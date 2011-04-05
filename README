@@ -1,2 +1,5 @@
 Testing, testing
 HALLO //jesper
+
+$ git commit -am "-vad du har gjort-" // överlämna
+$ git push // laddar upp 
