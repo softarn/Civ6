@@ -4,6 +4,7 @@ public class Tile {
 	private int x, y;
 	
 	private TerrainType terrain;
+	private PhysicalUnit unit;
 	
 	Tile(TerrainType tt, int countToFog, boolean plain, int x, int y){
 		explored = false;
@@ -14,5 +15,13 @@ public class Tile {
 		this.plain = plain;
 		this.x = x;
 		this.y = y;		
+	}
+	
+	public void setUnit(PhysicalUnit pu){
+		unit = pu;
+	}
+	
+	public void getUnit(){
+		return unit;
 	}
 }
