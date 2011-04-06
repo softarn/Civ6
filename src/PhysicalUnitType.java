@@ -1,10 +1,10 @@
 public class PhysicalUnitType implements Comparable<PhysicalUnitType>{
-  String name;
-  int range;
-  int maxHitpoints;
-  int defence;
-  int attack;
-  int movementPoints;
+  private String name;
+  private int range;
+  private int maxHitpoints;
+  private int defence;
+  private int attack;
+  private int movementPoints;
   public PhysicalUnitType(String name, int attack, int defence, int movementPoints, int maxHitpoints, int range){
         this.name = name;
         this.attack = attack;
@@ -40,15 +40,16 @@ public class PhysicalUnitType implements Comparable<PhysicalUnitType>{
 
   /**
    * Used for comparing one unittype to another, 
-   * to find out if you could win, draw or lose 
-   * in a fight with the other unittype.
+   * to check if it's stronger than the other.
    *
-   * @param other The opposing unittype.
+   * @param other The other unittype.
    *
-   * @return Negative for a loss, 0 for a tie and positive for a win.
+   * @return 
    */
   public int compareTo(PhysicalUnitType other){
-    return 0;
+    int attacking = this.attack - other.defence;
+    int defending = other.attack - this.defence;
+    return attacking - defending;
   }
 
   /**

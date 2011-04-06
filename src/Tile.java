@@ -21,7 +21,7 @@ public class Tile {
 		unit = pu;
 	}
 	
-	public void getUnit(){
+	public PhysicalUnit getUnit(){
 		return unit;
 	}
 }
