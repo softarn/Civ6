@@ -4,9 +4,6 @@ import javax.swing.JPanel;
 
 public class Window extends JFrame{
 
-    int w;
-    int h;
-
     //Only for testpurpose
     public static void main(String[] args){
 	new Window(100,100);
