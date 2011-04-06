@@ -1,5 +1,5 @@
 public class GameMapView{
 
-	public void draw();
+	public void draw(){}
 
 }

@@ -1,13 +1,28 @@
-public class Window{
-	int x;
-	int y;
-	int w;
-	int h;
-	
-	Window (int x,int y,int w,int h){
-		this.x = x;
-		this.y = y;
-		this.w = w;
-		this.h = h;
-	}
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+public class Window extends JFrame{
+
+    int w;
+    int h;
+
+    //Only for testpurpose
+    public static void main(String[] args){
+	new Window(100,100);
+	State s = State.getInstance();
+
+	try{
+	    Thread.sleep(2000);
+	}catch(Throwable t){}
+
+	s.setState(3);
+    }
+
+    Window(int w,int h){
+	Menu m = new Menu();
+	add(m);
+	this.setSize(w, h);
+	setVisible(true);
+    }
 }
