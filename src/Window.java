@@ -13,13 +13,13 @@ public class Window extends JFrame{
 	    Thread.sleep(2000);
 	}catch(Throwable t){}
 
-	s.setState(3);
+	s.setState(1);
     }
 
     Window(int w,int h){
 	Menu m = new Menu();
 	add(m);
-	this.setSize(w, h);
+	setSize(w, h);
 	setVisible(true);
     }
 }
