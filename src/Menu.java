@@ -8,6 +8,11 @@ import java.util.Observable;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+import state.State;
+import static state.State.UnitState.Selected;
+import static state.State.UnitState.UnSelected;
+import static state.State.ActionState.Move;
+
 public class Menu extends JPanel implements Observer, ActionListener{
 
     private static final State state = State.getInstance();
@@ -15,7 +20,7 @@ public class Menu extends JPanel implements Observer, ActionListener{
     private JButton move;
 
     //Status is only for testing purpose
-    private JLabel status = new JLabel("Status is: " + state.getState());
+    private JLabel status = new JLabel("Status is: " + state.getUnitState());
 
     Menu(){
 	super();
@@ -39,21 +44,24 @@ public class Menu extends JPanel implements Observer, ActionListener{
     }
 
     private void update(){
-	switch(state.getState()){
-	    case 0: move.setEnabled(false); break;
-	    case 1: move.setEnabled(true); break;
-	    case 2: move.setEnabled(true); break;
+	switch(state.getUnitState()){
+	    case UnSelected: move.setEnabled(false); break;
+	    case Selected: move.setEnabled(true);
+			   switch(state.getActionState()){
+			       case Move: move.setEnabled(false); break;
+			   }
+			   break;
 	}
 	updateState();
     }
 
     private void updateState(){
-	status.setText("Status is: " + state.getState());
+	status.setText("Status is: " + state.getUnitState());
     }
 
     public void actionPerformed(ActionEvent ae){
 	if(move == ae.getSource()){
-	    state.setState(2);
+	    state.setActionState(Move);
 	}
     }
 

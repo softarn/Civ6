@@ -2,6 +2,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import state.State;
+import static state.State.UnitState.Selected;
+
 public class Window extends JFrame{
 
     //Only for testpurpose
@@ -13,7 +16,7 @@ public class Window extends JFrame{
 	    Thread.sleep(2000);
 	}catch(Throwable t){}
 
-	s.setState(1);
+	s.setUnitState(Selected);
     }
 
     Window(int w,int h){
