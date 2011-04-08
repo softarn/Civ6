@@ -19,6 +19,8 @@ public class Window extends JFrame{
     Window(int w,int h){
 	Menu m = new Menu();
 	add(m);
+	
+	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	setSize(w, h);
 	setVisible(true);
     }
