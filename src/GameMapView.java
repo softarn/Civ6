@@ -1,5 +1,9 @@
-public class GameMapView{
+import javax.swing.JPanel;
 
-	public void draw(){}
+public class GameMapView extends JPanel{
 
+  public GameMapView(){
+    super();
+    new GameMap(this);
+  }
 }

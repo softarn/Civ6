@@ -1,6 +1,7 @@
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import java.awt.BorderLayout;
 
 import state.State;
 import static state.State.UnitState.Selected;
@@ -9,7 +10,7 @@ public class Window extends JFrame{
 
     //Only for testpurpose
     public static void main(String[] args){
-	new Window(100,100);
+	new Window(200,100);
 	State s = State.getInstance();
 
 	try{
@@ -21,9 +22,10 @@ public class Window extends JFrame{
 
     Window(int w,int h){
 	Menu m = new Menu();
-	add(m);
-	
-	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        GameMapView gmv = new GameMapView();
+        setLayout(new BorderLayout());
+	add(m, BorderLayout.EAST);
+        add(gmv, BorderLayout.CENTER);
 	setSize(w, h);
 	setVisible(true);
     }
