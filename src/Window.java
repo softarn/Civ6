@@ -24,6 +24,8 @@ public class Window extends JFrame{
 	Menu m = new Menu();
         GameMapView gmv = new GameMapView();
         setLayout(new BorderLayout());
+	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 	add(m, BorderLayout.EAST);
         add(gmv, BorderLayout.CENTER);
 	setSize(w, h);
