@@ -16,6 +16,7 @@ public class State extends Observable{
 	return INSTANCE;
     }
 
+    //Unitstate
     public enum UnitState{
 	Selected, UnSelected 
     }
@@ -30,6 +31,7 @@ public class State extends Observable{
 	notifyObservers();
     }
 
+    //ActionsState
     public enum ActionState{
 	None, Move 
     }
