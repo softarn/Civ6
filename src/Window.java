@@ -10,25 +10,25 @@ public class Window extends JFrame{
 
     //Only for testpurpose
     public static void main(String[] args){
-	new Window(200,100);
-	State s = State.getInstance();
+        new Window(900,900);
+        State s = State.getInstance();
 
-	try{
-	    Thread.sleep(2000);
-	}catch(Throwable t){}
+        try{
+            Thread.sleep(2000);
+        }catch(Throwable t){}
 
-	s.setUnitState(Selected);
+        s.setUnitState(Selected);
     }
 
     Window(int w,int h){
-	Menu m = new Menu();
+        Menu m = new Menu();
         GameMapView gmv = new GameMapView();
         setLayout(new BorderLayout());
-	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-	add(m, BorderLayout.EAST);
+        add(m, BorderLayout.EAST);
         add(gmv, BorderLayout.CENTER);
-	setSize(w, h);
-	setVisible(true);
+        setSize(w, h);
+        setVisible(true);
     }
 }

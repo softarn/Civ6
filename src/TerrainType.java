@@ -33,16 +33,16 @@ public enum TerrainType {
      *
      * @return An already created terraintype.
      *
-    public static TerrainType getInstance(int id){
-        if(id >= 0 && id < 12){
-            return types[id];
-        }
-        else{
-            System.out.println("Undefined terraintype id: " + id);
-            return null;
-        }
-    }
-    */
+     public static TerrainType getInstance(int id){
+     if(id >= 0 && id < 12){
+     return types[id];
+     }
+     else{
+     System.out.println("Undefined terraintype id: " + id);
+     return null;
+     }
+     }
+     */
 
     public String getTileImage(){
         return tilefile;
