@@ -37,8 +37,8 @@ public class TerrainType {
 		this.name = name;
 		attackBonus = att;
 		defenceBonus = def;
-                tilefile = name + ".png";
-                fogfile = name + "fog.png";
+                tilefile = "../data/img/"+name + ".png";
+                fogfile = "../data/img/"+name + "fog.png";
 	}
 
         /**
