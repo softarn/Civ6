@@ -32,7 +32,7 @@ public enum TerrainType {
      * @param id A terrain as defined by the constants.
      *
      * @return An already created terraintype.
-     */
+     *
     public static TerrainType getInstance(int id){
         if(id >= 0 && id < 12){
             return types[id];
@@ -42,6 +42,7 @@ public enum TerrainType {
             return null;
         }
     }
+    */
 
     public String getTileImage(){
         return tilefile;
