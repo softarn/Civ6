@@ -1,62 +1,71 @@
 import java.util.ArrayList;
 
 public class GameMap{
-  private Tile currentTile = null;
-  private Tile[][] tiles;
-  private GameMapView gmv;
+    private Tile currentTile = null;
+    private Tile[][] tiles = {
+            {new Tile(TerrainType.getInstance(11), 0, false, 0, 0), new Tile(TerrainType.getInstance(5), 0, false, 0 , 1), new Tile(TerrainType.getInstance(8), 0, false, 0, 2)},
+            {new Tile(TerrainType.getInstance(5), 0, true, 1, 0), new Tile(TerrainType.getInstance(5), 0, false, 1, 1), new Tile(TerrainType.getInstance(9), 0, true, 1, 2)},
+            {new Tile(TerrainType.getInstance(11), 0, true, 2, 0), new Tile(TerrainType.getInstance(11), 0, false, 2, 1), new Tile(TerrainType.getInstance(5), 0, true, 2, 2)}
+        };
+    private GameMapView gmv;
 
-  public GameMap(GameMapView gmv){
-    super();
+    public GameMap(GameMapView gmv){
+        super();
 
-    // Parsing the map
-    parseMap("Put server map data here");
+        // Parsing the map
+        parseMap("Put server map data here");
 
-    this.gmv = gmv;
-    // Put all TileViews on the GameMapView
-    for(int i=0; i<getWidth(); ++i){
-      for(int j=0; j<getHeight(); ++j){
-        gmv.add(tiles[i][j].getView());
-      }
+        this.gmv = gmv;
+        // Put all TileViews on the GameMapView
+        for(int j=getHeight()-1; j>=0; --j){
+            for(int i=0; i<getWidth(); ++i){
+                gmv.add(tiles[i][j].getView());
+            }
+        }
     }
-  }
 
-  /**
-   * Get a specific tile.
-   */
-  public Tile getTile(int x, int y){
-    return null;
-  }
+    /**
+     * Get a specific tile.
+     */
+    public Tile getTile(int x, int y){
+        return null;
+    }
 
-  /**
-   * Get the width of the map.
-   * Width is in the X direction.
-   */
-  public int getWidth(){
-    return 0;
-  }
+    /**
+     * Get the width of the map.
+     * Width is in the X direction.
+     */
+    public int getWidth(){
+        return 3;
+    }
 
-  /**
-   * Get the height of the map.
-   * Height is in the Y direction.
-   */
-  public int getHeight(){
-    return 0;
-  }
+    /**
+     * Get the height of the map.
+     * Height is in the Y direction.
+     */
+    public int getHeight(){
+        return 3;
+    }
 
-  public Tile[] getNeighbours(Tile tile, int range){
-    return new Tile[0];
-  }
+    public Tile[] getNeighbours(Tile tile, int range){
+        return new Tile[0];
+    }
 
-  public int getDistance(Tile a, Tile b){
-    return 1;
-  }
+    public int getDistance(Tile a, Tile b){
+        return 1;
+    }
 
-  /**
-   * Adds all tiles to the map.
-   *
-   * @param terrain Indata from the server interface.
-   */
-  public void parseMap(String terrain){
-    tiles = new Tile[0][0];
-  }
+    /**
+     * Adds all tiles to the map.
+     *
+     * @param terrain Indata from the server interface.
+     */
+    public void parseMap(String terrain){
+    /*    tiles = {
+            {new Tile(null, 0, false, 0, 0), new Tile(null, 0, false, 0 , 1)},
+            {new Tile(null, 0, true, 1, 0), new Tile(null, 0, false, 1, 1)},
+            {new Tile(null, 0, true, 2, 0), new Tile(null, 0, false, 2, 1)}
+        };
+    */
+    }
 }
