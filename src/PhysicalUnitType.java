@@ -5,13 +5,16 @@ public class PhysicalUnitType implements Comparable<PhysicalUnitType>{
   private int defence;
   private int attack;
   private int movementPoints;
-  public PhysicalUnitType(String name, int attack, int defence, int movementPoints, int maxHitpoints, int range){
+  private int manpower;
+	
+  public PhysicalUnitType(String name, int attack, int defence, int movementPoints, int maxHitpoints, int range, int manpower){
         this.name = name;
         this.attack = attack;
         this.defence = defence;
         this.movementPoints = movementPoints;
         this.maxHitpoints = maxHitpoints;
         this.range = range;
+	this.manpower = manpower;  
   }
 
   public String getName(){
@@ -36,6 +39,10 @@ public class PhysicalUnitType implements Comparable<PhysicalUnitType>{
 
   public int getRange(){
     return range;
+  }
+  
+  public int getManpower() {
+	  return manpower;
   }
 
   /**
