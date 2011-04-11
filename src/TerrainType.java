@@ -66,7 +66,7 @@ public class TerrainType {
                 return fogfile;
         }
 	
-	public getAttackBonus() {
+	public int getAttackBonus() {
 		return attackBonus;
 	}
 
