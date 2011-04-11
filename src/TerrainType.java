@@ -65,5 +65,9 @@ public class TerrainType {
         public String getFogImage(){
                 return fogfile;
         }
+	
+	public getAttackBonus() {
+		return attackBonus;
+	}
 
 }
