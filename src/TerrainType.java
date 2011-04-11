@@ -1,67 +1,54 @@
-public class TerrainType {
-	private String name;
-	private int attackBonus;
-	private int defenceBonus;
-        private String tilefile;
-        private String fogfile;
+public enum TerrainType {
+    Sea("Sea",     50, 0),
+        Ocean("Ocean",      30, 20),
+        Plains("Plains",     25, 0),
+        Grassland("Grassland",  25, 0),
+        March("March",      0,  25),
+        Desert("Desert",     10, 0),
+        Tundra("Tundra",     15, 0),
+        Rainforest("Rainforest", 15, 50),
+        Conifer("Conifer",    25, 75),
+        Broadleaf("Broadleaf",  25, 75), 
+        Hills("Hills",      25, 100), 
+        Mountain("Mountain",   20, 200);
 
-        private static TerrainType[] types = {
-          new TerrainType("Sea",        50, 0),
-          new TerrainType("Ocean",      30, 20),
-          new TerrainType("Plains",     25, 0),
-          new TerrainType("Grassland",  25, 0),
-          new TerrainType("March",      0,  25),
-          new TerrainType("Desert",     10, 0),
-          new TerrainType("Tundra",     15, 0),
-          new TerrainType("Rainforest", 15, 50),
-          new TerrainType("Conifer",    25, 75),
-          new TerrainType("Broadleaf",  25, 75), 
-          new TerrainType("Hills",      25, 100), 
-          new TerrainType("Mountain",   20, 200), 
-        };
+    private final String name;
+    private final int attackBonus;
+    private final int defenceBonus;
+    private final String tilefile;
+    private final String fogfile;
 
-        public static final int SEA = 0;
-        public static final int OCEAN = 1;
-        public static final int PLAINS = 2;
-        public static final int GRASSLAND = 3;
-        public static final int MARCH = 4;
-        public static final int DESERT = 5;
-        public static final int TUNDRA = 6;
-        public static final int RAINFOREST = 7;
-        public static final int CONIFER = 8;
-        public static final int BROADLEAF = 9;
-        public static final int HILLS = 10;
-        public static final int MOUNTAIN = 11;
-	
-	private TerrainType(String name, int att, int def){
-		this.name = name;
-		attackBonus = att;
-		defenceBonus = def;
-                tilefile = "../data/img/"+name + ".png";
-                fogfile = "../data/img/"+name + "fog.png";
-	}
+    private TerrainType(String name, int att, int def){
+        this.name = name;
+        attackBonus = att;
+        defenceBonus = def;
+        tilefile = name + ".png";
+        fogfile = name + "fog.png";
+    }
 
-        /**
-         * Get a terraintype by id.
-         * 
-         * @param id A terrain as defined by the constants.
-         *
-         * @return An already created terraintype.
-         */
-        public static TerrainType getInstance(int id){
-          if(id >= 0 && id < 12){
-            return types[id];
-          }
-          else{
-            System.out.println("Undefined terraintype id: " + id);
-            return null;
-          }
-        }
+    /**
+     * Get a terraintype by id.
+     * 
+     * @param id A terrain as defined by the constants.
+     *
+     * @return An already created terraintype.
+     *
+     public static TerrainType getInstance(int id){
+     if(id >= 0 && id < 12){
+     return types[id];
+     }
+     else{
+     System.out.println("Undefined terraintype id: " + id);
+     return null;
+     }
+     }
+     */
 
-        public String getTileImage(){
-                return tilefile;
-        }
+    public String getTileImage(){
+        return tilefile;
+    }
 
+<<<<<<< HEAD
         public String getFogImage(){
                 return fogfile;
         }
@@ -69,5 +56,10 @@ public class TerrainType {
 	public int getAttackBonus() {
 		return attackBonus;
 	}
+=======
+    public String getFogImage(){
+        return fogfile;
+    }
+>>>>>>> 1183b659a249b59f670fced16f12b4dfd4776436
 
 }

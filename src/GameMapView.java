@@ -1,5 +1,6 @@
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import java.awt.Color;
 
 public class GameMapView extends JPanel{
 
@@ -7,5 +8,6 @@ public class GameMapView extends JPanel{
     super();
     new GameMap(this);
     setLayout(null);
+    setBackground(Color.black);
   }
 }

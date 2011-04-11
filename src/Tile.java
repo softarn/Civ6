@@ -10,7 +10,7 @@ public class Tile {
     public Tile(){
         //Temporary empty tile constructor, remove this when it is not needed anymore.
     }
-    public Tile(TerrainType tt, int countToFog, boolean plain, int x, int y){
+    public Tile(TerrainType tt, int x, int y){
         explored = false;
         fog = true;
         countToFog = 0;

@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 
 public class TileView extends JPanel{
 
+    private static final String imgPath = "../data/img/"; //Need a better fix for this!
     private int positionx;
     private int positiony;
     private Polygon area;
@@ -31,7 +32,7 @@ public class TileView extends JPanel{
         setBounds(x, y, 175, 175);
         setOpaque(false);
         try{
-            normal = ImageIO.read(new File(tile.getTerrain().getTileImage()));
+            normal = ImageIO.read(new File(imgPath + tile.getTerrain().getTileImage()));
             //fogged = ImageIO.read(new File(tile.getTerrain().getFogImage()));
         }
         catch(IOException e){

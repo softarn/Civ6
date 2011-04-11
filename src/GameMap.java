@@ -3,11 +3,12 @@ import java.util.ArrayList;
 public class GameMap{
     private Tile currentTile = null;
     private Tile[][] tiles = {
-            {new Tile(TerrainType.getInstance(11), 0, false, 0, 0), new Tile(TerrainType.getInstance(5), 0, false, 0 , 1), new Tile(TerrainType.getInstance(8), 0, false, 0, 2)},
-            {new Tile(TerrainType.getInstance(5), 0, true, 1, 0), new Tile(TerrainType.getInstance(5), 0, false, 1, 1), new Tile(TerrainType.getInstance(9), 0, true, 1, 2)},
-            {new Tile(TerrainType.getInstance(11), 0, true, 2, 0), new Tile(TerrainType.getInstance(11), 0, false, 2, 1), new Tile(TerrainType.getInstance(5), 0, true, 2, 2)}
-        };
+            {new Tile(TerrainType.Mountain, 0, 0), new Tile(TerrainType.Mountain, 0, 1), new Tile(TerrainType.Mountain, 0, 2)},
+            {new Tile(TerrainType.Mountain, 1, 0), new Tile(TerrainType.Desert, 1, 1), new Tile(TerrainType.Mountain, 1, 2)},
+            {new Tile(TerrainType.Mountain, 2, 0), new Tile(TerrainType.Desert, 2, 1), new Tile(TerrainType.Mountain, 2, 2)},
+    };
     private GameMapView gmv;
+    private int height = 3, width = 3;
 
     public GameMap(GameMapView gmv){
         super();
@@ -36,7 +37,7 @@ public class GameMap{
      * Width is in the X direction.
      */
     public int getWidth(){
-        return 3;
+        return width;
     }
 
     /**
@@ -44,7 +45,7 @@ public class GameMap{
      * Height is in the Y direction.
      */
     public int getHeight(){
-        return 3;
+        return height;
     }
 
     public Tile[] getNeighbours(Tile tile, int range){
