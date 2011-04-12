@@ -1,3 +1,5 @@
+package src;
+
 public enum TerrainType {
     Sea("Sea",     50, 0),
         Ocean("Ocean",      30, 20),

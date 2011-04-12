@@ -1,3 +1,5 @@
+package src;
+
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 import java.io.File;
@@ -5,7 +7,7 @@ import java.io.IOException;
 
 public class Tile {
     private boolean selected, explored, fog, plain;
-    private static final String imgPath = "../data/img/"; //Need a better fix for this!
+    private static final String imgPath = "data/img/"; //Need a better fix for this!
 
     private int countToFog;
     private int x, y;

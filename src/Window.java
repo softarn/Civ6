@@ -1,10 +1,11 @@
+package src;
+
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 
-import state.State;
-import static state.State.UnitState.Selected;
+import static src.State.UnitState.Selected;
 
 public class Window extends JFrame{
 
