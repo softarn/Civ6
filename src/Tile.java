@@ -9,7 +9,7 @@ import static src.State.TileState.Selected;
 import static src.State.TileState.UnSelected;
 
 public class Tile {
-    private boolean selected, explored, fog, plain;
+    private boolean selected, hilight, explored, fog, plain;
     private static final String imgPath = "data/img/"; //Need a better fix for this!
 
     private int countToFog;
@@ -41,6 +41,7 @@ public class Tile {
             }
         }
 
+        hilight = false;
         selected = false;
         explored = false;
         fog = true;
@@ -103,6 +104,18 @@ public class Tile {
 
     public TerrainType getTerrain(){
         return terrain;
+    }
+
+    public void hilight(){
+        hilight = true;
+    }
+
+    public void dehilight(){
+        hilight = false;
+    }
+
+    public boolean isHilighted(){
+        return hilight;
     }
 
     public boolean isExplored(){
