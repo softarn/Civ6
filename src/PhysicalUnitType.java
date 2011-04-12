@@ -1,3 +1,5 @@
+package src;
+
 public enum PhysicalUnitType {
     Musketeer("Musketeer", 100, 2, 2, 3, 2, 1); 
 

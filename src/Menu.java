@@ -1,3 +1,5 @@
+package src;
+
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -8,10 +10,9 @@ import java.util.Observable;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-import state.State;
-import static state.State.UnitState.Selected;
-import static state.State.UnitState.UnSelected;
-import static state.State.ActionState.Move;
+import static src.State.UnitState.Selected;
+import static src.State.UnitState.UnSelected;
+import static src.State.ActionState.Move;
 
 public class Menu extends JPanel implements Observer, ActionListener{
 

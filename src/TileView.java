@@ -1,3 +1,5 @@
+package src;
+
 import java.io.File;
 import java.io.IOException;
 import java.awt.Polygon;
@@ -14,7 +16,7 @@ import javax.swing.JPanel;
 
 public class TileView extends JPanel{
 
-    private static final String imgPath = "../data/img/"; //Need a better fix for this!
+    private static final String imgPath = "data/img/"; //Need a better fix for this!
     private int positionx;
     private int positiony;
     private Polygon area;
@@ -41,8 +43,7 @@ public class TileView extends JPanel{
         try{
             normal = ImageIO.read(new File(imgPath + tile.getTerrain().getTileImage()));
             fogged = ImageIO.read(new File(imgPath + tile.getTerrain().getFogImage()));
-        }
-        catch(IOException e){
+        }catch(IOException e){
             System.out.println(e);
         }
     }
