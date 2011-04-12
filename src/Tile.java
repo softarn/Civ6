@@ -27,11 +27,11 @@ public class Tile {
         unit = pu;
         this.x = x;
         this.y = y;
+
         if(pu != null){
             try{
                 unitImg = ImageIO.read(new File(imgPath + pu.getType().getUnitImage()));
-            }
-            catch(IOException e){
+            }catch(IOException e){
                 System.out.println(e);
             }
         }

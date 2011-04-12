@@ -4,6 +4,10 @@ import java.util.Observable;
 
 public class State extends Observable{
     private static final State INSTANCE = new State();
+
+    private static PhysicalUnit selectedUnit;
+    private static Tile selectedTile;
+
     private UnitState unitState;
     private TileState tileState;
     private ActionState actionState;
@@ -15,6 +19,18 @@ public class State extends Observable{
 
     public static State getInstance(){
         return INSTANCE;
+    }
+
+    public static void setSelectedTile(Tile tile){
+        selectedTile = tile;
+    }
+
+    public static Tile getSelectedTile(){
+        return tile;
+    }
+
+    public static PhysicalUnit getSelectedUnit(){
+        return selectedUnit;
     }
 
     //Unitstate

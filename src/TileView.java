@@ -40,8 +40,7 @@ public class TileView extends JPanel{
         try{
             normal = ImageIO.read(new File(imgPath + tile.getTerrain().getTileImage()));
             fogged = ImageIO.read(new File(imgPath + tile.getTerrain().getFogImage()));
-        }
-        catch(IOException e){
+        }catch(IOException e){
             System.out.println(e);
         }
     }
