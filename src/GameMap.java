@@ -23,7 +23,6 @@ public class GameMap{
                 gmv.add(tiles[i][j].getView());
             }
         }
-        tiles[2][1].select();
     }
 
     /**
@@ -41,7 +40,13 @@ public class GameMap{
      * coordinates relative to GameMapView.
      */
     public Tile getTileAt(int x, int y){
-        //for(int i=0)
+        for(int j=getHeight()-1; j>=0; --j){
+            for(int i=getWidth()-1; i>=0; --i){
+                if(tiles[i][j].getView().contains(x, y)){
+                    return tiles[i][j];
+                }
+            }
+        }
         return null;
     }
 

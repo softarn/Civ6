@@ -31,6 +31,7 @@ public class TileView extends JPanel{
         int[] xs = {43, 3, 43, 121, 160, 121};
         int[] ys = {35, 104, 170, 170, 104, 35};
         area = new Polygon(xs,ys,6);
+        area.translate(x, y);
         positionx = x;
         positiony = y;
         this.tile = tile;
@@ -76,7 +77,9 @@ public class TileView extends JPanel{
                 g.setColor(Color.YELLOW);
                 Graphics2D g2 = (Graphics2D) g;
                 g2.setStroke(new BasicStroke(3));
+                area.translate(-positionx, -positiony);
                 g2.drawPolygon(area);
+                area.translate(positionx, positiony);
             }
 
             if(tile.hasUnit()){

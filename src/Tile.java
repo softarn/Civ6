@@ -72,8 +72,6 @@ public class Tile {
     }
 
     public TileView getView(){
-        System.out.println(view.getTilePositionx());
-        System.out.println(view.getTilePositiony());
         return view;
     }
 

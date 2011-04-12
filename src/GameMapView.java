@@ -13,6 +13,7 @@ public class GameMapView extends JPanel{
         gm = new GameMap(this);
         setLayout(null);
         setBackground(Color.black);
+        addMouseListener(new GameMapListener());
     }
 
     private class GameMapListener implements MouseListener{
@@ -33,7 +34,13 @@ public class GameMapView extends JPanel{
         }
 
         public void mouseClicked(MouseEvent e){
-           // (e.getX(), e.getY());
+            Tile tile = gm.getTileAt(e.getX(), e.getY());
+            System.out.println("Printing hexagon at x"+ tile.getView().getTilePositionx()+
+                    " y"+tile.getView().getTilePositiony());
+            if(tile != null){
+                tile.select();
+                tile.getView().repaint();
+            }
         }
     }
 }
