@@ -4,9 +4,9 @@ import java.io.File;
 import java.io.IOException;
 
 public class Tile {
+    private boolean selected, explored, fog, plain;
     private static final String imgPath = "../data/img/"; //Need a better fix for this!
 
-    private boolean explored, fog, plain;
     private int countToFog;
     private int x, y;
 
@@ -15,9 +15,6 @@ public class Tile {
     private TileView view;
     private BufferedImage unitImg;
 
-    public Tile(){
-        //Temporary empty tile constructor, remove this when it is not needed anymore.
-    }
     public Tile(TerrainType tt, PhysicalUnit pu, int x, int y){
         init(tt, pu, x, y);
     }
@@ -39,10 +36,23 @@ public class Tile {
             }
         }
 
+        selected = false;
         explored = false;
         fog = true;
         countToFog = 0;
         view = new TileView(((x - y)*120)+120, ((x + y)*68), this);
+    }
+
+    public void select(){
+        selected = true;
+    }
+
+    public void deselect(){
+        selected = true;
+    }
+
+    public boolean isSelected(){
+        return selected;
     }
 
     public void setUnit(PhysicalUnit pu){

@@ -19,16 +19,29 @@ public class GameMap{
         this.gmv = gmv;
         // Put all TileViews on the GameMapView
         for(int j=getHeight()-1; j>=0; --j){
-            for(int i=0; i<getWidth(); ++i){
+            for(int i=getWidth()-1; i>=0; --i){
                 gmv.add(tiles[i][j].getView());
             }
         }
+        tiles[2][1].select();
     }
 
     /**
-     * Get a specific tile.
+     * Get a specific tile from the array.
      */
     public Tile getTile(int x, int y){
+        if(x < getWidth() || y < getHeight()){
+            return null;
+        } 
+        return tiles[x][y];
+    }
+
+    /**
+     * Get a specific tile from the array at the 
+     * coordinates relative to GameMapView.
+     */
+    public Tile getTileAt(int x, int y){
+        //for(int i=0)
         return null;
     }
 
@@ -62,11 +75,11 @@ public class GameMap{
      * @param terrain Indata from the server interface.
      */
     public void parseMap(String terrain){
-    /*    tiles = {
-            {new Tile(null, 0, false, 0, 0), new Tile(null, 0, false, 0 , 1)},
-            {new Tile(null, 0, true, 1, 0), new Tile(null, 0, false, 1, 1)},
-            {new Tile(null, 0, true, 2, 0), new Tile(null, 0, false, 2, 1)}
-        };
-    */
+        /*    tiles = {
+              {new Tile(null, 0, false, 0, 0), new Tile(null, 0, false, 0 , 1)},
+              {new Tile(null, 0, true, 1, 0), new Tile(null, 0, false, 1, 1)},
+              {new Tile(null, 0, true, 2, 0), new Tile(null, 0, false, 2, 1)}
+              };
+              */
     }
 }
