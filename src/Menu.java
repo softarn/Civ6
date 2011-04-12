@@ -24,46 +24,46 @@ public class Menu extends JPanel implements Observer, ActionListener{
     private JLabel status = new JLabel("Status is: " + state.getUnitState());
 
     Menu(){
-	super();
+        super();
 
-	move = new JButton("Move");
-	//move.setMnemonic(KeyEvent.VK_D);
-	move.setActionCommand("move");
-	move.addActionListener(this);
+        move = new JButton("Move");
+        //move.setMnemonic(KeyEvent.VK_D);
+        move.setActionCommand("move");
+        move.addActionListener(this);
 
-	state.addObserver(this);
-	add(status);
-	add(move);
+        state.addObserver(this);
+        add(status);
+        add(move);
 
-	update();
+        update();
     }
 
     public void update(Observable obs, Object obj){
-	if(obs == state){
-	    update();
-	}
+        if(obs == state){
+            update();
+        }
     }
 
     private void update(){
-	switch(state.getUnitState()){
-	    case UnSelected: move.setEnabled(false); break;
-	    case Selected: move.setEnabled(true);
-			   switch(state.getActionState()){
-			       case Move: move.setEnabled(false); break;
-			   }
-			   break;
-	}
-	updateState();
+        switch(state.getUnitState()){
+            case UnSelected: move.setEnabled(false); break;
+            case Selected: move.setEnabled(true);
+                           switch(state.getActionState()){
+                               case Move: move.setEnabled(false); break;
+                           }
+                           break;
+        }
+        updateState();
     }
 
     private void updateState(){
-	status.setText("Status is: " + state.getUnitState());
+        status.setText("Status is: " + state.getUnitState());
     }
 
     public void actionPerformed(ActionEvent ae){
-	if(move == ae.getSource()){
-	    state.setActionState(Move);
-	}
+        if(move == ae.getSource()){
+            state.setActionState(Move);
+        }
     }
 
 }
