@@ -2,11 +2,8 @@ package src;
 
 public class Move {
 	
-	private PhysicalUnit selectedUnit;
-	
-	public boolean makeMove (Tile t){
-		return false;
-	
-	}
+//	public static boolean makeMove(PhysicalUnit, pu, Tile t){
+
+//	}
 	
 }

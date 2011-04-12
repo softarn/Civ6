@@ -67,13 +67,13 @@ public class TileView extends JPanel{
             if(tile.isExplored()){
                 // Tile is being seen by a unit
                 terrain = normal;
-            }
-            else {
+            }else{
                 // Tile is no longer being watched, so paint the foggy tile.
                 terrain = fogged;
             }
 
             g.drawImage(terrain, 0, 0, this);
+
             if(tile.isSelected()){
                 g.setColor(Color.YELLOW);
                 Graphics2D g2 = (Graphics2D) g;
@@ -93,8 +93,7 @@ public class TileView extends JPanel{
                 int y = 150 - h;
                 g.drawImage(unitImg, x, y, this);
             }
-        }
-        else{
+        }else{
             //Tile is in total fog so lets just paint it black
             g.setColor(Color.BLACK);
             g.fillPolygon(area);
