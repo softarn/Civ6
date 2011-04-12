@@ -34,6 +34,7 @@ public class TileView extends JPanel{
         positionx = x;
         positiony = y;
         this.tile = tile;
+
         setBounds(x, y, 175, 175);
         setOpaque(false);
         try{
@@ -69,12 +70,24 @@ public class TileView extends JPanel{
                 // Tile is no longer being watched, so paint the foggy tile.
                 terrain = fogged;
             }
+
             g.drawImage(terrain, 0, 0, this);
             if(tile.isSelected()){
                 g.setColor(Color.YELLOW);
                 Graphics2D g2 = (Graphics2D) g;
                 g2.setStroke(new BasicStroke(3));
                 g2.drawPolygon(area);
+            }
+
+            if(tile.hasUnit()){
+                BufferedImage unitImg = tile.getUnitImg();
+
+                int h = unitImg.getTileHeight();
+                int w = unitImg.getTileWidth();
+
+                int x = (w/2) + 20;
+                int y = 150 - h;
+                g.drawImage(unitImg, x, y, this);
             }
         }
         else{
