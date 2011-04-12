@@ -14,11 +14,11 @@ public class Window extends JFrame{
         new Window(900,900);
         State s = State.getInstance();
 
-        try{
+/*        try{
             Thread.sleep(2000);
         }catch(Throwable t){}
 
-        s.setUnitState(Selected);
+        s.setUnitState(Selected);*/
     }
 
     Window(int w,int h){

@@ -41,7 +41,6 @@ public class GameMapView extends JPanel{
                     " y"+tile.getView().getTilePositiony());
             if(tile != null){
                 tile.select();
-                tile.getView().repaint();
             }
         }
     }

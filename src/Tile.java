@@ -5,6 +5,9 @@ import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
 
+import static src.State.TileState.Selected;
+import static src.State.TileState.UnSelected;
+
 public class Tile {
     private boolean selected, explored, fog, plain;
     private static final String imgPath = "data/img/"; //Need a better fix for this!
@@ -46,11 +49,32 @@ public class Tile {
     }
 
     public void select(){
+        State st = State.getInstance();
+        if(st.getTileState() == Selected){
+            State.getSelectedTile().deselect();
+        }
+        st.setTileState(Selected);
+        st.setSelectedTile(this);
+        if(unit != null){
+            st.setUnitState(State.UnitState.Selected);
+            st.setSelectedUnit(unit);
+        }
         selected = true;
+        view.repaint();
     }
 
     public void deselect(){
-        selected = true;
+        State st = State.getInstance();
+        if(st.getSelectedTile().equals(this)){
+            st.setTileState(UnSelected);
+            st.setSelectedTile(null);
+            selected = false;
+            if(unit != null){
+                st.setUnitState(State.UnitState.UnSelected);
+                st.setSelectedUnit(null);
+            }
+            view.repaint();
+        }
     }
 
     public boolean isSelected(){
