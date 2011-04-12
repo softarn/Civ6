@@ -26,24 +26,6 @@ public enum TerrainType {
         fogfile = name + "fog.png";
     }
 
-    /**
-     * Get a terraintype by id.
-     * 
-     * @param id A terrain as defined by the constants.
-     *
-     * @return An already created terraintype.
-     *
-     public static TerrainType getInstance(int id){
-     if(id >= 0 && id < 12){
-     return types[id];
-     }
-     else{
-     System.out.println("Undefined terraintype id: " + id);
-     return null;
-     }
-     }
-     */
-
     public String getTileImage(){
         return tilefile;
     }

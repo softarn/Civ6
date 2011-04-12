@@ -4,7 +4,7 @@ public class GameMap{
     private Tile currentTile = null;
     private Tile[][] tiles = {
             {new Tile(TerrainType.Mountain, 0, 0), new Tile(TerrainType.Mountain, 0, 1), new Tile(TerrainType.Mountain, 0, 2)},
-            {new Tile(TerrainType.Mountain, 1, 0), new Tile(TerrainType.Desert, 1, 1), new Tile(TerrainType.Mountain, 1, 2)},
+            {new Tile(TerrainType.Mountain, 1, 0), new Tile(TerrainType.Desert, new PhysicalUnit(PhysicalUnitType.Musketeer), 1, 1), new Tile(TerrainType.Mountain, 1, 2)},
             {new Tile(TerrainType.Mountain, 2, 0), new Tile(TerrainType.Desert, 2, 1), new Tile(TerrainType.Mountain, 2, 2)},
     };
     private GameMapView gmv;
