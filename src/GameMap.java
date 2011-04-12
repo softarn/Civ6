@@ -9,6 +9,7 @@ public class GameMap{
             {new Tile(TerrainType.Mountain, 1, 0), new Tile(TerrainType.Desert, new PhysicalUnit(PhysicalUnitType.Musketeer), 1, 1), new Tile(TerrainType.Mountain, 1, 2)},
             {new Tile(TerrainType.Mountain, 2, 0), new Tile(TerrainType.Desert, 2, 1), new Tile(TerrainType.Mountain, 2, 2)},
     };
+    private static GameMap map;
     private GameMapView gmv;
     private int height = 3, width = 3;
 
@@ -25,6 +26,15 @@ public class GameMap{
                 gmv.add(tiles[i][j].getView());
             }
         }
+        map = this;
+    }
+
+    /**
+     * Temporary solution to be able to reach the map from anywhere.
+     * Assumes GameMapView initialized the object before this is called.
+     */
+    public static GameMap getInstance(){
+        return map;
     }
 
     /**

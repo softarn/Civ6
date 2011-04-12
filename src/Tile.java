@@ -6,8 +6,11 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.Math;
 
+import static src.State.TileState.Selected;
+import static src.State.TileState.UnSelected;
+
 public class Tile {
-    private boolean selected, explored, fog, plain;
+    private boolean selected, hilight, explored, fog, plain;
     private static final String imgPath = "data/img/"; //Need a better fix for this!
 
     private int countToFog;
@@ -39,6 +42,7 @@ public class Tile {
             }
         }
 
+        hilight = false;
         selected = false;
         explored = false;
         fog = true;
@@ -74,11 +78,32 @@ public class Tile {
     }
 
     public void select(){
+        State st = State.getInstance();
+        if(st.getTileState() == Selected){
+            State.getSelectedTile().deselect();
+        }
+        st.setTileState(Selected);
+        st.setSelectedTile(this);
+        if(unit != null){
+            st.setUnitState(State.UnitState.Selected);
+            st.setSelectedUnit(unit);
+        }
         selected = true;
+        view.repaint();
     }
 
     public void deselect(){
-        selected = true;
+        State st = State.getInstance();
+        if(st.getSelectedTile().equals(this)){
+            st.setTileState(UnSelected);
+            st.setSelectedTile(null);
+            selected = false;
+            if(unit != null){
+                st.setUnitState(State.UnitState.UnSelected);
+                st.setSelectedUnit(null);
+            }
+            view.repaint();
+        }
     }
 
     public boolean isSelected(){
@@ -107,6 +132,18 @@ public class Tile {
 
     public TerrainType getTerrain(){
         return terrain;
+    }
+
+    public void hilight(){
+        hilight = true;
+    }
+
+    public void dehilight(){
+        hilight = false;
+    }
+
+    public boolean isHilighted(){
+        return hilight;
     }
 
     public boolean isExplored(){

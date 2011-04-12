@@ -63,6 +63,7 @@ public class TileView extends JPanel{
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         Image terrain;
+        area.translate(-positionx, -positiony);
         if(!tile.hasFog()){
             if(tile.isExplored()){
                 // Tile is being seen by a unit
@@ -78,9 +79,11 @@ public class TileView extends JPanel{
                 g.setColor(Color.YELLOW);
                 Graphics2D g2 = (Graphics2D) g;
                 g2.setStroke(new BasicStroke(3));
-                area.translate(-positionx, -positiony);
                 g2.drawPolygon(area);
-                area.translate(positionx, positiony);
+            }
+            if(tile.isHilighted()){
+                g.setColor(new Color(240, 200, 50, 120));
+                g.fillPolygon(area);
             }
 
             if(tile.hasUnit()){
@@ -98,5 +101,6 @@ public class TileView extends JPanel{
             g.setColor(Color.BLACK);
             g.fillPolygon(area);
         }
+        area.translate(positionx, positiony);
     }
 }

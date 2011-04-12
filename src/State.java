@@ -29,6 +29,10 @@ public class State extends Observable{
         return selectedTile;
     }
 
+    public static void setSelectedUnit(PhysicalUnit unit){
+        selectedUnit = unit;
+    }
+
     public static PhysicalUnit getSelectedUnit(){
         return selectedUnit;
     }
@@ -50,7 +54,7 @@ public class State extends Observable{
 
     //TileState
     public enum TileState{
-        Selected, Unselected
+        Selected, UnSelected
     }
 
     public TileState getTileState(){
