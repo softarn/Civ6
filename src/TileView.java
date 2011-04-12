@@ -4,6 +4,8 @@ import java.awt.Polygon;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.BasicStroke;
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
@@ -26,6 +28,9 @@ public class TileView extends JPanel{
      */
     public TileView(int x, int y, Tile tile){
         // Create polygon here
+        int[] xs = {43, 3, 43, 121, 160, 121};
+        int[] ys = {35, 104, 170, 170, 104, 35};
+        area = new Polygon(xs,ys,6);
         positionx = x;
         positiony = y;
         this.tile = tile;
@@ -33,7 +38,7 @@ public class TileView extends JPanel{
         setOpaque(false);
         try{
             normal = ImageIO.read(new File(imgPath + tile.getTerrain().getTileImage()));
-            //fogged = ImageIO.read(new File(tile.getTerrain().getFogImage()));
+            fogged = ImageIO.read(new File(imgPath + tile.getTerrain().getFogImage()));
         }
         catch(IOException e){
             System.out.println(e);
@@ -49,7 +54,7 @@ public class TileView extends JPanel{
     }
 
     public boolean contains(int x, int y){
-        return false;//area.contains(x, y);
+        return area.contains(x, y);
     }
 
     public void paintComponent(Graphics g){
@@ -65,11 +70,17 @@ public class TileView extends JPanel{
                 terrain = fogged;
             }
             g.drawImage(terrain, 0, 0, this);
+            if(tile.isSelected()){
+                g.setColor(Color.YELLOW);
+                Graphics2D g2 = (Graphics2D) g;
+                g2.setStroke(new BasicStroke(3));
+                g2.drawPolygon(area);
+            }
         }
         else{
             //Tile is in total fog so lets just paint it black
             g.setColor(Color.BLACK);
-            //            g.fillPolygon(area);
+            g.fillPolygon(area);
         }
     }
 }

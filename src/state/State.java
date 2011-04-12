@@ -5,6 +5,7 @@ import java.util.Observable;
 public class State extends Observable{
     private static final State INSTANCE = new State();
     private UnitState unitState;
+    private TileState tileState;
     private ActionState actionState;
 
     private State(){
@@ -27,6 +28,21 @@ public class State extends Observable{
 
     public void setUnitState(UnitState state){
         unitState = state;
+        setChanged();
+        notifyObservers();
+    }
+
+    //TileState
+    public enum TileState{
+        Selected, Unselected
+    }
+
+    public TileState getTileState(){
+        return tileState;
+    }
+
+    public void setTileState(TileState state){
+        tileState = state;
         setChanged();
         notifyObservers();
     }

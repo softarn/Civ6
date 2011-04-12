@@ -23,7 +23,7 @@ public enum TerrainType {
         attackBonus = att;
         defenceBonus = def;
         tilefile = name + ".png";
-        fogfile = name + "fog.png";
+        fogfile = name + "Fog.png";
     }
 
     /**
