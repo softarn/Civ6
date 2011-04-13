@@ -1,10 +1,11 @@
+package src;
+
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 
-import state.State;
-import static state.State.UnitState.Selected;
+import static src.State.UnitState.Selected;
 
 public class Window extends JFrame{
 
@@ -13,11 +14,11 @@ public class Window extends JFrame{
         new Window(900,900);
         State s = State.getInstance();
 
-        try{
+/*        try{
             Thread.sleep(2000);
         }catch(Throwable t){}
 
-        s.setUnitState(Selected);
+        s.setUnitState(Selected);*/
     }
 
     Window(int w,int h){

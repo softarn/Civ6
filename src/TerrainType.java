@@ -1,3 +1,5 @@
+package src;
+
 public enum TerrainType {
     Sea("Sea",     50, 0),
         Ocean("Ocean",      30, 20),
@@ -23,26 +25,8 @@ public enum TerrainType {
         attackBonus = att;
         defenceBonus = def;
         tilefile = name + ".png";
-        fogfile = name + "fog.png";
+        fogfile = name + "Fog.png";
     }
-
-    /**
-     * Get a terraintype by id.
-     * 
-     * @param id A terrain as defined by the constants.
-     *
-     * @return An already created terraintype.
-     *
-     public static TerrainType getInstance(int id){
-     if(id >= 0 && id < 12){
-     return types[id];
-     }
-     else{
-     System.out.println("Undefined terraintype id: " + id);
-     return null;
-     }
-     }
-     */
 
     public String getTileImage(){
         return tilefile;

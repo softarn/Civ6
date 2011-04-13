@@ -1,10 +1,15 @@
-package state;
+package src;
 
 import java.util.Observable;
 
 public class State extends Observable{
     private static final State INSTANCE = new State();
+
+    private static PhysicalUnit selectedUnit;
+    private static Tile selectedTile;
+
     private UnitState unitState;
+    private TileState tileState;
     private ActionState actionState;
 
     private State(){
@@ -14,6 +19,22 @@ public class State extends Observable{
 
     public static State getInstance(){
         return INSTANCE;
+    }
+
+    public static void setSelectedTile(Tile tile){
+        selectedTile = tile;
+    }
+
+    public static Tile getSelectedTile(){
+        return selectedTile;
+    }
+
+    public static void setSelectedUnit(PhysicalUnit unit){
+        selectedUnit = unit;
+    }
+
+    public static PhysicalUnit getSelectedUnit(){
+        return selectedUnit;
     }
 
     //Unitstate
@@ -27,6 +48,21 @@ public class State extends Observable{
 
     public void setUnitState(UnitState state){
         unitState = state;
+        setChanged();
+        notifyObservers();
+    }
+
+    //TileState
+    public enum TileState{
+        Selected, UnSelected
+    }
+
+    public TileState getTileState(){
+        return tileState;
+    }
+
+    public void setTileState(TileState state){
+        tileState = state;
         setChanged();
         notifyObservers();
     }

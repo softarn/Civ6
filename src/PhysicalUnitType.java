@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 public class PhysicalUnitType implements Comparable<PhysicalUnitType>{
   private String name;
   private int range;
@@ -8,35 +9,67 @@ public class PhysicalUnitType implements Comparable<PhysicalUnitType>{
   private int manpower;
 	
   public PhysicalUnitType(String name, int attack, int defence, int movementPoints, int maxHitpoints, int range, int manpower){
+=======
+package src;
+
+public enum PhysicalUnitType {
+    Musketeer("Musketeer", 100, 2, 2, 3, 2, 1); 
+
+    private String name;
+    private int maxManpower;
+    private int defence;
+    private int attack;
+    private int hitPoint;
+    private int range;
+    private int movementPoint;
+
+    private final String imgFile;
+
+    private PhysicalUnitType(String name, 
+            int maxManpower,
+            int attack,
+            int defence,
+            int hitPoint,
+            int range,
+            int movementPoints){
+>>>>>>> b181f8331d237fa17415f4ca2fd0d4942618b42b
         this.name = name;
+        this.maxManpower = maxManpower;
         this.attack = attack;
         this.defence = defence;
-        this.movementPoints = movementPoints;
-        this.maxHitpoints = maxHitpoints;
+        this.hitPoint = hitPoint;
         this.range = range;
+<<<<<<< HEAD
 	this.manpower = manpower;  
   }
+=======
+        this.movementPoint = movementPoint;
+>>>>>>> b181f8331d237fa17415f4ca2fd0d4942618b42b
 
-  public String getName(){
-    return name;
-  }
+        imgFile = name + ".png"; 
+    }
 
-  public int getAttack(){
-    return attack;
-  }
+    public String getName(){
+        return name;
+    }
 
-  public int getDefence(){
-    return defence;
-  }
+    public int getAttack(){
+        return attack;
+    }
 
-  public int getMovementPoints(){
-    return movementPoints;
-  }
+    public int getDefence(){
+        return defence;
+    }
 
-  public int getMaxHitpoints(){
-    return maxHitpoints;
-  }
+    public int getMovementPoint(){
+        return movementPoint;
+    }
 
+    public int getMaxManpower(){
+        return maxManpower;
+    }
+
+<<<<<<< HEAD
   public int getRange(){
     return range;
   }
@@ -44,33 +77,41 @@ public class PhysicalUnitType implements Comparable<PhysicalUnitType>{
   public int getManpower() {
 	  return manpower;
   }
-
-  /**
-   * Used for comparing one unittype to another, 
-   * to check if it's stronger than the other.
-   *
-   * @param other The other unittype.
-   *
-   * @return 
-   */
-  public int compareTo(PhysicalUnitType other){
-    int attacking = this.attack - other.defence;
-    int defending = other.attack - this.defence;
-    return attacking - defending;
-  }
-
-  /**
-   * If the unittype names are equal the unittypes are the same
-   * this method tests that connection.
-   *
-   * @param other Another PhysicalUnitType to compare to.
-   *
-   * @return True if this name is equal to other's name
-   */
-  public boolean equals(Object other){
-    if(other instanceof PhysicalUnitType){
-      return this.name.equals(((PhysicalUnitType)other).name);
+=======
+    public int getRange(){
+        return range;
     }
-    return false;
-  }
+>>>>>>> b181f8331d237fa17415f4ca2fd0d4942618b42b
+
+    public String getUnitImage(){
+        return imgFile;
+    }
+
+    /**
+     * Used for comparing one unittype to another, 
+     * to check if it's stronger than the other.
+     *
+     * @param other The other unittype.
+     *
+     * @return 
+    public int compareTo(PhysicalUnitType other){
+        int attacking = this.attack - other.defence;
+        int defending = other.attack - this.defence;
+        return attacking - defending;
+    }
+
+    /**
+     * If the unittype names are equal the unittypes are the same
+     * this method tests that connection.
+     *
+     * @param other Another PhysicalUnitType to compare to.
+     *
+     * @return True if this name is equal to other's name
+    public boolean equals(Object other){
+        if(other instanceof PhysicalUnitType){
+            return this.name.equals(((PhysicalUnitType)other).name);
+        }
+        return false;
+    }
+     */
 }
