@@ -1,7 +1,5 @@
 package src;
 
-import java.io.File;
-import java.io.IOException;
 import java.awt.Polygon;
 import java.awt.Color;
 import java.awt.Image;
@@ -16,13 +14,10 @@ import javax.swing.JPanel;
 
 public class TileView extends JPanel{
 
-    private static final String imgPath = "data/img/"; //Need a better fix for this!
     private int positionx;
     private int positiony;
     private Polygon area;
     private Tile tile;
-    private BufferedImage normal;
-    private BufferedImage fogged;
 
     /**
      * x and y in this case is pixels away from 
@@ -40,12 +35,6 @@ public class TileView extends JPanel{
 
         setBounds(x, y, 175, 175);
         setOpaque(false);
-        try{
-            normal = ImageIO.read(new File(imgPath + tile.getTerrain().getTileImage()));
-            fogged = ImageIO.read(new File(imgPath + tile.getTerrain().getFogImage()));
-        }catch(IOException e){
-            System.out.println(e);
-        }
     }
 
     public int getTilePositionx(){
@@ -64,13 +53,11 @@ public class TileView extends JPanel{
         super.paintComponent(g);
         Image terrain;
         area.translate(-positionx, -positiony);
-        if(!tile.hasFog()){
-            if(tile.isExplored()){
-                // Tile is being seen by a unit
-                terrain = normal;
+        if(tile.isExplored()){
+            if(tile.hasFog()){
+                terrain = tile.getTileFogImg();
             }else{
-                // Tile is no longer being watched, so paint the foggy tile.
-                terrain = fogged;
+                terrain = tile.getTileImg();
             }
 
             g.drawImage(terrain, 0, 0, this);
@@ -81,6 +68,7 @@ public class TileView extends JPanel{
                 g2.setStroke(new BasicStroke(3));
                 g2.drawPolygon(area);
             }
+
             if(tile.isHilighted()){
                 g.setColor(new Color(240, 200, 50, 120));
                 g.fillPolygon(area);
@@ -96,6 +84,7 @@ public class TileView extends JPanel{
                 int y = 150 - h;
                 g.drawImage(unitImg, x, y, this);
             }
+
         }else{
             //Tile is in total fog so lets just paint it black
             g.setColor(Color.BLACK);

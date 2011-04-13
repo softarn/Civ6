@@ -10,7 +10,7 @@ import static src.State.TileState.Selected;
 import static src.State.TileState.UnSelected;
 
 public class Tile {
-    private boolean selected, hilight, explored, fog, plain;
+    private boolean selected, hilight, explored, plain;
     private static final String imgPath = "data/img/"; //Need a better fix for this!
 
     private int countToFog;
@@ -39,7 +39,6 @@ public class Tile {
         hilight = false;
         selected = false;
         explored = false;
-        fog = true;
         countToFog = 0;
         view = new TileView(((x - y)*120)+120, ((x + y)*68), this);
     }
@@ -107,6 +106,14 @@ public class Tile {
     public BufferedImage getUnitImg(){
         return unitImg;
     }
+    
+    public BufferedImage getTileImg(){
+        return terrain.getNormalImage();
+    }
+
+    public BufferedImage getTileFogImg(){
+        return terrain.getFogImage();
+    }
 
     public TileView getView(){
         return view;
@@ -128,11 +135,16 @@ public class Tile {
         return hilight;
     }
 
+    public void setExplored(boolean bool){
+        countToFog = 40;
+        explored = bool;
+    }
+
     public boolean isExplored(){
-        return true; //explored;
+        return explored;
     }
 
     public boolean hasFog(){
-        return false; //fog;
+        return countToFog == 0;
     }
 }
