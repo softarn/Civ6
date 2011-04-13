@@ -14,8 +14,8 @@ public enum TerrainType {
         Tundra("Tundra",     15, 0),
         Rainforest("Rainforest", 15, 50),
         Conifer("Conifer",    25, 75),
-        Broadleaf("Broadleaf",  25, 75), 
         Hills("Hills",      25, 100), */
+        Broadleaf("Broadleaf",  25, 75), 
         Desert("Desert",     10, 0),
         Mountain("Mountain",   20, 200);
 

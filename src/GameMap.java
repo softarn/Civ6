@@ -5,13 +5,21 @@ import java.util.ArrayList;
 public class GameMap{
     private Tile currentTile = null;
     private Tile[][] tiles = {
-            {new Tile(TerrainType.Mountain, 0, 0), new Tile(TerrainType.Mountain, 0, 1), new Tile(TerrainType.Mountain, 0, 2)},
+            {new Tile(TerrainType.Broadleaf, 0, 0), new Tile(TerrainType.Mountain, 0, 1), new Tile(TerrainType.Mountain, 0, 2)},
             {new Tile(TerrainType.Mountain, 1, 0), new Tile(TerrainType.Desert, new PhysicalUnit(PhysicalUnitType.Musketeer), 1, 1), new Tile(TerrainType.Mountain, 1, 2)},
             {new Tile(TerrainType.Mountain, 2, 0), new Tile(TerrainType.Desert, 2, 1), new Tile(TerrainType.Mountain, 2, 2)},
     };
     private static GameMap map;
     private GameMapView gmv;
     private int height = 3, width = 3;
+
+    private int[][] offsets = {{-1,-1},
+                            {0,-1},
+                            {1,0},
+                            {1,1},
+                            {0,1},
+                            {-1,0}};
+
 
     public GameMap(GameMapView gmv){
         super();
@@ -41,7 +49,8 @@ public class GameMap{
      * Get a specific tile from the array.
      */
     public Tile getTile(int x, int y){
-        if(x < getWidth() || y < getHeight()){
+        if(x > getWidth() || y > getHeight() ||
+                x < 0 || y < 0){
             return null;
         } 
         return tiles[x][y];
@@ -88,14 +97,15 @@ public class GameMap{
         int y = tile.getY();
 
         ArrayList<Tile> acc = new ArrayList<Tile>();
-        acc.add(tiles[x-1][y-1]);
-        acc.add(tiles[x][y-1]);
-        acc.add(tiles[x+1][y]);
-        acc.add(tiles[x+1][y+1]);
-        acc.add(tiles[x][y+1]);
-        acc.add(tiles[x-1][y]);
 
-        return getNeighbours(tile, --range, acc);
+        for(int[] off : offsets){
+            Tile t = getTile(x - off[0], y - off[1]);
+            if(t != null)
+                acc.add(t);
+        }
+
+        return acc;
+        //return getNeighbours(tile, --range, acc);
     }
 
     /**

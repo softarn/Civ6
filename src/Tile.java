@@ -32,13 +32,13 @@ public class Tile {
         this.x = x;
         this.y = y;
 
-        setUnit(pu);
-
         hilight = false;
         selected = false;
         explored = false;
         countToFog = 0;
         view = new TileView(((x - y)*120)+120, ((x + y)*68), this);
+
+        setUnit(pu);
     }
 
     public int getX(){
@@ -82,7 +82,13 @@ public class Tile {
         return selected;
     }
 
+    //This function must be edited 
     public void setUnit(PhysicalUnit pu){
+        if(pu != null){
+           setExplored(true);
+        }else{
+            countToFog = 0;
+        }
         unit = pu;
     }
 
@@ -126,8 +132,9 @@ public class Tile {
         return hilight;
     }
 
+    //Must be edited later
     public void setExplored(boolean bool){
-        countToFog = 40;
+        countToFog = 1;
         explored = bool;
     }
 

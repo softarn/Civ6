@@ -1,5 +1,7 @@
 package src;
 
+import java.awt.image.BufferedImage;
+
 public class PhysicalUnit implements Comparable<PhysicalUnit>{
     private static int count = 0;
     private int idNumber;
