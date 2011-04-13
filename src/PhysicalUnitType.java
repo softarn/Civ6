@@ -1,5 +1,10 @@
 package src;
 
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
+import java.io.File;
+import java.io.IOException;
+
 public enum PhysicalUnitType {
     Musketeer("Musketeer", 100, 2, 2, 3, 2, 1); 
 
@@ -10,8 +15,9 @@ public enum PhysicalUnitType {
     private int hitPoint;
     private int range;
     private int movementPoint;
+    private BufferedImage unitImg;
 
-    private final String imgFile;
+    private static final String imgPath = "data/img/"; //Need a better fix for this!
 
     private PhysicalUnitType(String name, 
             int maxManpower,
@@ -26,7 +32,12 @@ public enum PhysicalUnitType {
         this.defence = defence;
         this.hitPoint = hitPoint;
         this.range = range;
-        imgFile = name + ".png"; 
+
+        try{
+            unitImg = ImageIO.read(new File(imgPath + name + ".png"));
+        }catch(IOException e){
+            System.out.println(e);
+        }
     }
 
     public String getName(){
@@ -53,8 +64,8 @@ public enum PhysicalUnitType {
         return range;
     }
 
-    public String getUnitImage(){
-        return imgFile;
+    public BufferedImage getImage(){
+        return unitImg;
     }
 
     /**

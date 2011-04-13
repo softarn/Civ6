@@ -44,6 +44,10 @@ public class PhysicalUnit implements Comparable<PhysicalUnit>{
         return false;
     }
 
+    public BufferedImage getImage(){
+        return type.getImage();
+    }
+
     /**
      * Used for comparing one unit to another, 
      * to find out if you could win, draw or lose 

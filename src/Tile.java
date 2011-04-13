@@ -11,7 +11,6 @@ import static src.State.TileState.UnSelected;
 
 public class Tile {
     private boolean selected, hilight, explored, plain;
-    private static final String imgPath = "data/img/"; //Need a better fix for this!
 
     private int countToFog;
     private int x, y;
@@ -19,7 +18,6 @@ public class Tile {
     private TerrainType terrain;
     private PhysicalUnit unit;
     private TileView view;
-    private BufferedImage unitImg;
 
     public Tile(TerrainType tt, PhysicalUnit pu, int x, int y){
         init(tt, pu, x, y);
@@ -85,13 +83,6 @@ public class Tile {
     }
 
     public void setUnit(PhysicalUnit pu){
-        if(pu != null){
-            try{
-                unitImg = ImageIO.read(new File(imgPath + pu.getType().getUnitImage()));
-            }catch(IOException e){
-                System.out.println(e);
-            }
-        }
         unit = pu;
     }
 
@@ -104,7 +95,7 @@ public class Tile {
     }
 
     public BufferedImage getUnitImg(){
-        return unitImg;
+        return unit.getImage();
     }
     
     public BufferedImage getTileImg(){
