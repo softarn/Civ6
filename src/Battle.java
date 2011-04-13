@@ -3,32 +3,34 @@ package src;
 import java.util.Random;
 
 public class Battle{
-/*
-	public static int doBattle(PhysicalUnitType u1, PhysicalUnitType u2, TerrainType t1, TerrainType t2) {
+	public static int doBattle(PhysicalUnit u1, PhysicalUnit u2, TerrainType t1, TerrainType t2) {
 		
 		int winnerId=0;
 		
 		// Get variables from object u1 (attacking) and U2 (defending) 
-		String name1=u1.getName();
-		String name2=u2.getName();
+        PhysicalUnitType ut1 = u1.getType();
+        PhysicalUnitType ut2 = u2.getType();
 		
-		int defence1 = u1. getDefence(); 
-		int defence2 = u2.getDefence();
+		String name1=ut1.getName();
+		String name2=ut2.getName();
+
+		int defence1 = ut1.getDefence(); 
+		int defence2 = ut2.getDefence();
 		
-		int attack1 = u1.getAttack();
-		int attack2 = u2.getAttack();
+		int attack1 = ut1.getAttack();
+		int attack2 = ut2.getAttack();
 		
-		int range1 = u1.getRange();
-		int range2=u2.getRange();
+		int range1 = ut1.getRange();
+		int range2 = ut2.getRange();
 		
-		int movementPoints1=u1.getMovementPoints();
-		int movementPoints2=u2.getMovementPoints();
+		int movementPoint1=u1.getCurrentMovementPoint();
+		int movementPoint2=u2.getCurrentMovementPoint();
 		
-		int hitPoints1 = u1.getHitpoints();
-		int hitPoints2 = u1.getHitpoints();
+		int hitPoints1 = ut1.getHitPoints();
+		int hitPoints2 = ut1.getHitPoints();
 		
-		int manPower1 = u1.getManpower();
-		int manPower2 = u2.getManpower();
+		int manPower1 = u1.getManPower();
+		int manPower2 = u2.getManPower();
 		
 		
 		int attackBonus=t1.getAttackBonus();
@@ -41,13 +43,13 @@ public class Battle{
 		
 		for (int i = 0; i <= randomCharge; i++) { 
 			int randomNumber1=randomizer.nextInt(attack1*hitPoints1*attackBonus);
-			int randomNumber2= randomizer.nextInt(defence1*hitPoints2*defenceBonus);
+			int randomNumber2= randomizer.nextInt(defence2*hitPoints2*defenceBonus);
 		
 			manPower1-=randomNumber2;
 			manPower2-=randomNumber1;
 			
-			System.out.println(manPower1);
-			System.out.println(manPower2);
+            u1.setManPower(manPower1);
+            u2.setManPower(manPower2);
 			
 			if (manPower1<1 || manPower2<1){
 				break;
@@ -67,19 +69,6 @@ public class Battle{
 		return winnerId;
 		
 	}
-	
-	public static void main(String [] args) {
-		
-		PhysicalUnitType p1 = new PhysicalUnitType("Marcus", 2,1,1,1,2,100);
-		PhysicalUnitType p2 = new PhysicalUnitType("Jesper", 2,2,1,3,2,100);	
-		
-		
-		TerrainType t2 = TerrainType.getInstance(3);
-		System.out.println(doBattle(p1,p2,t2));
-		
-		
-	}
-*/	
 }
 
 

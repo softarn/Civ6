@@ -4,7 +4,7 @@ public enum PhysicalUnitType {
     Musketeer("Musketeer", 100, 2, 2, 3, 2, 1); 
 
     private String name;
-    private int maxManpower;
+    private int maxManPower;
     private int defence;
     private int attack;
     private int hitPoint;
@@ -14,14 +14,14 @@ public enum PhysicalUnitType {
     private final String imgFile;
 
     private PhysicalUnitType(String name, 
-            int maxManpower,
+            int maxManPower,
             int attack,
             int defence,
             int hitPoint,
             int range,
             int movementPoints){
         this.name = name;
-        this.maxManpower = maxManpower;
+        this.maxManPower = maxManPower;
         this.attack = attack;
         this.defence = defence;
         this.hitPoint = hitPoint;
@@ -43,12 +43,16 @@ public enum PhysicalUnitType {
         return defence;
     }
 
+    public int getHitPoints(){
+        return hitPoint;
+    }
+
     public int getMovementPoint(){
         return movementPoint;
     }
 
-    public int getMaxManpower(){
-        return maxManpower;
+    public int getMaxManPower(){
+        return maxManPower;
     }
 
     public int getRange(){

@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
+import java.lang.Math;
 
 import static src.State.TileState.Selected;
 import static src.State.TileState.UnSelected;
@@ -33,13 +34,7 @@ public class Tile {
         this.x = x;
         this.y = y;
 
-        if(pu != null){
-            try{
-                unitImg = ImageIO.read(new File(imgPath + pu.getType().getUnitImage()));
-            }catch(IOException e){
-                System.out.println(e);
-            }
-        }
+        setUnit(pu);
 
         hilight = false;
         selected = false;
@@ -47,6 +42,14 @@ public class Tile {
         fog = true;
         countToFog = 0;
         view = new TileView(((x - y)*120)+120, ((x + y)*68), this);
+    }
+
+    public int getX(){
+        return x;
+    }
+
+    public int getY(){
+        return y;
     }
 
     public void select(){
@@ -83,6 +86,13 @@ public class Tile {
     }
 
     public void setUnit(PhysicalUnit pu){
+        if(pu != null){
+            try{
+                unitImg = ImageIO.read(new File(imgPath + pu.getType().getUnitImage()));
+            }catch(IOException e){
+                System.out.println(e);
+            }
+        }
         unit = pu;
     }
 

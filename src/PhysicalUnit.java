@@ -3,7 +3,7 @@ package src;
 public class PhysicalUnit implements Comparable<PhysicalUnit>{
     private static int count = 0;
     private int idNumber;
-    private int manpower;
+    private int manPower;
     private int currentMovementPoint;
     //private City city = null;
 
@@ -11,7 +11,7 @@ public class PhysicalUnit implements Comparable<PhysicalUnit>{
 
     public PhysicalUnit(PhysicalUnitType type){
         this.idNumber = ++count;
-        this.manpower = type.getMaxManpower();
+        this.manPower = type.getMaxManPower();
         this.currentMovementPoint = type.getMovementPoint();
         this.type = type;
     }
@@ -24,8 +24,12 @@ public class PhysicalUnit implements Comparable<PhysicalUnit>{
         return type;
     }
 
-    public int getManpower(){
-        return manpower;
+    public int getManPower(){
+        return manPower;
+    }
+
+    public void setManPower(int manPower){
+        manPower = manPower;
     }
 
     public int getCurrentMovementPoint(){
@@ -54,8 +58,8 @@ public class PhysicalUnit implements Comparable<PhysicalUnit>{
      * @return Negative for a loss, 0 for a tie and positive for a win.
      */
     public int compareTo(PhysicalUnit other){
-        int attacking = this.type.getAttack() - other.type.getDefence() - other.manpower;
-        int defending = this.manpower - other.type.getAttack() + this.type.getDefence();
+        int attacking = this.type.getAttack() - other.type.getDefence() - other.manPower;
+        int defending = this.manPower - other.type.getAttack() + this.type.getDefence();
         return attacking - defending;
     }
 
