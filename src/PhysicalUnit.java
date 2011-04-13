@@ -29,7 +29,7 @@ public class PhysicalUnit implements Comparable<PhysicalUnit>{
     }
 
     public void setManPower(int manPower){
-        manPower = manPower;
+        this.manPower = manPower;
     }
 
     public int getCurrentMovementPoint(){

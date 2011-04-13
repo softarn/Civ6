@@ -69,7 +69,7 @@ public class State extends Observable{
 
     //ActionsState
     public enum ActionState{
-        None, Move 
+        None, Move, Attack
     }
 
     public ActionState getActionState(){
