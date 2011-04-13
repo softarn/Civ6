@@ -6,9 +6,13 @@ import java.awt.Color;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseEvent;
 
+import static src.State.ActionState.Move;
+import static src.State.ActionState.None;
+
 public class GameMapView extends JPanel{
 
     private GameMap gm;
+    private State state = State.getInstance();
 
     public GameMapView(){
         super();
@@ -40,7 +44,12 @@ public class GameMapView extends JPanel{
             System.out.println("Printing hexagon at x"+ tile.getView().getTilePositionx()+
                     " y"+tile.getView().getTilePositiony());
             if(tile != null){
-                tile.select();
+                if(state.getActionState() == Move){
+                    src.Move.makeMove(state.getSelectedTile(), tile);
+                    state.setActionState(None);
+                }
+
+                tile.select(); 
             }
         }
     }

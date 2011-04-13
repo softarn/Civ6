@@ -34,13 +34,7 @@ public class Tile {
         this.x = x;
         this.y = y;
 
-        if(pu != null){
-            try{
-                unitImg = ImageIO.read(new File(imgPath + pu.getType().getUnitImage()));
-            }catch(IOException e){
-                System.out.println(e);
-            }
-        }
+        setUnit(pu);
 
         hilight = false;
         selected = false;
@@ -48,25 +42,6 @@ public class Tile {
         fog = true;
         countToFog = 0;
         view = new TileView(((x - y)*120)+120, ((x + y)*68), this);
-    }
-
-    public static int calcDist(Tile t1, Tile t2){
-        int x1 = t1.getX();
-        int x2 = t2.getX();
-
-        int y1 = t1.getY();
-        int y2 = t2.getY();
-
-        System.out.println("x1: " +x1+ "y1: "+y1);
-/*
-        if(x1 > x2)
-            return Tile.calcDist(t2, t1);
-        else if(y2>=y1)
-            return x2-x1 + y2-y1;
-        else
-            return Math.max(x2-x1, y1-y2);
-            */
-        return Math.max(Math.max(Math.abs(x1-x2), Math.abs(y1-y2)), Math.abs(Math.abs(x1-x2) + Math.abs(y1-y2)));
     }
 
     public int getX(){
@@ -111,6 +86,13 @@ public class Tile {
     }
 
     public void setUnit(PhysicalUnit pu){
+        if(pu != null){
+            try{
+                unitImg = ImageIO.read(new File(imgPath + pu.getType().getUnitImage()));
+            }catch(IOException e){
+                System.out.println(e);
+            }
+        }
         unit = pu;
     }
 

@@ -78,8 +78,46 @@ public class GameMap{
         return height;
     }
 
-    public Tile[] getNeighbours(Tile tile, int range){
-        return new Tile[0];
+    /**
+     * Get all neighbours to a tile in an ArrayList(Not finished yet!)
+     * @param tile Neighbours to this tile will be returned
+     * @param range Neighbours in this range will be returned
+     */
+    public ArrayList<Tile> getNeighbours(Tile tile, int range){
+        int x = tile.getX();
+        int y = tile.getY();
+
+        ArrayList<Tile> acc = new ArrayList<Tile>();
+        acc.add(tiles[x-1][y-1]);
+        acc.add(tiles[x][y-1]);
+        acc.add(tiles[x+1][y]);
+        acc.add(tiles[x+1][y+1]);
+        acc.add(tiles[x][y+1]);
+        acc.add(tiles[x-1][y]);
+
+        return getNeighbours(tile, --range, acc);
+    }
+
+    /**
+     * Not finished yet!
+     */
+    private ArrayList<Tile> getNeighbours(Tile tile, int range, ArrayList<Tile> acc){
+        if(range < 1){
+            acc.remove(tile);
+            return acc;
+        }
+
+        ArrayList<Tile> tmp = new ArrayList<Tile>();
+
+        for(Tile t : acc){
+            for(Tile t2 : getNeighbours(t,1)){
+                if(!acc.contains(t2))
+                    tmp.add(t2);
+            }
+        }
+
+        acc.addAll(tmp);
+        return getNeighbours(tile, --range, acc);            
     }
 
     public int getDistance(Tile a, Tile b){
