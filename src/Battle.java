@@ -3,8 +3,8 @@ package src;
 import java.util.Random;
 
 public class Battle{
-
-	public static int doBattle(PhysicalUnitType u1, PhysicalUnitType u2, TerrainType t1) {
+/*
+	public static int doBattle(PhysicalUnitType u1, PhysicalUnitType u2, TerrainType t1, TerrainType t2) {
 		
 		int winnerId=0;
 		
@@ -24,14 +24,15 @@ public class Battle{
 		int movementPoints1=u1.getMovementPoints();
 		int movementPoints2=u2.getMovementPoints();
 		
-		int maxHitPoints1 = u1.getMaxHitpoints();
-		int maxHitPoints2 = u1.getMaxHitpoints();
+		int hitPoints1 = u1.getHitpoints();
+		int hitPoints2 = u1.getHitpoints();
 		
 		int manPower1 = u1.getManpower();
 		int manPower2 = u2.getManpower();
 		
 		
 		int attackBonus=t1.getAttackBonus();
+		int defenceBonus=t2.getDefenceBonus();
 		
 		
 		// Attacking object losing manpower randomNumber2 and defending losing randomNumber1 / ProgMeistro JesperB
@@ -39,8 +40,8 @@ public class Battle{
 		int randomCharge = randomizer.nextInt(8)+1;
 		
 		for (int i = 0; i <= randomCharge; i++) { 
-			int randomNumber1=randomizer.nextInt(attack1*maxHitPoints1*attackBonus);
-			int randomNumber2= randomizer.nextInt(defence1*maxHitPoints2*attackBonus);
+			int randomNumber1=randomizer.nextInt(attack1*hitPoints1*attackBonus);
+			int randomNumber2= randomizer.nextInt(defence1*hitPoints2*defenceBonus);
 		
 			manPower1-=randomNumber2;
 			manPower2-=randomNumber1;
@@ -78,7 +79,7 @@ public class Battle{
 		
 		
 	}
-	
+*/	
 }
 
 

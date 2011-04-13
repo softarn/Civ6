@@ -32,18 +32,16 @@ public enum TerrainType {
         return tilefile;
     }
 
-<<<<<<< HEAD
-        public String getFogImage(){
-                return fogfile;
-        }
-	
 	public int getAttackBonus() {
 		return attackBonus;
 	}
-=======
+
+	public int getDefenceBonus() {
+		return attackBonus;
+	}
+
     public String getFogImage(){
         return fogfile;
     }
->>>>>>> 1183b659a249b59f670fced16f12b4dfd4776436
 
 }
