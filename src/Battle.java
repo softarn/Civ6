@@ -3,7 +3,7 @@ package src;
 import java.util.Random;
 
 public class Battle{
-
+/*
 	public static int doBattle(PhysicalUnitType u1, PhysicalUnitType u2, TerrainType t1) {
 		
 		int winnerId=0;
@@ -66,7 +66,6 @@ public class Battle{
 		return winnerId;
 		
 	}
-	
 	public static void main(String [] args) {
 		
 		PhysicalUnitType p1 = new PhysicalUnitType("Marcus", 2,1,1,1,2,100);
@@ -77,7 +76,7 @@ public class Battle{
 		System.out.println(doBattle(p1,p2,t2));
 		
 		
-	}
+	}*/
 	
 }
 

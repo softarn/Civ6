@@ -1,15 +1,3 @@
-<<<<<<< HEAD
-public class PhysicalUnitType implements Comparable<PhysicalUnitType>{
-  private String name;
-  private int range;
-  private int maxHitpoints;
-  private int defence;
-  private int attack;
-  private int movementPoints;
-  private int manpower;
-	
-  public PhysicalUnitType(String name, int attack, int defence, int movementPoints, int maxHitpoints, int range, int manpower){
-=======
 package src;
 
 public enum PhysicalUnitType {
@@ -32,20 +20,12 @@ public enum PhysicalUnitType {
             int hitPoint,
             int range,
             int movementPoints){
->>>>>>> b181f8331d237fa17415f4ca2fd0d4942618b42b
         this.name = name;
         this.maxManpower = maxManpower;
         this.attack = attack;
         this.defence = defence;
         this.hitPoint = hitPoint;
         this.range = range;
-<<<<<<< HEAD
-	this.manpower = manpower;  
-  }
-=======
-        this.movementPoint = movementPoint;
->>>>>>> b181f8331d237fa17415f4ca2fd0d4942618b42b
-
         imgFile = name + ".png"; 
     }
 
@@ -69,19 +49,9 @@ public enum PhysicalUnitType {
         return maxManpower;
     }
 
-<<<<<<< HEAD
-  public int getRange(){
-    return range;
-  }
-  
-  public int getManpower() {
-	  return manpower;
-  }
-=======
     public int getRange(){
         return range;
     }
->>>>>>> b181f8331d237fa17415f4ca2fd0d4942618b42b
 
     public String getUnitImage(){
         return imgFile;
