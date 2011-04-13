@@ -8,6 +8,7 @@ import java.awt.event.MouseEvent;
 
 import static src.State.ActionState.Move;
 import static src.State.ActionState.None;
+import static src.State.UnitState.Selected;
 
 public class GameMapView extends JPanel{
 
@@ -44,11 +45,25 @@ public class GameMapView extends JPanel{
             System.out.println("Printing hexagon at x"+ tile.getView().getTilePositionx()+
                     " y"+tile.getView().getTilePositiony());
             if(tile != null){
-                if(state.getActionState() == Move){
-                    src.Move.makeMove(state.getSelectedTile(), tile);
-                    state.setActionState(None);
+                switch(state.getActionState()){
+                    case Move:
+                        src.Move.makeMove(state.getSelectedTile(), tile);
+                        state.setActionState(None);
+                        break;
+                    case Attack:
+                        if(state.getUnitState() == Selected && tile.hasUnit()){
+                            System.out.println(state.getSelectedUnit().getManPower() + " and " + 
+                                    tile.getUnit().getManPower());
+                            System.out.println(Battle.doBattle(state.getSelectedUnit(), tile.getUnit(), 
+                                    state.getSelectedTile(), tile));
+                            state.setActionState(None);
+                            tile = state.getSelectedTile();
+                        }
+                        else{
+                            System.out.println("No unit to attack here.");
+                        }
+                        break;
                 }
-
                 tile.select(); 
             }
         }

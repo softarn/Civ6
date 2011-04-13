@@ -9,7 +9,7 @@ public enum PhysicalUnitType {
     Musketeer("Musketeer", 100, 2, 2, 3, 2, 1); 
 
     private String name;
-    private int maxManpower;
+    private int maxManPower;
     private int defence;
     private int attack;
     private int hitPoint;
@@ -20,14 +20,14 @@ public enum PhysicalUnitType {
     private static final String imgPath = "data/img/"; //Need a better fix for this!
 
     private PhysicalUnitType(String name, 
-            int maxManpower,
+            int maxManPower,
             int attack,
             int defence,
             int hitPoint,
             int range,
             int movementPoints){
         this.name = name;
-        this.maxManpower = maxManpower;
+        this.maxManPower = maxManPower;
         this.attack = attack;
         this.defence = defence;
         this.hitPoint = hitPoint;
@@ -52,12 +52,16 @@ public enum PhysicalUnitType {
         return defence;
     }
 
+    public int getHitPoints(){
+        return hitPoint;
+    }
+
     public int getMovementPoint(){
         return movementPoint;
     }
 
-    public int getMaxManpower(){
-        return maxManpower;
+    public int getMaxManPower(){
+        return maxManPower;
     }
 
     public int getRange(){
@@ -75,11 +79,11 @@ public enum PhysicalUnitType {
      * @param other The other unittype.
      *
      * @return 
-    public int compareTo(PhysicalUnitType other){
-        int attacking = this.attack - other.defence;
-        int defending = other.attack - this.defence;
-        return attacking - defending;
-    }
+     public int compareTo(PhysicalUnitType other){
+     int attacking = this.attack - other.defence;
+     int defending = other.attack - this.defence;
+     return attacking - defending;
+     }
 
     /**
      * If the unittype names are equal the unittypes are the same
@@ -88,11 +92,11 @@ public enum PhysicalUnitType {
      * @param other Another PhysicalUnitType to compare to.
      *
      * @return True if this name is equal to other's name
-    public boolean equals(Object other){
-        if(other instanceof PhysicalUnitType){
-            return this.name.equals(((PhysicalUnitType)other).name);
-        }
-        return false;
-    }
+     public boolean equals(Object other){
+     if(other instanceof PhysicalUnitType){
+     return this.name.equals(((PhysicalUnitType)other).name);
+     }
+     return false;
+     }
      */
 }

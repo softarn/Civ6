@@ -52,4 +52,12 @@ public enum TerrainType {
         return fogImg;
     }
 
+	public int getAttackBonus() {
+		return attackBonus;
+	}
+
+	public int getDefenceBonus() {
+		return attackBonus;
+	}
+
 }

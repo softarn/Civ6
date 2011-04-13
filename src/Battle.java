@@ -1,37 +1,44 @@
 package src;
 
 import java.util.Random;
+import static src.State.UnitState.UnSelected;
 
 public class Battle{
-/*
-	public static int doBattle(PhysicalUnitType u1, PhysicalUnitType u2, TerrainType t1) {
+    private static State state = State.getInstance();
+	public static int doBattle(PhysicalUnit u1, PhysicalUnit u2, Tile t1, Tile t2) {
 		
 		int winnerId=0;
 		
 		// Get variables from object u1 (attacking) and U2 (defending) 
-		String name1=u1.getName();
-		String name2=u2.getName();
+        PhysicalUnitType ut1 = u1.getType();
+        PhysicalUnitType ut2 = u2.getType();
+        TerrainType tt1 = t1.getTerrain();
+        TerrainType tt2 = t2.getTerrain();
 		
-		int defence1 = u1. getDefence(); 
-		int defence2 = u2.getDefence();
+		String name1=ut1.getName();
+		String name2=ut2.getName();
+
+		int defence1 = ut1.getDefence(); 
+		int defence2 = ut2.getDefence();
 		
-		int attack1 = u1.getAttack();
-		int attack2 = u2.getAttack();
+		int attack1 = ut1.getAttack();
+		int attack2 = ut2.getAttack();
 		
-		int range1 = u1.getRange();
-		int range2=u2.getRange();
+		int range1 = ut1.getRange();
+		int range2 = ut2.getRange();
 		
-		int movementPoints1=u1.getMovementPoints();
-		int movementPoints2=u2.getMovementPoints();
+		int movementPoint1=u1.getCurrentMovementPoint();
+		int movementPoint2=u2.getCurrentMovementPoint();
 		
-		int maxHitPoints1 = u1.getMaxHitpoints();
-		int maxHitPoints2 = u1.getMaxHitpoints();
+		int hitPoints1 = ut1.getHitPoints();
+		int hitPoints2 = ut1.getHitPoints();
 		
-		int manPower1 = u1.getManpower();
-		int manPower2 = u2.getManpower();
+		int manPower1 = u1.getManPower();
+		int manPower2 = u2.getManPower();
 		
 		
-		int attackBonus=t1.getAttackBonus();
+		int attackBonus=tt1.getAttackBonus();
+		int defenceBonus=tt2.getDefenceBonus();
 		
 		
 		// Attacking object losing manpower randomNumber2 and defending losing randomNumber1 / ProgMeistro JesperB
@@ -39,23 +46,31 @@ public class Battle{
 		int randomCharge = randomizer.nextInt(8)+1;
 		
 		for (int i = 0; i <= randomCharge; i++) { 
-			int randomNumber1=randomizer.nextInt(attack1*maxHitPoints1*attackBonus);
-			int randomNumber2= randomizer.nextInt(defence1*maxHitPoints2*attackBonus);
+			int randomNumber1=randomizer.nextInt((int)(attack1*hitPoints1*(1+attackBonus*0.01)));
+			int randomNumber2= randomizer.nextInt((int)(defence2*hitPoints2*(1+defenceBonus*0.01)));
 		
 			manPower1-=randomNumber2;
 			manPower2-=randomNumber1;
 			
-			System.out.println(manPower1);
-			System.out.println(manPower2);
+            System.out.println(manPower1);
+            System.out.println(manPower2);
+            u1.setManPower(manPower1);
+            u2.setManPower(manPower2);
 			
-			if (manPower1<1 || manPower2<1){
+			if (manPower1<1 && manPower2<1){
+                state.setUnitState(UnSelected);
+                t1.setUnit(null);
+                t2.setUnit(null);
 				break;
 			}
 			else if (manPower1<=0) {
+                t1.setUnit(null);
+                state.setUnitState(UnSelected);
 				winnerId=1;
 				break;
 			}
 			else if (manPower2<=0){
+                t2.setUnit(null);
 				winnerId=-1;
 				break;
 			}
@@ -66,18 +81,6 @@ public class Battle{
 		return winnerId;
 		
 	}
-	public static void main(String [] args) {
-		
-		PhysicalUnitType p1 = new PhysicalUnitType("Marcus", 2,1,1,1,2,100);
-		PhysicalUnitType p2 = new PhysicalUnitType("Jesper", 2,2,1,3,2,100);	
-		
-		
-		TerrainType t2 = TerrainType.getInstance(3);
-		System.out.println(doBattle(p1,p2,t2));
-		
-		
-	}*/
-	
 }
 
 
