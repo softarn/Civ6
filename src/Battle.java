@@ -1,8 +1,6 @@
-<<<<<<< HEAD
-import java.util.Random;
-=======
 package src;
->>>>>>> b181f8331d237fa17415f4ca2fd0d4942618b42b
+
+import java.util.Random;
 
 public class Battle{
 
@@ -85,16 +83,3 @@ public class Battle{
 
 
 
-
-
-
-
-
-
-
-
-
-<<<<<<< HEAD
-=======
-}
->>>>>>> b181f8331d237fa17415f4ca2fd0d4942618b42b
