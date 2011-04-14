@@ -68,28 +68,27 @@ public class TileView extends JPanel{
                 g2.setStroke(new BasicStroke(3));
                 g2.drawPolygon(area);
             }
-
-            if(tile.isHilighted()){
-                g.setColor(new Color(240, 200, 50, 120));
-                g.fillPolygon(area);
-            }
-
-            if(tile.hasUnit()){
-                BufferedImage unitImg = tile.getUnitImg();
-
-                int h = unitImg.getTileHeight();
-                int w = unitImg.getTileWidth();
-
-                int x = (w/2) + 20;
-                int y = 150 - h;
-                g.drawImage(unitImg, x, y, this);
-            }
-
         }else{
             //Tile is in total fog so lets just paint it black
             g.setColor(Color.BLACK);
             g.fillPolygon(area);
         }
+        if(tile.isHilighted()){
+            g.setColor(new Color(240, 200, 50, 120));
+            g.fillPolygon(area);
+        }
+
+        if(tile.hasUnit() && !tile.hasFog()){
+            BufferedImage unitImg = tile.getUnitImg();
+
+            int h = unitImg.getTileHeight();
+            int w = unitImg.getTileWidth();
+
+            int x = (w/2) + 20;
+            int y = 150 - h;
+            g.drawImage(unitImg, x, y, this);
+        }
+
         area.translate(positionx, positiony);
     }
 }
