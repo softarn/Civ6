@@ -23,12 +23,13 @@ public class Window extends JFrame{
 
     Window(int w,int h){
         Menu m = new Menu();
-        GameMapView gmv = new GameMapView();
+        ViewPort vp = new ViewPort();
+
         setLayout(new BorderLayout());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         add(m, BorderLayout.EAST);
-        add(gmv, BorderLayout.CENTER);
+        add(vp, BorderLayout.CENTER);
         setSize(w, h);
         setVisible(true);
     }
