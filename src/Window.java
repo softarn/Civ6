@@ -12,13 +12,6 @@ public class Window extends JFrame{
     //Only for testpurpose
     public static void main(String[] args){
         new Window(900,900);
-        State s = State.getInstance();
-
-/*        try{
-            Thread.sleep(2000);
-        }catch(Throwable t){}
-
-        s.setUnitState(Selected);*/
     }
 
     Window(int w,int h){
