@@ -2,16 +2,15 @@ package src;
 
 import java.util.ArrayList;
 
+import static src.State.UnitState.Selected;
+
 public class GameMap{
+    private static final State state = State.getInstance();
     private Tile currentTile = null;
-    private Tile[][] tiles = {
-            {new Tile(TerrainType.Mountain, new PhysicalUnit(PhysicalUnitType.Musketeer), 0, 0), new Tile(TerrainType.Mountain, 0, 1), new Tile(TerrainType.Mountain, 0, 2)},
-            {new Tile(TerrainType.Mountain, 1, 0), new Tile(TerrainType.Desert, new PhysicalUnit(PhysicalUnitType.Musketeer), 1, 1), new Tile(TerrainType.Mountain, 1, 2)},
-            {new Tile(TerrainType.Mountain, 2, 0), new Tile(TerrainType.Desert, 2, 1), new Tile(TerrainType.Mountain, 2, 2)},
-    };
+    private Tile[][] tiles;
     private static GameMap map;
     private GameMapView gmv;
-    private int height = 3, width = 3;
+    private int height = 3, width = 7;
 
     private int[][] offsets = {{-1,-1},
                             {0,-1},
@@ -23,10 +22,19 @@ public class GameMap{
 
     public GameMap(GameMapView gmv){
         super();
+        map = this;
 
         // Parsing the map
         parseMap("Put server map data here");
-
+        for(Tile[] temp : tiles){
+            for(Tile tile : temp){
+                if(tile.hasUnit()){ // Check if this unit is owned by the player too
+                    for(Tile t : getNeighbours(tile, 1)){
+                        t.setExplored(true);
+                    }
+                }
+            }
+        }
         this.gmv = gmv;
         // Put all TileViews on the GameMapView
         for(int j=getHeight()-1; j>=0; --j){
@@ -34,7 +42,6 @@ public class GameMap{
                 gmv.add(tiles[i][j].getView());
             }
         }
-        map = this;
     }
 
     /**
@@ -49,7 +56,7 @@ public class GameMap{
      * Get a specific tile from the array.
      */
     public Tile getTile(int x, int y){
-        if(x > getWidth() || y > getHeight() ||
+        if(x >= getWidth() || y >= getHeight() ||
                 x < 0 || y < 0){
             return null;
         } 
@@ -90,44 +97,17 @@ public class GameMap{
     /**
      * Get all neighbours to a tile in an ArrayList(Not finished yet!)
      * @param tile Neighbours to this tile will be returned
-     * @param range Neighbours in this range will be returned
+     * @param range Neighbours in this range will be returned.
      */
     public ArrayList<Tile> getNeighbours(Tile tile, int range){
-        int x = tile.getX();
-        int y = tile.getY();
-
-        ArrayList<Tile> acc = new ArrayList<Tile>();
-
-        for(int[] off : offsets){
-            Tile t = getTile(x - off[0], y - off[1]);
-            if(t != null)
-                acc.add(t);
-        }
-
-        return acc;
-        //return getNeighbours(tile, --range, acc);
-    }
-
-    /**
-     * Not finished yet!
-     */
-    private ArrayList<Tile> getNeighbours(Tile tile, int range, ArrayList<Tile> acc){
-        if(range < 1){
-            acc.remove(tile);
-            return acc;
-        }
-
-        ArrayList<Tile> tmp = new ArrayList<Tile>();
-
-        for(Tile t : acc){
-            for(Tile t2 : getNeighbours(t,1)){
-                if(!acc.contains(t2))
-                    tmp.add(t2);
+        ArrayList<Tile> result = new ArrayList<Tile>();
+        for(int[] t : tile.getNeighbours(range)){
+            Tile temp = getTile(t[0], t[1]);
+            if(temp != null){
+                result.add(temp);
             }
         }
-
-        acc.addAll(tmp);
-        return getNeighbours(tile, --range, acc);            
+        return result;
     }
 
     public int getDistance(Tile a, Tile b){
@@ -140,11 +120,15 @@ public class GameMap{
      * @param terrain Indata from the server interface.
      */
     public void parseMap(String terrain){
-        /*    tiles = {
-              {new Tile(null, 0, false, 0, 0), new Tile(null, 0, false, 0 , 1)},
-              {new Tile(null, 0, true, 1, 0), new Tile(null, 0, false, 1, 1)},
-              {new Tile(null, 0, true, 2, 0), new Tile(null, 0, false, 2, 1)}
-              };
-              */
+        Tile[][] temp = {
+            {new Tile(TerrainType.Mountain, new PhysicalUnit(PhysicalUnitType.Musketeer), 0, 0), new Tile(TerrainType.Mountain, 0, 1), new Tile(TerrainType.Mountain, 0, 2)},
+            {new Tile(TerrainType.Mountain, 1, 0), new Tile(TerrainType.Desert, new PhysicalUnit(PhysicalUnitType.Musketeer), 1, 1), new Tile(TerrainType.Mountain, 1, 2)},
+            {new Tile(TerrainType.Mountain, 2, 0), new Tile(TerrainType.Desert, 2, 1), new Tile(TerrainType.Sea, 2, 2)},
+            {new Tile(TerrainType.Marsh, 3, 0), new Tile(TerrainType.Plains, 3, 1), new Tile(TerrainType.Hills, 3, 2)},
+            {new Tile(TerrainType.Marsh, 4, 0), new Tile(TerrainType.Plains, 4, 1), new Tile(TerrainType.Plains, 4, 2)},
+            {new Tile(TerrainType.Hills, 5, 0), new Tile(TerrainType.Desert, 5, 1), new Tile(TerrainType.Grassland, 5, 2)},
+            {new Tile(TerrainType.Broadleaf, 6, 0), new Tile(TerrainType.Desert, 6, 1), new Tile(TerrainType.Marsh, 6, 2)},
+        };
+        tiles = temp;
     }
 }

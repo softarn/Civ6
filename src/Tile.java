@@ -5,6 +5,7 @@ import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
 import java.lang.Math;
+import java.util.ArrayList;
 
 import static src.State.TileState.Selected;
 import static src.State.TileState.UnSelected;
@@ -18,6 +19,13 @@ public class Tile {
     private TerrainType terrain;
     private PhysicalUnit unit;
     private TileView view;
+
+    private int[][] offsets = {{-1,-1},
+                            {0,-1},
+                            {1,0},
+                            {1,1},
+                            {0,1},
+                            {-1,0}};
 
     public Tile(TerrainType tt, PhysicalUnit pu, int x, int y){
         init(tt, pu, x, y);
@@ -36,7 +44,7 @@ public class Tile {
         selected = false;
         explored = false;
         countToFog = 0;
-        view = new TileView(((x - y)*120)+120, ((x + y)*68), this);
+        view = new TileView(((x - y)*120)+120*2, ((x + y)*68), this);
 
         setUnit(pu);
     }
@@ -85,7 +93,7 @@ public class Tile {
     //This function must be edited 
     public void setUnit(PhysicalUnit pu){
         if(pu != null){
-           setExplored(true);
+            setExplored(true);
         }else{
             countToFog = 0;
         }
@@ -145,4 +153,68 @@ public class Tile {
     public boolean hasFog(){
         return countToFog == 0;
     }
+
+    /**
+     * Get all neighbours to a tile in an ArrayList(Not finished yet!)
+     * @param tile Neighbours to this tile will be returned
+     * @param range Neighbours in this range will be returned.
+     */
+    public ArrayList<int[]> getNeighbours(int range){
+        if(range < 1){
+            return new ArrayList<int[]>();
+        }
+        int x = getX();
+        int y = getY();
+
+        ArrayList<int[]> acc = new ArrayList<int[]>();
+
+        for(int[] off : offsets){
+            int[] t = {x - off[0], y - off[1]}; //Tile t = getTile(x - off[0], y - off[1]);
+            if(t != null)
+                acc.add(t);
+        }
+        if(range > 1){
+            for(int[] off : offsets){
+                int[] t = {x - off[0], y - off[1]}; //Tile t = getTile(x - off[0], y - off[1]);
+                acc.addAll(getNeighbours(t, range - 1, acc));
+            }
+        }
+
+        return acc;
+    }
+
+    // Get neighbours within a range of 1 of the tile.
+    private ArrayList<int[]> getNeighbours(int[] tile){
+        ArrayList<int[]> tmp = new ArrayList<int[]>();
+        for(int[] off : offsets){
+            int[] t = {x - off[0], y - off[1]}; //Tile t = getTile(x - off[0], y - off[1]);
+            if(t != null)
+                tmp.add(t);
+        }
+        return tmp;
+    }
+
+    private ArrayList<int[]> getNeighbours(int[] tile, int range, ArrayList<int[]> acc){
+        if(range < 1){
+            return new ArrayList<int[]>();
+        }
+        int x = tile[0];
+        int y = tile[1];
+
+        ArrayList<int[]> tmp = new ArrayList<int[]>();
+
+        for(int[] t2 : getNeighbours(tile)){
+            if(!acc.contains(t2))
+                tmp.add(t2);
+        }
+        if(range > 1){
+            for(int[] off : offsets){
+                int[] t = {x - off[0], y - off[1]}; //Tile t = getTile(x - off[0], y - off[1]);
+                acc.addAll(getNeighbours(t, range - 1, acc));
+            }
+        }
+
+        return acc;            
+    }
+
 }
