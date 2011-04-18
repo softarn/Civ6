@@ -1,0 +1,26 @@
+<project name="civ6" default="compile">
+
+    <property name="output.dir" value="bin"/>
+    <property name="src.dir" value="src"/>
+
+    <target name="prepare">
+	<delete includeemptydirs="true" failonerror="false">
+	    <fileset dir="${output.dir}"/>
+	</delete>
+	<mkdir dir="bin"/>
+    </target>
+
+    <target name="compile" depends="prepare">
+	<javac srcdir="${src.dir}" destdir="bin/"/>
+    </target>
+
+    <target name="run">
+	<java fork="yes"
+	    classname="src.Window">
+	    <classpath>
+		<pathelement path="${java.class.path}"/>
+	    </classpath>
+	</java>
+    </target>
+
+</project>
