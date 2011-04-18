@@ -12,8 +12,11 @@ import static src.State.ActionState.Move;
 import static src.State.ActionState.None;
 import static src.State.UnitState.Selected;
 
-public class GameMapView extends JPanel{
+import static src.State.HoverState.HoverNone;
+import static src.State.HoverState.HoverTileOnly;   
 
+public class GameMapView extends JPanel{
+    
     private GameMap gm;
     private State state = State.getInstance();
 
@@ -50,7 +53,7 @@ public class GameMapView extends JPanel{
                 setBounds(tempX, tempY, getWidth(), getHeight());
             }
         }
-
+        
         public void mouseReleased(MouseEvent e){
             if(e.getButton() == MouseEvent.BUTTON3){
                 saveX = 0;
@@ -97,15 +100,23 @@ public class GameMapView extends JPanel{
         }
 
         public void mouseMoved(MouseEvent e){
-
+        
         }
 
         public void mouseExited(MouseEvent e){
-
+        
         }
 
         public void mouseEntered(MouseEvent e){
-
+            Tile tile = gm.getTileAt(e.getX(), e.getY());
+            if (tile == null){
+                state.setHoverTile(null);
+                state.setHoverState(HoverNone);
+            }
+            else if (tile != state.getHoverTile()) {
+                state.setHoverTile(tile);
+                state.setHoverState(HoverTileOnly);
+            }	
         }
-    }
-}
+    } 
+}// class

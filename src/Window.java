@@ -12,23 +12,17 @@ public class Window extends JFrame{
     //Only for testpurpose
     public static void main(String[] args){
         new Window(900,900);
-        State s = State.getInstance();
-
-/*        try{
-            Thread.sleep(2000);
-        }catch(Throwable t){}
-
-        s.setUnitState(Selected);*/
     }
 
     Window(int w,int h){
+	super ("Civ 6");
         Menu m = new Menu();
         ViewPort vp = new ViewPort();
 
         setLayout(new BorderLayout());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        add(m, BorderLayout.EAST);
+        add(m, BorderLayout.SOUTH);
         add(vp, BorderLayout.CENTER);
         setSize(w, h);
         setVisible(true);
