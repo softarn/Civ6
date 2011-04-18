@@ -3,82 +3,110 @@ package src;
 import java.util.Observable;
 
 public class State extends Observable{
-    private static final State INSTANCE = new State();
+	private static final State INSTANCE = new State();
 
-    private static PhysicalUnit selectedUnit;
-    private static Tile selectedTile;
+	private static PhysicalUnit selectedUnit;
+	private static Tile selectedTile;
+	private static Tile hoverTile;
+	
+	private UnitState unitState;
+	private TileState tileState;
+	private ActionState actionState;
+    private HoverState hoverState;
+   
+	private State(){
+		setUnitState(UnitState.UnSelected);
+		setActionState(ActionState.None);
+        setHoverState(HoverState.HoverNone);
+	}
+	
+	public static State getInstance(){
+		return INSTANCE;
+	}
 
-    private UnitState unitState;
-    private TileState tileState;
-    private ActionState actionState;
+	public static void setSelectedTile(Tile tile){
+		selectedTile = tile;
+	}
 
-    private State(){
-        setUnitState(UnitState.UnSelected);
-        setActionState(ActionState.None);
+	public static Tile getSelectedTile(){
+		return selectedTile;
+	}
+
+	public static void setSelectedUnit(PhysicalUnit unit){
+		selectedUnit = unit;
+	}
+
+	public static PhysicalUnit getSelectedUnit(){
+		return selectedUnit;
+	}
+    
+    public void setHoverTile(Tile t){
+        hoverTile = t;    
+    }
+    
+    public Tile getHoverTile() {
+        return hoverTile;
     }
 
-    public static State getInstance(){
-        return INSTANCE;
-    }
+	//Unitstate
+	public enum UnitState{
+		Selected, UnSelected 
+	}
 
-    public static void setSelectedTile(Tile tile){
-        selectedTile = tile;
-    }
+	public UnitState getUnitState(){
+		return unitState;
+	}
 
-    public static Tile getSelectedTile(){
-        return selectedTile;
-    }
+	public void setUnitState(UnitState state){
+		unitState = state;
+		setChanged();
+		notifyObservers();
+	}
 
-    public static void setSelectedUnit(PhysicalUnit unit){
-        selectedUnit = unit;
-    }
+	//TileState
+	public enum TileState{
+		Selected, UnSelected
+	}
 
-    public static PhysicalUnit getSelectedUnit(){
-        return selectedUnit;
-    }
+	public TileState getTileState(){
+		return tileState;
+	}
 
-    //Unitstate
-    public enum UnitState{
-        Selected, UnSelected 
-    }
+	public void setTileState(TileState state){
+		tileState = state;
+		setChanged();
+		notifyObservers();
+	}
 
-    public UnitState getUnitState(){
-        return unitState;
-    }
+	//ActionsState
+	public enum ActionState{
+		None, Move, Attack
+	}
 
-    public void setUnitState(UnitState state){
-        unitState = state;
+	public ActionState getActionState(){
+		return actionState;
+	}
+
+	public void setActionState(ActionState state){
+		actionState = state;
+		setChanged();
+		notifyObservers();
+	}
+    
+    // HoverState 
+	public enum HoverState {
+        HoverNone, HoverTileOnly, HoverTileUnit 
+    } 
+    
+    public HoverState getHoverState (){
+        return hoverState;
+    }
+    
+    public void setHoverState(HoverState state) {
+        hoverState = state;
         setChanged();
-        notifyObservers();
+		notifyObservers();
     }
-
-    //TileState
-    public enum TileState{
-        Selected, UnSelected
-    }
-
-    public TileState getTileState(){
-        return tileState;
-    }
-
-    public void setTileState(TileState state){
-        tileState = state;
-        setChanged();
-        notifyObservers();
-    }
-
-    //ActionsState
-    public enum ActionState{
-        None, Move, Attack
-    }
-
-    public ActionState getActionState(){
-        return actionState;
-    }
-
-    public void setActionState(ActionState state){
-        actionState = state;
-        setChanged();
-        notifyObservers();
-    }
+    
+    
 }

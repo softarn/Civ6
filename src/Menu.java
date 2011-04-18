@@ -15,6 +15,10 @@ import static src.State.UnitState.UnSelected;
 import static src.State.ActionState.Move;
 import static src.State.ActionState.Attack;
 
+import static src.State.HoverState.HoverNone;
+import static src.State.HoverState.HoverTileOnly;
+
+
 public class Menu extends JPanel implements Observer, ActionListener{
 
     private static final State state = State.getInstance();
@@ -22,19 +26,15 @@ public class Menu extends JPanel implements Observer, ActionListener{
     private JButton move;
     private JButton attack;
     private JLabel tileLabel;
-    private String tileText;	
-    private boolean notUpdated;
     private GameMapView gmv = new GameMapView();    
-	
+    
    //Status is only for testing purpose
    private JLabel status = new JLabel("Status is: " + state.getUnitState());
-	
+    
     Menu(){
         super();
-	tileText = gmv.getFeedbackText();    
-	tileLabel = new JLabel("Tile info: "+tileText); 
-	notUpdated=true; 
-	
+    tileLabel = new JLabel("Tile info is empty"); 
+    
         move = new JButton("Move");
         //move.setMnemonic(KeyEvent.VK_D);
         move.setActionCommand("move");
@@ -48,10 +48,9 @@ public class Menu extends JPanel implements Observer, ActionListener{
         add(status); 
         add(move); 
         add(attack); 
-	add(tileLabel); 
-	
-	update(); 
-	updateTile();
+    add(tileLabel); 
+    
+    update(); 
     }
 
     public void update(Observable obs, Object obj){
@@ -61,6 +60,15 @@ public class Menu extends JPanel implements Observer, ActionListener{
     }
 
     private void update(){
+    switch (state.getHoverState()) {
+       case HoverNone:
+            tileLabel.setText("No tile selected ");
+            break;
+        case HoverTileOnly:
+            tileLabel.setText(state.getHoverTile().getTerrain().toString());
+            break;
+    }        
+        
         switch(state.getUnitState()){
             case UnSelected: 
                 move.setEnabled(false); 
@@ -74,18 +82,10 @@ public class Menu extends JPanel implements Observer, ActionListener{
                     case Attack: move.setEnabled(false); break;
                 }
                 break;
-	}	
+    }	
         updateState();
-	
+    
     }
-    
-    public void updateTile(){ 
-	    String tileText2=gmv.getFeedbackText(); 
-		if (tileText2!=null) {
-			tileLabel.setText("Tooltips: " +tileText2); 
-		}
-	}		
-    
 
     private void updateState(){
         status.setText("Status is: " + state.getUnitState());
@@ -98,6 +98,8 @@ public class Menu extends JPanel implements Observer, ActionListener{
         if(attack == ae.getSource()){
             state.setActionState(Attack);
         }
+    
+    
     }
 }
 
