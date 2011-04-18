@@ -28,11 +28,11 @@ public class Menu extends JPanel implements Observer, ActionListener{
     private JButton plus;
     private JButton minus;
 
-    //Status is only for testing purpose
-    private JLabel status = new JLabel("Status is: " + state.getUnitState());
-
     private JLabel tileLabel;
     private GameMapView gmv = new GameMapView();    
+
+    //Status is only for testing purpose
+    private JLabel status = new JLabel("Status is: " + state.getUnitState());
 
     Menu(){
         super();
