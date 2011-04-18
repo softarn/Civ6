@@ -21,7 +21,7 @@ public class GameMapView extends JPanel{
         super();
         gm = new GameMap(this);
         setLayout(null);
-        setBounds(0,0,125*gm.getWidth()*2,140*gm.getHeight());
+        setBounds(-120*(gm.getWidth()-1),0,125*gm.getWidth()*2,140*gm.getHeight());
         setBackground(Color.black);
         GameMapListener gml = new GameMapListener();
         addMouseListener(gml);
@@ -61,9 +61,9 @@ public class GameMapView extends JPanel{
         public void mousePressed(MouseEvent e){
             if(e.getButton() == MouseEvent.BUTTON1){
                 Tile tile = gm.getTileAt(e.getX(), e.getY());
-                System.out.println("Printing hexagon at x"+ tile.getView().getTilePositionx()+
-                        " y"+tile.getView().getTilePositiony());
                 if(tile != null){
+                    System.out.println("Printing hexagon at x"+ tile.getView().getTilePositionx()+
+                            " y"+tile.getView().getTilePositiony());
                     switch(state.getActionState()){
                         case Move:
                             src.Move.makeMove(state.getSelectedTile(), tile);

@@ -74,7 +74,7 @@ public class GameMap{
             rad = ((pixely - offsetY) / (höjd/2))
             x = (kolumn + rad) / 2
             y = (rad - kolumn) / 2
-        */
+            */
         for(int j=getHeight()-1; j>=0; --j){
             for(int i=getWidth()-1; i>=0; --i){
                 if(tiles[i][j].getView().contains(x, y)){
@@ -83,6 +83,14 @@ public class GameMap{
             }
         }
         return null;
+        /*
+        double kolumn = ((x - 120 * width) / 120.0 );
+        double rad = (y / 70.0);
+        int absX = (int)Math.floor((kolumn + rad) / 2);
+        int absY = (int)Math.floor((rad - kolumn) / 2);
+        System.out.println(x +","+ y +" = "+ absX +","+ absY);
+        return getTile(absX, absY);
+        */
     }
 
     /**
@@ -118,7 +126,25 @@ public class GameMap{
     }
 
     public int getDistance(Tile a, Tile b){
-        return 1;
+        return 1; 
+    }
+/*
+    public void scale(double grade){
+        double size;
+        for(int j=height-1; j>=0; --j){
+            for(int i=width-1; i>=0; --i){
+                if(tiles[i][j].getView().getWidth()*grade > 200){
+                    size = 200;
+                }
+                else if(tiles[i][j].getView().getWidth()*grade < 50){
+                    size = 50;
+                }
+                else{
+                    size = tiles[i][j].getView().getWidth()*grade;
+                }
+                tiles[i][j].getView().resize(150);
+            }
+        }
     }
 
     /**

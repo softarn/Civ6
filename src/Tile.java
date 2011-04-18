@@ -47,7 +47,12 @@ public class Tile {
         selected = false;
         explored = false;
         countToFog = 0;
-        view = new TileView(((x - y)*120)+60*GameMap.getInstance().getWidth()*2, ((x + y)*68), this);
+        /**
+         * pixelx = ((x - y) * bredd) + offsetX
+         * pixely = ((x + y) * höjd / 2) + offsetY
+         */
+
+        view = new TileView(((x - y)*120)+120*GameMap.getInstance().getWidth(), ((x + y)*68), this);
 
         setUnit(pu);
     }

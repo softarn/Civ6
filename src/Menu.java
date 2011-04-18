@@ -21,6 +21,8 @@ public class Menu extends JPanel implements Observer, ActionListener{
 
     private JButton move;
     private JButton attack;
+    private JButton plus;
+    private JButton minus;
 
     //Status is only for testing purpose
     private JLabel status = new JLabel("Status is: " + state.getUnitState());
@@ -37,10 +39,20 @@ public class Menu extends JPanel implements Observer, ActionListener{
         attack.setActionCommand("attack");
         attack.addActionListener(this);
 
+        plus = new JButton("+");
+        plus.setActionCommand("+");
+        plus.addActionListener(this);
+
+        minus = new JButton("-");
+        minus.setActionCommand("-");
+        minus.addActionListener(this);
+
         state.addObserver(this);
         add(status);
         add(move);
         add(attack);
+        add(plus);
+        add(minus);
 
         update();
     }
@@ -62,7 +74,7 @@ public class Menu extends JPanel implements Observer, ActionListener{
                 attack.setEnabled(true);
                 switch(state.getActionState()){
                     case Move: move.setEnabled(false); break;
-                    case Attack: move.setEnabled(false); break;
+                    case Attack: attack.setEnabled(false); break;
                 }
                 break;
         }
@@ -79,6 +91,12 @@ public class Menu extends JPanel implements Observer, ActionListener{
         }
         if(attack == ae.getSource()){
             state.setActionState(Attack);
+        }
+        if(plus == ae.getSource()){
+//            GameMap.getInstance().scale(1.1);
+        }
+        if(minus == ae.getSource()){
+//            GameMap.getInstance().scale(0.9);
         }
     }
 }

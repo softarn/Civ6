@@ -35,10 +35,11 @@ public class TileView extends JPanel{
         aura = new Polygon(xs,ys,6);
         positionx = x;
         positiony = y;
+        maxX = 175;
+        maxY = 175;
         this.tile = tile;
+        setBounds(x, y, (int)maxX, (int)maxY);
 
-        setBounds(x, y, 175, 175);
-        //resize(300);
         setOpaque(false);
     }
 
@@ -46,18 +47,23 @@ public class TileView extends JPanel{
         maxX = xy;
         maxY = xy;
 
-        int[] txs = new int[6];
-        int[] tys = new int[6];
-        int tX = (int)(getX() * getWidth() / maxX);
-        int tY = (int)(getY() * getHeight() / maxY);
-        setBounds(tX, tY, getWidth(), getHeight());
+        int[] tempXs = new int[6];
+        int[] tempYs = new int[6];
+        int tempX = (int)(getX() * maxX / getWidth());
+        int tempY = (int)(getY() * maxY / getHeight());
+        setBounds(tempX, tempY, getWidth(), getHeight());
         for(int i=0; i<6; ++i){
-            txs[i] = (int)(xs[i] * getWidth() / maxX);
-            tys[i] = (int)(ys[i] * getHeight() / maxY);
+            tempXs[i] = (int)(xs[i] * maxX / getWidth());
+            tempYs[i] = (int)(ys[i] * maxY / getHeight());
         }
-        area = new Polygon(xs, ys, 6);
-        // area.translate((int)(tX * getWidth() / maxX), (int)(tY * getHeight() / maxY);
-        area.translate(tX, tY);
+        area = new Polygon(tempXs, tempYs, 6);
+        // area.translate((int)(tX * getWidth() / maxX), (int)(tY * getHeight() / maxY));
+        area.translate(tempX, tempY);
+        repaint();
+    }
+
+    public boolean contains(int x, int y){
+        return area.contains(x, y);
     }
 
     public int getTilePositionx(){
@@ -68,18 +74,13 @@ public class TileView extends JPanel{
         return positiony;
     }
 
-    public boolean contains(int x, int y){
-        return area.contains(x, y);
-    }
-
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
         Image terrain;
-        /*g2.scale(
-                (double) getWidth() / maxX,
-                (double) getHeight() / maxY);
-                */
+        g2.scale(
+                (double) maxX / getWidth(),
+                (double) maxY / getHeight());
         if(tile.isExplored()){
             if(tile.hasFog()){
                 terrain = tile.getTileFogImg();
@@ -101,7 +102,7 @@ public class TileView extends JPanel{
         }
         if(tile.isHilighted()){
             g2.setColor(new Color(240, 200, 50, 120));
-            g2.fillPolygon(area);
+            g2.fillPolygon(aura);
         }
 
         if(tile.hasUnit() && !tile.hasFog()){
