@@ -1,6 +1,7 @@
 package src;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import static src.State.UnitState.Selected;
 
@@ -10,7 +11,7 @@ public class GameMap{
     private Tile[][] tiles;
     private static GameMap map;
     private GameMapView gmv;
-    private int height = 3, width = 7;
+    private int height = 15, width = 15;
 
     private int[][] offsets = {{-1,-1},
                             {0,-1},
@@ -68,6 +69,12 @@ public class GameMap{
      * coordinates relative to GameMapView.
      */
     public Tile getTileAt(int x, int y){
+        /*
+            kolumn =((pixelx - offsetX) / bredd)
+            rad = ((pixely - offsetY) / (höjd/2))
+            x = (kolumn + rad) / 2
+            y = (rad - kolumn) / 2
+        */
         for(int j=getHeight()-1; j>=0; --j){
             for(int i=getWidth()-1; i>=0; --i){
                 if(tiles[i][j].getView().contains(x, y)){
@@ -115,20 +122,25 @@ public class GameMap{
     }
 
     /**
-     * Adds all tiles to the map.
+     * Sets all the tiles in the map.
      *
      * @param terrain Indata from the server interface.
      */
     public void parseMap(String terrain){
-        Tile[][] temp = {
-            {new Tile(TerrainType.Mountain, new PhysicalUnit(PhysicalUnitType.Musketeer), 0, 0), new Tile(TerrainType.Mountain, 0, 1), new Tile(TerrainType.Mountain, 0, 2)},
-            {new Tile(TerrainType.Mountain, 1, 0), new Tile(TerrainType.Desert, new PhysicalUnit(PhysicalUnitType.Musketeer), 1, 1), new Tile(TerrainType.Mountain, 1, 2)},
-            {new Tile(TerrainType.Mountain, 2, 0), new Tile(TerrainType.Desert, 2, 1), new Tile(TerrainType.Sea, 2, 2)},
-            {new Tile(TerrainType.Marsh, 3, 0), new Tile(TerrainType.Plains, 3, 1), new Tile(TerrainType.Hills, 3, 2)},
-            {new Tile(TerrainType.Marsh, 4, 0), new Tile(TerrainType.Plains, 4, 1), new Tile(TerrainType.Plains, 4, 2)},
-            {new Tile(TerrainType.Hills, 5, 0), new Tile(TerrainType.Desert, 5, 1), new Tile(TerrainType.Grassland, 5, 2)},
-            {new Tile(TerrainType.Broadleaf, 6, 0), new Tile(TerrainType.Desert, 6, 1), new Tile(TerrainType.Marsh, 6, 2)},
-        };
-        tiles = temp;
+        TerrainType[] tt = TerrainType.values();
+        Random r = new Random();
+        Tile[][] result = new Tile[width][];
+        for(int k=0; k<width; k++){
+            result[k] = new Tile[height];
+        }
+        for(int j=height-1; j>=0; --j){
+            for(int i=width-1; i>=0; --i){
+                int rand = Math.abs(r.nextInt())%tt.length;
+                Tile temp = new Tile(tt[rand], i, j);
+                result[i][j] = temp;
+            }
+        }
+        result[1][1].setUnit(new PhysicalUnit(PhysicalUnitType.Musketeer));
+        tiles = result;
     }
 }

@@ -16,25 +16,48 @@ public class TileView extends JPanel{
 
     private int positionx;
     private int positiony;
+    private double maxX, maxY;
+    // The clickable hexagon
     private Polygon area;
+    // The graphical hexagon
+    private Polygon aura;
     private Tile tile;
+    private int[] xs = {43, 3, 43, 121, 160, 121};
+    private int[] ys = {35, 104, 170, 170, 104, 35};
 
     /**
      * x and y in this case is pixels away from 
      * the top left corner of the GameMapView. 
      */
     public TileView(int x, int y, Tile tile){
-        // Create polygon here
-        int[] xs = {43, 3, 43, 121, 160, 121};
-        int[] ys = {35, 104, 170, 170, 104, 35};
         area = new Polygon(xs,ys,6);
         area.translate(x, y);
+        aura = new Polygon(xs,ys,6);
         positionx = x;
         positiony = y;
         this.tile = tile;
 
         setBounds(x, y, 175, 175);
+        //resize(300);
         setOpaque(false);
+    }
+
+    public void resize(double xy){
+        maxX = xy;
+        maxY = xy;
+
+        int[] txs = new int[6];
+        int[] tys = new int[6];
+        int tX = (int)(getX() * getWidth() / maxX);
+        int tY = (int)(getY() * getHeight() / maxY);
+        setBounds(tX, tY, getWidth(), getHeight());
+        for(int i=0; i<6; ++i){
+            txs[i] = (int)(xs[i] * getWidth() / maxX);
+            tys[i] = (int)(ys[i] * getHeight() / maxY);
+        }
+        area = new Polygon(xs, ys, 6);
+        // area.translate((int)(tX * getWidth() / maxX), (int)(tY * getHeight() / maxY);
+        area.translate(tX, tY);
     }
 
     public int getTilePositionx(){
@@ -51,8 +74,12 @@ public class TileView extends JPanel{
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
+        Graphics2D g2 = (Graphics2D) g;
         Image terrain;
-        area.translate(-positionx, -positiony);
+        /*g2.scale(
+                (double) getWidth() / maxX,
+                (double) getHeight() / maxY);
+                */
         if(tile.isExplored()){
             if(tile.hasFog()){
                 terrain = tile.getTileFogImg();
@@ -60,22 +87,21 @@ public class TileView extends JPanel{
                 terrain = tile.getTileImg();
             }
 
-            g.drawImage(terrain, 0, 0, this);
+            g2.drawImage(terrain, 0, 0, this);
 
             if(tile.isSelected()){
-                g.setColor(Color.YELLOW);
-                Graphics2D g2 = (Graphics2D) g;
+                g2.setColor(Color.YELLOW);
                 g2.setStroke(new BasicStroke(3));
-                g2.drawPolygon(area);
+                g2.drawPolygon(aura);
             }
         }else{
             //Tile is in total fog so lets just paint it black
-            g.setColor(Color.BLACK);
-            g.fillPolygon(area);
+            g2.setColor(Color.BLACK);
+            g2.fillPolygon(aura);
         }
         if(tile.isHilighted()){
-            g.setColor(new Color(240, 200, 50, 120));
-            g.fillPolygon(area);
+            g2.setColor(new Color(240, 200, 50, 120));
+            g2.fillPolygon(area);
         }
 
         if(tile.hasUnit() && !tile.hasFog()){
@@ -86,9 +112,7 @@ public class TileView extends JPanel{
 
             int x = (w/2) + 20;
             int y = 150 - h;
-            g.drawImage(unitImg, x, y, this);
+            g2.drawImage(unitImg, x, y, this);
         }
-
-        area.translate(positionx, positiony);
     }
 }

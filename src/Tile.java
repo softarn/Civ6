@@ -27,6 +27,9 @@ public class Tile {
                             {0,1},
                             {-1,0}};
 
+    public Tile(){
+        // Empty constructor does nothing
+    }
     public Tile(TerrainType tt, PhysicalUnit pu, int x, int y){
         init(tt, pu, x, y);
     }
@@ -44,7 +47,7 @@ public class Tile {
         selected = false;
         explored = false;
         countToFog = 0;
-        view = new TileView(((x - y)*120)+120*2, ((x + y)*68), this);
+        view = new TileView(((x - y)*120)+60*GameMap.getInstance().getWidth()*2, ((x + y)*68), this);
 
         setUnit(pu);
     }
