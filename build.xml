@@ -5,16 +5,16 @@
 
     <target name="prepare">
 	<delete includeemptydirs="true" failonerror="false">
-	    <fileset dir="${output.dir}" />
+	    <fileset dir="${output.dir}"/>
 	</delete>
-	<mkdir dir="bin" />
+	<mkdir dir="bin"/>
     </target>
 
     <target name="compile" depends="prepare">
-	<javac srcdir="${src.dir}" destdir="bin/" />
+	<javac srcdir="${src.dir}" destdir="bin/"/>
     </target>
 
-    <target name="run" >
+    <target name="run">
 	<java fork="yes"
 	    classname="src.Window">
 	    <classpath>
