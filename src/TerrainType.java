@@ -51,6 +51,10 @@ public enum TerrainType {
     public BufferedImage getFogImage(){
         return fogImg;
     }
+    
+    public String getName() {
+	return name;
+    }
 
     /**
      * Returns the cost to pass this terrain for the specific unittype.

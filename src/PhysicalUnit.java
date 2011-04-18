@@ -14,7 +14,7 @@ public class PhysicalUnit implements Comparable<PhysicalUnit>{
     public PhysicalUnit(PhysicalUnitType type){
         this.idNumber = ++count;
         this.manPower = type.getMaxManPower();
-        this.currentMovementPoint = type.getMovementPoint();
+        this.currentMovementPoint = type.getMovementPoints();
         this.type = type;
     }
 
@@ -41,6 +41,7 @@ public class PhysicalUnit implements Comparable<PhysicalUnit>{
     public int getID(){
         return idNumber;
     }
+
 
     public boolean useMovementPoints(int point){
         if(currentMovementPoint >= point){

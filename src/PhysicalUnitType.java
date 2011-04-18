@@ -14,7 +14,7 @@ public enum PhysicalUnitType {
     private int attack;
     private int hitPoint;
     private int range;
-    private int movementPoint;
+    private int movementPoints;
     private BufferedImage unitImg;
 
     private static final String imgPath = "data/img/"; //Need a better fix for this!
@@ -32,6 +32,7 @@ public enum PhysicalUnitType {
         this.defence = defence;
         this.hitPoint = hitPoint;
         this.range = range;
+        this.movementPoints = movementPoints;
 
         try{
             unitImg = ImageIO.read(new File(imgPath + name + ".png"));
@@ -56,8 +57,8 @@ public enum PhysicalUnitType {
         return hitPoint;
     }
 
-    public int getMovementPoint(){
-        return movementPoint;
+    public int getMovementPoints(){
+        return movementPoints;
     }
 
     public int getMaxManPower(){
