@@ -13,8 +13,9 @@ import static src.State.ActionState.None;
 import static src.State.UnitState.Selected;
 
 public class GameMapView extends JPanel{
-
+	
     private GameMap gm;
+    p String feedbackText;
     private State state = State.getInstance();
 
     public GameMapView(){
@@ -97,15 +98,19 @@ public class GameMapView extends JPanel{
         }
 
         public void mouseMoved(MouseEvent e){
-
+		
         }
 
         public void mouseExited(MouseEvent e){
-
+		
         }
 
         public void mouseEntered(MouseEvent e){
-
+		Tile tile = gm.getTileAt(e.getX(), e.getY());
+		if (null != tile)
+			feedbackText = tile.getTerrain().getName();
+			System.out.println(feedbackText);
         }
-    }
+	}
+	    
 }

@@ -21,13 +21,20 @@ public class Menu extends JPanel implements Observer, ActionListener{
 
     private JButton move;
     private JButton attack;
-
-    //Status is only for testing purpose
-    private JLabel status = new JLabel("Status is: " + state.getUnitState());
-
+    private JLabel tileLabel;
+    private String tileText;	
+    private boolean notUpdated;
+    private GameMapView gmv = new GameMapView();    
+	
+   //Status is only for testing purpose
+   private JLabel status = new JLabel("Status is: " + state.getUnitState());
+	
     Menu(){
         super();
-
+	tileText = gmv.getFeedbackText();    
+	tileLabel = new JLabel("Tile info: "+tileText); 
+	notUpdated=true; 
+	
         move = new JButton("Move");
         //move.setMnemonic(KeyEvent.VK_D);
         move.setActionCommand("move");
@@ -38,11 +45,13 @@ public class Menu extends JPanel implements Observer, ActionListener{
         attack.addActionListener(this);
 
         state.addObserver(this);
-        add(status);
-        add(move);
-        add(attack);
-
-        update();
+        add(status); 
+        add(move); 
+        add(attack); 
+	add(tileLabel); 
+	
+	update(); 
+	updateTile();
     }
 
     public void update(Observable obs, Object obj){
@@ -65,9 +74,18 @@ public class Menu extends JPanel implements Observer, ActionListener{
                     case Attack: move.setEnabled(false); break;
                 }
                 break;
-        }
+	}	
         updateState();
+	
     }
+    
+    public void updateTile(){ 
+	    String tileText2=gmv.getFeedbackText(); 
+		if (tileText2!=null) {
+			tileLabel.setText("Tooltips: " +tileText2); 
+		}
+	}		
+    
 
     private void updateState(){
         status.setText("Status is: " + state.getUnitState());
@@ -82,3 +100,4 @@ public class Menu extends JPanel implements Observer, ActionListener{
         }
     }
 }
+
