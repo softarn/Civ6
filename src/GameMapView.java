@@ -66,8 +66,12 @@ public class GameMapView extends JPanel{
                 if(tile != null){
                     switch(state.getActionState()){
                         case Move:
-                            src.Move.makeMove(state.getSelectedTile(), tile);
-                            state.setActionState(None);
+                            if(src.Move.makeMove(state.getSelectedTile(), tile)){
+                                state.setActionState(None);
+                            }else{
+                                tile = state.getSelectedTile();
+                                System.out.println("Not a possible move");
+                            }
                             break;
                         case Attack:
                             if(state.getUnitState() == Selected && tile.hasUnit()){
@@ -77,8 +81,7 @@ public class GameMapView extends JPanel{
                                             state.getSelectedTile(), tile));
                                 state.setActionState(None);
                                 tile = state.getSelectedTile();
-                            }
-                            else{
+                            }else{
                                 System.out.println("No unit to attack here.");
                             }
                             break;
