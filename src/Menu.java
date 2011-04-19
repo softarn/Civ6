@@ -3,12 +3,15 @@ package src;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JFrame;
 
 import java.util.Observer;
 import java.util.Observable;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
+import java.awt.*;
 
 import static src.State.UnitState.Selected;
 import static src.State.UnitState.UnSelected;
@@ -22,7 +25,8 @@ import static src.State.HoverState.HoverTileOnly;
 public class Menu extends JPanel implements Observer, ActionListener{
 
     private static final State state = State.getInstance();
-
+    private JPanel north = new JPanel();
+    
     private JButton move;
     private JButton attack;
     private JButton plus;
@@ -30,12 +34,13 @@ public class Menu extends JPanel implements Observer, ActionListener{
 
     private JLabel tileLabel;
     private GameMapView gmv = new GameMapView();    
-
+    
     //Status is only for testing purpose
     private JLabel status = new JLabel("Status is: " + state.getUnitState());
 
-    Menu(){
-        super();
+    Menu(){ 
+        super(); 
+        setLayout(new BorderLayout());
         tileLabel = new JLabel("Tile info is empty"); 
 
         move = new JButton("Move");
@@ -57,10 +62,10 @@ public class Menu extends JPanel implements Observer, ActionListener{
 
         state.addObserver(this);
 
-        add(status); 
-        add(move); 
-        add(attack); 
-        add(tileLabel); 
+        add(status, BorderLayout.CENTER); 
+        add(move, BorderLayout.SOUTH); 
+        add(attack, BorderLayout.EAST); 
+        add(tileLabel, BorderLayout.NORTH); 
 
         update(); 
     }
