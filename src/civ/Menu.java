@@ -20,10 +20,7 @@ import static civ.State.ActionState.Attack;
 
 import static civ.State.HoverState.HoverNone;
 import static civ.State.HoverState.HoverTileOnly;
-<<<<<<< HEAD
 import static civ.State.HoverState.HoverTileUnit;
-=======
->>>>>>> 690ee6f00a1e5cfa07087867977c7fa642c08ec3
 
 public class Menu extends JPanel implements Observer, ActionListener{
 
@@ -88,12 +85,12 @@ public class Menu extends JPanel implements Observer, ActionListener{
                 tileLabel.setText("No tile selected ");
                 break;
             case HoverTileOnly:
-                tileLabel.setText(state.getHoverTile().getTerrain().toString());
+                tileLabel.setText("Terrain: " + state.getHoverTile().getTerrain().toString());
                 break;
             case HoverTileUnit:
                 String outputTerrain = state.getHoverTile().getTerrain().toString();
                 String outputUnit = Integer.toString(state.getHoverTile().getUnit().getManPower());
-                tileLabel.setText(outputTerrain+" "+ outputUnit);
+                tileLabel.setText("Terrain: " +outputTerrain+" - Unit: " +state.getHoverTile().getUnit().getType() +  " - Manpower: "+ outputUnit);
                 break;
         }        
 
