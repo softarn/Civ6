@@ -1,27 +1,58 @@
 <project name="civ6" default="compile">
 
-    <property name="output.dir" value="bin/"/>
+    <property name="bin.dir" value="bin/"/>
     <property name="src.dir" value="src/"/>
+    <property name="test.dir" value="test/"/>
+    <property name="lib.dir" value="lib/"/>
+
+    <path id="lib.classpath">
+	<fileset dir="${lib.dir}">
+	    <include name="*.jar"/>
+	</fileset>
+    </path>
+
+    <path id="test.classpath">
+	<pathelement location="${bin.dir}"/>
+	<pathelement location="${test.dir}"/>
+	<path refid="lib.classpath"/>
+    </path>
 
     <target name="prepare">
 	<delete includeemptydirs="true" failonerror="false">
-	    <fileset dir="${output.dir}"/>
+	    <fileset dir="${bin.dir}"/>
 	</delete>
 	<mkdir dir="bin"/>
     </target>
 
     <target name="compile" depends="prepare">
-	<javac srcdir="${src.dir}" destdir="${output.dir}"/>
+	<javac srcdir="${src.dir}" destdir="${bin.dir}"/>
     </target>
 
     <target name="run">
 	<java fork="yes"
 	    classname="civ.Window">
 	    <classpath>
-		<pathelement path="${output.dir}"/>
+		<pathelement path="${bin.dir}"/>
 		<pathelement path="${java.class.path}"/>
 	    </classpath>
 	</java>
+    </target>
+
+    <target name="compile_test" >
+	<javac>
+	    <src path="${test.dir}" />
+	    <classpath refid="test.classpath"/>
+	</javac>
+    </target>
+
+    <target name="test" depends="compile_test">
+	<junit printsummary="no"> 
+	    <classpath refid="test.classpath"/>
+	    <formatter type="plain" usefile="false"/>
+	    <batchtest fork="yes">
+		<fileset dir="${test.dir}" includes="*.class"/>
+	    </batchtest>
+	</junit>
     </target>
 
 </project>

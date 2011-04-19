@@ -20,7 +20,10 @@ import static civ.State.ActionState.Attack;
 
 import static civ.State.HoverState.HoverNone;
 import static civ.State.HoverState.HoverTileOnly;
+<<<<<<< HEAD
 import static civ.State.HoverState.HoverTileUnit;
+=======
+>>>>>>> 690ee6f00a1e5cfa07087867977c7fa642c08ec3
 
 public class Menu extends JPanel implements Observer, ActionListener{
 
