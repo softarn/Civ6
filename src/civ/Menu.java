@@ -19,7 +19,6 @@ import static civ.State.ActionState.Attack;
 import static civ.State.HoverState.HoverNone;
 import static civ.State.HoverState.HoverTileOnly;
 
-
 public class Menu extends JPanel implements Observer, ActionListener{
 
     private static final State state = State.getInstance();
