@@ -23,7 +23,7 @@ public enum PhysicalUnitType {
 
     // Horseborn 
     Cavalry("Cavalry", "Mounted", 100, 6, 4, 1, 2),
-    Knight("Kight", "Mounted", 100, 12, 8, 1, 2),
+    Knight("Knight", "Mounted", 100, 12, 8, 1, 2),
     Crusader("Crusader", "Mounted", 100, 6, 4, 1, 2),
 
     // Boats
@@ -62,6 +62,7 @@ public enum PhysicalUnitType {
             unitImg = ImageIO.read(new File(imgPath + name + ".png"));
         }catch(IOException e){
             System.out.println(e);
+            System.out.println(name);
         }
     }
 
