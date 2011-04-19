@@ -15,7 +15,8 @@ public class State extends Observable{
     private HoverState hoverState;
    
 	private State(){
-		setUnitState(UnitState.UnSelected);
+		setUnitState(UnitState.UnitUnSelected);
+		setTileState(TileState.TileUnSelected);
 		setActionState(ActionState.None);
         setHoverState(HoverState.HoverNone);
 	}
@@ -50,7 +51,7 @@ public class State extends Observable{
 
 	//Unitstate
 	public enum UnitState{
-		Selected, UnSelected 
+		UnitSelected, UnitUnSelected 
 	}
 
 	public UnitState getUnitState(){
@@ -65,7 +66,7 @@ public class State extends Observable{
 
 	//TileState
 	public enum TileState{
-		Selected, UnSelected
+		TileSelected, TileUnSelected
 	}
 
 	public TileState getTileState(){

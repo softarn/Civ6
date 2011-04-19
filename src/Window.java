@@ -5,8 +5,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 
-import static src.State.UnitState.Selected;
-
 public class Window extends JFrame{
 
     //Only for testpurpose

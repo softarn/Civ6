@@ -7,8 +7,10 @@ import java.io.IOException;
 import java.lang.Math;
 import java.util.ArrayList;
 
-import static src.State.TileState.Selected;
-import static src.State.TileState.UnSelected;
+import static src.State.TileState.TileSelected;
+import static src.State.TileState.TileUnSelected;
+import static src.State.UnitState.UnitSelected;
+import static src.State.UnitState.UnitUnSelected;
 
 public class Tile {
     private boolean selected, hilight, explored, plain;
@@ -67,13 +69,13 @@ public class Tile {
 
     public void select(){
         State st = State.getInstance();
-        if(st.getTileState() == Selected){
+        if(st.getTileState() == TileSelected){
             State.getSelectedTile().deselect();
         }
-        st.setTileState(Selected);
+        st.setTileState(TileSelected);
         st.setSelectedTile(this);
         if(unit != null){
-            st.setUnitState(State.UnitState.Selected);
+            st.setUnitState(UnitSelected);
             st.setSelectedUnit(unit);
         }
         selected = true;
@@ -83,11 +85,11 @@ public class Tile {
     public void deselect(){
         State st = State.getInstance();
         if(st.getSelectedTile().equals(this)){
-            st.setTileState(UnSelected);
+            st.setTileState(TileUnSelected);
             st.setSelectedTile(null);
             selected = false;
             if(unit != null){
-                st.setUnitState(State.UnitState.UnSelected);
+                st.setUnitState(UnitUnSelected);
                 st.setSelectedUnit(null);
             }
             view.repaint();

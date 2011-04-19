@@ -6,13 +6,37 @@ import java.io.File;
 import java.io.IOException;
 
 public enum PhysicalUnitType {
-    Musketeer("Musketeer", 100, 2, 2, 3, 2, 1); 
+    // Artillery
+    Catapult("Catapult", "Artillery", 100, 12, 1, 2, 1),
+    Trebuchet("Trebuchet", "Artillery", 100, 20, 2, 3, 1),
+    Cannon("Cannon", "Artillery", 100, 30, 3, 4, 1),
+
+    // Range
+    Archer("Archer", "Range", 100, 4, 2, 2, 1),
+    Musketeer("Musketeer", "Range", 100, 8, 6, 2, 1),
+
+    // Melee
+    Phalanx("Phalanx", "Melee", 100, 2, 5, 1, 1),
+    Legion("Legion", "Melee", 100, 6, 4, 1, 1),
+    Infantry("Infantry", "Melee", 100, 3, 3, 1, 1),
+    Pikeman("Pikeman", "Melee", 100, 2, 3, 1, 1),
+
+    // Horseborn 
+    Cavalry("Cavalry", "Mounted", 100, 6, 4, 1, 2),
+    Knight("Kight", "Mounted", 100, 12, 8, 1, 2),
+    Crusader("Crusader", "Mounted", 100, 6, 4, 1, 2),
+
+    // Boats
+    Trireme("Trireme", "Boat", 50, 4, 3, 1, 3),
+    Galley("Galley", "Boat", 250, 30, 25, 1, 4),
+    Caravel("Caravel", "Boat", 100, 50, 40, 1, 6);
+
 
     private String name;
+    private String category;
     private int maxManPower;
     private int defence;
     private int attack;
-    private int hitPoint;
     private int range;
     private int movementPoints;
     private BufferedImage unitImg;
@@ -20,17 +44,17 @@ public enum PhysicalUnitType {
     private static final String imgPath = "data/img/"; //Need a better fix for this!
 
     private PhysicalUnitType(String name, 
+            String category,
             int maxManPower,
             int attack,
             int defence,
-            int hitPoint,
             int range,
             int movementPoints){
         this.name = name;
+        this.category = category;
         this.maxManPower = maxManPower;
         this.attack = attack;
         this.defence = defence;
-        this.hitPoint = hitPoint;
         this.range = range;
         this.movementPoints = movementPoints;
 
@@ -45,16 +69,16 @@ public enum PhysicalUnitType {
         return name;
     }
 
+    public String getCategory(){
+        return category;
+    }
+
     public int getAttack(){
         return attack;
     }
 
     public int getDefence(){
         return defence;
-    }
-
-    public int getHitPoints(){
-        return hitPoint;
     }
 
     public int getMovementPoints(){
@@ -71,6 +95,10 @@ public enum PhysicalUnitType {
 
     public BufferedImage getImage(){
         return unitImg;
+    }
+
+    public String toString(){
+        return name;
     }
 
     /**

@@ -3,7 +3,7 @@ package src;
 import java.util.ArrayList;
 import java.util.Random;
 
-import static src.State.UnitState.Selected;
+import static src.State.UnitState.UnitSelected;
 
 public class GameMap{
     private static final State state = State.getInstance();

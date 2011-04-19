@@ -1,7 +1,7 @@
 package src;
 
 import java.util.Random;
-import static src.State.UnitState.UnSelected;
+import static src.State.UnitState.UnitUnSelected;
 
 public class Battle{
     private static State state = State.getInstance();
@@ -30,9 +30,6 @@ public class Battle{
 		int movementPoint1=u1.getCurrentMovementPoint();
 		int movementPoint2=u2.getCurrentMovementPoint();
 		
-		int hitPoints1 = ut1.getHitPoints();
-		int hitPoints2 = ut1.getHitPoints();
-		
 		int manPower1 = u1.getManPower();
 		int manPower2 = u2.getManPower();
 		
@@ -46,8 +43,8 @@ public class Battle{
 		int randomCharge = randomizer.nextInt(8)+1;
 		
 		for (int i = 0; i <= randomCharge; i++) { 
-			int randomNumber1=randomizer.nextInt((int)(attack1*hitPoints1*(1+attackBonus*0.01)));
-			int randomNumber2= randomizer.nextInt((int)(defence2*hitPoints2*(1+defenceBonus*0.01)));
+			int randomNumber1=randomizer.nextInt((int)(attack1*(1+attackBonus*0.01)));
+			int randomNumber2= randomizer.nextInt((int)(defence2*(1+defenceBonus*0.01)));
 		
 			manPower1-=randomNumber2;
 			manPower2-=randomNumber1;
@@ -58,14 +55,14 @@ public class Battle{
             u2.setManPower(manPower2);
 			
 			if (manPower1<1 && manPower2<1){
-                state.setUnitState(UnSelected);
+                state.setUnitState(UnitUnSelected);
                 t1.setUnit(null);
                 t2.setUnit(null);
 				break;
 			}
 			else if (manPower1<=0) {
                 t1.setUnit(null);
-                state.setUnitState(UnSelected);
+                state.setUnitState(UnitUnSelected);
 				winnerId=1;
 				break;
 			}
