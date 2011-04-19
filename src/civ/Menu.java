@@ -10,21 +10,12 @@ import java.util.Observable;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.BorderLayout;
 
-<<<<<<< HEAD:src/Menu.java
-import java.awt.*;
-
-import static src.State.UnitState.Selected;
-import static src.State.UnitState.UnSelected;
-import static src.State.ActionState.Move;
-import static src.State.ActionState.Attack;
-=======
 import static civ.State.UnitState.Selected;
 import static civ.State.UnitState.UnSelected;
 import static civ.State.ActionState.Move;
 import static civ.State.ActionState.Attack;
->>>>>>> 685a7138538e38b4c07585716b1f9e4f5fbf1d8a:src/civ/Menu.java
-
 import static civ.State.HoverState.HoverNone;
 import static civ.State.HoverState.HoverTileOnly;
 
