@@ -100,7 +100,15 @@ public class GameMapView extends JPanel{
         }
 
         public void mouseMoved(MouseEvent e){
-        
+            Tile tile = gm.getTileAt(e.getX(), e.getY());
+            if (tile == null){
+                state.setHoverTile(null);
+                state.setHoverState(HoverNone);
+            }
+            else if (tile != state.getHoverTile() && tile.isExplored() == true) {
+                state.setHoverTile(tile);
+                state.setHoverState(HoverTileOnly);
+            }    
         }
 
         public void mouseExited(MouseEvent e){
@@ -108,15 +116,24 @@ public class GameMapView extends JPanel{
         }
 
         public void mouseEntered(MouseEvent e){
-            Tile tile = gm.getTileAt(e.getX(), e.getY());
-            if (tile == null){
-                state.setHoverTile(null);
-                state.setHoverState(HoverNone);
-            }
-            else if (tile != state.getHoverTile()) {
-                state.setHoverTile(tile);
-                state.setHoverState(HoverTileOnly);
-            }	
-        }
+        }	
     } 
 }// class
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
