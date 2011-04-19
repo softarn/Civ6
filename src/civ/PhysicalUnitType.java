@@ -1,4 +1,4 @@
-package src;
+package civ;
 
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;

@@ -1,7 +1,7 @@
 <project name="civ6" default="compile">
 
-    <property name="output.dir" value="bin"/>
-    <property name="src.dir" value="src"/>
+    <property name="output.dir" value="bin/"/>
+    <property name="src.dir" value="src/"/>
 
     <target name="prepare">
 	<delete includeemptydirs="true" failonerror="false">
@@ -11,13 +11,14 @@
     </target>
 
     <target name="compile" depends="prepare">
-	<javac srcdir="${src.dir}" destdir="bin/"/>
+	<javac srcdir="${src.dir}" destdir="${output.dir}"/>
     </target>
 
     <target name="run">
 	<java fork="yes"
-	    classname="src.Window">
+	    classname="civ.Window">
 	    <classpath>
+		<pathelement path="${output.dir}"/>
 		<pathelement path="${java.class.path}"/>
 	    </classpath>
 	</java>

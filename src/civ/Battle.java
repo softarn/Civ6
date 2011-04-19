@@ -1,7 +1,7 @@
-package src;
+package civ;
 
 import java.util.Random;
-import static src.State.UnitState.UnSelected;
+import static civ.State.UnitState.UnSelected;
 
 public class Battle{
     private static State state = State.getInstance();

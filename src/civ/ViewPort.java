@@ -1,4 +1,4 @@
-package src;
+package civ;
 
 import javax.swing.JPanel;
 
