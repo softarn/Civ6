@@ -1,4 +1,4 @@
-package src;
+package civ;
 
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
@@ -7,10 +7,10 @@ import java.io.IOException;
 import java.lang.Math;
 import java.util.ArrayList;
 
-import static src.State.TileState.TileSelected;
-import static src.State.TileState.TileUnSelected;
-import static src.State.UnitState.UnitSelected;
-import static src.State.UnitState.UnitUnSelected;
+import static civ.State.TileState.TileSelected;
+import static civ.State.TileState.TileUnSelected;
+import static civ.State.UnitState.UnitSelected;
+import static civ.State.UnitState.UnitUnSelected;
 
 public class Tile {
     private boolean selected, hilight, explored, plain;

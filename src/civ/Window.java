@@ -1,4 +1,4 @@
-package src;
+package civ;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -17,7 +17,7 @@ public class Window extends JFrame{
         Menu m = new Menu();
         ViewPort vp = new ViewPort();
 
-        setLayout(new BorderLayout());
+        setLayout(new BorderLayout(50, 100));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         add(m, BorderLayout.SOUTH);

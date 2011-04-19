@@ -1,9 +1,9 @@
-package src;
+package civ;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-import static src.State.UnitState.UnitSelected;
+import static civ.State.UnitState.UnitSelected;
 
 public class GameMap{
     private static final State state = State.getInstance();

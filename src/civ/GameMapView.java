@@ -1,4 +1,4 @@
-package src;
+package civ;
 
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -8,12 +8,12 @@ import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseEvent;
 import javax.swing.SwingUtilities;
 
-import static src.State.ActionState.Move;
-import static src.State.ActionState.None;
-import static src.State.UnitState.UnitSelected;
+import static civ.State.ActionState.Move;
+import static civ.State.ActionState.None;
+import static civ.State.UnitState.UnitSelected;
 
-import static src.State.HoverState.HoverNone;
-import static src.State.HoverState.HoverTileOnly;   
+import static civ.State.HoverState.HoverNone;
+import static civ.State.HoverState.HoverTileOnly;   
 
 public class GameMapView extends JPanel{
     
@@ -69,7 +69,7 @@ public class GameMapView extends JPanel{
                             " y"+tile.getView().getTilePositiony());
                     switch(state.getActionState()){
                         case Move:
-                            src.Move.makeMove(state.getSelectedTile(), tile);
+                            civ.Move.makeMove(state.getSelectedTile(), tile);
                             state.setActionState(None);
                             break;
                         case Attack:
@@ -100,7 +100,15 @@ public class GameMapView extends JPanel{
         }
 
         public void mouseMoved(MouseEvent e){
-        
+            Tile tile = gm.getTileAt(e.getX(), e.getY());
+            if (tile == null){
+                state.setHoverTile(null);
+                state.setHoverState(HoverNone);
+            }
+            else if (tile != state.getHoverTile() && tile.isExplored() == true) {
+                state.setHoverTile(tile);
+                state.setHoverState(HoverTileOnly);
+            }    
         }
 
         public void mouseExited(MouseEvent e){
@@ -108,15 +116,24 @@ public class GameMapView extends JPanel{
         }
 
         public void mouseEntered(MouseEvent e){
-            Tile tile = gm.getTileAt(e.getX(), e.getY());
-            if (tile == null){
-                state.setHoverTile(null);
-                state.setHoverState(HoverNone);
-            }
-            else if (tile != state.getHoverTile()) {
-                state.setHoverTile(tile);
-                state.setHoverState(HoverTileOnly);
-            }	
-        }
+        }	
     } 
 }// class
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

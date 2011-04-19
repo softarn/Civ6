@@ -1,4 +1,4 @@
-package src;
+package civ;
 
 public class Move {
     private static final GameMap gm = GameMap.getInstance();

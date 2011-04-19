@@ -1,31 +1,34 @@
-package src;
+package civ;
 
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 
 import java.util.Observer;
 import java.util.Observable;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.BorderLayout;
 
-import static src.State.TileState.TileSelected;
-import static src.State.TileState.TileUnSelected;
-import static src.State.UnitState.UnitSelected;
-import static src.State.UnitState.UnitUnSelected;
-import static src.State.ActionState.Move;
-import static src.State.ActionState.Attack;
+import static civ.State.TileState.TileSelected;
+import static civ.State.TileState.TileUnSelected;
+import static civ.State.UnitState.UnitSelected;
+import static civ.State.UnitState.UnitUnSelected;
+import static civ.State.ActionState.Move;
+import static civ.State.ActionState.Attack;
 
-import static src.State.HoverState.HoverNone;
-import static src.State.HoverState.HoverTileOnly;
+import static civ.State.HoverState.HoverNone;
+import static civ.State.HoverState.HoverTileOnly;
 
 
 public class Menu extends JPanel implements Observer, ActionListener{
 
     private static final State state = State.getInstance();
-
+    private JPanel north = new JPanel();
+    
     private JButton move;
     private JButton attack;
     private JButton putUnit;
@@ -33,12 +36,13 @@ public class Menu extends JPanel implements Observer, ActionListener{
     private JComboBox selUnit;
     private JLabel tileLabel;
     private GameMapView gmv = new GameMapView();    
-
+    
     //Status is only for testing purpose
     private JLabel status = new JLabel("Status is: " + state.getUnitState());
 
-    Menu(){
-        super();
+    Menu(){ 
+        super(); 
+        setLayout(new BorderLayout());
         tileLabel = new JLabel("Tile info is empty"); 
 
         move = new JButton("Move");
@@ -57,12 +61,13 @@ public class Menu extends JPanel implements Observer, ActionListener{
 
         state.addObserver(this);
 
-        add(status); 
-        add(move); 
-        add(selUnit); 
-        add(putUnit); 
-        add(attack); 
-        add(tileLabel); 
+//        add(selUnit); 
+//        add(putUnit); 
+
+        add(status, BorderLayout.CENTER); 
+        add(move, BorderLayout.SOUTH); 
+        add(attack, BorderLayout.EAST); 
+        add(tileLabel, BorderLayout.NORTH); 
 
         update(); 
     }
