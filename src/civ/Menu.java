@@ -33,6 +33,7 @@ public class Menu extends JPanel implements Observer, ActionListener{
     private JButton minus;
 
     private JLabel tileLabel;
+    private JLabel unitPresentation;
     private GameMapView gmv = new GameMapView();    
     
     //Status is only for testing purpose
@@ -40,9 +41,11 @@ public class Menu extends JPanel implements Observer, ActionListener{
 
     Menu(){ 
         super(); 
+        setLayout(new BorderLayout());
         
         tileLabel = new JLabel("Tile info is empty");  
-
+        unitPresentation = new JLabel();
+        
         move = new JButton("Move");
         //move.setMnemonic(KeyEvent.VK_D);
         move.setActionCommand("move");
@@ -65,9 +68,10 @@ public class Menu extends JPanel implements Observer, ActionListener{
        add(north); 
         
         //north.add(status); 
-        //add(move, BorderLayout.SOUTH); 
-        //add(attack, BorderLayout.NORTH); 
-        add(tileLabel);
+        add(move, BorderLayout.CENTER); 
+        add(attack, BorderLayout.WEST); 
+        add(unitPresentation, BorderLayout.NORTH);
+        add(tileLabel, BorderLayout.SOUTH);
         
         update(); 
         
@@ -90,7 +94,7 @@ public class Menu extends JPanel implements Observer, ActionListener{
             case HoverTileUnit:
                 String outputTerrain = state.getHoverTile().getTerrain().toString();
                 String outputUnit = Integer.toString(state.getHoverTile().getUnit().getManPower());
-                tileLabel.setText("Terrain: " +outputTerrain+" - Unit: " +state.getHoverTile().getUnit().getType() +  " - Manpower: "+ outputUnit);
+                tileLabel.setText("Terrain: " +outputTerrain+" - Unit: " +state.getHoverTile().getUnit().getType() +" Anf: " +state.getHoverTile().getUnit().getType().getAttack() + " Def: "+state.getHoverTile().getUnit().getType().getDefence()+ " Mnp: "+ outputUnit);
                 break;
         }        
 
@@ -102,14 +106,18 @@ public class Menu extends JPanel implements Observer, ActionListener{
             case Selected: 
                 move.setEnabled(true);
                 attack.setEnabled(true);
+                // Add html taggs in JLabel unitPresentation with -arrow- BR -arrow- for line break
+                // unitPresentation should contain victory chance variable 
+                
                 switch(state.getActionState()){
                     case Move: move.setEnabled(false); break;
                     case Attack: attack.setEnabled(false); break;
                 }
+                
+                unitPresentation.setText(state.getHoverTile().getUnit().getType().getName()+ " is marked \n Attack: " +state.getHoverTile().getUnit().getType().getAttack());
                 break;
         }	
         updateState();
-
     }
 
     private void updateState(){

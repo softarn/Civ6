@@ -6,7 +6,7 @@ import java.io.File;
 import java.io.IOException;
 
 public enum PhysicalUnitType {
-    Musketeer("Musketeer", 100, 2, 2, 3, 2, 1); 
+    Musketeer("Musketeer", 100, 2, 2, 3, 2, 10); 
 
     private String name;
     private int maxManPower;
