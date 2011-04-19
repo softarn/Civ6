@@ -109,7 +109,7 @@ public class Tile {
     }
 
     public PhysicalUnit getUnit(){
-        return unit;
+        return unit; 
     }
 
     public boolean hasUnit(){

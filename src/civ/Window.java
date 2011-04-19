@@ -19,7 +19,7 @@ public class Window extends JFrame{
         Menu m = new Menu();
         ViewPort vp = new ViewPort();
 
-        setLayout(new BorderLayout(50, 100));
+        setLayout(new BorderLayout());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         add(m, BorderLayout.SOUTH);

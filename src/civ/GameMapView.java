@@ -13,7 +13,8 @@ import static civ.State.ActionState.None;
 import static civ.State.UnitState.Selected;
 
 import static civ.State.HoverState.HoverNone;
-import static civ.State.HoverState.HoverTileOnly;   
+import static civ.State.HoverState.HoverTileOnly;
+import static civ.State.HoverState.HoverTileUnit;
 
 public class GameMapView extends JPanel{
     
@@ -105,10 +106,15 @@ public class GameMapView extends JPanel{
                 state.setHoverTile(null);
                 state.setHoverState(HoverNone);
             }
-            else if (tile != state.getHoverTile() && tile.isExplored() == true) {
-                state.setHoverTile(tile);
-                state.setHoverState(HoverTileOnly);
+            else if (tile != state.getHoverTile() && tile.hasUnit()){
+                state.setHoverTile(tile); 
+                state.setHoverState(HoverTileUnit); 
+            } 
+            else if (tile != state.getHoverTile() && tile.isExplored() == true){
+                state.setHoverTile(tile); 
+                state.setHoverState(HoverTileOnly); 
             }    
+                  
         }
 
         public void mouseExited(MouseEvent e){

@@ -10,15 +10,17 @@ import java.util.Observable;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.BorderLayout;
+
+import java.awt.*;
 
 import static civ.State.UnitState.Selected;
 import static civ.State.UnitState.UnSelected;
 import static civ.State.ActionState.Move;
 import static civ.State.ActionState.Attack;
+
 import static civ.State.HoverState.HoverNone;
 import static civ.State.HoverState.HoverTileOnly;
-
+import static civ.State.HoverState.HoverTileUnit;
 
 public class Menu extends JPanel implements Observer, ActionListener{
 
@@ -38,8 +40,8 @@ public class Menu extends JPanel implements Observer, ActionListener{
 
     Menu(){ 
         super(); 
-        setLayout(new BorderLayout());
-        tileLabel = new JLabel("Tile info is empty"); 
+        
+        tileLabel = new JLabel("Tile info is empty");  
 
         move = new JButton("Move");
         //move.setMnemonic(KeyEvent.VK_D);
@@ -59,13 +61,16 @@ public class Menu extends JPanel implements Observer, ActionListener{
         minus.addActionListener(this);
 
         state.addObserver(this);
-
-        add(status, BorderLayout.CENTER); 
-        add(move, BorderLayout.SOUTH); 
-        add(attack, BorderLayout.EAST); 
-        add(tileLabel, BorderLayout.NORTH); 
-
+        // Intended to be the north panel    
+       add(north); 
+        
+        //north.add(status); 
+        //add(move, BorderLayout.SOUTH); 
+        //add(attack, BorderLayout.NORTH); 
+        add(tileLabel);
+        
         update(); 
+        
     }
 
     public void update(Observable obs, Object obj){
@@ -81,6 +86,11 @@ public class Menu extends JPanel implements Observer, ActionListener{
                 break;
             case HoverTileOnly:
                 tileLabel.setText(state.getHoverTile().getTerrain().toString());
+                break;
+            case HoverTileUnit:
+                String outputTerrain = state.getHoverTile().getTerrain().toString();
+                String outputUnit = Integer.toString(state.getHoverTile().getUnit().getManPower());
+                tileLabel.setText(outputTerrain+" "+ outputUnit);
                 break;
         }        
 
