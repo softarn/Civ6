@@ -1,4 +1,4 @@
-package src;
+package civ;
 
 import java.awt.Polygon;
 import java.awt.Color;

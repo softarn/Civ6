@@ -1,4 +1,4 @@
-package src;
+package civ;
 
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -8,12 +8,12 @@ import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseEvent;
 import javax.swing.SwingUtilities;
 
-import static src.State.ActionState.Move;
-import static src.State.ActionState.None;
-import static src.State.UnitState.Selected;
+import static civ.State.ActionState.Move;
+import static civ.State.ActionState.None;
+import static civ.State.UnitState.Selected;
 
-import static src.State.HoverState.HoverNone;
-import static src.State.HoverState.HoverTileOnly;   
+import static civ.State.HoverState.HoverNone;
+import static civ.State.HoverState.HoverTileOnly;   
 
 public class GameMapView extends JPanel{
     
@@ -69,7 +69,7 @@ public class GameMapView extends JPanel{
                             " y"+tile.getView().getTilePositiony());
                     switch(state.getActionState()){
                         case Move:
-                            src.Move.makeMove(state.getSelectedTile(), tile);
+                            civ.Move.makeMove(state.getSelectedTile(), tile);
                             state.setActionState(None);
                             break;
                         case Attack:
