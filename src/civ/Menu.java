@@ -47,9 +47,9 @@ public class Menu extends JPanel implements Observer, ActionListener{
         setLayout(new BorderLayout(20, 30));
         north.setLayout(new FlowLayout());
         
-        manPowerBar = new JProgressBar(0,100);  
+        manPowerBar = new JProgressBar(0, 100);  
         manPowerBar.setSize(new Dimension(50,10));
-        manPowerBar.setString("Manpower ");
+        manPowerBar.setString("Manpower "); 
         manPowerBar.setStringPainted(true);
         
         tileLabel = new JLabel("Tile info is empty");  
