@@ -108,7 +108,7 @@ public class Menu extends JPanel implements Observer, ActionListener{
                 tileLabel.setText("No tile selected \n");
                 break;
             case HoverTileOnly:
-                tileLabel.setText("Terrain: \n" + state.getHoverTile().getTerrain().toString());
+                tileLabel.setText("Terrain: \n" + state.getHoverTile().getTerrain().toString() + state.getHoverTile().getTerrain().getResourceunit());
                 break;
             case HoverTileUnit:
                 String outputTerrain = state.getHoverTile().getTerrain().toString();
