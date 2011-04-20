@@ -2,16 +2,16 @@ package civ;
 
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
+import javax.swing.JOptionPane;
 import java.awt.Color;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseEvent;
-import javax.swing.SwingUtilities;
 
 import static civ.State.ActionState.Move;
 import static civ.State.ActionState.None;
 import static civ.State.UnitState.UnitSelected;
-
 import static civ.State.HoverState.HoverNone;
 import static civ.State.HoverState.HoverTileOnly;
 import static civ.State.HoverState.HoverTileUnit;
@@ -68,6 +68,7 @@ public class GameMapView extends JPanel{
                 if(tile != null){
                     System.out.println("Printing hexagon at x"+ tile.getView().getTilePositionx()+
                             " y"+tile.getView().getTilePositiony());
+
                     switch(state.getActionState()){
                         case Move:
                             civ.Move.makeMove(state.getSelectedTile(), tile);
@@ -75,14 +76,14 @@ public class GameMapView extends JPanel{
                             break;
                         case Attack:
                             if(state.getUnitState() == UnitSelected && tile.hasUnit()){
-                                System.out.println(state.getSelectedUnit().getManPower() + " and " + 
-                                        tile.getUnit().getManPower());
+                                int choice = showConfirmAttackPane(state.getSelectedUnit(), tile.getUnit(), 
+                                            state.getSelectedTile(), tile);
+                                if(choice == 0)
                                 System.out.println(Battle.doBattle(state.getSelectedUnit(), tile.getUnit(), 
                                             state.getSelectedTile(), tile));
                                 state.setActionState(None);
                                 tile = state.getSelectedTile();
-                            }
-                            else{
+                            }else{
                                 System.out.println("No unit to attack here.");
                             }
                             break;
@@ -123,6 +124,19 @@ public class GameMapView extends JPanel{
         public void mouseEntered(MouseEvent e){
         }	
     } 
+
+    private int showConfirmAttackPane(PhysicalUnit att, PhysicalUnit def, Tile tatt, Tile tdef){
+        PhysicalUnit tmpAtt = new PhysicalUnit(att);
+        PhysicalUnit tmpDef = new PhysicalUnit(def);
+        Battle.doAverageBattle(tmpAtt, tmpDef, tatt, tdef);
+
+        return JOptionPane.showConfirmDialog(
+                null,
+                "You: " + tmpAtt.getManPower() + "\nDefender: " + tmpDef.getManPower() +
+                "\n Attack?",
+                "Expected outcome",
+                JOptionPane.YES_NO_OPTION);
+    }
 }// class
 
 
