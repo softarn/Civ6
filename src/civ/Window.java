@@ -11,7 +11,7 @@ public class Window extends JFrame{
 
     //Only for testpurpose
     public static void main(String[] args){
-        new Window(900,900);
+        new Window(600,600);
     }
 
     Window(int w,int h){
@@ -19,7 +19,7 @@ public class Window extends JFrame{
         Menu m = new Menu();
         ViewPort vp = new ViewPort();
 
-        setLayout(new BorderLayout(40, 80));
+        setLayout(new BorderLayout());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         add(m, BorderLayout.SOUTH);

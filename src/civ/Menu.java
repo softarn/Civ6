@@ -4,6 +4,7 @@ import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JFrame;
+import javax.swing.JProgressBar;
 
 import java.util.Observer;
 import java.util.Observable;
@@ -26,12 +27,14 @@ public class Menu extends JPanel implements Observer, ActionListener{
 
     private static final State state = State.getInstance();
     private JPanel north = new JPanel();
+    private JPanel eastPanel = new JPanel();
     
     private JButton move;
     private JButton attack;
     private JButton plus;
     private JButton minus;
-
+   
+    private JProgressBar manPowerBar;    
     private JLabel tileLabel;
     private JLabel unitPresentation;
     private GameMapView gmv = new GameMapView();    
@@ -41,7 +44,13 @@ public class Menu extends JPanel implements Observer, ActionListener{
 
     Menu(){ 
         super(); 
-        setLayout(new BorderLayout());
+        setLayout(new BorderLayout(20, 30));
+        north.setLayout(new FlowLayout());
+        
+        manPowerBar = new JProgressBar(0,100);  
+        manPowerBar.setSize(new Dimension(50,10));
+        manPowerBar.setString("Manpower ");
+        manPowerBar.setStringPainted(true);
         
         tileLabel = new JLabel("Tile info is empty");  
         unitPresentation = new JLabel();
@@ -65,14 +74,17 @@ public class Menu extends JPanel implements Observer, ActionListener{
 
         state.addObserver(this);
         // Intended to be the north panel    
-       add(north); 
+        add(north, BorderLayout.NORTH); 
+        add(eastPanel, BorderLayout.EAST);
+        add(manPowerBar, BorderLayout.SOUTH);
+        
+        north.add(tileLabel);
+        north.add(unitPresentation);
         
         //north.add(status); 
-        add(move, BorderLayout.CENTER); 
-        add(attack, BorderLayout.WEST); 
-        add(unitPresentation, BorderLayout.NORTH);
-        add(tileLabel, BorderLayout.SOUTH);
-        
+        eastPanel.add(move); 
+        eastPanel.add(attack); 
+       
         update(); 
         
     }
@@ -86,15 +98,15 @@ public class Menu extends JPanel implements Observer, ActionListener{
     private void update(){
         switch (state.getHoverState()) {
             case HoverNone:
-                tileLabel.setText("No tile selected ");
+                tileLabel.setText("No tile selected \n");
                 break;
             case HoverTileOnly:
-                tileLabel.setText("Terrain: " + state.getHoverTile().getTerrain().toString());
+                tileLabel.setText("Terrain: \n" + state.getHoverTile().getTerrain().toString());
                 break;
             case HoverTileUnit:
                 String outputTerrain = state.getHoverTile().getTerrain().toString();
                 String outputUnit = Integer.toString(state.getHoverTile().getUnit().getManPower());
-                tileLabel.setText("Terrain: " +outputTerrain+" - Unit: " +state.getHoverTile().getUnit().getType() +" Anf: " +state.getHoverTile().getUnit().getType().getAttack() + " Def: "+state.getHoverTile().getUnit().getType().getDefence()+ " Mnp: "+ outputUnit);
+                tileLabel.setText("Terrain: " +outputTerrain+" - Unit: " +state.getHoverTile().getUnit().getType() +" Anf: " +state.getHoverTile().getUnit().getType().getAttack() + " Def: "+state.getHoverTile().getUnit().getType().getDefence()+ " Mnp: \n"+ outputUnit);
                 break;
         }        
 
@@ -106,7 +118,10 @@ public class Menu extends JPanel implements Observer, ActionListener{
             case Selected: 
                 move.setEnabled(true);
                 attack.setEnabled(true);
-                // Add html taggs in JLabel unitPresentation with -arrow- BR -arrow- for line break
+            
+                manPowerBar.setValue(state.getHoverTile().getUnit().getManPower());
+                manPowerBar.setString("Manpower: " + Integer.toString(state.getHoverTile().getUnit().getManPower()));
+                manPowerBar.repaint();
                 // unitPresentation should contain victory chance variable 
                 
                 switch(state.getActionState()){
@@ -114,7 +129,7 @@ public class Menu extends JPanel implements Observer, ActionListener{
                     case Attack: attack.setEnabled(false); break;
                 }
                 
-                unitPresentation.setText(state.getHoverTile().getUnit().getType().getName()+ " is marked \n Attack: " +state.getHoverTile().getUnit().getType().getAttack());
+                unitPresentation.setText(state.getHoverTile().getUnit().getType().getName()+ (" is marked. Attack: ") +state.getHoverTile().getUnit().getType().getAttack());
                 break;
         }	
         updateState();

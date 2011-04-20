@@ -15,9 +15,9 @@ public class State extends Observable{
     private HoverState hoverState;
    
 	private State(){
-		setUnitState(UnitState.UnSelected);
-		setActionState(ActionState.None);
-        setHoverState(HoverState.HoverNone);
+		setUnitState(UnitState.UnSelected); 
+		setActionState(ActionState.None); 
+        setHoverState(HoverState.HoverNone); 
 	}
 	
 	public static State getInstance(){
