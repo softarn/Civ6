@@ -26,7 +26,7 @@ public class Menu extends JPanel implements Observer, ActionListener{
 
     private static final State state = State.getInstance();
     private JPanel north = new JPanel();
-    
+
     private JButton move;
     private JButton attack;
     private JButton plus;
@@ -35,17 +35,17 @@ public class Menu extends JPanel implements Observer, ActionListener{
     private JLabel tileLabel;
     private JLabel unitPresentation;
     private GameMapView gmv = new GameMapView();    
-    
+
     //Status is only for testing purpose
     private JLabel status = new JLabel("Status is: " + state.getUnitState());
 
     Menu(){ 
         super(); 
         setLayout(new BorderLayout());
-        
+
         tileLabel = new JLabel("Tile info is empty");  
         unitPresentation = new JLabel();
-        
+
         move = new JButton("Move");
         //move.setMnemonic(KeyEvent.VK_D);
         move.setActionCommand("move");
@@ -65,16 +65,16 @@ public class Menu extends JPanel implements Observer, ActionListener{
 
         state.addObserver(this);
         // Intended to be the north panel    
-       add(north); 
-        
+        add(north); 
+
         //north.add(status); 
         add(move, BorderLayout.CENTER); 
         add(attack, BorderLayout.WEST); 
         add(unitPresentation, BorderLayout.NORTH);
         add(tileLabel, BorderLayout.SOUTH);
-        
+
         update(); 
-        
+
     }
 
     public void update(Observable obs, Object obj){
@@ -108,12 +108,12 @@ public class Menu extends JPanel implements Observer, ActionListener{
                 attack.setEnabled(true);
                 // Add html taggs in JLabel unitPresentation with -arrow- BR -arrow- for line break
                 // unitPresentation should contain victory chance variable 
-                
+
                 switch(state.getActionState()){
                     case Move: move.setEnabled(false); break;
                     case Attack: attack.setEnabled(false); break;
                 }
-                
+
                 unitPresentation.setText(state.getHoverTile().getUnit().getType().getName()+ " is marked \n Attack: " +state.getHoverTile().getUnit().getType().getAttack());
                 break;
         }	
