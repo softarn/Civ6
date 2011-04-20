@@ -60,9 +60,11 @@ public class Menu extends JPanel implements Observer, ActionListener{
 
         state.addObserver(this);
 
-//        add(selUnit); 
-//        add(putUnit); 
+        JPanel createUnit = new JPanel();
+        createUnit.add(selUnit); 
+        createUnit.add(putUnit); 
 
+        add(createUnit, BorderLayout.WEST);
         add(status, BorderLayout.CENTER); 
         add(move, BorderLayout.SOUTH); 
         add(attack, BorderLayout.EAST); 

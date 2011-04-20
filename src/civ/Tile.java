@@ -12,7 +12,7 @@ import static civ.State.TileState.TileUnSelected;
 import static civ.State.UnitState.UnitSelected;
 import static civ.State.UnitState.UnitUnSelected;
 
-public class Tile {
+public class Tile implements Comparable<Tile>{
     private boolean selected, hilight, explored, plain;
 
     private int countToFog;
@@ -227,4 +227,17 @@ public class Tile {
         return acc;            
     }
 
+    public boolean equals(Object other){
+        if(other instanceof Tile){
+            Tile oth = (Tile)other;
+            if(this.x == oth.x && this.y == oth.y){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public int compareTo(Tile other){
+        return (this.x * this.y) - (other.x * other.y);
+    }
 }

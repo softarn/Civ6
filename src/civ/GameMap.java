@@ -1,6 +1,7 @@
 package civ;
 
 import java.util.ArrayList;
+import java.util.TreeSet;
 import java.util.Random;
 
 import static civ.State.UnitState.UnitSelected;
@@ -123,7 +124,6 @@ public class GameMap{
           }
           }
           return result;
-          */
         if(range < 1){
             // Range to short, return empty array
             return new ArrayList<Tile>();
@@ -133,7 +133,7 @@ public class GameMap{
 
         ArrayList<Tile> acc = new ArrayList<Tile>();
 
-        for(int[] off : offsets){
+        /*for(int[] off : offsets){
             // Add all surrounding tiles
             Tile t = getTile(x - off[0], y - off[1]);
             if(t != null)
@@ -144,13 +144,27 @@ public class GameMap{
             // function with one less range next time.
             for(int[] off : offsets){
                 Tile t = getTile(x - off[0], y - off[1]);
-                acc.addAll(getNeighbours(t, range - 1, acc));
+                //acc.addAll(getNeighbours(t, range - 1, acc));
+                getNeighbours(t, range - 1, acc);
             }
         }
-
+        */
+        ArrayList<Tile> acc = new ArrayList<Tile>();
+        getNeighbours(tile, range, acc);
+        acc.remove(tile);
         return acc;
     }
 
+    private ArrayList<Tile> getNeighbours(Tile tile){
+        ArrayList<Tile> result = new ArrayList<Tile>();
+        for(int[] off : offsets){
+            // Add all surrounding tiles
+            Tile t = getTile(tile.getX() - off[0], tile.getY() - off[1]);
+            if(t != null)
+                result.add(t);
+        }
+        return result;
+    }
 
     private ArrayList<Tile> getNeighbours(Tile tile, int range, ArrayList<Tile> acc){
         if(range < 1){
@@ -159,16 +173,21 @@ public class GameMap{
         int x = tile.getX();
         int y = tile.getY();
 
-        for(Tile t2 : getNeighbours(tile, 1)){
+        ArrayList<Tile> neighbours = getNeighbours(tile);
+        for(Tile t1 : neighbours){
             // Add all surrounding tiles
-            if(!acc.contains(t2))
-                acc.add(t2);
+            if(!acc.contains(t1))
+                acc.add(t1);
         }
         if(range > 1){
             // Recurse through all surrounding tiles with one less range cost
-            for(int[] off : offsets){
+            /*for(int[] off : offsets){
                 Tile t = getTile(x - off[0], y - off[1]);
-                acc.addAll(getNeighbours(t, range - 1, acc));
+                //acc.addAll(getNeighbours(t, range - 1, acc));
+                getNeighbours(t, range - 1, acc);
+            }*/
+            for(Tile t2 : neighbours){
+                getNeighbours(t2, range -1, acc);
             }
         }
 
