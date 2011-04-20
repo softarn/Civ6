@@ -7,8 +7,8 @@ public class PopUpBubble extends JPanel{
 	
 	private Image i; //Flytta till globalt scope
 
-//Anropas vid avslutad strid, ourloss är den egna soldatens förluster, theirloss är motståndarens förluster
-//skall ritas ut med vänster hörn på X / Y
+//Anropas vid avslutad strid, ourloss ar den egna soldatens forluster, theirloss ar motstandarens forluster
+//skall ritas ut med vanster horn pa X / Y
 	PopUpBubble(int x, int y, int ourloss, int theirloss){
 		if (ourloss>theirloss){
 			try{
@@ -37,7 +37,7 @@ public class PopUpBubble extends JPanel{
 			}
 		}
 		setLayout(null);
-		setBounds(x, y-(i.getHeight(null)), i.getWidth(null)+1, i.getHeight(null)+1);//bör beräknas efter bilden		
+		setBounds(x, y-(i.getHeight(null)), i.getWidth(null)+1, i.getHeight(null)+1);//bor beraknas efter bilden		
 		setOpaque(false);		
 			
 		JLabel losslabel = new JLabel(""+ourloss);
@@ -55,8 +55,8 @@ public class PopUpBubble extends JPanel{
 
 	}
 
-//Anropas när kommando ges till enhet/stad, skall svara med att rita ut simpel feedback med vänster hörn(typ) på X / Y
-	//bilden är 300 x 226 y stor
+//Anropas nar kommando ges till enhet/stad, skall svara med att rita ut simpel feedback med vanster horn(typ) pa X / Y
+	//bilden ar 300 x 226 y stor
 	PopUpBubble(int x, int y){
 		try{
 			i = ImageIO.read(new File("data/img/bubbla2.png"));
@@ -66,7 +66,7 @@ public class PopUpBubble extends JPanel{
 			}
 		
 		setLayout(null);
-		//setBounds(x, y-226, 301, 227);//bör beräknas efter bilden
+		//setBounds(x, y-226, 301, 227);//bor beraknas efter bilden
 		setBounds(x, y-(i.getHeight(null)), i.getWidth(null), i.getHeight(null));
 		setOpaque(false);		
 		
@@ -79,7 +79,7 @@ public class PopUpBubble extends JPanel{
 	
 	protected void paintComponent(Graphics g){
 		super.paintComponent(g);
-		g.drawImage(/*pratbubbla här*/ i, 0, 0, this);
+		g.drawImage(/*pratbubbla har*/ i, 0, 0, this);
 	}
 	
 }

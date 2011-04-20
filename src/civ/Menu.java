@@ -106,7 +106,11 @@ public class Menu extends JPanel implements Observer, ActionListener{
             case HoverTileUnit:
                 String outputTerrain = state.getHoverTile().getTerrain().toString();
                 String outputUnit = Integer.toString(state.getHoverTile().getUnit().getManPower());
-                tileLabel.setText("Terrain: " +outputTerrain+" - Unit: " +state.getHoverTile().getUnit().getType() +" Anf: " +state.getHoverTile().getUnit().getType().getAttack() + " Def: "+state.getHoverTile().getUnit().getType().getDefence()+ " Mnp: \n"+ outputUnit);
+               tileLabel.setText("Terrain: " +outputTerrain+
+                        " - Unit: " +state.getHoverTile().getUnit().getType() +
+                        " Anf: " +state.getHoverTile().getUnit().getType().getAttack() + 
+                        " Def: "+state.getHoverTile().getUnit().getType().getDefence()+ 
+                        " Mnp: "+ outputUnit);
                 break;
         }        
 
