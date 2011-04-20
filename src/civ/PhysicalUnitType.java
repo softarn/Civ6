@@ -31,7 +31,6 @@ public enum PhysicalUnitType {
     Galley("Galley", "Boat", 250, 30, 25, 1, 4),
     Caravel("Caravel", "Boat", 100, 50, 40, 1, 6);
 
-
     private String name;
     private String category;
     private int maxManPower;

@@ -108,10 +108,11 @@ public class Tile implements Comparable<Tile>{
             countToFog = 0;
         }
         unit = pu;
+        view.repaint();
     }
 
     public PhysicalUnit getUnit(){
-        return unit;
+        return unit; 
     }
 
     public boolean hasUnit(){

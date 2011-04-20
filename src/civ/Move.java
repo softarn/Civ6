@@ -12,7 +12,7 @@ public class Move {
 
         t1.setUnit(null);
         t2.setUnit(unit);
-        for(Tile t : gm.getNeighbours(t2, 3)){
+        for(Tile t : gm.getNeighbours(t2, 1)){
             t.setExplored(true);
             t.getView().repaint();
         }
