@@ -113,11 +113,11 @@ public class Menu extends JPanel implements Observer, ActionListener{
             case HoverTileUnit:
                 String outputTerrain = state.getHoverTile().getTerrain().toString();
                 String outputUnit = Integer.toString(state.getHoverTile().getUnit().getManPower());
-                tileLabel.setText("Terrain: " +outputTerrain+
-                        " - Unit: " +state.getHoverTile().getUnit().getType() +
-                        " Anf: " +state.getHoverTile().getUnit().getType().getAttack() + 
-                        " Def: "+state.getHoverTile().getUnit().getType().getDefence()+ 
-                        " Mnp: "+ outputUnit);
+                tileLabel.setText("Terrain: " + outputTerrain +
+                        " - Unit: " + state.getHoverTile().getUnit().getType() +
+                        " Att: " + state.getHoverTile().getUnit().getType().getAttack() + 
+                        " Def: " + state.getHoverTile().getUnit().getType().getDefence() +
+                        " Mnp: " + outputUnit);
                 break;
         }        
 
@@ -129,9 +129,9 @@ public class Menu extends JPanel implements Observer, ActionListener{
             case UnitSelected: 
                 move.setEnabled(true);
                 attack.setEnabled(true);
-
-                manPowerBar.setValue(state.getHoverTile().getUnit().getManPower());
-                manPowerBar.setString("Manpower: " + Integer.toString(state.getHoverTile().getUnit().getManPower()));
+            
+                manPowerBar.setValue(state.getSelectedUnit().getManPower());
+                manPowerBar.setString("Manpower: " + Integer.toString(state.getSelectedUnit().getManPower()));
                 manPowerBar.repaint();
                 // unitPresentation should contain victory chance variable 
 
@@ -139,8 +139,9 @@ public class Menu extends JPanel implements Observer, ActionListener{
                     case Move: move.setEnabled(false); break;
                     case Attack: attack.setEnabled(false); break;
                 }
-
-                unitPresentation.setText(state.getHoverTile().getUnit().getType().getName()+ (" is marked. Attack: ") +state.getHoverTile().getUnit().getType().getAttack());
+                
+                unitPresentation.setText(state.getSelectedUnit().getType().getName()+
+                        (" is marked. Attack: ") +state.getSelectedUnit().getType().getAttack());
                 break;
         }	
         updateState();

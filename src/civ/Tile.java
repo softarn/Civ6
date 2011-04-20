@@ -72,11 +72,11 @@ public class Tile implements Comparable<Tile>{
         if(st.getTileState() == TileSelected){
             State.getSelectedTile().deselect();
         }
-        st.setTileState(TileSelected);
         st.setSelectedTile(this);
+        st.setTileState(TileSelected);
         if(unit != null){
-            st.setUnitState(UnitSelected);
             st.setSelectedUnit(unit);
+            st.setUnitState(UnitSelected);
         }
         selected = true;
         view.repaint();
@@ -85,12 +85,12 @@ public class Tile implements Comparable<Tile>{
     public void deselect(){
         State st = State.getInstance();
         if(st.getSelectedTile().equals(this)){
-            st.setTileState(TileUnSelected);
             st.setSelectedTile(null);
+            st.setTileState(TileUnSelected);
             selected = false;
             if(unit != null){
-                st.setUnitState(UnitUnSelected);
                 st.setSelectedUnit(null);
+                st.setUnitState(UnitUnSelected);
             }
             view.repaint();
         }
@@ -105,7 +105,7 @@ public class Tile implements Comparable<Tile>{
         if(pu != null){
             setExplored(true);
         }else{
-            countToFog = 0;
+            //countToFog = 0;
         }
         unit = pu;
         view.repaint();
