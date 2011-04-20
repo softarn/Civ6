@@ -5,8 +5,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 
-import static civ.State.UnitState.Selected;
-
 public class Window extends JFrame{
 
     //Only for testpurpose
@@ -15,7 +13,7 @@ public class Window extends JFrame{
     }
 
     Window(int w,int h){
-	super ("Civ 6");
+        super ("Civ 6");
         Menu m = new Menu();
         ViewPort vp = new ViewPort();
 

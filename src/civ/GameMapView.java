@@ -10,7 +10,7 @@ import javax.swing.SwingUtilities;
 
 import static civ.State.ActionState.Move;
 import static civ.State.ActionState.None;
-import static civ.State.UnitState.Selected;
+import static civ.State.UnitState.UnitSelected;
 
 import static civ.State.HoverState.HoverNone;
 import static civ.State.HoverState.HoverTileOnly;
@@ -74,7 +74,7 @@ public class GameMapView extends JPanel{
                             state.setActionState(None);
                             break;
                         case Attack:
-                            if(state.getUnitState() == Selected && tile.hasUnit()){
+                            if(state.getUnitState() == UnitSelected && tile.hasUnit()){
                                 System.out.println(state.getSelectedUnit().getManPower() + " and " + 
                                         tile.getUnit().getManPower());
                                 System.out.println(Battle.doBattle(state.getSelectedUnit(), tile.getUnit(), 

@@ -1,9 +1,10 @@
 package civ;
 
 import java.util.ArrayList;
+import java.util.TreeSet;
 import java.util.Random;
 
-import static civ.State.UnitState.Selected;
+import static civ.State.UnitState.UnitSelected;
 
 public class GameMap{
     private static final State state = State.getInstance();
@@ -14,11 +15,11 @@ public class GameMap{
     private int height = 15, width = 15;
 
     private int[][] offsets = {{-1,-1},
-                            {0,-1},
-                            {1,0},
-                            {1,1},
-                            {0,1},
-                            {-1,0}};
+        {0,-1},
+        {1,0},
+        {1,1},
+        {0,1},
+        {-1,0}};
 
 
     public GameMap(GameMapView gmv){
@@ -60,7 +61,7 @@ public class GameMap{
         if(x >= getWidth() || y >= getHeight() ||
                 x < 0 || y < 0){
             return null;
-        } 
+                } 
         return tiles[x][y];
     }
 
@@ -70,11 +71,11 @@ public class GameMap{
      */
     public Tile getTileAt(int x, int y){
         /*
-            kolumn =((pixelx - offsetX) / bredd)
-            rad = ((pixely - offsetY) / (höjd/2))
-            x = (kolumn + rad) / 2
-            y = (rad - kolumn) / 2
-            */
+           kolumn =((pixelx - offsetX) / bredd)
+           rad = ((pixely - offsetY) / (höjd/2))
+           x = (kolumn + rad) / 2
+           y = (rad - kolumn) / 2
+           */
         for(int j=getHeight()-1; j>=0; --j){
             for(int i=getWidth()-1; i>=0; --i){
                 if(tiles[i][j].getView().contains(x, y)){
@@ -84,13 +85,13 @@ public class GameMap{
         }
         return null;
         /*
-        double kolumn = ((x - 120 * width) / 120.0 );
-        double rad = (y / 70.0);
-        int absX = (int)Math.floor((kolumn + rad) / 2);
-        int absY = (int)Math.floor((rad - kolumn) / 2);
-        System.out.println(x +","+ y +" = "+ absX +","+ absY);
-        return getTile(absX, absY);
-        */
+           double kolumn = ((x - 120 * width) / 120.0 );
+           double rad = (y / 70.0);
+           int absX = (int)Math.floor((kolumn + rad) / 2);
+           int absY = (int)Math.floor((rad - kolumn) / 2);
+           System.out.println(x +","+ y +" = "+ absX +","+ absY);
+           return getTile(absX, absY);
+           */
     }
 
     /**
@@ -115,37 +116,105 @@ public class GameMap{
      * @param range Neighbours in this range will be returned.
      */
     public ArrayList<Tile> getNeighbours(Tile tile, int range){
-        ArrayList<Tile> result = new ArrayList<Tile>();
-        for(int[] t : tile.getNeighbours(range)){
-            Tile temp = getTile(t[0], t[1]);
-            if(temp != null){
-                result.add(temp);
+        /*ArrayList<Tile> result = new ArrayList<Tile>();
+          for(int[] t : tile.getNeighbours(range)){
+          Tile temp = getTile(t[0], t[1]);
+          if(temp != null){
+          result.add(temp);
+          }
+          }
+          return result;
+        if(range < 1){
+            // Range to short, return empty array
+            return new ArrayList<Tile>();
+        }
+        int x = tile.getX();
+        int y = tile.getY();
+
+        ArrayList<Tile> acc = new ArrayList<Tile>();
+
+        /*for(int[] off : offsets){
+            // Add all surrounding tiles
+            Tile t = getTile(x - off[0], y - off[1]);
+            if(t != null)
+                acc.add(t);
+        }
+        if(range > 1){
+            // If there range was more than one call the recursive 
+            // function with one less range next time.
+            for(int[] off : offsets){
+                Tile t = getTile(x - off[0], y - off[1]);
+                //acc.addAll(getNeighbours(t, range - 1, acc));
+                getNeighbours(t, range - 1, acc);
             }
         }
+        */
+        ArrayList<Tile> acc = new ArrayList<Tile>();
+        getNeighbours(tile, range, acc);
+        acc.remove(tile);
+        return acc;
+    }
+
+    private ArrayList<Tile> getNeighbours(Tile tile){
+        ArrayList<Tile> result = new ArrayList<Tile>();
+        for(int[] off : offsets){
+            // Add all surrounding tiles
+            Tile t = getTile(tile.getX() - off[0], tile.getY() - off[1]);
+            if(t != null)
+                result.add(t);
+        }
         return result;
+    }
+
+    private ArrayList<Tile> getNeighbours(Tile tile, int range, ArrayList<Tile> acc){
+        if(range < 1){
+            return new ArrayList<Tile>();
+        }
+        int x = tile.getX();
+        int y = tile.getY();
+
+        ArrayList<Tile> neighbours = getNeighbours(tile);
+        for(Tile t1 : neighbours){
+            // Add all surrounding tiles
+            if(!acc.contains(t1))
+                acc.add(t1);
+        }
+        if(range > 1){
+            // Recurse through all surrounding tiles with one less range cost
+            /*for(int[] off : offsets){
+                Tile t = getTile(x - off[0], y - off[1]);
+                //acc.addAll(getNeighbours(t, range - 1, acc));
+                getNeighbours(t, range - 1, acc);
+            }*/
+            for(Tile t2 : neighbours){
+                getNeighbours(t2, range -1, acc);
+            }
+        }
+
+        return acc;            
     }
 
     public int getDistance(Tile a, Tile b){
         return 1; 
     }
-/*
-    public void scale(double grade){
-        double size;
-        for(int j=height-1; j>=0; --j){
-            for(int i=width-1; i>=0; --i){
-                if(tiles[i][j].getView().getWidth()*grade > 200){
-                    size = 200;
-                }
-                else if(tiles[i][j].getView().getWidth()*grade < 50){
-                    size = 50;
-                }
-                else{
-                    size = tiles[i][j].getView().getWidth()*grade;
-                }
-                tiles[i][j].getView().resize(150);
-            }
-        }
-    }
+    /*
+       public void scale(double grade){
+       double size;
+       for(int j=height-1; j>=0; --j){
+       for(int i=width-1; i>=0; --i){
+       if(tiles[i][j].getView().getWidth()*grade > 200){
+       size = 200;
+       }
+       else if(tiles[i][j].getView().tWidth()*grade < 50){
+       size = 50;
+       }
+       else{
+       size = tiles[i][j].getView().getWidth()*grade;
+       }
+       tiles[i][j].getView().resize(150);
+       }
+       }
+       }
 
     /**
      * Sets all the tiles in the map.

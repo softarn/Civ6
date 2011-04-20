@@ -2,7 +2,7 @@ package civ;
 
 import java.util.Random;
 import java.lang.Math;
-import static civ.State.UnitState.UnSelected;
+import static civ.State.UnitState.UnitUnSelected;
 
 public class Battle {
 
@@ -32,9 +32,6 @@ public class Battle {
 		int movementPoint1 = u1.getCurrentMovementPoint();
 		int movementPoint2 = u2.getCurrentMovementPoint();
 		
-		int hitPoints1 = ut1.getHitPoints();
-		int hitPoints2 = ut1.getHitPoints();
-		
 		int mp1 = u1.getManPower();
 		int mp2 = u2.getManPower();
 		
@@ -62,13 +59,13 @@ public class Battle {
             u2.setManPower(mp2);
 			
 			if (mp1<1 && mp2<1){
-                state.setUnitState(UnSelected);
+                state.setUnitState(UnitUnSelected);
                 t1.setUnit(null);
                 t2.setUnit(null);
 				break;
 			}else if(mp1<=0) {
                 t1.setUnit(null);
-                state.setUnitState(UnSelected);
+                state.setUnitState(UnitUnSelected);
 				winnerId=1;
 				break;
 			}else if(mp2<=0){

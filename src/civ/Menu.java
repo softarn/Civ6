@@ -3,6 +3,7 @@ package civ;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JProgressBar;
 
@@ -14,8 +15,10 @@ import java.awt.event.ActionEvent;
 
 import java.awt.*;
 
-import static civ.State.UnitState.Selected;
-import static civ.State.UnitState.UnSelected;
+import static civ.State.TileState.TileSelected;
+import static civ.State.TileState.TileUnSelected;
+import static civ.State.UnitState.UnitSelected;
+import static civ.State.UnitState.UnitUnSelected;
 import static civ.State.ActionState.Move;
 import static civ.State.ActionState.Attack;
 
@@ -28,11 +31,12 @@ public class Menu extends JPanel implements Observer, ActionListener{
     private static final State state = State.getInstance();
     private JPanel north = new JPanel();
     private JPanel eastPanel = new JPanel();
+    private JPanel createUnit = new JPanel(); // Temporary panel
     
     private JButton move;
     private JButton attack;
-    private JButton plus;
-    private JButton minus;
+    private JButton putUnit;
+    private JComboBox selUnit;
    
     private JProgressBar manPowerBar;    
     private JLabel tileLabel;
@@ -64,15 +68,18 @@ public class Menu extends JPanel implements Observer, ActionListener{
         attack.setActionCommand("attack");
         attack.addActionListener(this);
 
-        plus = new JButton("+");
-        plus.setActionCommand("+");
-        plus.addActionListener(this);
-
-        minus = new JButton("-");
-        minus.setActionCommand("-");
-        minus.addActionListener(this);
+        selUnit = new JComboBox(PhysicalUnitType.values());
+        putUnit = new JButton("Set Unit");
+        putUnit.setActionCommand("setunit");
+        putUnit.addActionListener(this);
 
         state.addObserver(this);
+
+        createUnit.add(selUnit); 
+        createUnit.add(putUnit); 
+
+        add(createUnit, BorderLayout.WEST);
+
         // Intended to be the north panel    
         add(north, BorderLayout.NORTH); 
         add(eastPanel, BorderLayout.EAST);
@@ -115,11 +122,11 @@ public class Menu extends JPanel implements Observer, ActionListener{
         }        
 
         switch(state.getUnitState()){
-            case UnSelected: 
+            case UnitUnSelected: 
                 move.setEnabled(false); 
                 attack.setEnabled(false);
                 break;
-            case Selected: 
+            case UnitSelected: 
                 move.setEnabled(true);
                 attack.setEnabled(true);
             
@@ -150,11 +157,16 @@ public class Menu extends JPanel implements Observer, ActionListener{
         if(attack == ae.getSource()){
             state.setActionState(Attack);
         }
-        if(plus == ae.getSource()){
-            //            GameMap.getInstance().scale(1.1);
-        }
-        if(minus == ae.getSource()){
-            //            GameMap.getInstance().scale(0.9);
+        if(putUnit == ae.getSource()){
+            if(state.getTileState() == TileSelected){
+                if(state.getSelectedTile().hasUnit()){
+                    status.setText("Status is: Can't place unit on another unit.");
+                }
+                else{
+                    state.getSelectedTile().setUnit(new PhysicalUnit((PhysicalUnitType)selUnit.getSelectedItem()));
+                    state.getSelectedTile().getView().repaint();
+                }
+            }
         }
     }
 }

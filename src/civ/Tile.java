@@ -7,10 +7,12 @@ import java.io.IOException;
 import java.lang.Math;
 import java.util.ArrayList;
 
-import static civ.State.TileState.Selected;
-import static civ.State.TileState.UnSelected;
+import static civ.State.TileState.TileSelected;
+import static civ.State.TileState.TileUnSelected;
+import static civ.State.UnitState.UnitSelected;
+import static civ.State.UnitState.UnitUnSelected;
 
-public class Tile {
+public class Tile implements Comparable<Tile>{
     private boolean selected, hilight, explored, plain;
 
     private int countToFog;
@@ -67,13 +69,13 @@ public class Tile {
 
     public void select(){
         State st = State.getInstance();
-        if(st.getTileState() == Selected){
+        if(st.getTileState() == TileSelected){
             State.getSelectedTile().deselect();
         }
-        st.setTileState(Selected);
+        st.setTileState(TileSelected);
         st.setSelectedTile(this);
         if(unit != null){
-            st.setUnitState(State.UnitState.Selected);
+            st.setUnitState(UnitSelected);
             st.setSelectedUnit(unit);
         }
         selected = true;
@@ -83,11 +85,11 @@ public class Tile {
     public void deselect(){
         State st = State.getInstance();
         if(st.getSelectedTile().equals(this)){
-            st.setTileState(UnSelected);
+            st.setTileState(TileUnSelected);
             st.setSelectedTile(null);
             selected = false;
             if(unit != null){
-                st.setUnitState(State.UnitState.UnSelected);
+                st.setUnitState(UnitUnSelected);
                 st.setSelectedUnit(null);
             }
             view.repaint();
@@ -106,6 +108,7 @@ public class Tile {
             countToFog = 0;
         }
         unit = pu;
+        view.repaint();
     }
 
     public PhysicalUnit getUnit(){
@@ -225,4 +228,17 @@ public class Tile {
         return acc;            
     }
 
+    public boolean equals(Object other){
+        if(other instanceof Tile){
+            Tile oth = (Tile)other;
+            if(this.x == oth.x && this.y == oth.y){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public int compareTo(Tile other){
+        return (this.x * this.y) - (other.x * other.y);
+    }
 }
