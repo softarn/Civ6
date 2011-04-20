@@ -32,17 +32,17 @@ public class Menu extends JPanel implements Observer, ActionListener{
     private JPanel north = new JPanel();
     private JPanel eastPanel = new JPanel();
     private JPanel createUnit = new JPanel(); // Temporary panel
-    
+
     private JButton move;
     private JButton attack;
     private JButton putUnit;
     private JComboBox selUnit;
-   
+
     private JProgressBar manPowerBar;    
     private JLabel tileLabel;
     private JLabel unitPresentation;
     private GameMapView gmv = new GameMapView();    
-    
+
     //Status is only for testing purpose
     private JLabel status = new JLabel("Status is: " + state.getUnitState());
 
@@ -50,15 +50,15 @@ public class Menu extends JPanel implements Observer, ActionListener{
         super(); 
         setLayout(new BorderLayout(20, 30));
         north.setLayout(new FlowLayout());
-        
+
         manPowerBar = new JProgressBar(0,100);  
         manPowerBar.setSize(new Dimension(50,10));
         manPowerBar.setString("Manpower ");
         manPowerBar.setStringPainted(true);
-        
+
         tileLabel = new JLabel("Tile info is empty");  
         unitPresentation = new JLabel();
-        
+
         move = new JButton("Move");
         //move.setMnemonic(KeyEvent.VK_D);
         move.setActionCommand("move");
@@ -84,16 +84,16 @@ public class Menu extends JPanel implements Observer, ActionListener{
         add(north, BorderLayout.NORTH); 
         add(eastPanel, BorderLayout.EAST);
         add(manPowerBar, BorderLayout.SOUTH);
-        
+
         north.add(tileLabel);
         north.add(unitPresentation);
-        
+
         //north.add(status); 
         eastPanel.add(move); 
         eastPanel.add(attack); 
-       
+
         update(); 
-        
+
     }
 
     public void update(Observable obs, Object obj){
@@ -105,15 +105,15 @@ public class Menu extends JPanel implements Observer, ActionListener{
     private void update(){
         switch (state.getHoverState()) {
             case HoverNone:
-                tileLabel.setText("No tile selected \n");
+                tileLabel.setText("No tile");
                 break;
             case HoverTileOnly:
-                tileLabel.setText("Terrain: \n" + state.getHoverTile().getTerrain().toString());
+                tileLabel.setText("Terrain:" + state.getHoverTile().getTerrain().toString());
                 break;
             case HoverTileUnit:
                 String outputTerrain = state.getHoverTile().getTerrain().toString();
                 String outputUnit = Integer.toString(state.getHoverTile().getUnit().getManPower());
-               tileLabel.setText("Terrain: " +outputTerrain+
+                tileLabel.setText("Terrain: " +outputTerrain+
                         " - Unit: " +state.getHoverTile().getUnit().getType() +
                         " Anf: " +state.getHoverTile().getUnit().getType().getAttack() + 
                         " Def: "+state.getHoverTile().getUnit().getType().getDefence()+ 
@@ -129,17 +129,17 @@ public class Menu extends JPanel implements Observer, ActionListener{
             case UnitSelected: 
                 move.setEnabled(true);
                 attack.setEnabled(true);
-            
+
                 manPowerBar.setValue(state.getHoverTile().getUnit().getManPower());
                 manPowerBar.setString("Manpower: " + Integer.toString(state.getHoverTile().getUnit().getManPower()));
                 manPowerBar.repaint();
                 // unitPresentation should contain victory chance variable 
-                
+
                 switch(state.getActionState()){
                     case Move: move.setEnabled(false); break;
                     case Attack: attack.setEnabled(false); break;
                 }
-                
+
                 unitPresentation.setText(state.getHoverTile().getUnit().getType().getName()+ (" is marked. Attack: ") +state.getHoverTile().getUnit().getType().getAttack());
                 break;
         }	
