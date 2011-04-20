@@ -65,8 +65,8 @@ public class Menu extends JPanel implements Observer, ActionListener{
        add(north); 
         
         //north.add(status); 
-        //add(move, BorderLayout.SOUTH); 
-        //add(attack, BorderLayout.NORTH); 
+        add(move, BorderLayout.SOUTH); 
+        add(attack, BorderLayout.NORTH); 
         add(tileLabel);
         
         update(); 
