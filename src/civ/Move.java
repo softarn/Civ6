@@ -22,7 +22,7 @@ public class Move {
 
     private static int moveLength(Tile t1, Tile t2, int movementPoints){
         for(int i = 1; i <= movementPoints; i++){
-            for(Tile t : gm.getNeighbours(t1, i)){
+            for(Tile t : gm.getNeighbours(t1, i, true)){
                 if(t == t2){
                     return i;
                 }
@@ -30,5 +30,4 @@ public class Move {
         }
         return -1;
     }
-	
 }

@@ -104,6 +104,12 @@ public class Tile implements Comparable<Tile>{
     public void setUnit(PhysicalUnit pu){
         if(pu != null){
             setExplored(true);
+            if(GameMap.getInstance() != null){
+                for(Tile t : GameMap.getInstance().getNeighbours(this, pu.getType().getVision())){
+                    t.setExplored(true);
+                    t.getView().repaint();
+                }
+            }
         }else{
             //countToFog = 0;
         }

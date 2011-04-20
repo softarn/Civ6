@@ -7,6 +7,7 @@ import static civ.State.UnitState.UnitUnSelected;
 public class Battle {
 
     private static State state = State.getInstance();
+    private static GameMap gm = GameMap.getInstance();
 
 	public static int doBattle(PhysicalUnit u1, PhysicalUnit u2, Tile t1, Tile t2) {
 		
@@ -49,8 +50,12 @@ public class Battle {
             int dau = rand.nextInt(audp) + rand.nextInt(audp);
             int ddu = rand.nextInt(dudp) + rand.nextInt(dudp);
 
-			mp1 -= ddu;
-			mp2 -= dau;
+            if(-1 != attackRange(t2, t1, range2)){
+			    mp1 -= ddu;
+            }
+            if(-1 != attackRange(t1, t2, range1)){
+                mp2 -= dau;
+            }
 			
             System.out.println(mp1);
             System.out.println(mp2);
@@ -81,5 +86,14 @@ public class Battle {
 
     private static int round(double d) {
         return (int)Math.floor(d + 0.5f);
+    }
+
+    private static int attackRange(Tile t1, Tile t2, int range){
+            for(Tile t : gm.getNeighbours(t1, range, false)){
+                if(t == t2){
+                    return 1;
+                }
+            }
+        return -1;
     }
 }

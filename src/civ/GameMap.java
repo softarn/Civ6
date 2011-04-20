@@ -58,10 +58,9 @@ public class GameMap{
      * Get a specific tile from the array.
      */
     public Tile getTile(int x, int y){
-        if(x >= getWidth() || y >= getHeight() ||
-                x < 0 || y < 0){
+        if(x >= getWidth() || y >= getHeight() || x < 0 || y < 0){
             return null;
-                } 
+        } 
         return tiles[x][y];
     }
 
@@ -116,31 +115,42 @@ public class GameMap{
      * @param range Neighbours in this range will be returned.
      */
     public ArrayList<Tile> getNeighbours(Tile tile, int range){
+        return getNeighbours(tile, range, false);
+    }
+    
+    public ArrayList<Tile> getNeighbours(Tile tile, int range, boolean considerTerrain){
         ArrayList<Tile> acc = new ArrayList<Tile>();
-        getNeighbours(tile, range, acc);
+        getNeighbours(tile, range, acc, considerTerrain);
         acc.remove(tile);
         return acc;
     }
 
-    private ArrayList<Tile> getNeighbours(Tile tile){
+    private ArrayList<Tile> getNeighbours(Tile tile, boolean terrain){
         ArrayList<Tile> result = new ArrayList<Tile>();
         for(int[] off : offsets){
             // Add all surrounding tiles
             Tile t = getTile(tile.getX() - off[0], tile.getY() - off[1]);
             if(t != null)
-                result.add(t);
+                if(terrain && state.getUnitState() == UnitSelected){
+                    if(t.getTerrain().isTraversible(state.getSelectedUnit())){
+                        result.add(t);
+                    }
+                }
+                else{
+                    result.add(t);
+                }
         }
         return result;
     }
 
-    private ArrayList<Tile> getNeighbours(Tile tile, int range, ArrayList<Tile> acc){
+    private ArrayList<Tile> getNeighbours(Tile tile, int range, ArrayList<Tile> acc, boolean terrain){
         if(range < 1){
             return new ArrayList<Tile>();
         }
         int x = tile.getX();
         int y = tile.getY();
 
-        ArrayList<Tile> neighbours = getNeighbours(tile);
+        ArrayList<Tile> neighbours = getNeighbours(tile, terrain);
         for(Tile t1 : neighbours){
             // Add all surrounding tiles
             if(!acc.contains(t1))
@@ -148,13 +158,8 @@ public class GameMap{
         }
         if(range > 1){
             // Recurse through all surrounding tiles with one less range cost
-            /*for(int[] off : offsets){
-                Tile t = getTile(x - off[0], y - off[1]);
-                //acc.addAll(getNeighbours(t, range - 1, acc));
-                getNeighbours(t, range - 1, acc);
-            }*/
             for(Tile t2 : neighbours){
-                getNeighbours(t2, range -1, acc);
+                getNeighbours(t2, range - 1, acc, terrain);
             }
         }
 
@@ -202,7 +207,7 @@ public class GameMap{
                 result[i][j] = temp;
             }
         }
-        result[1][1].setUnit(new PhysicalUnit(PhysicalUnitType.Musketeer));
         tiles = result;
+        tiles[1][1].setUnit(new PhysicalUnit(PhysicalUnitType.Musketeer));
     }
 }
