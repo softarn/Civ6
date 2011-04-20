@@ -108,6 +108,4 @@ public class State extends Observable{
         setChanged();
 		notifyObservers();
     }
-    
-    
 }

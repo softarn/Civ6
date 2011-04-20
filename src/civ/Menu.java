@@ -87,7 +87,6 @@ public class Menu extends JPanel implements Observer, ActionListener{
 
         north.add(tileLabel);
         north.add(unitPresentation);
-        north.add(status);
 
         //north.add(status); 
         eastPanel.add(move); 
@@ -106,10 +105,10 @@ public class Menu extends JPanel implements Observer, ActionListener{
     private void update(){
         switch (state.getHoverState()) {
             case HoverNone:
-                tileLabel.setText("No tile selected \n");
+                tileLabel.setText("No tile");
                 break;
             case HoverTileOnly:
-                tileLabel.setText("Terrain: \n" + state.getHoverTile().getTerrain().toString());
+                tileLabel.setText("Terrain:" + state.getHoverTile().getTerrain().toString());
                 break;
             case HoverTileUnit:
                 String outputTerrain = state.getHoverTile().getTerrain().toString();
@@ -130,7 +129,6 @@ public class Menu extends JPanel implements Observer, ActionListener{
             case UnitSelected: 
                 move.setEnabled(true);
                 attack.setEnabled(true);
-
                 manPowerBar.setValue(state.getSelectedUnit().getManPower());
                 manPowerBar.setString("Manpower: " + Integer.toString(state.getSelectedUnit().getManPower()));
                 manPowerBar.repaint();
@@ -141,7 +139,8 @@ public class Menu extends JPanel implements Observer, ActionListener{
                     case Attack: attack.setEnabled(false); break;
                 }
 
-                unitPresentation.setText(state.getSelectedUnit().getType().getName()+ (" is marked. Attack: ") +state.getSelectedUnit().getType().getAttack());
+                unitPresentation.setText(state.getSelectedUnit().getType().getName()+
+                        (" is marked. Attack: ") +state.getSelectedUnit().getType().getAttack());
                 break;
         }	
         updateState();

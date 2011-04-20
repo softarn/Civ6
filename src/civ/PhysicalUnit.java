@@ -7,15 +7,21 @@ public class PhysicalUnit implements Comparable<PhysicalUnit>{
     private int idNumber;
     private int manPower;
     private int currentMovementPoint;
-    //private City city = null;
-
     private PhysicalUnitType type;
+    //private City city = null;
 
     public PhysicalUnit(PhysicalUnitType type){
         this.idNumber = ++count;
         this.manPower = type.getMaxManPower();
         this.currentMovementPoint = type.getMovementPoints();
         this.type = type;
+    }
+
+    public PhysicalUnit(PhysicalUnit other){
+        this.idNumber = ++count;
+        this.manPower = other.getManPower();
+        this.currentMovementPoint = other.getCurrentMovementPoint();
+        this.type = other.getType();
     }
 
     public boolean isInCity(){

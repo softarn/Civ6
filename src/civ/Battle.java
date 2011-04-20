@@ -9,32 +9,109 @@ public class Battle {
     private static State state = State.getInstance();
     private static GameMap gm = GameMap.getInstance();
 
-	public static int doBattle(PhysicalUnit u1, PhysicalUnit u2, Tile t1, Tile t2) {
-		
-		int winnerId=0;
+    public static int doAverageBattle(PhysicalUnit u1, PhysicalUnit u2, Tile t1, Tile t2) {
+		int winnerId = 0;
 		
 		// Get variables from object u1 (attacking) and U2 (defending) 
-        PhysicalUnitType ut1 = u1.getType();
-        PhysicalUnitType ut2 = u2.getType();
+        PhysicalUnitType uta = u1.getType();
+        PhysicalUnitType utd = u2.getType();
 
         TerrainType tt1 = t1.getTerrain();
         TerrainType tt2 = t2.getTerrain();
 		
-		String name1 = ut1.getName();
-		String name2 = ut2.getName();
+		String name1 = uta.getName();
+		String name2 = utd.getName();
 
-		int dp = ut2.getDefence();
+		int dp = utd.getDefence();
+        if(utd == PhysicalUnitType.Pikeman && uta.isMounted())
+            dp = 8;
 
-		int ap = ut1.getAttack();
+		int ap = uta.getAttack();
 		
-		int range1 = ut1.getRange();
-		int range2 = ut2.getRange();
+		int range1 = uta.getRange();
+		int range2 = utd.getRange();
 		
 		int movementPoint1 = u1.getCurrentMovementPoint();
 		int movementPoint2 = u2.getCurrentMovementPoint();
 		
-		int mp1 = u1.getManPower();
-		int mp2 = u2.getManPower();
+		int mpa = u1.getManPower();
+		int mpd = u2.getManPower();
+		
+		int attackBonus = tt1.getAttackBonus();
+		int defenceBonus = tt2.getDefenceBonus();
+		
+		// Attacking object losing manpower randomNumber2 and defending losing randomNumber1 
+		Random rand = new Random();
+		
+		for (int i = 0; i < 12; i++) { 
+            int audp = (int)Math.round((ap * mpa) / 100.0);
+            int dudp = (int)Math.round((dp * mpd) / 100.0);
+
+            System.out.println("battle a: " + audp);
+            System.out.println("battle d: " + dudp);
+
+            int dau = 0;
+            int ddu = 0;
+            if(audp > 1)
+                dau = Math.round(audp/2);
+            if(dudp > 1)
+                ddu = Math.round(dudp/2);
+
+			mpa -= ddu;
+			mpd -= dau;
+
+            u1.setManPower(mpa);
+            u2.setManPower(mpd);
+			
+			if (mpa < 1 && mpd < 1){
+                state.setUnitState(UnitUnSelected);
+                t1.setUnit(null);
+                t2.setUnit(null);
+				break;
+			}else if(mpa < 1) {
+                t1.setUnit(null);
+                state.setUnitState(UnitUnSelected);
+				winnerId = 1;
+				break;
+			}else if(mpd < 1){
+                t2.setUnit(null);
+                state.setHoverState(State.HoverState.HoverTileOnly);
+				winnerId =- 1;
+				break;
+			}
+			
+		}// for
+		return winnerId;
+    }
+
+	public static int doBattle(PhysicalUnit u1, PhysicalUnit u2, Tile t1, Tile t2) {
+		
+		int winnerId = 0;
+		
+		// Get variables from object u1 (attacking) and U2 (defending) 
+        PhysicalUnitType uta = u1.getType();
+        PhysicalUnitType utd = u2.getType();
+
+        TerrainType tt1 = t1.getTerrain();
+        TerrainType tt2 = t2.getTerrain();
+		
+		String name1 = uta.getName();
+		String name2 = utd.getName();
+
+		int dp = utd.getDefence();
+        if(utd == PhysicalUnitType.Pikeman && uta.isMounted())
+            dp = 8;
+
+		int ap = uta.getAttack();
+		
+		int range1 = uta.getRange();
+		int range2 = utd.getRange();
+		
+		int movementPoint1 = u1.getCurrentMovementPoint();
+		int movementPoint2 = u2.getCurrentMovementPoint();
+		
+		int mpa = u1.getManPower();
+		int mpd = u2.getManPower();
 		
 		int attackBonus = tt1.getAttackBonus();
 		int defenceBonus = tt2.getDefenceBonus();
@@ -43,39 +120,48 @@ public class Battle {
 		Random rand = new Random();
         int charges = rand.nextInt(11) + rand.nextInt(11) + 2;
 		
-		for (int i = 0; i <= charges; i++) { 
-            int audp = round((ap * mp1) / 100);
-            int dudp = round((dp * mp2) / 100);
+		for (int i = 0; i < charges; i++) { 
+            int audp = (int)Math.round((ap * mpa) / 100.0);
+            System.out.println("DP: "+dp+" MDP:"+mpd+" calc:"+ ((dp * mpd) / 100.0) + " round:"+Math.round((dp * mpd) / 100.0));
+            int dudp = (int)Math.round((dp * mpd) / 100.0);
 
-            int dau = rand.nextInt(audp) + rand.nextInt(audp);
-            int ddu = rand.nextInt(dudp) + rand.nextInt(dudp);
+            System.out.println("battle a: " + audp);
+            System.out.println("battle d: " + dudp);
+
+            int dau = 0;
+            int ddu = 0;
+            if(audp > 1)
+                dau = rand.nextInt(audp) + rand.nextInt(audp);
+            if(dudp > 1)
+                ddu = rand.nextInt(dudp) + rand.nextInt(dudp);
 
             if(-1 != attackRange(t2, t1, range2)){
-			    mp1 -= ddu;
+			    mpa -= ddu;
             }
             if(-1 != attackRange(t1, t2, range1)){
-                mp2 -= dau;
+                mpd -= dau;
             }
 			
-            System.out.println(mp1);
-            System.out.println(mp2);
+            System.out.println(mpa);
+            System.out.println(mpd);
 
-            u1.setManPower(mp1);
-            u2.setManPower(mp2);
+            u1.setManPower(mpa);
+            u2.setManPower(mpd);
 			
-			if (mp1<1 && mp2<1){
+			if (mpa < 1 && mpd < 1){
                 state.setUnitState(UnitUnSelected);
                 t1.setUnit(null);
                 t2.setUnit(null);
 				break;
-			}else if(mp1<=0) {
+			}else if(mpa < 1) {
                 t1.setUnit(null);
                 state.setUnitState(UnitUnSelected);
-				winnerId=1;
+				winnerId = 1;
 				break;
-			}else if(mp2<=0){
+			}else if(mpd < 1){
                 t2.setUnit(null);
-				winnerId=-1;
+                state.setHoverState(State.HoverState.HoverTileOnly);
+				winnerId =- 1;
 				break;
 			}
 			
