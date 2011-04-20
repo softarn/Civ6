@@ -113,8 +113,7 @@ public class GameMapView extends JPanel{
             else if (tile != state.getHoverTile() && tile.isExplored() == true){
                 state.setHoverTile(tile); 
                 state.setHoverState(HoverTileOnly); 
-            }    
-                  
+            }
         }
 
         public void mouseExited(MouseEvent e){
