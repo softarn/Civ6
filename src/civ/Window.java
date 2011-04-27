@@ -14,6 +14,7 @@ public class Window extends JFrame{
 
     Window(int w,int h){
         super ("Civ 6");
+        Round.next(); // Round.next() has to be run atleast once before the player gets to play.
         Menu m = new Menu();
         ViewPort vp = new ViewPort();
 

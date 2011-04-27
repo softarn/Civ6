@@ -22,8 +22,8 @@ public class TileView extends JPanel{
     // The graphical hexagon
     private Polygon aura;
     private Tile tile;
-    private int[] xs = {43, 3, 43, 121, 160, 121};
-    private int[] ys = {35, 104, 170, 170, 104, 35};
+    private int[] xs = {42, 2, 41, 122, 161, 121};
+    private int[] ys = {35, 103, 170, 170, 104, 35};
 
     /**
      * x and y in this case is pixels away from 
@@ -84,21 +84,26 @@ public class TileView extends JPanel{
         if(tile.isExplored()){
             if(tile.hasFog()){
                 terrain = tile.getTileFogImg();
+                g2.drawImage(terrain, 0, 0, this);
             }else{
                 terrain = tile.getTileImg();
+                g2.drawImage(terrain, 0, 0, this);
+                if(tile.getUnit() != null && tile.getUnit().isAlly()){
+                    g2.setColor(Color.YELLOW);
+                    g2.setStroke(new BasicStroke(2));
+                    g2.drawPolygon(aura);
+                }
             }
 
-            g2.drawImage(terrain, 0, 0, this);
-
             if(tile.isSelected()){
-                g2.setColor(Color.YELLOW);
+                g2.setColor(Color.GREEN);
                 g2.setStroke(new BasicStroke(3));
                 g2.drawPolygon(aura);
             }
         }else{
             //Tile is in total fog so lets just paint it black
-            g2.setColor(Color.BLACK);
-            g2.fillPolygon(aura);
+            g2.setColor(Color.WHITE);
+            g2.drawPolygon(aura);
         }
         if(tile.isHilighted()){
             g2.setColor(new Color(240, 200, 50, 120));
@@ -111,7 +116,7 @@ public class TileView extends JPanel{
             int h = unitImg.getTileHeight();
             int w = unitImg.getTileWidth();
 
-            int x = (w/2) + 20;
+            int x = (w/2) - 60;
             int y = 150 - h;
             g2.drawImage(unitImg, x, y, this);
         }

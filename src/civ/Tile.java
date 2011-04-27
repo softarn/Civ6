@@ -102,7 +102,7 @@ public class Tile implements Comparable<Tile>{
 
     //This function must be edited 
     public void setUnit(PhysicalUnit pu){
-        if(pu != null){
+        if(pu != null && pu.isAlly()){
             setExplored(true);
             if(GameMap.getInstance() != null){
                 for(Tile t : GameMap.getInstance().getNeighbours(this, pu.getType().getVision())){

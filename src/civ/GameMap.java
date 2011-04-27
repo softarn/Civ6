@@ -14,12 +14,14 @@ public class GameMap{
     private GameMapView gmv;
     private int height = 15, width = 15;
 
-    private int[][] offsets = {{-1,-1},
+    private int[][] offsets = {
+        {-1,-1},
         {0,-1},
         {1,0},
         {1,1},
         {0,1},
-        {-1,0}};
+        {-1,0}
+    };
 
 
     public GameMap(GameMapView gmv){
@@ -28,15 +30,7 @@ public class GameMap{
 
         // Parsing the map
         parseMap("Put server map data here");
-        for(Tile[] temp : tiles){
-            for(Tile tile : temp){
-                if(tile.hasUnit()){ // Check if this unit is owned by the player too
-                    for(Tile t : getNeighbours(tile, tile.getUnit().getType().getVision())){
-                        t.setExplored(true);
-                    }
-                }
-            }
-        }
+        exploreMap();
         this.gmv = gmv;
         // Put all TileViews on the GameMapView
         for(int j=getHeight()-1; j>=0; --j){
@@ -52,6 +46,19 @@ public class GameMap{
      */
     public static GameMap getInstance(){
         return map;
+    }
+
+    public void exploreMap(){
+        for(Tile[] temp : tiles){
+            for(Tile tile : temp){
+                if(tile.hasUnit() && tile.getUnit().isAlly()){ 
+                    for(Tile t : getNeighbours(tile, tile.getUnit().getType().getVision())){
+                        t.setExplored(true);
+                    }
+                }
+                tile.getView().repaint();
+            }
+        }
     }
 
     /**
@@ -117,7 +124,7 @@ public class GameMap{
     public ArrayList<Tile> getNeighbours(Tile tile, int range){
         return getNeighbours(tile, range, false);
     }
-    
+
     public ArrayList<Tile> getNeighbours(Tile tile, int range, boolean considerTerrain){
         ArrayList<Tile> acc = new ArrayList<Tile>();
         getNeighbours(tile, range, acc, considerTerrain);
@@ -208,6 +215,6 @@ public class GameMap{
             }
         }
         tiles = result;
-        tiles[1][1].setUnit(new PhysicalUnit(PhysicalUnitType.Musketeer));
+        tiles[1][1].setUnit(new PhysicalUnit(PhysicalUnitType.Musketeer, Player.getInstance("Murray")));
     }
 }

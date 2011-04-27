@@ -76,11 +76,14 @@ public class GameMapView extends JPanel{
                             break;
                         case Attack:
                             if(state.getUnitState() == UnitSelected && tile.hasUnit()){
-                                int choice = showConfirmAttackPane(state.getSelectedUnit(), tile.getUnit(), 
+                                if(!tile.getUnit().isAlly()){
+                                    int choice = showConfirmAttackPane(state.getSelectedUnit(), tile.getUnit(), 
                                             state.getSelectedTile(), tile);
-                                if(choice == 0)
-                                System.out.println(Battle.doBattle(state.getSelectedUnit(), tile.getUnit(), 
-                                            state.getSelectedTile(), tile));
+                                    if(choice == 0){
+                                        System.out.println(Battle.doBattle(state.getSelectedUnit(), tile.getUnit(), 
+                                                    state.getSelectedTile(), tile));
+                                    }
+                                }
                                 state.setActionState(None);
                                 tile = state.getSelectedTile();
                             }else{

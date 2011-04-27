@@ -35,8 +35,10 @@ public class Menu extends JPanel implements Observer, ActionListener{
 
     private JButton move;
     private JButton attack;
+    private JButton endturn;
     private JButton putUnit;
     private JComboBox selUnit;
+    private JComboBox selPlayer;
 
     private JProgressBar manPowerBar;    
     private JLabel tileLabel;
@@ -68,13 +70,19 @@ public class Menu extends JPanel implements Observer, ActionListener{
         attack.setActionCommand("attack");
         attack.addActionListener(this);
 
+        endturn = new JButton("End Turn");
+        endturn.setActionCommand("endturn");
+        endturn.addActionListener(this);
+
         selUnit = new JComboBox(PhysicalUnitType.values());
+        selPlayer = new JComboBox(Round.getPlayers());
         putUnit = new JButton("Set Unit");
         putUnit.setActionCommand("setunit");
         putUnit.addActionListener(this);
 
         state.addObserver(this);
 
+        createUnit.add(selPlayer); 
         createUnit.add(selUnit); 
         createUnit.add(putUnit); 
 
@@ -89,8 +97,9 @@ public class Menu extends JPanel implements Observer, ActionListener{
         north.add(unitPresentation);
 
         //north.add(status); 
-        eastPanel.add(move); 
-        eastPanel.add(attack); 
+        eastPanel.add(move);
+        eastPanel.add(attack);
+        eastPanel.add(endturn);
 
         update(); 
 
@@ -113,11 +122,19 @@ public class Menu extends JPanel implements Observer, ActionListener{
             case HoverTileUnit:
                 String outputTerrain = state.getHoverTile().getTerrain().toString();
                 String outputUnit = Integer.toString(state.getHoverTile().getUnit().getManPower());
-                tileLabel.setText("<html>Terrain: " + outputTerrain +
-                        "<br>Unit: " + state.getHoverTile().getUnit().getType() +
-                        " Anfall: " + state.getHoverTile().getUnit().getType().getAttack() + 
-                        " Försvar: " + state.getHoverTile().getUnit().getType().getDefence() + 
-                        " Manpower: " + outputUnit + "</html>");
+                if(state.getHoverTile().getUnit().isAlly()){
+                    tileLabel.setText("<html>Terrain: " + outputTerrain +
+                            "<br>Unit: " + state.getHoverTile().getUnit().getType() +
+                            " Anfall: " + state.getHoverTile().getUnit().getType().getAttack() + 
+                            " Försvar: " + state.getHoverTile().getUnit().getType().getDefence() + 
+                            " Manpower: " + outputUnit + "</html>");
+                }
+                else{
+                    // Enemy unit hovered
+                    tileLabel.setText("<html>Terrain: " + outputTerrain +
+                            "<br>Unit: Enemy unit");
+
+                }
                 break;
         }        
 
@@ -125,22 +142,28 @@ public class Menu extends JPanel implements Observer, ActionListener{
             case UnitUnSelected: 
                 move.setEnabled(false); 
                 attack.setEnabled(false);
+
+                manPowerBar.setValue(0);
+                manPowerBar.setString("Manpower: 0");
+                manPowerBar.repaint();
                 break;
             case UnitSelected: 
-                move.setEnabled(true);
-                attack.setEnabled(true);
-                manPowerBar.setValue(state.getSelectedUnit().getManPower());
-                manPowerBar.setString("Manpower: " + Integer.toString(state.getSelectedUnit().getManPower()));
-                manPowerBar.repaint();
-                // unitPresentation should contain victory chance variable 
+                if(state.getSelectedUnit().isAlly()){
+                    move.setEnabled(true);
+                    attack.setEnabled(true);
+                    manPowerBar.setValue(state.getSelectedUnit().getManPower());
+                    manPowerBar.setString("Manpower: " + Integer.toString(state.getSelectedUnit().getManPower()));
+                    manPowerBar.repaint();
+                    // unitPresentation should contain victory chance variable 
 
-                switch(state.getActionState()){
-                    case Move: move.setEnabled(false); break;
-                    case Attack: attack.setEnabled(false); break;
+                    switch(state.getActionState()){
+                        case Move: move.setEnabled(false); break;
+                        case Attack: attack.setEnabled(false); break;
+                    }
+
+                    //unitPresentation.setText(state.getSelectedUnit().getType().getName()+
+                    //        (" is marked. Attack: ") +state.getSelectedUnit().getType().getAttack());
                 }
-
-                unitPresentation.setText(state.getSelectedUnit().getType().getName()+
-                        (" is marked. Attack: ") +state.getSelectedUnit().getType().getAttack());
                 break;
         }	
         updateState();
@@ -157,6 +180,10 @@ public class Menu extends JPanel implements Observer, ActionListener{
         if(attack == ae.getSource()){
             state.setActionState(Attack);
         }
+        if(endturn == ae.getSource()){
+            Round.next();
+            GameMap.getInstance().exploreMap();
+        }
         if(putUnit == ae.getSource()){
             if(state.getTileState() == TileSelected){
                 if(state.getSelectedTile().hasUnit()){
@@ -166,7 +193,9 @@ public class Menu extends JPanel implements Observer, ActionListener{
                     status.setText("Status is: Unit can't stand there.");
                 }
                 else{
-                    state.getSelectedTile().setUnit(new PhysicalUnit((PhysicalUnitType)selUnit.getSelectedItem()));
+                    state.getSelectedTile().setUnit(new PhysicalUnit(
+                                (PhysicalUnitType)selUnit.getSelectedItem(), 
+                                (Player)selPlayer.getSelectedItem()));
                     state.getSelectedTile().getView().repaint();
                 }
             }
