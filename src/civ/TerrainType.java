@@ -4,112 +4,36 @@ import java.io.File;
 import java.io.IOException;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
+import java.util.ArrayList;
 
 public enum TerrainType {
-    Sea("Sea",     50, 0, {
-        new ResourceUnit(ResourceType.Fish, 6), 
-        new ResourceUnit(ResourceType.Gold, 2)
-        new ResourceUnit(ResourceType.Happiness, 2)
-        new ResourceUnit(ResourceType.Science, 2)}),
-    
-        Ocean("Ocean",      30, 20,{
-            new ResourceUnit(ResourceType.Fish, 4), 
-            new ResourceUnit(ResourceType.Gold, 1)
-            new ResourceUnit(ResourceType.Happiness, 1)
-            new ResourceUnit(ResourceType.Science, 1)}),
-      
-        Plains("Plains",     25, 0, {
-            new ResourceUnit(ResourceType.Wheat, 5), 
-            new ResourceUnit(ResourceType.Game, 1), 
-            new ResourceUnit(ResourceType.Hay, 6), 
-            new ResourceUnit(ResourceType.Stone, 1), 
-            new ResourceUnit(ResourceType.Lumber, 1), 
-            new ResourceUnit(ResourceType.Gold, 2), 
-            new ResourceUnit(ResourceType.Coal, 1)
-            new ResourceUnit(ResourceType.Happiness, 2)
-            new ResourceUnit(ResourceType.Science, 2)}),
-      
-        Grassland("Grassland",  25, 0, {
-            new ResourceUnit(ResourceType.Wheat, 6), 
-            new ResourceUnit(ResourceType.Game, 1), 
-            new ResourceUnit(ResourceType.hay, 8), 
-            new ResourceUnit(ResourceType.Lumber, 1), 
-            new ResourceUnit(ResourceType.Gold, 2), 
-            new ResourceUnit(ResourceType.Coal, 1)
-            new ResourceUnit(ResourceType.Happiness, 2)
-            new ResourceUnit(ResourceType.Science, 2)}),
-      
-        Marsh("Marsh",      0,  25, {
-            new ResourceUnit(ResourceType.Wheat, 2),
-            new ResourceUnit(ResourceType.Hay, 2),
-            new ResourceUnit(ResourceType.Ore, 2), 
-            new ResourceUnit(ResourceType.Gold, 1)
-            new ResourceUnit(ResourceType.Happiness, 0)
-            new ResourceUnit(ResourceType.Science, 0)}),
+        Sea("Sea",                      50, 0,  2,2,2,0,0,0,0,0,0,6,0,0),
+        Ocean("Ocean",                  30, 20, 1,1,1,0,0,0,0,0,0,4,0,0),
+        Plains("Plains",                25, 0,  2,2,2,1,0,0,1,1,5,0,1,6),
+        Grassland("Grassland",          25, 0,  2,2,2,0,0,0,1,1,6,0,1,8),
+        Marsh("Marsh",                  0,  25, 1,0,0,0,2,0,0,0,2,0,0,0),
+        Desert("Desert",                10, 0,  1,0,1,0,1,0,0,0,1,0,0,0),
+        Tundra("Tundra",                15, 0,  1,0,1,0,0,0,0,0,1,0,1,1),
+        Rainforest("Rainforest",        15, 50, 1,0,0,0,0,0,0,6,1,0,4,1),
+        Conifer("Conifer",              25, 75, 2,1,0,0,0,0,0,10,1,0,5,1),
+        Broadleaf("Broadleaf",          25, 75, 2,1,0,0,0,0,0,8,1,0,6,1),         
+        Hills("Hills",                  25, 100, 0,1,1,6,8,1,4,1,1,0,1,1), 
+        Mountain("Mountain",            20, 200, 0,0,0,7,6,6,3,0,0,0,0,0);
         
-        Desert("Desert",     10, 0, {
-            new ResourceUnit(ResourceType.Wheat, 1), 
-            new ResourceUnit(ResourceType.Gold, 1),
-            new ResourceUnit(ResourceType.Ore, 1)
-            new ResourceUnit(ResourceType.Happiness, 0)
-            new ResourceUnit(ResourceType.Science, 1)}),
-      
-        Tundra("Tundra",     15, 0, {
-            new ResourceUnit(ResourceType.Wheat, 1), 
-            new ResourceUnit(ResourceType.Game, 1), 
-            new ResourceUnit(ResourceType.hay, 1), 
-            new ResourceUnit(ResourceType.Gold, 1)
-            new ResourceUnit(ResourceType.Happiness, 0)
-            new ResourceUnit(ResourceType.Science, 1)}),
-       
-        Rainforest("Rainforest", 15, 50, {
-            new ResourceUnit(ResourceType.Wheat, 1), 
-            new ResourceUnit(ResourceType.Game, 4),
-            new ResourceUnit(ResourceType.Hay, 1), 
-            new ResourceUnit(ResourceType.Lumber, 6),
-            new ResourceUnit(ResourceType.Gold, 1)
-            new ResourceUnit(ResourceType.Happiness, 0)
-            new ResourceUnit(ResourceType.Science, 0)}),
-       
-        Conifer("Conifer",    25, 75, {
-            new ResourceUnit(ResourceType.Wheat, 1), 
-            new ResourceUnit(ResourceType.Game, 5), 
-            new ResourceUnit(ResourceType.Hay, 1),
-            new ResourceUnit(ResourceType.Lumber, 10), 
-            new ResourceUnit(ResourceType.Gold, 2)
-            new ResourceUnit(ResourceType.Happiness, 1)
-            new ResourceUnit(ResourceType.Science, 0)}),
+    /*
+    private int [12] seaArray = {};
+    private int [12] oceanArray = {};
+    private int [12] plainsArray = {};
+    private int [12] grasslandArray = {};
+    private int [12] marshArray = {};
+    private int [12] desertArray = {};
+    private int [12] tundraArray = {};
+    private int [12] rainforrestArray = {};
+    private int [12] coniferArray = {};
+    private int [12] broadleafArray = {};
+    private int [12] hillsArray = {};
+    private int [12] mountainArray = {};*/
         
-        Broadleaf("Broadleaf",  25, 75, {
-            new ResourceUnit(ResourceType.Hay, 1),
-            new ResourceUnit(ResourceType.Wheat, 1), 
-            new ResourceUnit(ResourceType.Game, 6), 
-            new ResourceUnit(ResourceType.Lumber, 8),
-            new ResourceUnit(ResourceType.Gold, 2)
-            new ResourceUnit(ResourceType.Happiness, 1)
-            new ResourceUnit(ResourceType.Science, 0)}),         
-            
-        Hills("Hills",      25, 100, {
-            new ResourceUnit(ResourceType.Wheat, 1), 
-            new ResourceUnit(ResourceType.Game, 1), 
-            new ResourceUnit(ResourceType.Stone, 6),
-            new ResourceUnit(ResourceType.Hay, 1),
-            new ResourceUnit(ResourceType.Ore, 8), 
-            new ResourceUnit(ResourceType.Lumber, 1),
-            new ResourceUnit(ResourceType.Coal, 4), 
-            new ResourceUnit(ResourceType.Sulfur, 1)
-            new ResourceUnit(ResourceType.Happiness, 1)
-            new ResourceUnit(ResourceType.Science, 1)}), 
-            
-        Mountain("Mountain",   20, 200, {
-            new ResourceUnit(ResourceType.Stone, 7), 
-            new ResourceUnit(ResourceType.Ore, 6), 
-            new ResourceUnit(ResourceType.Coal, 3), 
-            new ResourceUnit(ResourceType.Sulfur , 6)
-            new ResourceUnit(ResourceType.Happiness, 0)
-            new ResourceUnit(ResourceType.Science, 0)});
-
-            
     private static final String imgPath = "data/img/"; //Need a better fix for this!
 
     private final String name;
@@ -121,21 +45,50 @@ public enum TerrainType {
     private BufferedImage fogImg;
     private ResourceType type;
     private ResourceUnit runit;
+
+    //private Hashmap<TerrainType, Integer> hm = new HashMap<TerrainType, Integer>();  
     
-    private HashMap<TerrainType, Integer> hm = new HashMap<TerrainType, Integer>();   
-    
-    
-    private TerrainType(String name, int att, int def, ResourceUnit[] resources){
+    ResourceUnit[] resources;
+/*    ResourceUnit happiness;
+    ResourceUnit science;
+    ResourceUnit stone;
+    ResourceUnit ore;
+    ResourceUnit sulfur;
+    ResourceUnit coal;
+    ResourceUnit lumber;
+    ResourceUnit wheat;
+    ResourceUnit fish;
+    ResourceUnit game;
+    ResourceUnit hay;            
+   */         
+    private TerrainType(String name, int att, int def, int gold, int happiness, int science, int stone, int ore, 
+            int sulfur, int coal, int lumber, int wheat, int fish, int game, int hay) {
+                
         this.name = name;
         attackBonus = att;
         defenceBonus = def;
         tilefile = name + ".png";
         fogfile = name + "Fog.png";
 
-        try{
+        resources = new ResourceUnit[]{
+            new ResourceUnit(ResourceType.Gold, gold),
+            new ResourceUnit(ResourceType.Happiness, happiness),
+            new ResourceUnit(ResourceType.Science, science),
+            new ResourceUnit(ResourceType.Stone, stone),
+            new ResourceUnit(ResourceType.Ore, ore),
+            new ResourceUnit(ResourceType.Sulfur, sulfur),
+            new ResourceUnit(ResourceType.Coal, coal),
+            new ResourceUnit(ResourceType.Lumber, lumber),
+            new ResourceUnit(ResourceType.Wheat, wheat),
+            new ResourceUnit(ResourceType.Fish, fish),
+            new ResourceUnit(ResourceType.Game, game),
+            new ResourceUnit(ResourceType.Hay, hay)
+        };
+            
+        try {
             normalImg = ImageIO.read(new File(imgPath + tilefile));
             fogImg = ImageIO.read(new File(imgPath + fogfile));
-        }catch(IOException e){
+        } catch(IOException e){
             System.out.println(e);
         }
     }
@@ -168,9 +121,21 @@ public enum TerrainType {
 		return attackBonus;
 	}
     
-    public String getResources(){
-        return ;
+    
+    public ArrayList<ResourceUnit> getResources(){ 
+        ArrayList<ResourceUnit> arrayValues = new ArrayList<ResourceUnit> ();
+        for(ResourceUnit ru : resources) {
+            if (ru.getAmount() == (0))
+                continue;
+            
+            else { 
+                arrayValues.add(ru);
+            }
+        }
+        return arrayValues;
     }
+    
+    
     
     public ResourceUnit getResourceUnit() {
         return runit;

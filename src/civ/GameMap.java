@@ -31,7 +31,7 @@ public class GameMap{
         for(Tile[] temp : tiles){
             for(Tile tile : temp){
                 if(tile.hasUnit()){ // Check if this unit is owned by the player too
-                    for(Tile t : getNeighbours(tile, 1)){
+                    for(Tile t : getNeighbours(tile, tile.getUnit().getType().getVision())){
                         t.setExplored(true);
                     }
                 }
@@ -116,39 +116,6 @@ public class GameMap{
      * @param range Neighbours in this range will be returned.
      */
     public ArrayList<Tile> getNeighbours(Tile tile, int range){
-        /*ArrayList<Tile> result = new ArrayList<Tile>();
-          for(int[] t : tile.getNeighbours(range)){
-          Tile temp = getTile(t[0], t[1]);
-          if(temp != null){
-          result.add(temp);
-          }
-          }
-          return result;
-        if(range < 1){
-            // Range to short, return empty array
-            return new ArrayList<Tile>();
-        }
-        int x = tile.getX();
-        int y = tile.getY();
-
-        ArrayList<Tile> acc = new ArrayList<Tile>();
-
-        /*for(int[] off : offsets){
-            // Add all surrounding tiles
-            Tile t = getTile(x - off[0], y - off[1]);
-            if(t != null)
-                acc.add(t);
-        }
-        if(range > 1){
-            // If there range was more than one call the recursive 
-            // function with one less range next time.
-            for(int[] off : offsets){
-                Tile t = getTile(x - off[0], y - off[1]);
-                //acc.addAll(getNeighbours(t, range - 1, acc));
-                getNeighbours(t, range - 1, acc);
-            }
-        }
-        */
         ArrayList<Tile> acc = new ArrayList<Tile>();
         getNeighbours(tile, range, acc);
         acc.remove(tile);
