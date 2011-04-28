@@ -55,7 +55,7 @@ public class Menu extends JPanel implements Observer, ActionListener{
 
         manPowerBar = new JProgressBar(0,100);  
         manPowerBar.setSize(new Dimension(50,10));
-        manPowerBar.setString("Manpower ");
+        manPowerBar.setString("Manpower "); 
         manPowerBar.setStringPainted(true);
 
         tileLabel = new JLabel("Tile info is empty");  
@@ -117,7 +117,8 @@ public class Menu extends JPanel implements Observer, ActionListener{
                 tileLabel.setText("No tile");
                 break;
             case HoverTileOnly:
-                tileLabel.setText("Terrain:" + state.getHoverTile().getTerrain().toString());
+                tileLabel.setText("Terrain: \n" + state.getHoverTile().getTerrain().toString() +" "+ 
+            state.getHoverTile().getTerrain().getResources());
                 break;
             case HoverTileUnit:
                 String outputTerrain = state.getHoverTile().getTerrain().toString();

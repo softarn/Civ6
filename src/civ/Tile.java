@@ -51,7 +51,7 @@ public class Tile implements Comparable<Tile>{
         countToFog = 0;
         /**
          * pixelx = ((x - y) * bredd) + offsetX
-         * pixely = ((x + y) * höjd / 2) + offsetY
+         * pixely = ((x + y) * height / 2) + offsetY
          */
 
         view = new TileView(((x - y)*120)+120*GameMap.getInstance().getWidth(), ((x + y)*68)+170, this);

@@ -11,7 +11,7 @@ public class PhysicalUnit implements Comparable<PhysicalUnit>{
     private Player allegiance;
     //private City city = null;
 
-    public PhysicalUnit(PhysicalUnitType type){
+    public PhysicalUnit(PhysicalUnitType type){ 
         this.idNumber = ++count;
         this.type = type;
         this.allegiance = null;
@@ -63,7 +63,6 @@ public class PhysicalUnit implements Comparable<PhysicalUnit>{
     public int getID(){
         return idNumber;
     }
-
 
     public boolean useMovementPoints(int point){
         if(currentMovementPoint >= point){
