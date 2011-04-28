@@ -25,7 +25,7 @@ public class GameMapView extends JPanel{
         super();
         gm = new GameMap(this);
         setLayout(null);
-        setBounds(-120*(gm.getWidth()-1),0,125*gm.getWidth()*2,140*gm.getHeight());
+        setBounds(-120*(gm.getWidth()-1),0,125*gm.getWidth()*2,170*gm.getHeight());
         setBackground(Color.black);
         GameMapListener gml = new GameMapListener();
         addMouseListener(gml);
@@ -34,6 +34,7 @@ public class GameMapView extends JPanel{
 
     private class GameMapListener implements MouseListener, MouseMotionListener{
         private int saveX=0, saveY=0;
+        JPanel before, after;
         public void mouseDragged(MouseEvent e){
             if(SwingUtilities.isRightMouseButton(e)){
                 int tempX = getX() + e.getX() - saveX;
@@ -64,6 +65,11 @@ public class GameMapView extends JPanel{
 
         public void mousePressed(MouseEvent e){
             if(e.getButton() == MouseEvent.BUTTON1){
+                if(after != null){
+                    GameMapView.this.remove(after);
+                    before = null;
+                    after = null;
+                }
                 Tile tile = gm.getTileAt(e.getX(), e.getY());
                 if(tile != null){
                     System.out.println("Printing hexagon at x"+ tile.getView().getTilePositionx()+
@@ -77,11 +83,25 @@ public class GameMapView extends JPanel{
                         case Attack:
                             if(state.getUnitState() == UnitSelected && tile.hasUnit()){
                                 if(!tile.getUnit().isAlly()){
-                                    int choice = showConfirmAttackPane(state.getSelectedUnit(), tile.getUnit(), 
+                                    if(Battle.attackRange(state.getSelectedTile(), tile, 
+                                                state.getSelectedUnit().getType().getRange()) > 0){
+                                        before = new PopUpBubble(state.getSelectedTile().getView().getX() + 135, 
+                                                state.getSelectedTile().getView().getY() + 35);
+                                        GameMapView.this.add(before, 0);
+                                        GameMapView.this.repaint();
+                                        int choice = showConfirmAttackPane(state.getSelectedUnit(), tile.getUnit(), 
                                             state.getSelectedTile(), tile);
-                                    if(choice == 0){
-                                        System.out.println(Battle.doBattle(state.getSelectedUnit(), tile.getUnit(), 
-                                                    state.getSelectedTile(), tile));
+                                        if(choice == 0){
+                                            Battle.doBattle(state.getSelectedUnit(), tile.getUnit(), 
+                                                state.getSelectedTile(), tile);
+                                        }
+                                        after = new PopUpBubble(state.getSelectedTile().getView().getX() + 135, 
+                                                state.getSelectedTile().getView().getY() + 35, 
+                                                Battle.getAttackerLoss(), Battle.getDefenderLoss());
+                                        GameMapView.this.remove(before);
+                                        GameMapView.this.add(after, 0);
+                                        GameMapView.this.repaint();
+
                                     }
                                 }
                                 state.setActionState(None);

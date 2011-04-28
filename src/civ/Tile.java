@@ -54,7 +54,7 @@ public class Tile implements Comparable<Tile>{
          * pixely = ((x + y) * höjd / 2) + offsetY
          */
 
-        view = new TileView(((x - y)*120)+120*GameMap.getInstance().getWidth(), ((x + y)*68), this);
+        view = new TileView(((x - y)*120)+120*GameMap.getInstance().getWidth(), ((x + y)*68)+170, this);
 
         setUnit(pu);
     }

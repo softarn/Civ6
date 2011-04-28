@@ -149,8 +149,10 @@ public class Menu extends JPanel implements Observer, ActionListener{
                 break;
             case UnitSelected: 
                 if(state.getSelectedUnit().isAlly()){
-                    move.setEnabled(true);
-                    attack.setEnabled(true);
+                    if(state.getSelectedUnit().getCurrentMovementPoint() > 0){
+                        move.setEnabled(true);
+                        attack.setEnabled(true);
+                    }
                     manPowerBar.setValue(state.getSelectedUnit().getManPower());
                     manPowerBar.setString("Manpower: " + Integer.toString(state.getSelectedUnit().getManPower()));
                     manPowerBar.repaint();

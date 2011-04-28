@@ -8,6 +8,8 @@ public class Battle {
 
     private static State state = State.getInstance();
     private static GameMap gm = GameMap.getInstance();
+    private static int attackerLoss;
+    private static int defenderLoss;
 
     public static int doAverageBattle(PhysicalUnit u1, PhysicalUnit u2, Tile t1, Tile t2) {
 		int winnerId = 0;
@@ -33,9 +35,11 @@ public class Battle {
 		
 		int movementPoint1 = u1.getCurrentMovementPoint();
 		int movementPoint2 = u2.getCurrentMovementPoint();
-		
-		int mpa = u1.getManPower();
-		int mpd = u2.getManPower();
+	
+        int mpab; // Attacker Manpower Before battle
+        int mpdb; // Defender Manpower Before battle
+		int mpa = mpab = u1.getManPower();
+		int mpd = mpdb = u2.getManPower();
 		
 		int attackBonus = tt1.getAttackBonus();
 		int defenceBonus = tt2.getDefenceBonus();
@@ -57,25 +61,22 @@ public class Battle {
             if(dudp > 1)
                 ddu = Math.round(dudp/2);
 
-			mpa -= ddu;
-			mpd -= dau;
+            if(-1 != attackRange(t2, t1, range2)){
+                mpa -= ddu;
+            }
+            if(-1 != attackRange(t1, t2, range1)){
+                mpd -= dau;
+            }
 
             u1.setManPower(mpa);
             u2.setManPower(mpd);
 			
 			if (mpa < 1 && mpd < 1){
-                state.setUnitState(UnitUnSelected);
-                t1.setUnit(null);
-                t2.setUnit(null);
 				break;
 			}else if(mpa < 1) {
-                t1.setUnit(null);
-                state.setUnitState(UnitUnSelected);
 				winnerId = 1;
 				break;
 			}else if(mpd < 1){
-                t2.setUnit(null);
-                state.setHoverState(State.HoverState.HoverTileOnly);
 				winnerId =- 1;
 				break;
 			}
@@ -88,7 +89,7 @@ public class Battle {
 		
 		int winnerId = 0;
 		
-		// Get variables from object u1 (attacking) and U2 (defending) 
+		// Get variables from object u1 (attacking) and u2 (defending) 
         PhysicalUnitType uta = u1.getType();
         PhysicalUnitType utd = u2.getType();
 
@@ -110,12 +111,18 @@ public class Battle {
 		int movementPoint1 = u1.getCurrentMovementPoint();
 		int movementPoint2 = u2.getCurrentMovementPoint();
 		
-		int mpa = u1.getManPower();
-		int mpd = u2.getManPower();
+        int mpab; // Attacker Manpower Before battle
+        int mpdb; // Defender Manpower Before battle
+		int mpa = mpab = u1.getManPower();
+		int mpd = mpdb = u2.getManPower();
 		
 		int attackBonus = tt1.getAttackBonus();
 		int defenceBonus = tt2.getDefenceBonus();
 		
+        // Remove the movement cost 1 from the attacking unit
+        if(!u1.useMovementPoints(1)){
+            return 0;
+        }
 		// Attacking object losing manpower randomNumber2 and defending losing randomNumber1 
 		Random rand = new Random();
         int charges = rand.nextInt(11) + rand.nextInt(11) + 2;
@@ -166,15 +173,24 @@ public class Battle {
 			}
 			
 		}// for
-		
+	    attackerLoss = mpab-u1.getManPower();
+        defenderLoss = mpdb-u2.getManPower();
 		return winnerId;
 	}
+
+    public static int getAttackerLoss(){
+        return attackerLoss;
+    }
+
+    public static int getDefenderLoss(){
+        return defenderLoss;
+    }
 
     private static int round(double d) {
         return (int)Math.floor(d + 0.5f);
     }
 
-    private static int attackRange(Tile t1, Tile t2, int range){
+    public static int attackRange(Tile t1, Tile t2, int range){
             for(Tile t : gm.getNeighbours(t1, range, false)){
                 if(t == t2){
                     return 1;
