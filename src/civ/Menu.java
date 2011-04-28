@@ -48,6 +48,9 @@ public class Menu extends JPanel implements Observer, ActionListener{
     //Status is only for testing purpose
     private JLabel status = new JLabel("Status is: " + state.getUnitState());
 
+    private int curScale = 5 ;
+    private int[] sizes = {50, 75, 90, 120, 150, 175, 190};
+
     Menu(){ 
         super(); 
         setLayout(new BorderLayout(20, 30));
@@ -103,6 +106,17 @@ public class Menu extends JPanel implements Observer, ActionListener{
 
         update(); 
 
+    }
+
+    private void scaleUp(){
+        if(curScale != sizes.length-1){
+            GameMap.getInstance().resize(sizes[++curScale]);
+        }
+    }
+    private void scaleDown(){
+        if(curScale != 0){
+            GameMap.getInstance().resize(sizes[--curScale]);
+        }
     }
 
     public void update(Observable obs, Object obj){
@@ -191,9 +205,11 @@ public class Menu extends JPanel implements Observer, ActionListener{
             if(state.getTileState() == TileSelected){
                 if(state.getSelectedTile().hasUnit()){
                     status.setText("Status is: Can't place unit on another unit.");
+                    scaleUp();
                 }
                 else if(!state.getSelectedTile().getTerrain().isTraversible((PhysicalUnitType)selUnit.getSelectedItem())){
                     status.setText("Status is: Unit can't stand there.");
+                    scaleDown();
                 }
                 else{
                     state.getSelectedTile().setUnit(new PhysicalUnit(

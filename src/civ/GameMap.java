@@ -5,6 +5,7 @@ import java.util.TreeSet;
 import java.util.Random;
 
 import static civ.State.UnitState.UnitSelected;
+import static civ.State.TileState.TileSelected;
 
 public class GameMap{
     private static final State state = State.getInstance();
@@ -176,24 +177,27 @@ public class GameMap{
     public int getDistance(Tile a, Tile b){
         return 1; 
     }
-    /*
-       public void scale(double grade){
-       double size;
-       for(int j=height-1; j>=0; --j){
-       for(int i=width-1; i>=0; --i){
-       if(tiles[i][j].getView().getWidth()*grade > 200){
-       size = 200;
-       }
-       else if(tiles[i][j].getView().tWidth()*grade < 50){
-       size = 50;
-       }
-       else{
-       size = tiles[i][j].getView().getWidth()*grade;
-       }
-       tiles[i][j].getView().resize(150);
-       }
-       }
-       }
+
+    public void resize(double newSize){
+        double size;
+        if(newSize > 200){
+            size = 200;
+        }
+        else if(newSize < 50){
+            size = 50;
+        }
+        else{
+            size = newSize;
+        }
+        for(int j=height-1; j>=0; --j){
+            for(int i=width-1; i>=0; --i){
+                tiles[i][j].getView().resize(size);
+            }
+        }
+        if(state.getTileState() == TileSelected){
+            gmv.centerOn(state.getSelectedTile());
+        }
+    }
 
     /**
      * Sets all the tiles in the map.

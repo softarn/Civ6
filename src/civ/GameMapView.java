@@ -25,11 +25,36 @@ public class GameMapView extends JPanel{
         super();
         gm = new GameMap(this);
         setLayout(null);
-        setBounds(-114*(gm.getWidth()-1),-200,125*gm.getWidth()*2,170*gm.getHeight());
+        setBounds(-105*(gm.getWidth()),-190,140*gm.getWidth()*2,170*gm.getHeight());
         setBackground(Color.black);
         GameMapListener gml = new GameMapListener();
         addMouseListener(gml);
         addMouseMotionListener(gml);
+    }
+
+    public void centerOn(Tile t){
+        // Calculate the center of the tile
+        centerOn(t.getView().getX()+t.getView().getWidth()/2, 
+                t.getView().getY()+t.getView().getHeight()/2);
+    }
+    public void centerOn(int x, int y){
+        // The coordinates for the map where the 
+        // point (x,y) is centered according to the viewport.
+        int tempX = getParent().getWidth()/2-x;
+        int tempY = getParent().getHeight()/2-y;
+        if(tempX > 0) {
+            tempX = 0;
+        }
+        if(tempX + getWidth() < getParent().getWidth()){
+            tempX = getParent().getWidth() - getWidth();
+        }
+        if(tempY > 0) {
+            tempY = 0;
+        }
+        if(tempY + getHeight() < getParent().getHeight()){
+            tempY = getParent().getHeight() - getHeight();
+        }
+        setBounds(tempX, tempY, getWidth(), getHeight());
     }
 
     private class GameMapListener implements MouseListener, MouseMotionListener{
@@ -161,21 +186,3 @@ public class GameMapView extends JPanel{
                 JOptionPane.YES_NO_OPTION);
     }
 }// class
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

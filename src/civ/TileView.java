@@ -17,6 +17,7 @@ public class TileView extends JPanel{
     private int positionx;
     private int positiony;
     private double maxX, maxY;
+    private int origX, origY, origW, origH;
     // The clickable hexagon
     private Polygon area;
     // The graphical hexagon
@@ -33,12 +34,12 @@ public class TileView extends JPanel{
         area = new Polygon(xs,ys,6);
         area.translate(x, y);
         aura = new Polygon(xs,ys,6);
-        positionx = x;
-        positiony = y;
-        maxX = 175;
-        maxY = 175;
+        positionx = origX = x;
+        positiony = origY = y;
+        maxX = origW = 175;
+        maxY = origH = 175;
         this.tile = tile;
-        setBounds(x, y, (int)maxX, (int)maxY);
+        setBounds(x, y, origW, origH);
 
         setOpaque(false);
     }
@@ -46,19 +47,20 @@ public class TileView extends JPanel{
     public void resize(double xy){
         maxX = xy;
         maxY = xy;
-
         int[] tempXs = new int[6];
         int[] tempYs = new int[6];
-        int tempX = (int)(getX() * maxX / getWidth());
-        int tempY = (int)(getY() * maxY / getHeight());
-        setBounds(tempX, tempY, getWidth(), getHeight());
+        int tempX = (int)(origX * maxX / origW);//getWidth());
+        int tempY = (int)(origY * maxY / origH);//getHeight());
+        int tempW = (int)(origW * maxX/origW);
+        int tempH = (int)(origH * maxY/origW);
+        setBounds(tempX, tempY, tempW, tempH);
         for(int i=0; i<6; ++i){
-            tempXs[i] = (int)(xs[i] * maxX / getWidth());
-            tempYs[i] = (int)(ys[i] * maxY / getHeight());
+            tempXs[i] = (int)(xs[i] * maxX / origW);//getWidth());
+            tempYs[i] = (int)(ys[i] * maxY / origH);//getHeight());
         }
         area = new Polygon(tempXs, tempYs, 6);
         // area.translate((int)(tX * getWidth() / maxX), (int)(tY * getHeight() / maxY));
-        area.translate(tempX, tempY);
+        area.translate(tempX, tempY); 
         repaint();
     }
 
@@ -75,12 +77,12 @@ public class TileView extends JPanel{
     }
 
     public void paintComponent(Graphics g){
-//        super.paintComponent(g);
+        super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
         Image terrain;
         g2.scale(
-                (double) maxX / getWidth(),
-                (double) maxY / getHeight());
+                (double) maxX / origW,
+                (double) maxY / origH);
         if(tile.isExplored()){
             if(tile.hasFog()){
                 terrain = tile.getTileFogImg();
