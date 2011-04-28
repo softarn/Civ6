@@ -1,9 +1,13 @@
 package civ;
 
-import javax.swing.*;
-import java.awt.*;
-import javax.imageio.*;
-import java.io.*;
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Font;
+import javax.imageio.ImageIO;
+import java.io.File;
+import java.io.IOException;
 
 public class PopUpBubble extends JPanel{
 	

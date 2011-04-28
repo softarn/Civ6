@@ -215,6 +215,6 @@ public class GameMap{
             }
         }
         tiles = result;
-        tiles[1][1].setUnit(new PhysicalUnit(PhysicalUnitType.Musketeer, Player.getInstance("Murray")));
+        tiles[1][1].setUnit(new PhysicalUnit(PhysicalUnitType.Musketeer, Player.getInstance("Andy")));
     }
 }
