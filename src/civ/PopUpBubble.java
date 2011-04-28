@@ -1,3 +1,5 @@
+package civ;
+
 import javax.swing.*;
 import java.awt.*;
 import javax.imageio.*;
@@ -81,5 +83,4 @@ public class PopUpBubble extends JPanel{
 		super.paintComponent(g);
 		g.drawImage(/*pratbubbla har*/ i, 0, 0, this);
 	}
-	
 }

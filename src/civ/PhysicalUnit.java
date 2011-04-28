@@ -7,15 +7,37 @@ public class PhysicalUnit implements Comparable<PhysicalUnit>{
     private int idNumber;
     private int manPower;
     private int currentMovementPoint;
-    //private City city = null;
-
     private PhysicalUnitType type;
+    private Player allegiance;
+    //private City city = null;
 
     public PhysicalUnit(PhysicalUnitType type){ 
         this.idNumber = ++count;
-        this.manPower = type.getMaxManPower();
-        this.currentMovementPoint = type.getMovementPoints();
         this.type = type;
+        this.allegiance = null;
+        reset();
+    }
+
+    public PhysicalUnit(PhysicalUnitType type, Player allegiance){
+        this.idNumber = ++count;
+        this.type = type;
+        this.allegiance = allegiance;
+        reset();
+    }
+
+    public PhysicalUnit(PhysicalUnit other){
+        this.idNumber = ++count;
+        this.manPower = other.getManPower();
+        this.currentMovementPoint = other.getCurrentMovementPoint();
+        this.type = other.getType();
+        this.allegiance = other.allegiance;
+    }
+
+    public boolean isAlly(){
+        if(allegiance == null){
+            return false;
+        }
+        return allegiance.isMe();
     }
 
     public boolean isInCity(){
@@ -48,6 +70,11 @@ public class PhysicalUnit implements Comparable<PhysicalUnit>{
             return true;
         }
         return false;
+    }
+
+    public void reset(){
+        this.manPower = type.getMaxManPower();
+        this.currentMovementPoint = type.getMovementPoints();
     }
 
     public BufferedImage getImage(){

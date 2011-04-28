@@ -14,12 +14,14 @@ public class GameMap{
     private GameMapView gmv;
     private int height = 15, width = 15;
 
-    private int[][] offsets = {{-1,-1},
+    private int[][] offsets = {
+        {-1,-1},
         {0,-1},
         {1,0},
         {1,1},
         {0,1},
-        {-1,0}};
+        {-1,0}
+    };
 
 
     public GameMap(GameMapView gmv){
@@ -28,15 +30,7 @@ public class GameMap{
 
         // Parsing the map
         parseMap("Put server map data here");
-        for(Tile[] temp : tiles){
-            for(Tile tile : temp){
-                if(tile.hasUnit()){ // Check if this unit is owned by the player too
-                    for(Tile t : getNeighbours(tile, tile.getUnit().getType().getVision())){
-                        t.setExplored(true);
-                    }
-                }
-            }
-        }
+        exploreMap();
         this.gmv = gmv;
         // Put all TileViews on the GameMapView
         for(int j=getHeight()-1; j>=0; --j){
@@ -54,14 +48,26 @@ public class GameMap{
         return map;
     }
 
+    public void exploreMap(){
+        for(Tile[] temp : tiles){
+            for(Tile tile : temp){
+                if(tile.hasUnit() && tile.getUnit().isAlly()){ 
+                    for(Tile t : getNeighbours(tile, tile.getUnit().getType().getVision())){
+                        t.setExplored(true);
+                    }
+                }
+                tile.getView().repaint();
+            }
+        }
+    }
+
     /**
      * Get a specific tile from the array.
      */
     public Tile getTile(int x, int y){
-        if(x >= getWidth() || y >= getHeight() ||
-                x < 0 || y < 0){
+        if(x >= getWidth() || y >= getHeight() || x < 0 || y < 0){
             return null;
-                } 
+        } 
         return tiles[x][y];
     }
 
@@ -116,31 +122,42 @@ public class GameMap{
      * @param range Neighbours in this range will be returned.
      */
     public ArrayList<Tile> getNeighbours(Tile tile, int range){
+        return getNeighbours(tile, range, false);
+    }
+
+    public ArrayList<Tile> getNeighbours(Tile tile, int range, boolean considerTerrain){
         ArrayList<Tile> acc = new ArrayList<Tile>();
-        getNeighbours(tile, range, acc);
+        getNeighbours(tile, range, acc, considerTerrain);
         acc.remove(tile);
         return acc;
     }
 
-    private ArrayList<Tile> getNeighbours(Tile tile){
+    private ArrayList<Tile> getNeighbours(Tile tile, boolean terrain){
         ArrayList<Tile> result = new ArrayList<Tile>();
         for(int[] off : offsets){
             // Add all surrounding tiles
             Tile t = getTile(tile.getX() - off[0], tile.getY() - off[1]);
             if(t != null)
-                result.add(t);
+                if(terrain && state.getUnitState() == UnitSelected){
+                    if(t.getTerrain().isTraversible(state.getSelectedUnit())){
+                        result.add(t);
+                    }
+                }
+                else{
+                    result.add(t);
+                }
         }
         return result;
     }
 
-    private ArrayList<Tile> getNeighbours(Tile tile, int range, ArrayList<Tile> acc){
+    private ArrayList<Tile> getNeighbours(Tile tile, int range, ArrayList<Tile> acc, boolean terrain){
         if(range < 1){
             return new ArrayList<Tile>();
         }
         int x = tile.getX();
         int y = tile.getY();
 
-        ArrayList<Tile> neighbours = getNeighbours(tile);
+        ArrayList<Tile> neighbours = getNeighbours(tile, terrain);
         for(Tile t1 : neighbours){
             // Add all surrounding tiles
             if(!acc.contains(t1))
@@ -148,13 +165,8 @@ public class GameMap{
         }
         if(range > 1){
             // Recurse through all surrounding tiles with one less range cost
-            /*for(int[] off : offsets){
-                Tile t = getTile(x - off[0], y - off[1]);
-                //acc.addAll(getNeighbours(t, range - 1, acc));
-                getNeighbours(t, range - 1, acc);
-            }*/
             for(Tile t2 : neighbours){
-                getNeighbours(t2, range -1, acc);
+                getNeighbours(t2, range - 1, acc, terrain);
             }
         }
 
@@ -202,7 +214,7 @@ public class GameMap{
                 result[i][j] = temp;
             }
         }
-        result[1][1].setUnit(new PhysicalUnit(PhysicalUnitType.Musketeer));
         tiles = result;
+        tiles[1][1].setUnit(new PhysicalUnit(PhysicalUnitType.Musketeer, Player.getInstance("Murray")));
     }
 }

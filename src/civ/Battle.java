@@ -7,9 +7,11 @@ import static civ.State.UnitState.UnitUnSelected;
 public class Battle {
 
     private static State state = State.getInstance();
+    private static GameMap gm = GameMap.getInstance();
+    private static int attackerLoss;
+    private static int defenderLoss;
 
-	public static int doBattle(PhysicalUnit u1, PhysicalUnit u2, Tile t1, Tile t2) {
-		
+    public static int doAverageBattle(PhysicalUnit u1, PhysicalUnit u2, Tile t1, Tile t2) {
 		int winnerId = 0;
 		
 		// Get variables from object u1 (attacking) and U2 (defending) 
@@ -33,18 +35,99 @@ public class Battle {
 		
 		int movementPoint1 = u1.getCurrentMovementPoint();
 		int movementPoint2 = u2.getCurrentMovementPoint();
-		
-		int mpa = u1.getManPower();
-		int mpd = u2.getManPower();
+	
+        int mpab; // Attacker Manpower Before battle
+        int mpdb; // Defender Manpower Before battle
+		int mpa = mpab = u1.getManPower();
+		int mpd = mpdb = u2.getManPower();
 		
 		int attackBonus = tt1.getAttackBonus();
 		int defenceBonus = tt2.getDefenceBonus();
 		
 		// Attacking object losing manpower randomNumber2 and defending losing randomNumber1 
 		Random rand = new Random();
+		
+		for (int i = 0; i < 12; i++) { 
+            int audp = (int)Math.round((ap * mpa) / 100.0);
+            int dudp = (int)Math.round((dp * mpd) / 100.0);
+
+            System.out.println("battle a: " + audp);
+            System.out.println("battle d: " + dudp);
+
+            int dau = 0;
+            int ddu = 0;
+            if(audp > 1)
+                dau = Math.round(audp/2);
+            if(dudp > 1)
+                ddu = Math.round(dudp/2);
+
+            if(-1 != attackRange(t2, t1, range2)){
+                mpa -= ddu;
+            }
+            if(-1 != attackRange(t1, t2, range1)){
+                mpd -= dau;
+            }
+
+            u1.setManPower(mpa);
+            u2.setManPower(mpd);
+			
+			if (mpa < 1 && mpd < 1){
+				break;
+			}else if(mpa < 1) {
+				winnerId = 1;
+				break;
+			}else if(mpd < 1){
+				winnerId =- 1;
+				break;
+			}
+			
+		}// for
+		return winnerId;
+    }
+
+	public static int doBattle(PhysicalUnit u1, PhysicalUnit u2, Tile t1, Tile t2) {
+		
+		int winnerId = 0;
+		
+		// Get variables from object u1 (attacking) and u2 (defending) 
+        PhysicalUnitType uta = u1.getType();
+        PhysicalUnitType utd = u2.getType();
+
+        TerrainType tt1 = t1.getTerrain();
+        TerrainType tt2 = t2.getTerrain();
+		
+		String name1 = uta.getName();
+		String name2 = utd.getName();
+
+		int dp = utd.getDefence();
+        if(utd == PhysicalUnitType.Pikeman && uta.isMounted())
+            dp = 8;
+
+		int ap = uta.getAttack();
+		
+		int range1 = uta.getRange();
+		int range2 = utd.getRange();
+		
+		int movementPoint1 = u1.getCurrentMovementPoint();
+		int movementPoint2 = u2.getCurrentMovementPoint();
+		
+        int mpab; // Attacker Manpower Before battle
+        int mpdb; // Defender Manpower Before battle
+		int mpa = mpab = u1.getManPower();
+		int mpd = mpdb = u2.getManPower();
+		
+		int attackBonus = tt1.getAttackBonus();
+		int defenceBonus = tt2.getDefenceBonus();
+		
+        // Remove the movement cost 1 from the attacking unit
+        if(!u1.useMovementPoints(1)){
+            return 0;
+        }
+		// Attacking object losing manpower randomNumber2 and defending losing randomNumber1 
+		Random rand = new Random();
         int charges = rand.nextInt(11) + rand.nextInt(11) + 2;
 		
-		for (int i = 0; i <= charges; i++) { 
+		for (int i = 0; i < charges; i++) { 
             int audp = (int)Math.round((ap * mpa) / 100.0);
             System.out.println("DP: "+dp+" MDP:"+mpd+" calc:"+ ((dp * mpd) / 100.0) + " round:"+Math.round((dp * mpd) / 100.0));
             int dudp = (int)Math.round((dp * mpd) / 100.0);
@@ -59,8 +142,12 @@ public class Battle {
             if(dudp > 1)
                 ddu = rand.nextInt(dudp) + rand.nextInt(dudp);
 
-			mpa -= ddu;
-			mpd -= dau;
+            if(-1 != attackRange(t2, t1, range2)){
+			    mpa -= ddu;
+            }
+            if(-1 != attackRange(t1, t2, range1)){
+                mpd -= dau;
+            }
 			
             System.out.println(mpa);
             System.out.println(mpd);
@@ -86,7 +173,29 @@ public class Battle {
 			}
 			
 		}// for
-		
+	    attackerLoss = mpab-u1.getManPower();
+        defenderLoss = mpdb-u2.getManPower();
 		return winnerId;
 	}
+
+    public static int getAttackerLoss(){
+        return attackerLoss;
+    }
+
+    public static int getDefenderLoss(){
+        return defenderLoss;
+    }
+
+    private static int round(double d) {
+        return (int)Math.floor(d + 0.5f);
+    }
+
+    public static int attackRange(Tile t1, Tile t2, int range){
+            for(Tile t : gm.getNeighbours(t1, range, false)){
+                if(t == t2){
+                    return 1;
+                }
+            }
+        return -1;
+    }
 }

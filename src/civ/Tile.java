@@ -54,7 +54,7 @@ public class Tile implements Comparable<Tile>{
          * pixely = ((x + y) * height / 2) + offsetY
          */
 
-        view = new TileView(((x - y)*120)+120*GameMap.getInstance().getWidth(), ((x + y)*68), this);
+        view = new TileView(((x - y)*120)+120*GameMap.getInstance().getWidth(), ((x + y)*68)+170, this);
 
         setUnit(pu);
     }
@@ -102,8 +102,14 @@ public class Tile implements Comparable<Tile>{
 
     //This function must be edited 
     public void setUnit(PhysicalUnit pu){
-        if(pu != null){
+        if(pu != null && pu.isAlly()){
             setExplored(true);
+            if(GameMap.getInstance() != null){
+                for(Tile t : GameMap.getInstance().getNeighbours(this, pu.getType().getVision())){
+                    t.setExplored(true);
+                    t.getView().repaint();
+                }
+            }
         }else{
             //countToFog = 0;
         }
