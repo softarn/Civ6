@@ -39,7 +39,7 @@ public class Menu extends JPanel implements Observer, ActionListener{
     private JButton putUnit;
     private JComboBox selUnit;
     private JComboBox selPlayer;
-
+	
     private JProgressBar manPowerBar;    
     private JLabel tileLabel;
     private JLabel unitPresentation;
@@ -55,7 +55,7 @@ public class Menu extends JPanel implements Observer, ActionListener{
         super(); 
         setLayout(new BorderLayout(20, 30));
         north.setLayout(new FlowLayout());
-
+		
         manPowerBar = new JProgressBar(0,100);  
         manPowerBar.setSize(new Dimension(50,10));
         manPowerBar.setString("Manpower "); 
