@@ -8,14 +8,19 @@ public class PhysicalUnit implements Comparable<PhysicalUnit>{
     private int manPower;
     private int currentMovementPoint;
     private PhysicalUnitType type;
+    private PhysicalUnitView view;
     private Player allegiance;
-    //private City city = null;
+    //private City city;
 
+    @Deprecated //Unit requires allegiance now
     public PhysicalUnit(PhysicalUnitType type){ 
+        System.out.println("Using deprecated constructor PhysicalUnit(PhysicalUnitType)./n" +
+                "Please use PhysicalUnit(PhysicalUnitType, Player) instead.");
         this.idNumber = ++count;
         this.type = type;
         this.allegiance = null;
         reset();
+        this.view = new PhysicalUnitView(this);
     }
 
     public PhysicalUnit(PhysicalUnitType type, Player allegiance){
@@ -23,6 +28,7 @@ public class PhysicalUnit implements Comparable<PhysicalUnit>{
         this.type = type;
         this.allegiance = allegiance;
         reset();
+        this.view = new PhysicalUnitView(this);
     }
 
     public PhysicalUnit(PhysicalUnit other){
@@ -31,6 +37,7 @@ public class PhysicalUnit implements Comparable<PhysicalUnit>{
         this.currentMovementPoint = other.getCurrentMovementPoint();
         this.type = other.getType();
         this.allegiance = other.allegiance;
+        this.view = other.getView();
     }
 
     public boolean isAlly(){
@@ -46,6 +53,10 @@ public class PhysicalUnit implements Comparable<PhysicalUnit>{
 
     public PhysicalUnitType getType(){
         return type;
+    }
+
+    public PhysicalUnitView getView(){
+        return view;
     }
 
     public int getManPower(){

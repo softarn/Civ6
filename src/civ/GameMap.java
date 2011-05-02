@@ -13,7 +13,7 @@ public class GameMap{
     private Tile[][] tiles;
     private static GameMap map;
     private GameMapView gmv;
-    private int height = 15, width = 15;
+    private int height = 20, width = 20;
 
     private int[][] offsets = {
         {-1,-1},

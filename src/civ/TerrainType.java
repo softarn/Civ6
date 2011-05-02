@@ -7,18 +7,18 @@ import javax.imageio.ImageIO;
 import java.util.ArrayList;
 
 public enum TerrainType {
-        Sea("Sea",                      50, 0, 0,  2,2,2,0,0,0,0,0,0,6,0,0),
-        Ocean("Ocean",                  30, 20, 0, 1,1,1,0,0,0,0,0,0,4,0,0),
-        Plains("Plains",                25, 0,1,  2,2,2,1,0,0,1,1,5,0,1,6),
-        Grassland("Grassland",          25, 0,1,  2,2,2,0,0,0,1,1,6,0,1,8),
-        Marsh("Marsh",                  0,  25,1, 1,0,0,0,2,0,0,0,2,0,0,0),
-        Desert("Desert",                10, 0,1,  1,0,1,0,1,0,0,0,1,0,0,0),
-        Tundra("Tundra",                15, 0,1,  1,0,1,0,0,0,0,0,1,0,1,1),
-        Rainforest("Rainforest",        15, 50,1, 1,0,0,0,0,0,0,6,1,0,4,1),
-        Conifer("Conifer",              25, 75,1, 2,1,0,0,0,0,0,10,1,0,5,1),
-        Broadleaf("Broadleaf",          25, 75,1, 2,1,0,0,0,0,0,8,1,0,6,1),         
-        Hills("Hills",                  25, 100,1, 0,1,1,6,8,1,4,1,1,0,1,1), 
-        Mountain("Mountain",            20, 200,1, 0,0,0,7,6,6,3,0,0,0,0,0);
+        Sea("Sea",                 50, 0,  0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 6, 0, 0),
+        Ocean("Ocean",             30, 20, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 4, 0, 0),
+        Plains("Plains",           25, 0,  1, 2, 2, 2, 1, 0, 0, 1, 1, 5, 0, 1, 6),
+        Grassland("Grassland",     25, 0,  1, 2, 2, 2, 0, 0, 0, 1, 1, 6, 0, 1, 8),
+        Marsh("Marsh",             0,  25, 1, 1, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0),
+        Desert("Desert",           10, 0,  1, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0),
+        Tundra("Tundra",           15, 0,  1, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1),
+        Rainforest("Rainforest",   15, 50, 1, 1, 0, 0, 0, 0, 0, 0, 6, 1, 0, 4, 1),
+        Conifer("Conifer",         25, 75, 1, 2, 1, 0, 0, 0, 0, 0, 10,1, 0, 5, 1),
+        Broadleaf("Broadleaf",     25, 75, 1, 2, 1, 0, 0, 0, 0, 0, 8, 1, 0, 6, 1),         
+        Hills("Hills",             25, 100,1, 0, 1, 1, 6, 8, 1, 4, 1, 1, 0, 1, 1), 
+        Mountain("Mountain",       20, 200,1, 0, 0, 0, 7, 6, 6, 3, 0, 0, 0, 0, 0);
         
     /*
     private int [12] seaArray = {};
