@@ -63,7 +63,7 @@ public class PhysicalUnitView extends JPanel{
         GridBagLayout gridbag = new GridBagLayout();
         GridBagConstraints c = new GridBagConstraints();
         upper.setLayout(gridbag);
-        upper.setPreferredSize(new Dimension(300, 115));
+        upper.setPreferredSize(new Dimension(260, 115));
         upper.setBorder(BorderFactory.createTitledBorder("Strid:"));
 
         manPower = new JProgressBar(0, pUnit.getType().getMaxManPower());  
