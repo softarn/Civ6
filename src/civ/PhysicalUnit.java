@@ -1,6 +1,7 @@
 package civ;
 
 import java.awt.image.BufferedImage;
+import java.util.HashMap;
 
 public class PhysicalUnit implements Comparable<PhysicalUnit>{
     private static int count = 0;
@@ -10,6 +11,8 @@ public class PhysicalUnit implements Comparable<PhysicalUnit>{
     private PhysicalUnitType type;
     private PhysicalUnitView view;
     private Player allegiance;
+    private HashMap<ResourceType, Integer> inventory;
+    private int currentInvSize;
     //private City city;
 
     @Deprecated //Unit requires allegiance now
@@ -27,6 +30,8 @@ public class PhysicalUnit implements Comparable<PhysicalUnit>{
         this.idNumber = ++count;
         this.type = type;
         this.allegiance = allegiance;
+        this.inventory = new HashMap<ResourceType, Integer>();
+        this.currentInvSize = 0;
         reset();
         this.view = new PhysicalUnitView(this);
     }
@@ -36,6 +41,8 @@ public class PhysicalUnit implements Comparable<PhysicalUnit>{
         this.manPower = other.getManPower();
         this.currentMovementPoint = other.getCurrentMovementPoint();
         this.type = other.getType();
+        this.inventory =  new HashMap<ResourceType, Integer>(other.inventory);
+        this.currentInvSize = other.currentInvSize;
         this.allegiance = other.allegiance;
         this.view = other.getView();
     }
@@ -80,7 +87,49 @@ public class PhysicalUnit implements Comparable<PhysicalUnit>{
             currentMovementPoint -= point;
             return true;
         }
-        return false;
+        return false; // No more movementpoints
+    }
+
+    public boolean addItem(ResourceUnit item){
+        if(inventory.size() > type.getInventorySize()){
+            return false; // Inventory full
+        }
+        if(inventory.containsKey(item.getResourceType())){
+            inventory.put(item.getResourceType(), item.getAmount() + inventory.get(item.getResourceType()));
+            currentInvSize += item.getAmount();
+        }
+        else{
+            inventory.put(item.getResourceType(), item.getAmount());
+            currentInvSize += item.getAmount();
+        }
+        return true;
+    }
+
+    /**
+     * Uses one item of the resource type in the inventory of the unit.
+     *
+     * @param type The type of resource you want to use
+     *
+     * @return True if the resourcetype was available and was used, otherwise false.
+     */
+    public boolean useItem(ResourceType type){
+        if(!inventory.containsKey(type)){
+            return false; // No such resource type
+        }
+        int amount = inventory.get(type);
+        if(amount <= 0){
+            return false; // No more units of this type
+        }
+        inventory.put(type, amount-1);
+        --currentInvSize;
+        return true;
+    }
+
+    /**
+     * @return Current total amount of items in the inventory
+     */
+    public int getInventoryAmount(){
+        return currentInvSize;
     }
 
     public void reset(){

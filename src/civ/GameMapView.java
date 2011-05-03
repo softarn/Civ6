@@ -133,6 +133,7 @@ public class GameMapView extends JPanel{
                                 tile = state.getSelectedTile();
                             }else{
                                 System.out.println("No unit to attack here.");
+                                state.setActionState(None);
                             }
                             break;
                     }

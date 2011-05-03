@@ -5,13 +5,17 @@ public class Round{
     private static int turn = 0;
     private static Player[] players = {Player.getInstance("Andy"), Player.getInstance("Harry")};
     private static Player activePlayer = null;
-
+    private static GameMap gm;
     
     static void next(){
         if(number%players.length == 0){
             ++turn;
         }
         activePlayer = players[number%players.length];
+        gm = GameMap.getInstance();
+        if(gm != null){
+            gm.resetUnits();
+        }
         ++number;
     }
 

@@ -177,6 +177,7 @@ public class Menu extends JPanel implements Observer, ActionListener{
                         attack.setEnabled(true);
                     }
                     unitView.add(state.getSelectedUnit().getView());
+                    state.getSelectedUnit().getView().update();
                     unitView.repaint();
                     manPowerBar.setValue(state.getSelectedUnit().getManPower());
                     manPowerBar.setString("Manpower: " + Integer.toString(state.getSelectedUnit().getManPower()));
@@ -200,23 +201,32 @@ public class Menu extends JPanel implements Observer, ActionListener{
     public void actionPerformed(ActionEvent ae){
         if(move == ae.getSource()){
             state.setActionState(Move);
+            if(state.getUnitState() == UnitSelected){
+                    state.getSelectedUnit().getView().update();
+            }
         }
         if(attack == ae.getSource()){
             state.setActionState(Attack);
+            if(state.getUnitState() == UnitSelected){
+                state.getSelectedUnit().getView().update();
+            }
         }
         if(endturn == ae.getSource()){
             Round.next();
             GameMap.getInstance().exploreMap();
+            if(state.getUnitState() == UnitSelected){
+                state.getSelectedUnit().getView().update();
+            }
         }
         /*
-        if(putUnit == ae.getSource()){
-            if(state.getTileState() == TileSelected){
-                if(state.getSelectedTile().hasUnit()){
-                    status.setText("Status is: Can't place unit on another unit.");
-                    scaleUp();
-                }
-                else if(!state.getSelectedTile().getTerrain().isTraversible((PhysicalUnitType)selUnit.getSelectedItem())){
-                    status.setText("Status is: Unit can't stand there.");
+           if(putUnit == ae.getSource()){
+           if(state.getTileState() == TileSelected){
+           if(state.getSelectedTile().hasUnit()){
+           status.setText("Status is: Can't place unit on another unit.");
+           scaleUp();
+           }
+           else if(!state.getSelectedTile().getTerrain().isTraversible((PhysicalUnitType)selUnit.getSelectedItem())){
+           status.setText("Status is: Unit can't stand there.");
                     scaleDown();
                 }
                 else{

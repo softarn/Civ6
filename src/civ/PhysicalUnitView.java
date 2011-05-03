@@ -39,7 +39,8 @@ public class PhysicalUnitView extends JPanel{
         setLayout(new BorderLayout());
 
         imgPane.add(image);
-        imgPane.setPreferredSize(new Dimension(pUnit.getImage().getWidth()+20, pUnit.getImage().getHeight() + 20));
+        imgPane.setPreferredSize(new Dimension(pUnit.getImage().getWidth() + 20, 
+                    pUnit.getImage().getHeight() + 20));
         
         buttonPane = createButtonPane();
         infoPane = createInfoPane();
@@ -125,12 +126,13 @@ public class PhysicalUnitView extends JPanel{
         manPower.setValue(pUnit.getManPower());
         manPower.setString("Mankraft: " + pUnit.getManPower()); 
         manPower.setStringPainted(true);
-        defence.setText("Försvarsvärde: "+ pUnit.getType().getDefence());
-        range.setText("Räckvidd: "+ pUnit.getType().getRange());
-        attack.setText("Attackvärde: "+ pUnit.getType().getAttack());
+        defence.setText("Försvarsvärde: " + pUnit.getType().getDefence());
+        range.setText("Räckvidd: " + pUnit.getType().getRange());
+        attack.setText("Attackvärde: " + pUnit.getType().getAttack());
         movement.setText("Förflyttning: " + pUnit.getCurrentMovementPoint() + 
                 "/" + pUnit.getType().getMovementPoints());
-        foodstorage.setText("Matlager: X/X");
+        foodstorage.setText("Matlager: " + pUnit.getInventoryAmount() + 
+                "/" + pUnit.getType().getInventorySize());
     }
 
     private void updateSettler(){

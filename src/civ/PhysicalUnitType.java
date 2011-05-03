@@ -7,29 +7,29 @@ import java.io.IOException;
 
 public enum PhysicalUnitType {
     // Artillery
-    Catapult("Catapult", "Artillery", 100, 12, 1, 2, 1, false),
-    Trebuchet("Trebuchet", "Artillery", 100, 20, 2, 3, 1, false),
-    Cannon("Cannon", "Artillery", 100, 30, 3, 4, 1, false),
+    Catapult("Catapult", "Artillery", 100, 12, 1, 2, 1, 50),
+    Trebuchet("Trebuchet", "Artillery", 100, 20, 2, 3, 1, 75),
+    Cannon("Cannon", "Artillery", 100, 30, 3, 4, 1, 100),
 
     // Range
-    Archer("Archer", "Range", 100, 4, 2, 2, 1, false),
-    Musketeer("Musketeer", "Range", 100, 8, 6, 2, 1, false),
+    Archer("Archer", "Range", 100, 4, 2, 2, 1, 50),
+    Musketeer("Musketeer", "Range", 100, 8, 6, 2, 1, 50),
 
     // Melee
-    Phalanx("Phalanx", "Melee", 100, 2, 5, 1, 1, false),
-    Legion("Legion", "Melee", 100, 6, 4, 1, 1, false),
-    Infantry("Infantry", "Melee", 100, 3, 3, 1, 1, false),
-    Pikeman("Pikeman", "Melee", 100, 2, 3, 1, 1, false),
+    Phalanx("Phalanx", "Melee", 100, 2, 5, 1, 1, 50),
+    Legion("Legion", "Melee", 100, 6, 4, 1, 1, 75),
+    Infantry("Infantry", "Melee", 100, 3, 3, 1, 1, 50),
+    Pikeman("Pikeman", "Melee", 100, 2, 3, 1, 1, 50),
 
     // Mounted 
-    Cavalry("Cavalry", "Mounted", 100, 6, 4, 1, 2, true),
-    Knight("Knight", "Mounted", 100, 12, 8, 1, 2, true),
-    Crusader("Crusader", "Mounted", 100, 6, 4, 1, 2, true),
+    Cavalry("Cavalry", "Mounted", 100, 6, 4, 1, 2, 100),
+    Knight("Knight", "Mounted", 100, 12, 8, 1, 2, 100),
+    Crusader("Crusader", "Mounted", 100, 6, 4, 1, 2, 150),
 
     // Boats
-    Trireme("Trireme", "Boat", 50, 4, 3, 1, 3, false),
-    Galley("Galley", "Boat", 250, 30, 25, 1, 4, false),
-    Caravel("Caravel", "Boat", 100, 50, 40, 1, 6, false);
+    Trireme("Trireme", "Boat", 50, 4, 3, 1, 3, 100),
+    Galley("Galley", "Boat", 250, 30, 25, 1, 4, 400),
+    Caravel("Caravel", "Boat", 100, 50, 40, 1, 6, 200);
 
     private String name;
     private String category;
@@ -39,6 +39,7 @@ public enum PhysicalUnitType {
     private int range;
     private int movementPoints;
     private int vision;
+    private int inventorySize;
     private boolean mounted;
     private BufferedImage unitImg;
 
@@ -51,7 +52,7 @@ public enum PhysicalUnitType {
             int defence,
             int range,
             int movementPoints,
-            boolean mounted){
+            int inventorySize){
         this.name = name;
         this.category = category;
         this.maxManPower = maxManPower;
@@ -59,8 +60,14 @@ public enum PhysicalUnitType {
         this.defence = defence;
         this.range = range;
         this.movementPoints = movementPoints;
-        this.vision = movementPoints;
-        this.mounted = mounted;
+        this.inventorySize = inventorySize;
+        if(category.equals("Boat")){
+            this.vision = 2;
+        }
+        else{
+            this.vision = movementPoints;
+        }
+        this.mounted = category.equals("Mounted");
 
         try{
             unitImg = ImageIO.read(new File(imgPath + name + ".png"));
@@ -106,12 +113,16 @@ public enum PhysicalUnitType {
         return unitImg;
     }
 
-    public String toString(){
-        return name;
-    }
-
     public boolean isMounted(){
         return mounted;
+    }
+
+    public int getInventorySize(){
+        return inventorySize;
+    }
+
+    public String toString(){
+        return name;
     }
 
     /**
