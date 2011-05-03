@@ -36,23 +36,18 @@ public class Menu extends JPanel implements Observer, ActionListener{
     private JPanel north = new JPanel();
     private JPanel eastPanel = new JPanel();
     private JPanel westPanel = new JPanel();
-    private JPanel northEast = new JPanel();
-    private JPanel createUnit = new JPanel(); // Temporary panel
-    private JPanel tabContent = new JPanel();
-    private JPanel eastWestPanel = new JPanel();
-    private JPanel eastEastPanel = new JPanel();
+    //private JPanel createUnit = new JPanel(); // Temporary panel
+    //private JPanel tabContent = new JPanel();
     
-    private JButton move;
-    private JButton attack;
-    private JButton putUnit;
-    private JButton unitsButton;
-    private JButton citiesButton;
-    private JComboBox selUnit;
-    private JComboBox selPlayer;
-    private JTextArea textArea;
+    //private JButton putUnit;
+    //private JComboBox selUnit;
+    //private JComboBox selPlayer;
     private JTabbedPane tabbedPane;
     private GlobalView globalViewObject;
+    //private PhysicalUnitView puvObject;
     
+    private PhysicalUnitView unitView;	
+    private JProgressBar manPowerBar;    
     private JLabel tileLabel;
     private JLabel unitPresentation;
     private GameMapView gmv = new GameMapView();    
@@ -62,77 +57,59 @@ public class Menu extends JPanel implements Observer, ActionListener{
 
     private int curScale = 5 ;
     private int[] sizes = {50, 75, 90, 120, 150, 175, 190};
-    private int scienceValue = 30;
+    //private int scienceValue = 30;
     
     Menu(){ 
         super(); 
-        setLayout(new BorderLayout(0,10));
-        north.setLayout(new BorderLayout());
+        setLayout(new BorderLayout(0,10)); 
+        
+        manPowerBar = new JProgressBar(0,100);  
+        manPowerBar.setSize(new Dimension(50,10));
+        manPowerBar.setString("Manpower "); 
+        manPowerBar.setStringPainted(true); 
         
         unitPresentation = new JLabel();
-        
-        move = new JButton("Move");
-        move.setActionCommand("move");
-        move.addActionListener(this);
-
-        attack = new JButton("Attack");
-        attack.setActionCommand("attack");
-        attack.addActionListener(this);
-
+        tileLabel = new JLabel();
+    
+/*
         selUnit = new JComboBox(PhysicalUnitType.values());
         selPlayer = new JComboBox(Round.getPlayers());
         putUnit = new JButton("Set Unit");
         putUnit.setActionCommand("setunit");
         putUnit.addActionListener(this);
-
-        state.addObserver(this);
-
-        createUnit.add(selPlayer); 
-        createUnit.add(selUnit); 
-        createUnit.add(putUnit); 
-        createUnit.add(move);
-        createUnit.add(attack);
-        
-        // Here goes tab content
-        textArea = new JTextArea("Edit Södergran \n och Nils Ferlin \n Karin Boye och Tomas Tranströmer \n");
-        tabContent = new JPanel();
-        tabContent.setPreferredSize(new Dimension (200,100));
-        tabContent.add(textArea);
-        
+*/
         tabbedPane = new JTabbedPane(); 
-        tabbedPane.addTab("Cities ", null, tabContent, "Your cities ");
-        tabbedPane.addTab("Units", null, null, "Your units ");
-        
-        add(westPanel,  BorderLayout.WEST); 
-        add(north, BorderLayout.NORTH); 
-        add(eastPanel, BorderLayout.EAST); 
+        //tabbedPane.addTab("Cities ", null, tabContent, "Your cities ");
+        //stabbedPane.addTab("Units", null, tabContent, "Your units ");
+       
+        add(north, BorderLayout.NORTH);      
+        add(westPanel,  BorderLayout.WEST);
+        add(eastPanel, BorderLayout.EAST);
         
         // Set layout managers 
-        northEast.setLayout(new BorderLayout());
+        north.setLayout(new BorderLayout()); 
         eastPanel.setLayout(new BorderLayout());
-        
-        eastWestPanel.setLayout(new BorderLayout());
-        eastWestPanel.setBorder(BorderFactory.createLineBorder(Color.black));
-        
-        eastEastPanel.setLayout(new BorderLayout());
-        
         westPanel.setLayout(new BorderLayout());
-        westPanel.setPreferredSize(new Dimension (300,150));
+        westPanel.setPreferredSize(new Dimension (560,200));
         
-        // North
-        north.add(northEast, BorderLayout.EAST);
-        north.add(tileLabel, BorderLayout.CENTER);
+        // ADD CONTENT
+        unitView = new PhysicalUnitView(GameMap.getInstance().getTile(1,1).getUnit());
+        globalViewObject = new GlobalView();
         
+        tabbedPane.addTab("Enhet ",null, unitView, "Enhetsegenskaper");
+        tabbedPane.addTab("Cities ",null,null, "About cities");
+        tabbedPane.setPreferredSize(new Dimension(560,200));
+            
         // East
-        eastPanel.add(globalViewObject, BorderLayout.NORTH);
-        eastPanel.add(eastWestPanel, BorderLayout.WEST);
-        eastPanel.add(eastEastPanel, BorderLayout.EAST);
-        eastPanel.add(createUnit, BorderLayout.SOUTH);
+        eastPanel.add(globalViewObject, BorderLayout.EAST);
         
         // West
-        westPanel.add(tabbedPane, BorderLayout.NORTH);
+        westPanel.add(tabbedPane, BorderLayout.WEST);
         
-        // Uppdatera
+        north.add(tileLabel);
+        north.add(unitPresentation);
+        
+        state.addObserver(this);
         update(); 
     }
 
@@ -182,8 +159,9 @@ public class Menu extends JPanel implements Observer, ActionListener{
 
         switch(state.getUnitState()){
             case UnitUnSelected: 
-                move.setEnabled(false); 
-                attack.setEnabled(false);
+                
+                unitView.removeAll();
+                unitView.repaint();
 
                 manPowerBar.setValue(0);
                 manPowerBar.setString("Manpower: 0");
@@ -191,22 +169,21 @@ public class Menu extends JPanel implements Observer, ActionListener{
                 break;
             case UnitSelected: 
                 if(state.getSelectedUnit().isAlly()){
-                    if(state.getSelectedUnit().getCurrentMovementPoint() > 0){
+                    /*if(state.getSelectedUnit().getCurrentMovementPoint() > 0){
                         move.setEnabled(true);
                         attack.setEnabled(true);
-                    }
+                    }*/
+                    unitView.add(state.getSelectedUnit().getView());
+                    unitView.repaint();
                     manPowerBar.setValue(state.getSelectedUnit().getManPower());
                     manPowerBar.setString("Manpower: " + Integer.toString(state.getSelectedUnit().getManPower()));
                     manPowerBar.repaint();
-                    // unitPresentation should contain victory chance variable 
 
-                    switch(state.getActionState()){
+                    /*switch(state.getActionState()){
                         case Move: move.setEnabled(false); break;
                         case Attack: attack.setEnabled(false); break;
-                    }
+                    }*/
 
-                    //unitPresentation.setText(state.getSelectedUnit().getType().getName()+
-                    //        (" is marked. Attack: ") +state.getSelectedUnit().getType().getAttack());
                 }
                 break;
         }	
@@ -218,14 +195,8 @@ public class Menu extends JPanel implements Observer, ActionListener{
     }
 
     public void actionPerformed(ActionEvent ae){
-        if(move == ae.getSource()){
-            state.setActionState(Move);
-        }
-        if(attack == ae.getSource()){
-            state.setActionState(Attack);
-        }
-
-        if(putUnit == ae.getSource()){
+    
+        /*if(putUnit == ae.getSource()){
             if(state.getTileState() == TileSelected){
                 if(state.getSelectedTile().hasUnit()){
                     status.setText("Status is: Can't place unit on another unit.");
@@ -242,7 +213,7 @@ public class Menu extends JPanel implements Observer, ActionListener{
                     state.getSelectedTile().getView().repaint();
                 }
             }
-        }
+        }*/
     }
 }
 

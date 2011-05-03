@@ -92,14 +92,14 @@ public class TileView extends JPanel{
                 g2.drawImage(terrain, 0, 0, this);
                 if(tile.getUnit() != null && tile.getUnit().isAlly()){
                     g2.setColor(Color.YELLOW);
-                    g2.setStroke(new BasicStroke(2));
+                    g2.setStroke(new BasicStroke(5));
                     g2.drawPolygon(aura);
                 }
             }
 
             if(tile.isSelected()){
                 g2.setColor(Color.GREEN);
-                g2.setStroke(new BasicStroke(3));
+                g2.setStroke(new BasicStroke(10));
                 g2.drawPolygon(aura);
             }
         }else{

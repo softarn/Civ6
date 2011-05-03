@@ -21,7 +21,7 @@ public enum PhysicalUnitType {
     Infantry("Infantry", "Melee", 100, 3, 3, 1, 1, false),
     Pikeman("Pikeman", "Melee", 100, 2, 3, 1, 1, false),
 
-    // Horseborn 
+    // Mounted 
     Cavalry("Cavalry", "Mounted", 100, 6, 4, 1, 2, true),
     Knight("Knight", "Mounted", 100, 12, 8, 1, 2, true),
     Crusader("Crusader", "Mounted", 100, 6, 4, 1, 2, true),
