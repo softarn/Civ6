@@ -64,7 +64,7 @@ public class Menu extends JPanel implements Observer, ActionListener{
         setLayout(new BorderLayout(0,10)); 
         
         manPowerBar = new JProgressBar(0,100);  
-        manPowerBar.setSize(new Dimension(50,10));
+        manPowerBar.setSize(new Dimension(30,10));
         manPowerBar.setString("Manpower "); 
         manPowerBar.setStringPainted(true); 
         
@@ -90,7 +90,7 @@ public class Menu extends JPanel implements Observer, ActionListener{
         north.setLayout(new BorderLayout()); 
         eastPanel.setLayout(new BorderLayout());
         westPanel.setLayout(new BorderLayout());
-        westPanel.setPreferredSize(new Dimension (560,200));
+        westPanel.setPreferredSize(new Dimension (540,200));
         
         // ADD CONTENT
         unitView = new PhysicalUnitView(GameMap.getInstance().getTile(1,1).getUnit());
@@ -98,7 +98,7 @@ public class Menu extends JPanel implements Observer, ActionListener{
         
         tabbedPane.addTab("Enhet ",null, unitView, "Enhetsegenskaper");
         tabbedPane.addTab("Cities ",null,null, "About cities");
-        tabbedPane.setPreferredSize(new Dimension(560,200));
+        tabbedPane.setPreferredSize(new Dimension(540,200));
             
         // East
         eastPanel.add(globalViewObject, BorderLayout.EAST);
