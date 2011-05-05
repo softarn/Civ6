@@ -4,6 +4,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
+import java.awt.Toolkit;
+import java.awt.Dimension;
 
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
@@ -21,7 +23,8 @@ public class Window extends JFrame{
 	
     //Only for testpurpose
     public static void main(String[] args){
-        new Window(600,600);
+        Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
+        new Window(size.width,size.height);
     }
 
     Window(int w,int h){

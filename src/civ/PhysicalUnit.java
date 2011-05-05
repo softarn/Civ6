@@ -23,6 +23,7 @@ public class PhysicalUnit implements Comparable<PhysicalUnit>{
         this.type = type;
         this.allegiance = null;
         reset();
+        this.currentInvSize = 0;
         this.view = new PhysicalUnitView(this);
     }
 
@@ -31,8 +32,9 @@ public class PhysicalUnit implements Comparable<PhysicalUnit>{
         this.type = type;
         this.allegiance = allegiance;
         this.inventory = new HashMap<ResourceType, Integer>();
-        this.currentInvSize = 0;
         reset();
+        this.currentInvSize = 0;
+        this.manPower = type.getMaxManPower();
         this.view = new PhysicalUnitView(this);
     }
 
@@ -129,11 +131,10 @@ public class PhysicalUnit implements Comparable<PhysicalUnit>{
      * @return Current total amount of items in the inventory
      */
     public int getInventoryAmount(){
-        return currentInvSize;
+        return currentInvSize; 
     }
 
     public void reset(){
-        this.manPower = type.getMaxManPower();
         this.currentMovementPoint = type.getMovementPoints();
     }
 

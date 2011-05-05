@@ -25,7 +25,7 @@
     </target>
 
     <target name="compile" depends="prepare">
-	<javac srcdir="${src.dir}" destdir="${bin.dir}"/>
+	<javac srcdir="${src.dir}" destdir="${bin.dir}" debug="true" debuglevel="lines,source"/>
     </target>
 
     <target name="run">
