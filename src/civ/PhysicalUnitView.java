@@ -32,7 +32,7 @@ import static civ.State.UnitState.UnitSelected;
  * PhysicalUnitView is the GUI representation of the information in the bottom
  * bar.
  */
-public class PhysicalUnitView extends JPanel implements Observer{
+public class PhysicalUnitView extends JPanel implements Observer, ActionListener{
     private static final State state = State.getInstance();
     private PhysicalUnit pUnit;
     private JLabel name = new JLabel();
@@ -62,6 +62,11 @@ public class PhysicalUnitView extends JPanel implements Observer{
         namePane.add(name);
         manPower = new JProgressBar(0, pUnit.getType().getMaxManPower());
         setLayout(new BorderLayout());
+
+        atkButton.addActionListener(this);
+        moveButton.addActionListener(this);
+        defButton.addActionListener(this);
+        infoButton.addActionListener(this);
 
         imgPane.add(image);
         imgPane.setMaximumSize(new Dimension(pUnit.getImage().getWidth() + 20, 
@@ -182,15 +187,24 @@ public class PhysicalUnitView extends JPanel implements Observer{
 
     public void update(Observable obs, Object obj){
         if(obs == state){
-            switch(state.getUnitState()){
-                case UnitSelected: 
-                    if(state.getSelectedUnit().isAlly()){
-                        if(state.getSelectedUnit().getCurrentMovementPoint() > 0){
-                            moveButton.setEnabled(true);
-                            atkButton.setEnabled(true);
-                        }
+            moveButton.setEnabled(true);
+            atkButton.setEnabled(true);
+
+            if(state.getUnitState() == UnitSelected){
+                if(state.getSelectedUnit().isAlly()){
+                    if(state.getSelectedUnit().getCurrentMovementPoint() == 0){
+                        moveButton.setEnabled(false);
+                        atkButton.setEnabled(false);
                     }
-                    break;
+                    switch(state.getActionState()){
+                        case Move:
+                            moveButton.setEnabled(false);
+                            break;
+                        case Attack:
+                            atkButton.setEnabled(false);
+                            break;
+                    }
+                }
             }
         }
     }
@@ -200,6 +214,7 @@ public class PhysicalUnitView extends JPanel implements Observer{
             if(state.getUnitState() == UnitSelected){
                 state.getSelectedUnit().getView().update();
                 state.setActionState(Move);
+                System.out.println("Move darnit!");
             }
         }
         if(atkButton == ae.getSource()){
