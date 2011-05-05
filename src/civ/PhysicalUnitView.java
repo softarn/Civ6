@@ -80,6 +80,7 @@ public class PhysicalUnitView extends JPanel implements Observer{
         add(leftPane, BorderLayout.WEST);
         add(rightPane, BorderLayout.CENTER);
 
+        state.addObserver(this);
         update();
     }
 
@@ -181,29 +182,30 @@ public class PhysicalUnitView extends JPanel implements Observer{
 
     public void update(Observable obs, Object obj){
         if(obs == state){
-            //switch(){
-            //    case UnitSelected: 
+            switch(state.getUnitState()){
+                case UnitSelected: 
                     if(state.getSelectedUnit().isAlly()){
                         if(state.getSelectedUnit().getCurrentMovementPoint() > 0){
                             moveButton.setEnabled(true);
                             atkButton.setEnabled(true);
                         }
                     }
-            //}
+                    break;
+            }
         }
     }
 
     public void actionPerformed(ActionEvent ae){
         if(moveButton == ae.getSource()){
-            state.setActionState(Move);
             if(state.getUnitState() == UnitSelected){
                 state.getSelectedUnit().getView().update();
+                state.setActionState(Move);
             }
         }
         if(atkButton == ae.getSource()){
-            state.setActionState(Attack);
             if(state.getUnitState() == UnitSelected){
                 state.getSelectedUnit().getView().update();
+                state.setActionState(Attack);
             }
         }
     }

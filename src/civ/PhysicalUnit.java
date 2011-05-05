@@ -13,6 +13,8 @@ public class PhysicalUnit implements Comparable<PhysicalUnit>{
     private Player allegiance;
     private HashMap<ResourceType, Integer> inventory;
     private int currentInvSize;
+    private boolean fortified;
+    //private SiegeTower st?
     //private City city;
 
     @Deprecated //Unit requires allegiance now
@@ -84,6 +86,18 @@ public class PhysicalUnit implements Comparable<PhysicalUnit>{
         return idNumber;
     }
 
+    public boolean isFortified(){
+        return fortified;
+    }
+
+    public void fortify(){
+        this.fortified = true;
+    }
+
+    public boolean inSiegeTower(){
+        return false; // !! change later !!
+    }
+
     public boolean useMovementPoints(int point){
         if(currentMovementPoint >= point){
             currentMovementPoint -= point;
@@ -136,6 +150,7 @@ public class PhysicalUnit implements Comparable<PhysicalUnit>{
 
     public void reset(){
         this.currentMovementPoint = type.getMovementPoints();
+        this.fortified = false;
     }
 
     public BufferedImage getImage(){

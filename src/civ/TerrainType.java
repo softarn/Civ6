@@ -97,10 +97,6 @@ public enum TerrainType {
 	return name;
     }
 
-    /**
-     * Returns the cost to pass this terrain for the specific unittype.
-     * The range is a scale from 1-10 where 10 is impassable.
-     */
     public boolean isTraversible(PhysicalUnit unit){
         return isTraversible(unit.getType());
     }
