@@ -112,7 +112,16 @@ public class TileView extends JPanel{
             g2.fillPolygon(aura);
         }
 
-        if(tile.hasUnit() && !tile.hasFog()){
+        if (tile.hasCity() && !tile.hasFog()){
+        	BufferedImage cityImg = tile.getCity().getImage();
+            int h = cityImg.getTileHeight();
+            int w = cityImg.getTileWidth();
+
+            int x = (w/2) - 60;
+            int y = 150 - h;
+            g2.drawImage(cityImg, x, y, this);
+    	}
+        else if(tile.hasUnit() && !tile.hasFog()){
             BufferedImage unitImg = tile.getUnitImg();
 
             int h = unitImg.getTileHeight();
@@ -122,5 +131,6 @@ public class TileView extends JPanel{
             int y = 150 - h;
             g2.drawImage(unitImg, x, y, this);
         }
+
     }
 }

@@ -20,6 +20,7 @@ public class Tile implements Comparable<Tile>{
 
     private TerrainType terrain;
     private PhysicalUnit unit;
+    private City city;
     private TileView view;
 
     private int[][] offsets = {{-1,-1},
@@ -33,15 +34,20 @@ public class Tile implements Comparable<Tile>{
         // Empty constructor does nothing
     }
     public Tile(TerrainType tt, PhysicalUnit pu, int x, int y){
-        init(tt, pu, x, y);
+        init(tt, pu, null, x, y);
     }
     public Tile(TerrainType tt, int x, int y){
-        init(tt, null, x, y);
+        init(tt, null, null, x, y);
+    }
+    public Tile (TerrainType tt, City city, int x, int y) {
+        init(tt, null, city, x, y);
+
     }
 
-    private void init(TerrainType tt, PhysicalUnit pu, int x, int y){
+    private void init(TerrainType tt, PhysicalUnit pu, City city, int x, int y){
         terrain = tt;
         unit = pu;
+        this.city = city;
         this.x = x;
         this.y = y;
 
@@ -99,6 +105,22 @@ public class Tile implements Comparable<Tile>{
     public boolean isSelected(){
         return selected;
     }
+    
+    public boolean hasCity () {
+        return city!=null;
+    }
+    
+    public void setCity(City city){
+        this.city = city;
+    }
+    
+    public City getCity() {
+        if(hasCity())
+            return city;
+        else
+        	return null;
+    }
+    
 
     //This function must be edited 
     public void setUnit(PhysicalUnit pu){

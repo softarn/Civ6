@@ -233,5 +233,6 @@ public class GameMap{
         tiles[1][1].getUnit().addItem(new ResourceUnit(ResourceType.Wheat, 5));
         tiles[1][1].getUnit().addItem(new ResourceUnit(ResourceType.Wheat, 3));
         tiles[1][1].getUnit().addItem(new ResourceUnit(ResourceType.Fish, 4));
+        tiles[2][2].setCity(new City());
     }
 }
