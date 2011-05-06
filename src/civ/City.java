@@ -7,7 +7,8 @@ import javax.imageio.ImageIO;
 
 public class City {
     //private PhysicalUnit phu = new PhysicalUnit(null, null);
-    public String name = new String("");
+    private String name = new String("");
+    private Hold hold = new Hold();
     private BufferedImage cityImg;
     
     public City() {
@@ -19,6 +20,14 @@ public class City {
         catch (IOException ioE) {
             System.out.println("Bilden finns ej ");    
         }
+    }
+
+    public String getName(){
+        return name;
+    }
+
+    public Hold getHold(){
+        return hold;
     }
     
     public BufferedImage getImage() {
