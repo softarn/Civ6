@@ -29,7 +29,13 @@ public enum PhysicalUnitType {
     // Boats
     Trireme("Trireme", "Boat", 50, 4, 3, 1, 3, 100),
     Galley("Galley", "Boat", 250, 30, 25, 1, 4, 400),
-    Caravel("Caravel", "Boat", 100, 50, 40, 1, 6, 200);
+    Caravel("Caravel", "Boat", 100, 50, 40, 1, 6, 200),
+
+    // Other
+    Settler("Settler", "Other", 100, 0, 2, 0, 1, 0),
+    Diplomat("Diplomat", "Other", 25, 0, 0, 0, 3, 0),
+    Siegetower("Siege Tower", "Other", 0, 0, 0, 0, 1, 0),
+    Wagontrain("Wagon Train", "Other", 0, 0, 0, 0, 2, 0);
 
     private String name;
     private String category;
@@ -42,6 +48,7 @@ public enum PhysicalUnitType {
     private int inventorySize;
     private boolean mounted;
     private BufferedImage unitImg;
+    private Hold hold;
 
     private static final String imgPath = "data/img/"; //Need a better fix for this!
 
@@ -68,6 +75,12 @@ public enum PhysicalUnitType {
             this.vision = movementPoints;
         }
         this.mounted = category.equals("Mounted");
+        if(name.equals("Siege Tower") || name.equals("Galley") || name.equals("Caravel")){
+            this.hold = new Hold();
+        }
+        else{
+            this.hold = null;
+        }
 
         try{
             unitImg = ImageIO.read(new File(imgPath + name + ".png"));
@@ -119,6 +132,10 @@ public enum PhysicalUnitType {
 
     public int getInventorySize(){
         return inventorySize;
+    }
+
+    public Hold getHold(){
+        return hold;
     }
 
     public String toString(){
