@@ -6,6 +6,8 @@ import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.Toolkit;
 import java.awt.Dimension;
+import javax.swing.Popup;
+import javax.swing.PopupFactory;
 
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
@@ -20,6 +22,7 @@ public class Window extends JFrame{
 	private JMenuItem menuItem1;
 	private JMenuItem menuItem2;
 	private JMenuItem menuItem3;
+	private PopupWindow puw;	
 	
     //Only for testpurpose
     public static void main(String[] args){
@@ -30,7 +33,10 @@ public class Window extends JFrame{
     Window(int w,int h){
         super ("Civ 6");
         Round.next(); // Round.next() has to be run atleast once before the player gets to play.
-        Menu m = new Menu();
+        	
+		puw = new PopupWindow();
+		
+        Menu m = new Menu(puw);
         ViewPort vp = new ViewPort();
 
 		mainMenuBar = new JMenuBar();
@@ -45,7 +51,7 @@ public class Window extends JFrame{
 		mainMenu.add(menuItem2);
 		secondMenu.add(menuItem3);
 		mainMenuBar.add(mainMenu);
-		mainMenuBar.add(secondMenu);	
+		mainMenuBar.add(secondMenu);
 		
 		setJMenuBar(mainMenuBar);
 		///add(mainMenu);
@@ -56,7 +62,10 @@ public class Window extends JFrame{
 
         add(m, BorderLayout.SOUTH);
         add(vp, BorderLayout.CENTER);
+		setGlassPane(puw);
         setSize(w, h);
         setVisible(true);
     }
+    
 }
+    

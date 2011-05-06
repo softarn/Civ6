@@ -6,13 +6,14 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class City {
-    //private PhysicalUnit phu = new PhysicalUnit(null, null);
     public String name = new String("");
     private BufferedImage cityImg;
+    private int defence;
+    
     
     public City() {
-        //this.phu = phu;
-        
+    	defence = 100;
+    	
         try {
             cityImg =  ImageIO.read(new File("data/img/city.png"));
         }
@@ -23,6 +24,10 @@ public class City {
     
     public BufferedImage getImage() {
         return cityImg;
+    }
+    
+    public int getDefence () {
+    	return defence;	
     }
     
 }

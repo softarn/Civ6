@@ -19,6 +19,8 @@ import javax.swing.BorderFactory;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.SwingConstants;
+import javax.swing.Popup;
+import javax.swing.PopupFactory;
 
 import java.util.Observer;
 import java.util.Observable;
@@ -54,6 +56,8 @@ public class PhysicalUnitView extends JPanel implements Observer, ActionListener
     private JLabel attack = new JLabel();
     private JLabel movement = new JLabel();
     private JLabel inventory = new JLabel();
+    
+    private Popup popup;
 
     public PhysicalUnitView(PhysicalUnit pu){
         pUnit = pu;
@@ -184,6 +188,10 @@ public class PhysicalUnitView extends JPanel implements Observer, ActionListener
     private void updateSettler(){
         // To be written at a later date
     }
+    
+    public void setPopup (Popup pop) {
+    	this.popup = pop;
+    }
 
     public void update(Observable obs, Object obj){
         if(obs == state){
@@ -222,6 +230,12 @@ public class PhysicalUnitView extends JPanel implements Observer, ActionListener
                 state.getSelectedUnit().getView().update();
                 state.setActionState(Attack);
             }
+        }
+        
+        if(infoButton == ae.getSource()){
+        	if(popup != null){
+        		popup.show();
+        	}
         }
     }
 }

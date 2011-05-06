@@ -39,7 +39,7 @@ class GlobalView extends JPanel implements ActionListener{
     private JButton showCitiesButton;
     private JProgressBar scienceBar;
     
-    private JLabel goldLabel;
+    //private JLabel goldLabel;
     private JLabel yearLabel;
     private JLabel scienceLabel;
     private JLabel amountCitiesLabel;
@@ -59,7 +59,7 @@ class GlobalView extends JPanel implements ActionListener{
         // Labels
         yearLabel = new JLabel("Year of the beast 666 b.c. ");
         scienceLabel = new JLabel("Forskning: Segling ");
-        goldLabel = new JLabel("<html>Gold: $ 1000 <BR> Inkomst 25 $ / runda <BR> </html>");
+        //goldLabel = new JLabel("<html>Gold: $ 1000 <BR> Inkomst 25 $ / runda <BR> </html>");
         
         // Buttons
         endturn = new JButton("End Turn");
@@ -121,7 +121,7 @@ class GlobalView extends JPanel implements ActionListener{
         yearPanel.add(yearLabel);
         yearPanel.add(endturn);
         
-        goldLabelPanel.add(goldLabel);
+        //goldLabelPanel.add(goldLabel);
         //goldLabelPanel.setBorder(new CompoundBorder(BorderFactory.createLineBorder(Color.BLACK), BorderFactory.createEmptyBorder(5,5,5,5)));
         goldLabelPanel.add(Box.createRigidArea(new Dimension(5,5)));
         goldLabelPanel.setAlignmentX(goldPanel.RIGHT_ALIGNMENT);
@@ -137,8 +137,8 @@ class GlobalView extends JPanel implements ActionListener{
         
         // Gold panel - Top Right Corner 
         goldPanel.setLayout(new BoxLayout(goldPanel, BoxLayout.X_AXIS));
-        goldLabel.setAlignmentX(goldPanel.RIGHT_ALIGNMENT);
-        goldLabel.setAlignmentY(goldPanel.TOP_ALIGNMENT);
+        //goldLabel.setAlignmentX(goldPanel.RIGHT_ALIGNMENT);
+        //goldLabel.setAlignmentY(goldPanel.TOP_ALIGNMENT);
         
         // Science panel - Bottom Left Corner
         scienceLabel.setAlignmentX(sciencePanel.LEFT_ALIGNMENT);

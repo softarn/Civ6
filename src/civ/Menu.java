@@ -10,6 +10,8 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.BoxLayout;
 import javax.swing.BorderFactory;
+import javax.swing.Popup;
+import javax.swing.PopupFactory;
 
 import java.util.Observer;
 import java.util.Observable;
@@ -48,13 +50,18 @@ public class Menu extends JPanel implements Observer, ActionListener{
 
     //Status is only for testing purpose
     private JLabel status = new JLabel("Status is: " + state.getUnitState());
-
+    private PopupWindow puw;
     private int curScale = 5 ;
     private int[] sizes = {50, 75, 90, 120, 150, 175, 190};
     
-    Menu(){ 
+    Menu(PopupWindow puw){ 
         super(); 
         setLayout(new BorderLayout(0,10)); 
+        
+        this.puw = puw;
+        Popup popup;
+        popup = PopupFactory.getSharedInstance().getPopup(null, puw, 200,200);
+		
         
         manPowerBar = new JProgressBar(0,100);  
         manPowerBar.setSize(new Dimension(30,10));
@@ -80,6 +87,7 @@ public class Menu extends JPanel implements Observer, ActionListener{
         
         // ADD CONTENT
         unitView = GameMap.getInstance().getTile(1,1).getUnit().getView();
+        unitView.setPopup(popup);
         globalViewObject = new GlobalView();
         
         tabbedPane.addTab("Enhet ", null, unitView, "Enhetsegenskaper");
@@ -115,6 +123,8 @@ public class Menu extends JPanel implements Observer, ActionListener{
             update();
         }
     }
+    
+    
     private void update(){
         switch (state.getHoverState()) {
             case HoverNone:
