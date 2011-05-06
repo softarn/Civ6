@@ -22,6 +22,6 @@ public class ViewPort extends JPanel{
     }
 
     public static JPanel getPopup(){
-        return popup
+        return popup;
     }
 }
