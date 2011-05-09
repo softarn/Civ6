@@ -9,6 +9,8 @@ import java.util.ArrayList;
 
 import static civ.State.TileState.TileSelected;
 import static civ.State.TileState.TileUnSelected;
+import static civ.State.CityState.CitySelected;
+import static civ.State.CityState.CityUnSelected;
 import static civ.State.UnitState.UnitSelected;
 import static civ.State.UnitState.UnitUnSelected;
 
@@ -80,7 +82,11 @@ public class Tile implements Comparable<Tile>{
         }
         st.setSelectedTile(this);
         st.setTileState(TileSelected);
-        if(unit != null){
+        if(hasCity()){
+        	st.setSelectedCity(city);
+        	st.setCityState(CitySelected);
+        }
+        if(hasUnit()){
             st.setSelectedUnit(unit);
             st.setUnitState(UnitSelected);
         }
@@ -94,7 +100,11 @@ public class Tile implements Comparable<Tile>{
             st.setSelectedTile(null);
             st.setTileState(TileUnSelected);
             selected = false;
-            if(unit != null){
+            if(hasCity()){
+                st.setSelectedCity(null);
+                st.setCityState(CityUnSelected);
+            }
+            if(hasUnit()){
                 st.setSelectedUnit(null);
                 st.setUnitState(UnitUnSelected);
             }
@@ -106,19 +116,8 @@ public class Tile implements Comparable<Tile>{
         return selected;
     }
     
-    public boolean hasCity () {
-        return city!=null;
-    }
-    
     public void setCity(City city){
         this.city = city;
-    }
-    
-    public City getCity() {
-        if(hasCity())
-            return city;
-        else
-        	return null;
     }
     
 
@@ -142,7 +141,15 @@ public class Tile implements Comparable<Tile>{
     public PhysicalUnit getUnit(){
         return unit; 
     }
+    
+    public City getCity() {
+    	return city;	
+    }
 
+    public boolean hasCity() {
+    	return city!=null;	
+    }
+    
     public boolean hasUnit(){
         return unit != null;
     }

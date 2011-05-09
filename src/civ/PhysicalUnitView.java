@@ -51,11 +51,11 @@ public class PhysicalUnitView extends JPanel implements Observer, ActionListener
     private JButton infoButton = new JButton("Visa mer info");
 
     private JProgressBar manPower;    
+    private JProgressBar lifeLength;
     private JLabel defence = new JLabel();
     private JLabel range = new JLabel();
     private JLabel attack = new JLabel();
     private JLabel movement = new JLabel();
-    private JLabel inventory = new JLabel();
     
     private Popup popup;
 
@@ -65,6 +65,7 @@ public class PhysicalUnitView extends JPanel implements Observer, ActionListener
         name.setFont(name.getFont().deriveFont(18.0f));
         namePane.add(name);
         manPower = new JProgressBar(0, pUnit.getType().getMaxManPower());
+        lifeLength = new JProgressBar();
         setLayout(new BorderLayout());
 
         atkButton.addActionListener(this);
@@ -135,7 +136,7 @@ public class PhysicalUnitView extends JPanel implements Observer, ActionListener
         stats.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
         stats.add(movement);
         stats.add(Box.createRigidArea(new Dimension(0,7)));
-        stats.add(inventory);
+        stats.add(lifeLength);
 
         JPanel left = new JPanel();
         left.setBorder(BorderFactory.createTitledBorder(""));
@@ -181,8 +182,15 @@ public class PhysicalUnitView extends JPanel implements Observer, ActionListener
         attack.setText("Attackvärde: " + pUnit.getType().getAttack());
         movement.setText("Förflyttning: " + pUnit.getCurrentMovementPoint() + 
                 "/" + pUnit.getType().getMovementPoints());
-        inventory.setText("Matlager: " + pUnit.getInventoryAmount() + 
-                "/" + pUnit.getType().getInventorySize());
+        
+        lifeLength.setMaximum(pUnit.getType().getInventorySize());
+        lifeLength.setString("Livslängd: "+ Integer.toString(pUnit.getInventoryAmount()));
+        lifeLength.setValue(pUnit.getInventoryAmount());
+        lifeLength.setStringPainted();
+        //lifeLength.paintString(true);
+
+        //inventory.setText("Matlager: " + pUnit.getInventoryAmount() + 
+          //      "/" + pUnit.getType().getInventorySize());
     }
 
     private void updateSettler(){

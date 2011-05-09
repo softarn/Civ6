@@ -44,6 +44,7 @@ public class Menu extends JPanel implements Observer, ActionListener{
     private GlobalView globalViewObject;
     
     private PhysicalUnitView unitView;	
+    private CityView cityView;
     private JProgressBar manPowerBar;    
     private JLabel tileLabel;
     //private JLabel unitPresentation;
@@ -103,8 +104,8 @@ public class Menu extends JPanel implements Observer, ActionListener{
         unitView.setPopup(popup);
         globalViewObject = new GlobalView();
         
-        tabbedPane.addTab("Enhet ", null, unitView, "Enhetsegenskaper");
-        tabbedPane.addTab("Cities ", null, null, "About cities");
+        tabbedPane.addTab(" Hey ", null, unitView, "Inget objekt markerat ");
+        //tabbedPane.addTab("Cities ", null, null, "About cities");
         tabbedPane.setPreferredSize(new Dimension(580,200));
             
         // East
@@ -117,6 +118,7 @@ public class Menu extends JPanel implements Observer, ActionListener{
         //north.add(unitPresentation);
         
         state.addObserver(this);
+        tabbedPane.repaint();
         update(); 
     }
 
@@ -161,24 +163,41 @@ public class Menu extends JPanel implements Observer, ActionListener{
                             "<br>Unit: Enemy unit");
 
                 }
+                
                 break;
         }        
 
         switch(state.getUnitState()){
-            case UnitUnSelected: 
-                
-                unitView.removeAll();
-                unitView.repaint();
 
-                break;
             case UnitSelected: 
                 if(state.getSelectedUnit().isAlly()){
-                    unitView.add(state.getSelectedUnit().getView());
-                    state.getSelectedUnit().getView().update();
-                    unitView.repaint();
+                    PhysicalUnit unit = state.getSelectedUnit();
+                 	String unitTypeName = unit.getType().getName();
+                 	tabbedPane.addTab(unitTypeName, null, unit.getView(), "Visa dina units ");
                 }
                 break;
-        }	
+                
+            case UnitUnSelected:                 
+                //tabbedPane.removeAll();
+                tabbedPane.repaint();
+
+                break;
+        }
+        
+        switch (state.getCityState()) {
+        	case CitySelected:
+        		System.out.println("Hello");
+        		City city = state.getSelectedCity();
+        		String cityName = city.getName();
+        		tabbedPane.addTab(cityName, null, city.getView(), "Visa dina städer ");
+        		
+        		break;
+        	case CityUnSelected:
+        		//tabbedPane.removeAll();
+        		tabbedPane.repaint();
+        		
+        		break;
+        }
         
         updateState();
     }

@@ -5,17 +5,21 @@ import java.util.Observable;
 public class State extends Observable{
 	private static final State INSTANCE = new State();
 
-	private static PhysicalUnit selectedUnit;
 	private static Tile selectedTile;
+	private static City selectedCity;
+	private static PhysicalUnit selectedUnit;
 	private static Tile hoverTile;
 	
 	private UnitState unitState;
+	private CityState cityState;
 	private TileState tileState;
 	private ActionState actionState;
     private HoverState hoverState;
    
 	private State(){
+		
 		setUnitState(UnitState.UnitUnSelected);
+		setCityState(CityState.CityUnSelected);
 		setTileState(TileState.TileUnSelected);
 		setActionState(ActionState.None);
         setHoverState(HoverState.HoverNone);
@@ -31,6 +35,14 @@ public class State extends Observable{
 
 	public static Tile getSelectedTile(){
 		return selectedTile;
+	}
+	
+	public static void setSelectedCity(City city){
+		selectedCity = city;
+	}
+
+	public static City getSelectedCity(){
+		return selectedCity;
 	}
 
 	public static void setSelectedUnit(PhysicalUnit unit){
@@ -63,6 +75,22 @@ public class State extends Observable{
 		setChanged();
 		notifyObservers();
 	}
+	
+	// Citystate
+	public enum CityState{
+		CitySelected, CityUnSelected 
+	}
+
+	public CityState getCityState(){
+		return cityState;
+	}
+
+	public void setCityState(CityState state){
+		cityState = state;
+		setChanged();
+		notifyObservers();
+	}
+
 
 	//TileState
 	public enum TileState{
