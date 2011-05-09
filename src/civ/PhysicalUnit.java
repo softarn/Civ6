@@ -11,7 +11,7 @@ public class PhysicalUnit implements Comparable<PhysicalUnit>{
     private PhysicalUnitType type;
     private PhysicalUnitView view;
     private Player allegiance;
-    private HashMap<ResourceType, Integer> inventory;
+    //private HashMap<ResourceType, Integer> inventory;
     private int currentInvSize;
     private boolean fortified;
     //private SiegeTower st?
@@ -25,7 +25,7 @@ public class PhysicalUnit implements Comparable<PhysicalUnit>{
         this.type = type;
         this.allegiance = null;
         reset();
-        this.currentInvSize = 0;
+        this.currentInvSize = type.getInventorySize();
         this.view = new PhysicalUnitView(this);
     }
 
@@ -33,9 +33,9 @@ public class PhysicalUnit implements Comparable<PhysicalUnit>{
         this.idNumber = ++count;
         this.type = type;
         this.allegiance = allegiance;
-        this.inventory = new HashMap<ResourceType, Integer>();
+        //this.inventory = new HashMap<ResourceType, Integer>();
         reset();
-        this.currentInvSize = 0;
+        this.currentInvSize = type.getInventorySize();
         this.manPower = type.getMaxManPower();
         this.view = new PhysicalUnitView(this);
     }
@@ -45,7 +45,7 @@ public class PhysicalUnit implements Comparable<PhysicalUnit>{
         this.manPower = other.getManPower();
         this.currentMovementPoint = other.getCurrentMovementPoint();
         this.type = other.getType();
-        this.inventory =  new HashMap<ResourceType, Integer>(other.inventory);
+        //this.inventory =  new HashMap<ResourceType, Integer>(other.inventory);
         this.currentInvSize = other.currentInvSize;
         this.allegiance = other.allegiance;
         this.view = other.getView();
@@ -106,7 +106,10 @@ public class PhysicalUnit implements Comparable<PhysicalUnit>{
         return false; // No more movementpoints
     }
 
-    public boolean addItem(ResourceUnit item){
+    @Deprecated // No more resources
+    public boolean addItem(){ //ResourceUnit item){
+        return false; 
+        /*
         if(inventory.size() > type.getInventorySize()){
             return false; // Inventory full
         }
@@ -118,7 +121,7 @@ public class PhysicalUnit implements Comparable<PhysicalUnit>{
             inventory.put(item.getResourceType(), item.getAmount());
             currentInvSize += item.getAmount();
         }
-        return true;
+        return true;*/
     }
 
     /**
@@ -128,7 +131,13 @@ public class PhysicalUnit implements Comparable<PhysicalUnit>{
      *
      * @return True if the resourcetype was available and was used, otherwise false.
      */
-    public boolean useItem(ResourceType type){
+    public boolean useItem(){ //ResourceType type){
+        if(currentInvSize == 0){
+            return false; // Time to die
+        }
+        --currentInvSize;
+        return true;
+        /*
         if(!inventory.containsKey(type)){
             return false; // No such resource type
         }
@@ -139,6 +148,7 @@ public class PhysicalUnit implements Comparable<PhysicalUnit>{
         inventory.put(type, amount-1);
         --currentInvSize;
         return true;
+        */
     }
 
     /**
