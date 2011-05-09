@@ -5,7 +5,7 @@ import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
 
-public enum PhysicalUnitType {
+public enum PhysicalUnitType implements AbstractUnitType{
     // Artillery
     Catapult("Catapult", "Artillery", 100, 12, 1, 2, 1, 50),
     Trebuchet("Trebuchet", "Artillery", 100, 20, 2, 3, 1, 75),
@@ -37,20 +37,8 @@ public enum PhysicalUnitType {
     Siegetower("Siege Tower", "Other", 0, 0, 0, 0, 1, 0),
     Wagontrain("Wagon Train", "Other", 0, 0, 0, 0, 2, 0);
 
-    private String name;
-    private String category;
-    private int maxManPower;
-    private int defence;
-    private int attack;
-    private int range;
-    private int movementPoints;
-    private int vision;
-    private int inventorySize;
-    private boolean mounted;
-    private BufferedImage unitImg;
+    private UnitType unitType;
     private Hold hold;
-
-    private static final String imgPath = "data/img/"; //Need a better fix for this!
 
     private PhysicalUnitType(String name, 
             String category,
@@ -60,21 +48,8 @@ public enum PhysicalUnitType {
             int range,
             int movementPoints,
             int inventorySize){
-        this.name = name;
-        this.category = category;
-        this.maxManPower = maxManPower;
-        this.attack = attack;
-        this.defence = defence;
-        this.range = range;
-        this.movementPoints = movementPoints;
-        this.inventorySize = inventorySize;
-        if(category.equals("Boat")){
-            this.vision = 2;
-        }
-        else{
-            this.vision = movementPoints;
-        }
-        this.mounted = category.equals("Mounted");
+        this.unitType = new UnitType(name, category, maxManPower, attack, 
+                defence, range, movementPoints, inventorySize);
         if(name.equals("Siege Tower") || name.equals("Galley") || name.equals("Caravel")){
             this.hold = new Hold();
         }
@@ -82,56 +57,50 @@ public enum PhysicalUnitType {
             this.hold = null;
         }
 
-        try{
-            unitImg = ImageIO.read(new File(imgPath + name + ".png"));
-        }catch(IOException e){
-            System.out.println(e);
-            System.out.println(name);
-        }
     }
 
     public String getName(){
-        return name;
+        return unitType.getName();
     }
 
     public String getCategory(){
-        return category;
+        return unitType.getCategory();
     }
 
     public int getAttack(){
-        return attack;
+        return unitType.getAttack();
     }
 
     public int getDefence(){
-        return defence;
+        return unitType.getDefence();
     }
 
     public int getMovementPoints(){
-        return movementPoints;
+        return unitType.getMovementPoints();
     }
 
     public int getVision(){
-        return vision;
+        return unitType.getVision();
     }
 
     public int getMaxManPower(){
-        return maxManPower;
+        return unitType.getMaxManPower();
     }
 
     public int getRange(){
-        return range;
+        return unitType.getRange();
     }
 
     public BufferedImage getImage(){
-        return unitImg;
-    }
-
-    public boolean isMounted(){
-        return mounted;
+        return unitType.getImage();
     }
 
     public int getInventorySize(){
-        return inventorySize;
+        return unitType.getInventorySize();
+    }
+
+    public boolean isMounted(){
+        return unitType.isMounted();
     }
 
     public Hold getHold(){
@@ -139,7 +108,7 @@ public enum PhysicalUnitType {
     }
 
     public String toString(){
-        return name;
+        return unitType.getName();
     }
 
     /**

@@ -101,7 +101,7 @@ public enum TerrainType {
         return isTraversible(unit.getType());
     }
 
-    public boolean isTraversible(PhysicalUnitType type){
+    public boolean isTraversible(AbstractUnitType type){
         for(String category : traversibleFor){
             if(type.getCategory().equals(category)){
                 return true;

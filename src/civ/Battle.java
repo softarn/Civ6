@@ -11,8 +11,8 @@ public class Battle {
     private static int attackerLoss;
     private static int defenderLoss;
 
-    private static PhysicalUnitType uta;
-    private static PhysicalUnitType utd;
+    private static AbstractUnitType uta;
+    private static AbstractUnitType utd;
     private static TerrainType tt1;
     private static TerrainType tt2;
     private static String name1;

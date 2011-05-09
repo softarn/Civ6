@@ -8,7 +8,7 @@ public class PhysicalUnit implements Comparable<PhysicalUnit>{
     private int idNumber;
     private int manPower;
     private int currentMovementPoint;
-    private PhysicalUnitType type;
+    private AbstractUnitType type;
     private PhysicalUnitView view;
     private Player allegiance;
     //private HashMap<ResourceType, Integer> inventory;
@@ -17,19 +17,19 @@ public class PhysicalUnit implements Comparable<PhysicalUnit>{
     //private SiegeTower st?
     //private City city;
 
-    @Deprecated //Unit requires allegiance now
-    public PhysicalUnit(PhysicalUnitType type){ 
-        System.out.println("Using deprecated constructor PhysicalUnit(PhysicalUnitType)./n" +
-                "Please use PhysicalUnit(PhysicalUnitType, Player) instead.");
+    /** Used to create barbarians */
+    public PhysicalUnit(BarbarianType type){ 
         this.idNumber = ++count;
         this.type = type;
         this.allegiance = null;
-        reset();
+        this.currentMovementPoint = type.getMovementPoints();
+        this.fortified = false;
         this.currentInvSize = type.getInventorySize();
+        this.manPower = type.getMaxManPower();
         this.view = new PhysicalUnitView(this);
     }
 
-    public PhysicalUnit(PhysicalUnitType type, Player allegiance){
+    public PhysicalUnit(AbstractUnitType type, Player allegiance){
         this.idNumber = ++count;
         this.type = type;
         this.allegiance = allegiance;
@@ -62,7 +62,7 @@ public class PhysicalUnit implements Comparable<PhysicalUnit>{
         return false;
     }
 
-    public PhysicalUnitType getType(){
+    public AbstractUnitType getType(){
         return type;
     }
 
@@ -107,85 +107,85 @@ public class PhysicalUnit implements Comparable<PhysicalUnit>{
     }
 
     @Deprecated // No more resources
-    public boolean addItem(){ //ResourceUnit item){
-        return false; 
-        /*
-        if(inventory.size() > type.getInventorySize()){
-            return false; // Inventory full
+        public boolean addItem(){ //ResourceUnit item){
+            return false; 
+            /*
+               if(inventory.size() > type.getInventorySize()){
+               return false; // Inventory full
+               }
+               if(inventory.containsKey(item.getResourceType())){
+               inventory.put(item.getResourceType(), item.getAmount() + inventory.get(item.getResourceType()));
+               currentInvSize += item.getAmount();
+               }
+               else{
+               inventory.put(item.getResourceType(), item.getAmount());
+               currentInvSize += item.getAmount();
+               }
+               return true;*/
         }
-        if(inventory.containsKey(item.getResourceType())){
-            inventory.put(item.getResourceType(), item.getAmount() + inventory.get(item.getResourceType()));
-            currentInvSize += item.getAmount();
-        }
-        else{
-            inventory.put(item.getResourceType(), item.getAmount());
-            currentInvSize += item.getAmount();
-        }
-        return true;*/
-    }
 
-    /**
-     * Uses one item of the resource type in the inventory of the unit.
-     *
-     * @param type The type of resource you want to use
-     *
-     * @return True if the resourcetype was available and was used, otherwise false.
-     */
-    public boolean useItem(){ //ResourceType type){
-        if(currentInvSize == 0){
-            return false; // Time to die
+        /**
+         * Uses one item of the resource type in the inventory of the unit.
+         *
+         * @param type The type of resource you want to use
+         *
+         * @return True if the resourcetype was available and was used, otherwise false.
+         */
+        public boolean useItem(){ //ResourceType type){
+            if(currentInvSize == 0){
+                return false; // Time to die
+            }
+            --currentInvSize;
+            return true;
+            /*
+               if(!inventory.containsKey(type)){
+               return false; // No such resource type
+               }
+               int amount = inventory.get(type);
+               if(amount <= 0){
+               return false; // No more units of this type
+               }
+               inventory.put(type, amount-1);
+               --currentInvSize;
+               return true;
+               */
         }
-        --currentInvSize;
-        return true;
-        /*
-        if(!inventory.containsKey(type)){
-            return false; // No such resource type
+
+        /**
+         * @return Current total amount of items in the inventory
+         */
+        public int getInventoryAmount(){
+            return currentInvSize; 
         }
-        int amount = inventory.get(type);
-        if(amount <= 0){
-            return false; // No more units of this type
+
+        public void reset(){
+            this.currentMovementPoint = type.getMovementPoints();
+            this.fortified = false;
         }
-        inventory.put(type, amount-1);
-        --currentInvSize;
-        return true;
-        */
-    }
 
-    /**
-     * @return Current total amount of items in the inventory
-     */
-    public int getInventoryAmount(){
-        return currentInvSize; 
-    }
-
-    public void reset(){
-        this.currentMovementPoint = type.getMovementPoints();
-        this.fortified = false;
-    }
-
-    public BufferedImage getImage(){
-        return type.getImage();
-    }
-
-    /**
-     * Used for comparing one unit to another, 
-     * to find out if you could win, draw or lose 
-     * in a fight with the other unit.
-     *
-     * @param other The opposing unit.
-     *
-     * @return Negative for a loss, 0 for a tie and positive for a win.
-     */
-    public int compareTo(PhysicalUnit other){
-        int attacking = this.type.getAttack() - other.type.getDefence() - other.manPower;
-        int defending = this.manPower - other.type.getAttack() + this.type.getDefence();
-        return attacking - defending;
-    }
-
-    public boolean equals(Object other){
-        if(other instanceof PhysicalUnit){
-            return this.idNumber == ((PhysicalUnit)other).idNumber;
+        public BufferedImage getImage(){
+            return type.getImage();
         }
-        return false;
-    }
-}
+
+        /**
+         * Used for comparing one unit to another, 
+         * to find out if you could win, draw or lose 
+         * in a fight with the other unit.
+         *
+         * @param other The opposing unit.
+         *
+         * @return Negative for a loss, 0 for a tie and positive for a win.
+         */
+        public int compareTo(PhysicalUnit other){
+            int attacking = this.type.getAttack() - other.type.getDefence() - other.manPower;
+            int defending = this.manPower - other.type.getAttack() + this.type.getDefence();
+            return attacking - defending;
+        }
+
+        public boolean equals(Object other){
+            if(other instanceof PhysicalUnit){
+                return this.idNumber == ((PhysicalUnit)other).idNumber;
+            }
+            return false;
+        }
+        }

@@ -65,7 +65,7 @@ public class GameMap{
     public void resetUnits(){
         for(Tile[] temp : tiles){
             for(Tile tile : temp){
-                if(tile.hasUnit() && tile.getUnit().isAlly()){ 
+                if(tile.hasUnit() && (tile.getUnit().isAlly() || tile.getUnit().getType().getName().equals("Barbarian"))){ 
                     tile.getUnit().reset();
                 }
             }
@@ -165,6 +165,7 @@ public class GameMap{
         if(range < 1){
             return new ArrayList<Tile>();
         }
+        System.out.println(tile);
         int x = tile.getX();
         int y = tile.getY();
 
@@ -230,6 +231,7 @@ public class GameMap{
         }
         tiles = result;
         tiles[1][1].setUnit(new PhysicalUnit(PhysicalUnitType.Musketeer, Player.getInstance("Andy")));
+        tiles[2][1].setUnit(new Barbarian(tiles[2][1]));
         tiles[2][2].setCity(new City());
     }
 }

@@ -74,7 +74,15 @@ public class Menu extends JPanel implements Observer, ActionListener{
         
         //unitPresentation = new JLabel();
         tileLabel = new JLabel();
-    
+ 
+        selUnit = new JComboBox(PhysicalUnitType.values());
+        putUnit = new JButton("Set Unit");
+        putUnit.setActionCommand("setunit");
+        putUnit.addActionListener(this);
+
+        createUnit.add(selUnit);
+        createUnit.add(putUnit);
+
         tabbedPane = new JTabbedPane(); 
         //tabbedPane.addTab("Cities ", null, tabContent, "Your cities ");
         //stabbedPane.addTab("Units", null, tabContent, "Your units ");
@@ -184,6 +192,7 @@ public class Menu extends JPanel implements Observer, ActionListener{
             if(state.getTileState() == TileSelected){
                 if(state.getSelectedTile().hasUnit()){
                     status.setText("Status is: Can't place unit on another unit.");
+                    GameMap gm = GameMap.getInstance();
                     //scaleUp();
                 }
                 else if(!state.getSelectedTile().getTerrain().isTraversible((PhysicalUnitType)selUnit.getSelectedItem())){
