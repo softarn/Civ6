@@ -38,6 +38,7 @@ public class Menu extends JPanel implements Observer, ActionListener{
     private JPanel north = new JPanel();
     private JPanel eastPanel = new JPanel();
     private JPanel westPanel = new JPanel();
+    private JPanel createUnit = new JPanel(); // Temporary panel
 
     private JTabbedPane tabbedPane;
     private GlobalView globalViewObject;
@@ -47,6 +48,9 @@ public class Menu extends JPanel implements Observer, ActionListener{
     private JLabel tileLabel;
     //private JLabel unitPresentation;
     private GameMapView gmv = new GameMapView();    
+
+    private JButton putUnit;
+    private JComboBox selUnit;
 
     //Status is only for testing purpose
     private JLabel status = new JLabel("Status is: " + state.getUnitState());
@@ -78,6 +82,7 @@ public class Menu extends JPanel implements Observer, ActionListener{
         add(north, BorderLayout.NORTH);      
         add(westPanel,  BorderLayout.WEST);
         add(eastPanel, BorderLayout.EAST);
+        add(createUnit, BorderLayout.CENTER);
         
         // Set layout managers 
         north.setLayout(new BoxLayout(north, BoxLayout.Y_AXIS)); 
@@ -175,6 +180,24 @@ public class Menu extends JPanel implements Observer, ActionListener{
     }
 
     public void actionPerformed(ActionEvent ae){
+        if(putUnit == ae.getSource()){
+            if(state.getTileState() == TileSelected){
+                if(state.getSelectedTile().hasUnit()){
+                    status.setText("Status is: Can't place unit on another unit.");
+                    //scaleUp();
+                }
+                else if(!state.getSelectedTile().getTerrain().isTraversible((PhysicalUnitType)selUnit.getSelectedItem())){
+                    status.setText("Status is: Unit can't stand there.");
+                    //scaleDown();
+                }
+                else{
+                    state.getSelectedTile().setUnit(new PhysicalUnit(
+                                (PhysicalUnitType)selUnit.getSelectedItem(),
+                                Round.getActivePlayer()));//(Player)selPlayer.getSelectedItem()));
+                    state.getSelectedTile().getView().repaint();
+                }
+            }
+        }
     }
 }
 
