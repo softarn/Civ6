@@ -45,7 +45,7 @@ public class Menu extends JPanel implements Observer, ActionListener{
     private PhysicalUnitView unitView;	
     private JProgressBar manPowerBar;    
     private JLabel tileLabel;
-    private JLabel unitPresentation;
+    //private JLabel unitPresentation;
     private GameMapView gmv = new GameMapView();    
 
     //Status is only for testing purpose
@@ -68,7 +68,7 @@ public class Menu extends JPanel implements Observer, ActionListener{
         manPowerBar.setString("Manpower "); 
         manPowerBar.setStringPainted(true); 
         
-        unitPresentation = new JLabel();
+        //unitPresentation = new JLabel();
         tileLabel = new JLabel();
     
         tabbedPane = new JTabbedPane(); 
@@ -80,7 +80,7 @@ public class Menu extends JPanel implements Observer, ActionListener{
         add(eastPanel, BorderLayout.EAST);
         
         // Set layout managers 
-        north.setLayout(new BorderLayout()); 
+        north.setLayout(new BoxLayout(north, BoxLayout.Y_AXIS)); 
         eastPanel.setLayout(new BorderLayout());
         westPanel.setLayout(new BorderLayout());
         westPanel.setPreferredSize(new Dimension (600,220));
@@ -101,7 +101,7 @@ public class Menu extends JPanel implements Observer, ActionListener{
         westPanel.add(tabbedPane, BorderLayout.WEST);
         
         north.add(tileLabel);
-        north.add(unitPresentation);
+        //north.add(unitPresentation);
         
         state.addObserver(this);
         update(); 
@@ -124,15 +124,13 @@ public class Menu extends JPanel implements Observer, ActionListener{
         }
     }
     
-    
     private void update(){
         switch (state.getHoverState()) {
             case HoverNone:
                 tileLabel.setText("No tile");
                 break;
             case HoverTileOnly:
-                tileLabel.setText("Terrain: \n" + state.getHoverTile().getTerrain().toString() +" "+ 
-            state.getHoverTile().getTerrain().getResources());
+                tileLabel.setText("Terrain: \n" + state.getHoverTile().getTerrain().toString());
                 break;
             case HoverTileUnit:
                 String outputTerrain = state.getHoverTile().getTerrain().toString();
@@ -168,6 +166,7 @@ public class Menu extends JPanel implements Observer, ActionListener{
                 }
                 break;
         }	
+        
         updateState();
     }
 
