@@ -1,4 +1,4 @@
-package civ;
+		package civ;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -13,15 +13,16 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
-public class Window extends JFrame{
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+
+public class Window extends JFrame  implements ActionListener{
 
 	//Menu bar
 	private JMenuBar mainMenuBar;
 	private JMenu mainMenu;
-	private JMenu secondMenu;
-	private JMenuItem menuItem1;
-	private JMenuItem menuItem2;
-	private JMenuItem menuItem3;
+	private JMenuItem menuItem;
 	private PopupWindow puw;	
 	
     //Only for testpurpose
@@ -30,7 +31,7 @@ public class Window extends JFrame{
         new Window(size.width,size.height);
     }
 
-    Window(int w,int h){
+    Window(int w,int h) {
         super ("Civ 6");
         Round.next(); // Round.next() has to be run atleast once before the player gets to play.
         	
@@ -41,17 +42,13 @@ public class Window extends JFrame{
 
 		mainMenuBar = new JMenuBar();
 		mainMenu = new JMenu("Meny");
-		secondMenu = new JMenu ("Help");
 		
-		menuItem1 = new JMenuItem("Help");
-		menuItem2 = new JMenuItem("Avsluta");
-		menuItem3 = new JMenuItem("Tutorial");
+		menuItem = new JMenuItem("Avsluta");
 		
-		mainMenu.add(menuItem1);
-		mainMenu.add(menuItem2);
-		secondMenu.add(menuItem3);
+		mainMenu.add(menuItem);
 		mainMenuBar.add(mainMenu);
-		mainMenuBar.add(secondMenu);
+		
+		menuItem.addActionListener(this);
 		
 		setJMenuBar(mainMenuBar);
 		///add(mainMenu);
@@ -65,6 +62,11 @@ public class Window extends JFrame{
 		setGlassPane(puw);
         setSize(w, h);
         setVisible(true);
+    }
+    
+    public void actionPerformed(ActionEvent ae){
+    	if (menuItem == ae.getSource())
+    		System.exit(0);
     }
     
 }

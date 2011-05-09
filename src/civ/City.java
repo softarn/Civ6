@@ -8,8 +8,9 @@ import javax.imageio.ImageIO;
 public class City {
 
     //private PhysicalUnit phu = new PhysicalUnit(null, null);
-    private String name = new String("");
+    private String name = new String("Mecca ");
     private Hold hold = new Hold();
+    private CityView cityView = new CityView();
     
     private BufferedImage cityImg;
     private int defence;
@@ -31,6 +32,10 @@ public class City {
 
     public Hold getHold(){
         return hold;
+    }
+    
+    public CityView getView(){
+    	return cityView;	
     }
     
     public BufferedImage getImage() {

@@ -186,7 +186,7 @@ public class PhysicalUnitView extends JPanel implements Observer, ActionListener
         lifeLength.setMaximum(pUnit.getType().getInventorySize());
         lifeLength.setString("Livslängd: "+ Integer.toString(pUnit.getInventoryAmount()));
         lifeLength.setValue(pUnit.getInventoryAmount());
-        lifeLength.setStringPainted(true);
+        lifeLength.setStringPainted();
         //lifeLength.paintString(true);
 
         //inventory.setText("Matlager: " + pUnit.getInventoryAmount() + 
