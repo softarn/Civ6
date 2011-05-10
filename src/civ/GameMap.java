@@ -165,7 +165,6 @@ public class GameMap{
         if(range < 1){
             return new ArrayList<Tile>();
         }
-        System.out.println(tile);
         int x = tile.getX();
         int y = tile.getY();
 
