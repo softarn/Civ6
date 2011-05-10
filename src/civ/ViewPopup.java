@@ -26,7 +26,7 @@ public class ViewPopup extends JPanel implements ActionListener{
 		exitButton.setBackground(new Color (0xEE2222));
 		exitButton.setForeground(new Color (0xFFFFFF));
 		
-		mainTPane.addTab("Enheter ", null, null, "Tooltips vare her ");
+		mainTPane.addTab("Enheter ", null, utv, "Tooltips vare her ");
         mainTPane.setPreferredSize(new Dimension(580,200));
 	
 		mainTPane.addTab("Städer", null, null, "Tooltips vare her ");
@@ -36,7 +36,7 @@ public class ViewPopup extends JPanel implements ActionListener{
 		
 		//closePanel.add(exitButton);
 		//closePanel.setPreferredSize(new Dimension (30,40));
-		
+		this.setOpaque(false);
 		add(mainTPane, BorderLayout.SOUTH);
 		add(exitButton, BorderLayout.EAST);
 		
