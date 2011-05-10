@@ -1,6 +1,7 @@
 package civ;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.TreeSet;
 import java.util.Random;
 
@@ -25,20 +26,26 @@ public class GameMap{
     };
 
 
-    public GameMap(GameMapView gmv){
+    private GameMap(){
         super();
-        map = this;
+    }
 
+    public void init(GameMapView gmv){
         // Parsing the map
-        parseMap("Put server map data here");
+        //parseMap("Put server map data here");
         exploreMap();
         this.gmv = gmv;
         // Put all TileViews on the GameMapView
         for(int j=getHeight()-1; j>=0; --j){
             for(int i=getWidth()-1; i>=0; --i){
                 gmv.add(tiles[i][j].getView());
+                tiles[i][j].setExplored(true);
             }
         }
+    }
+
+    public boolean isInited(){
+        return gmv != null;
     }
 
     /**
@@ -46,6 +53,7 @@ public class GameMap{
      * Assumes GameMapView initialized the object before this is called.
      */
     public static GameMap getInstance(){
+        if(map == null) map = new GameMap();
         return map;
     }
 
@@ -214,7 +222,43 @@ public class GameMap{
      *
      * @param terrain Indata from the server interface.
      */
-    public void parseMap(String terrain){
+    public void parseMap(ArrayList<ArrayList<String>> terrain){
+        HashMap<String, TerrainType> ter = new HashMap<String, TerrainType>();
+        ter.put("Sea", TerrainType.Sea);
+        ter.put("Ocean", TerrainType.Ocean);
+        ter.put("Plains", TerrainType.Plains);
+        ter.put("Grassland", TerrainType.Grassland);
+        ter.put("Marsh", TerrainType.Marsh);
+        ter.put("Desert", TerrainType.Desert);
+        ter.put("Tundra", TerrainType.Tundra);
+        ter.put("Rain Forrest", TerrainType.Rainforest);
+        ter.put("Conifer Forrest", TerrainType.Conifer);
+        ter.put("Broadleaf Forrest", TerrainType.Broadleaf);
+        ter.put("Hills", TerrainType.Hills);
+        ter.put("Mountains", TerrainType.Mountain);
+        width = terrain.size();
+        height = terrain.size(); // Make sure it's square later
+        Tile[][] result = new Tile[width][];
+        for(int k=0; k<width; k++){
+            result[k] = new Tile[height];
+        }
+        int j=height-1, i;
+        for(ArrayList<String> al : terrain){
+            i=width-1;
+            for(String type : al){
+                result[j][i] = new Tile(ter.get(type), j, i);
+                --i;
+            }
+            --j;
+        }
+        tiles = result;
+    }
+
+    /**
+     * Sets all tiles in the map, for singleplayer, 
+     * not anywhere close to a good randomization.
+     */
+    public void parseMap(){
         TerrainType[] tt = TerrainType.values();
         Random r = new Random();
         Tile[][] result = new Tile[width][];
@@ -229,8 +273,8 @@ public class GameMap{
             }
         }
         tiles = result;
-        tiles[1][1].setUnit(new PhysicalUnit(PhysicalUnitType.Musketeer, Player.getInstance("Andy")));
+/*        tiles[1][1].setUnit(new PhysicalUnit(PhysicalUnitType.Musketeer, Player.getInstance("Andy")));
         tiles[2][1].setUnit(new Barbarian(tiles[2][1]));
-        tiles[2][2].setCity(new City());
+        tiles[2][2].setCity(new City());*/
     }
 }

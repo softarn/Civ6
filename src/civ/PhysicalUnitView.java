@@ -71,7 +71,7 @@ public class PhysicalUnitView extends JPanel implements Observer, ActionListener
         atkButton.addActionListener(this);
         moveButton.addActionListener(this);
         defButton.addActionListener(this);
-        infoButton.addActionListener(this);git 
+        infoButton.addActionListener(this); 
 
         imgPane.add(image);
         imgPane.setMaximumSize(new Dimension(pUnit.getImage().getWidth() + 20, 
@@ -230,7 +230,6 @@ public class PhysicalUnitView extends JPanel implements Observer, ActionListener
             if(state.getUnitState() == UnitSelected){
                 state.getSelectedUnit().getView().update();
                 state.setActionState(Move);
-                System.out.println("Move darnit!");
             }
         }
         if(atkButton == ae.getSource()){

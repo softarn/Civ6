@@ -13,7 +13,7 @@ public class Round{
         }
         activePlayer = players[number%players.length];
         gm = GameMap.getInstance();
-        if(gm != null){
+        if(gm.isInited()){
             gm.resetUnits();
         }
         ++number;
