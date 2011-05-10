@@ -16,7 +16,9 @@ public class ViewPort extends JPanel{
         Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
         popup.setBounds(size.width/4,size.height/8,700,400);
         popup.setVisible(false);
-
+        popup.add(new ViewPopup());
+        popup.setOpaque(false);
+        
         add(popup);
         add(gmv);
     }
