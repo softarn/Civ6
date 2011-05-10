@@ -178,7 +178,7 @@ public class Menu extends JPanel implements Observer, ActionListener{
                 break;
                 
             case UnitUnSelected:                 
-                //tabbedPane.removeAll();
+                tabbedPane.removeAll();
                 tabbedPane.repaint();
 
                 break;

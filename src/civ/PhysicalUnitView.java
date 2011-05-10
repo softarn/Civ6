@@ -71,7 +71,7 @@ public class PhysicalUnitView extends JPanel implements Observer, ActionListener
         atkButton.addActionListener(this);
         moveButton.addActionListener(this);
         defButton.addActionListener(this);
-        infoButton.addActionListener(this);
+        infoButton.addActionListener(this);git 
 
         imgPane.add(image);
         imgPane.setMaximumSize(new Dimension(pUnit.getImage().getWidth() + 20, 
@@ -186,7 +186,7 @@ public class PhysicalUnitView extends JPanel implements Observer, ActionListener
         lifeLength.setMaximum(pUnit.getType().getInventorySize());
         lifeLength.setString("Livslängd: "+ Integer.toString(pUnit.getInventoryAmount()));
         lifeLength.setValue(pUnit.getInventoryAmount());
-        lifeLength.setStringPainted();
+        lifeLength.setStringPainted(true);
         //lifeLength.paintString(true);
 
         //inventory.setText("Matlager: " + pUnit.getInventoryAmount() + 

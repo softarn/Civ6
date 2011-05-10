@@ -73,6 +73,8 @@ public class Barbarian extends PhysicalUnit{
         }
         Random r = new Random();
         int i = r.nextInt(neighbours.size());
+        tile.setUnit(null);
         tile = neighbours.get(i);
+        tile.setUnit(this);
     }
 }
