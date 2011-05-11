@@ -17,6 +17,7 @@ public class Move {
             t.getView().repaint();
         }
         unit.useMovementPoints(length);
+        unit.getView().update();
         return true;
 	}
 

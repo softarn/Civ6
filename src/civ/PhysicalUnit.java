@@ -7,8 +7,8 @@ public class PhysicalUnit implements Comparable<PhysicalUnit>{
     private static int count = 0;
     private int idNumber;
     private int manPower;
-    private int currentMovementPoint;
-    private AbstractUnitType type;
+    protected int currentMovementPoint;
+    protected AbstractUnitType type;
     private PhysicalUnitView view;
     private Player allegiance;
     //private HashMap<ResourceType, Integer> inventory;

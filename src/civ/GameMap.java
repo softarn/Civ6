@@ -13,7 +13,7 @@ public class GameMap{
     private Tile[][] tiles;
     private static GameMap map;
     private GameMapView gmv;
-    private int height = 20, width = 20;
+    private int height = 10, width = 10;
 
     private int[][] offsets = {
         {-1,-1},
@@ -47,6 +47,10 @@ public class GameMap{
      */
     public static GameMap getInstance(){
         return map;
+    }
+
+    public GameMapView getView(){
+        return gmv;
     }
 
     public void exploreMap(){
@@ -230,7 +234,7 @@ public class GameMap{
         }
         tiles = result;
         tiles[1][1].setUnit(new PhysicalUnit(PhysicalUnitType.Musketeer, Player.getInstance("Andy")));
-        tiles[2][1].setUnit(new Barbarian(tiles[2][1]));
+        //tiles[2][1].setUnit(new Barbarian(tiles[2][1]));
         tiles[2][2].setCity(new City());
     }
 }

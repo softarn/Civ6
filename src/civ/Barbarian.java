@@ -65,6 +65,7 @@ public class Barbarian extends PhysicalUnit{
     public void reset(){
         GameMap gm = GameMap.getInstance();
         ArrayList<Tile> neighbours = gm.getNeighbours(tile, 1, true);
+        currentMovementPoint = type.getMovementPoints();
         for(Tile t : neighbours){
             if(t.hasUnit()){
                 Battle.doBattle(this, t.getUnit(), tile, t);
