@@ -28,11 +28,15 @@ public class Window extends JFrame  implements ActionListener{
     private JMenuBar mainMenuBar;
     private JMenu mainMenu;
     private JMenuItem menuItem;
-    private PopupWindow puw;	
+   // private PopupWindow puw;	
 
     //Only for testpurpose
     public static void main(String[] args){
-        String name, ip = "dvk.fishface.se";
+        
+    	StartScreen st = new StartScreen();
+    	
+    	
+    	/*String name, ip = "dvk.fishface.se";
         Proxy p;
         int port;
         Scanner getint = new Scanner(System.in);
@@ -117,9 +121,9 @@ public class Window extends JFrame  implements ActionListener{
         super ("Civ 6");
         Round.next(); // Round.next() has to be run atleast once before the player gets to play.
 
-        puw = new PopupWindow();
+        //puw = new PopupWindow();
 
-        Menu m = new Menu(puw);
+        Menu m = new Menu();
         ViewPort vp = new ViewPort();
 
         mainMenuBar = new JMenuBar();
@@ -141,7 +145,7 @@ public class Window extends JFrame  implements ActionListener{
 
         add(m, BorderLayout.SOUTH);
         add(vp, BorderLayout.CENTER);
-        setGlassPane(puw);
+        //setGlassPane(puw);
         setSize(w, h);
         setVisible(true);
     }
