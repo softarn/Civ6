@@ -15,6 +15,7 @@ public class Round{
         gm = GameMap.getInstance();
         if(gm.isInited()){
             gm.resetUnits();
+            spawnBarbarian();
         }
         ++number;
     }
@@ -34,6 +35,25 @@ public class Round{
         for(Player tempPlayer : players){
             if(!tempPlayer.equals(player)){
                 temp[i++] = tempPlayer;
+            }
+        }
+    }
+
+    private static void spawnBarbarian(){
+        // Make random number chance here
+        if(true){
+            for(int y=0; y<gm.getHeight(); ++y){
+                for(int x=0; x<gm.getWidth(); ++x){
+                    Tile t = gm.getTile(x, y);
+                    // Make another random chance here
+                    if(!t.getTerrain().getName().equals("Sea") &&
+                    !t.getTerrain().getName().equals("Ocean") &&
+                    !t.isExplored() &&
+                    !t.hasUnit()){
+                        t.setUnit(new Barbarian(t));
+                        return;
+                    }
+                }
             }
         }
     }

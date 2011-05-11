@@ -71,8 +71,9 @@ class GlobalView extends JPanel implements ActionListener{
         scienceButton.setPreferredSize(new Dimension(30,25));
         scienceButton.addActionListener(this);
         
-        placeHolderButton = new JButton("Place holder ");
+        placeHolderButton = new JButton("Visa enheter ");
         placeHolderButton.setPreferredSize(new Dimension(50,25));
+        placeHolderButton.addActionListener(this);
         
         showCitiesButton = new JButton ("Visa cities ");
         showCitiesButton.setPreferredSize(new Dimension(50,30));
@@ -114,7 +115,10 @@ class GlobalView extends JPanel implements ActionListener{
         // Add content to panels 
         goldPanel.add(goldLabelPanel);
         goldPanel.add(citiesPanel);
+        
+        iconsPanel.add(Box.createRigidArea(new Dimension(0,5)));
         iconsPanel.add(placeHolderButton, BorderLayout.NORTH);
+        
         sciencePanel.add(scienceLabel);
         sciencePanel.add(scienceBar);
         sciencePanel.add(scienceButton);
@@ -167,6 +171,15 @@ class GlobalView extends JPanel implements ActionListener{
             Round.next();
             GameMap.getInstance().exploreMap();
         }
-    } 
+        
+        else if (placeHolderButton == ae.getSource())
+        	ViewPort.getPopup().setVisible(true);
+        	
+    	} 
+    
+    
+    
+    
+    
     
 } // class 

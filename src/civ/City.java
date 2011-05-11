@@ -10,7 +10,7 @@ public class City {
     //private PhysicalUnit phu = new PhysicalUnit(null, null);
     private String name = new String("Mecca ");
     private Hold hold = new Hold();
-    private CityView cityView = new CityView();
+    private CityView cityView;
     
     private BufferedImage cityImg;
     private int defence;
@@ -24,6 +24,9 @@ public class City {
         catch (IOException ioE) {
             System.out.println("Bilden finns ej ");    
         }
+        
+        cityView = new CityView(this);
+    	
     }
 
     public String getName(){

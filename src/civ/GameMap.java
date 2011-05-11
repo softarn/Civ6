@@ -28,6 +28,7 @@ public class GameMap{
 
     private GameMap(){
         super();
+        map = this;
     }
 
     public void init(GameMapView gmv){
@@ -39,7 +40,6 @@ public class GameMap{
         for(int j=getHeight()-1; j>=0; --j){
             for(int i=getWidth()-1; i>=0; --i){
                 gmv.add(tiles[i][j].getView());
-                tiles[i][j].setExplored(true);
             }
         }
     }
@@ -55,6 +55,10 @@ public class GameMap{
     public static GameMap getInstance(){
         if(map == null) map = new GameMap();
         return map;
+    }
+
+    public GameMapView getView(){
+        return gmv;
     }
 
     public void exploreMap(){
