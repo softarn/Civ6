@@ -29,6 +29,10 @@ public class PhysicalUnit implements Comparable<PhysicalUnit>{
         this.view = new PhysicalUnitView(this);
     }
 
+    public PhysicalUnit(String type, Player allegiance){
+
+    }
+
     public PhysicalUnit(AbstractUnitType type, Player allegiance){
         this.idNumber = ++count;
         this.type = type;

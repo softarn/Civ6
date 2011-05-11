@@ -8,14 +8,17 @@ import javax.imageio.ImageIO;
 public class City {
 
     //private PhysicalUnit phu = new PhysicalUnit(null, null);
-    private String name = new String("Mecca ");
+    private String name;
+    private Player owner;
     private Hold hold = new Hold();
     private CityView cityView;
     
     private BufferedImage cityImg;
     private int defence;
     
-    public City() {
+    public City(String name, Player owner) {
+        this.name = name;
+        this.owner = owner;
     	defence = 100;
     	
         try {
