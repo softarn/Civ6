@@ -34,13 +34,13 @@ public class GameMap{
     public void init(GameMapView gmv){
         // Parsing the map
         //parseMap("Put server map data here");
-        exploreMap();
+        //exploreMap();
         this.gmv = gmv;
         // Put all TileViews on the GameMapView
         for(int j=getHeight()-1; j>=0; --j){
             for(int i=getWidth()-1; i>=0; --i){
                 gmv.add(tiles[i][j].getView());
-                tiles[i][j].setExplored(true);
+                //tiles[i][j].setExplored(true);
             }
         }
         resize(60);
@@ -66,6 +66,7 @@ public class GameMap{
     public void exploreMap(){
         for(Tile[] temp : tiles){
             for(Tile tile : temp){
+                tile.decreaseFogCounter();
                 if(tile.hasUnit() && tile.getUnit().isAlly()){ 
                     for(Tile t : getNeighbours(tile, tile.getUnit().getType().getVision())){
                         t.setExplored(true);

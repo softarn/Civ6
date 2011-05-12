@@ -235,6 +235,8 @@ public class Battle {
             state.setHoverState(State.HoverState.HoverTileOnly);
             t2.setUnit(null);
         }
+        attackerLoss = mamp-u1.getManPower();
+        defenderLoss = mdmp-u2.getManPower();
         return winnerId;
         /*
            int winnerId = 0;

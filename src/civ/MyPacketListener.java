@@ -41,7 +41,7 @@ class GameServer{
     public static boolean makeUnit(int x, int y, AbstractUnitType type){
         try{
             System.out.println();
-            proxy.madeUnit(x, y, type.getName());
+            proxy.madeUnit(x, y, Round.getMe().toString(), type.getName(), type.getMaxManPower());
         }
         catch(FailedException fe){
             System.out.println("Couldn't place unit");
@@ -98,7 +98,6 @@ public class MyPacketListener implements PacketListener{
                     gm.getTile(tileXValue, tileYValue).setCity();
                 }*/
             }
-            gm.exploreMap();
             //String improvement = received.getImprovement(i);
         }
 

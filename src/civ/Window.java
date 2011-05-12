@@ -32,7 +32,7 @@ public class Window extends JFrame  implements ActionListener{
 
     //Only for testpurpose
     public static void main(String[] args){
-        String name, ip = "dvk.fishface.se";
+        String name, ip = "chylis.dyndns-at-work.com";//"dvk.fishface.se";
         Proxy p;
         int port;
         Scanner getint = new Scanner(System.in);
@@ -52,7 +52,7 @@ public class Window extends JFrame  implements ActionListener{
 
         try{
             returned = p.connect(name);
-            System.out.println(returned.getOk() + "   " + returned.getOkMsg());
+            System.out.println(returned.getOk());
         }
         catch(FailedException fe){
             System.out.println(fe);
@@ -80,7 +80,7 @@ public class Window extends JFrame  implements ActionListener{
                 case 3:
                     try{
                         returned = p.host();
-                        System.out.println(returned.getName());
+                        //System.out.println(returned.getName());
                     }
                     catch(FailedException fe){
                         System.out.println(fe);
