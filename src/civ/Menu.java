@@ -100,8 +100,8 @@ public class Menu extends JPanel implements Observer, ActionListener{
         westPanel.setPreferredSize(new Dimension (600,220));
         
         // ADD CONTENT
-        unitView = GameMap.getInstance().getTile(1,1).getUnit().getView();
-        unitView.setPopup(popup);
+        //unitView = GameMap.getInstance().getTile(1,1).getUnit().getView();
+        //unitView.setPopup(popup);
         globalViewObject = new GlobalView();
         
         tabbedPane.addTab(" Hey ", null, unitView, "Inget objekt markerat ");

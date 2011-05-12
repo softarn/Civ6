@@ -230,7 +230,6 @@ public class PhysicalUnitView extends JPanel implements Observer, ActionListener
             if(state.getUnitState() == UnitSelected){
                 state.getSelectedUnit().getView().update();
                 state.setActionState(Move);
-                System.out.println("Move darnit!");
             }
         }
         if(atkButton == ae.getSource()){

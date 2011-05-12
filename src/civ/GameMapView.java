@@ -23,7 +23,8 @@ public class GameMapView extends JPanel{
 
     public GameMapView(){
         super();
-        gm = new GameMap(this);
+        gm = GameMap.getInstance();
+        gm.init(this);
         setLayout(null);
         setBounds(-105*(gm.getWidth()),-190,140*gm.getWidth()*2,170*gm.getHeight());
         setBackground(Color.black);
