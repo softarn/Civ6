@@ -28,11 +28,15 @@ public class Window extends JFrame  implements ActionListener{
     private JMenuBar mainMenuBar;
     private JMenu mainMenu;
     private JMenuItem menuItem;
-    private PopupWindow puw;	
+   // private PopupWindow puw;	
 
     //Only for testpurpose
     public static void main(String[] args){
-        String name, ip = "chylis.dyndns-at-work.com";//"dvk.fishface.se";
+        
+    	StartScreen st = new StartScreen();
+    	
+    	
+    	/*String name, ip = "dvk.fishface.se";
         Proxy p;
         int port;
         Scanner getint = new Scanner(System.in);
@@ -40,19 +44,17 @@ public class Window extends JFrame  implements ActionListener{
 
         System.out.println("Enter player name: ");
         name = scan.next();
-        Round.setMe(Player.getInstance(name));
 
         System.out.println("Enter a port to connect via: ");
         port = getint.nextInt();
 
         p = new Proxy(ip, port, new MyPacketListener());
-        GameServer.init(p);
 
         Result returned;
 
         try{
             returned = p.connect(name);
-            System.out.println(returned.getOk());
+            System.out.println(returned.getOk() + "   " + returned.getOkMsg());
         }
         catch(FailedException fe){
             System.out.println(fe);
@@ -80,7 +82,7 @@ public class Window extends JFrame  implements ActionListener{
                 case 3:
                     try{
                         returned = p.host();
-                        //System.out.println(returned.getName());
+                        System.out.println(returned.getName());
                     }
                     catch(FailedException fe){
                         System.out.println(fe);
@@ -117,12 +119,11 @@ public class Window extends JFrame  implements ActionListener{
 
     Window(int w,int h) {
         super ("Civ 6");
-        //Round.resume(); // Round.next() has to be run atleast once before the player gets to play.
-        System.out.println("Round started");
+        Round.next(); // Round.next() has to be run atleast once before the player gets to play.
 
-        puw = new PopupWindow();
+        //puw = new PopupWindow();
 
-        Menu m = new Menu(puw);
+        Menu m = new Menu();
         ViewPort vp = new ViewPort();
 
         mainMenuBar = new JMenuBar();
@@ -144,7 +145,7 @@ public class Window extends JFrame  implements ActionListener{
 
         add(m, BorderLayout.SOUTH);
         add(vp, BorderLayout.CENTER);
-        setGlassPane(puw);
+        //setGlassPane(puw);
         setSize(w, h);
         setVisible(true);
     }

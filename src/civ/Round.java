@@ -1,48 +1,32 @@
 package civ;
 
 public class Round{
-    private static Player me = null;
     private static int number = 0;
     private static int turn = 0;
-    private static Player[] players = {}; 
+    private static Player[] players; 
     private static Player activePlayer = null;
     private static GameMap gm;
     
     static void next(){
-        GameServer.endTurn();
-    }
-
-    static void resume(){
+        if(number%players.length == 0){
+            ++turn;
+        }
+        activePlayer = players[number%players.length];
         gm = GameMap.getInstance();
-        gm.exploreMap();
         if(gm.isInited()){
             gm.resetUnits();
             spawnBarbarian();
         }
-        ++turn;
-        System.out.println("I has new turn!");
+        ++number;
     }
-
-    /**
-     * Sets which player who is playing at this instance of the game.
-     */
-    public static void setMe(Player player){
-        me = player;
-    }
-
 
     public static void addPlayer(Player player){
         Player[] temp = new Player[players.length+1];
         int i=0;
         for(Player tempPlayer : players){
-            if(tempPlayer.equals(player)){
-                // No copies allowed
-                return;
-            }
             temp[i++] = tempPlayer;
         }
         temp[i] = player;
-        players = temp;
     }
 
     public static void delPlayer(Player player){
@@ -53,10 +37,6 @@ public class Round{
                 temp[i++] = tempPlayer;
             }
         }
-    }
-
-    public static Player getMe(){
-        return me;
     }
 
     private static void spawnBarbarian(){

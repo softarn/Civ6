@@ -188,18 +188,8 @@ public class Tile implements Comparable<Tile>{
 
     //Must be edited later
     public void setExplored(boolean bool){
-        if(bool){
-            countToFog = 80;
-        }
+        countToFog = 1;
         explored = bool;
-    }
-
-    public void decreaseFogCounter(){
-        System.out.println(x + "," + y + " = " + countToFog);
-        --countToFog;
-        if(countToFog == 40){
-            setExplored(false);
-        }
     }
 
     public boolean isExplored(){

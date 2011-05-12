@@ -34,16 +34,14 @@ public class GameMap{
     public void init(GameMapView gmv){
         // Parsing the map
         //parseMap("Put server map data here");
-        //exploreMap();
+        exploreMap();
         this.gmv = gmv;
         // Put all TileViews on the GameMapView
         for(int j=getHeight()-1; j>=0; --j){
             for(int i=getWidth()-1; i>=0; --i){
                 gmv.add(tiles[i][j].getView());
-                //tiles[i][j].setExplored(true);
             }
         }
-        resize(60);
     }
 
     public boolean isInited(){
@@ -66,7 +64,6 @@ public class GameMap{
     public void exploreMap(){
         for(Tile[] temp : tiles){
             for(Tile tile : temp){
-                tile.decreaseFogCounter();
                 if(tile.hasUnit() && tile.getUnit().isAlly()){ 
                     for(Tile t : getNeighbours(tile, tile.getUnit().getType().getVision())){
                         t.setExplored(true);
@@ -77,26 +74,11 @@ public class GameMap{
         }
     }
 
-    public void clearTiles(){
-        for(Tile[] temp : tiles){
-            for(Tile tile : temp){
-                if(tile.hasUnit()){
-                    tile.setUnit(null);
-                }
-            }
-        }
-    }
-
     public void resetUnits(){
         for(Tile[] temp : tiles){
             for(Tile tile : temp){
-                if(tile.hasUnit()){ 
-                    if(tile.getUnit().isAlly()){
-                        tile.getUnit().reset();
-                    }
-                    else if(tile.getUnit().getType().getName().equals("Barbarian")){ 
-
-                    }
+                if(tile.hasUnit() && (tile.getUnit().isAlly() || tile.getUnit().getType().getName().equals("Barbarian"))){ 
+                    tile.getUnit().reset();
                 }
             }
         }
@@ -223,8 +205,8 @@ public class GameMap{
         if(newSize > 200){
             size = 200;
         }
-        else if(newSize < 10){
-            size = 10;
+        else if(newSize < 50){
+            size = 50;
         }
         else{
             size = newSize;
@@ -264,14 +246,14 @@ public class GameMap{
         for(int k=0; k<width; k++){
             result[k] = new Tile[height];
         }
-        int j=0, i;
+        int j=height-1, i;
         for(ArrayList<String> al : terrain){
-            i=0;
+            i=width-1;
             for(String type : al){
-                result[i][j] = new Tile(ter.get(type), i, j);
-                ++i;
+                result[j][i] = new Tile(ter.get(type), j, i);
+                --i;
             }
-            ++j;
+            --j;
         }
         tiles = result;
     }

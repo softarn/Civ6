@@ -26,7 +26,7 @@ public class GameMapView extends JPanel{
         gm = GameMap.getInstance();
         gm.init(this);
         setLayout(null);
-        setBounds(-65*(gm.getWidth()),-190,140*gm.getWidth()*2,170*gm.getHeight());
+        setBounds(-105*(gm.getWidth()),-190,140*gm.getWidth()*2,170*gm.getHeight());
         setBackground(Color.black);
         GameMapListener gml = new GameMapListener();
         addMouseListener(gml);
