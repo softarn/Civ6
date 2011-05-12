@@ -1,6 +1,8 @@
+package proxy;
+
 import java.util.*;
 
-class Result{
+public class Result{
 	
 	// Här är medlemsvariabler som ska kunna returneras.
 	private boolean ok = true, locked;

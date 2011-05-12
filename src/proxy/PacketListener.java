@@ -1,3 +1,5 @@
+package proxy;
+
 public interface PacketListener{
 	
 	public void newTurn(Result received);

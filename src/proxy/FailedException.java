@@ -1,3 +1,5 @@
+package proxy;
+
 public class FailedException extends Exception{
 	int header;
 	String message;
