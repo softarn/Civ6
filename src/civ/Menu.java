@@ -54,18 +54,18 @@ public class Menu extends JPanel implements Observer, ActionListener{
     private JComboBox selUnit;
 
     //Status is only for testing purpose
-    private JLabel status = new JLabel("Status is: " + state.getUnitState());
-    private PopupWindow puw;
+    private JLa<bel status = new JLabel("Status is: " + state.getUnitState());
+    //private PopupWindow puw;
     private int curScale = 5 ;
     private int[] sizes = {50, 75, 90, 120, 150, 175, 190};
     
-    Menu(PopupWindow puw){ 
+    Menu(){ 
         super(); 
         setLayout(new BorderLayout(0,10)); 
         
-        this.puw = puw;
-        Popup popup;
-        popup = PopupFactory.getSharedInstance().getPopup(null, puw, 200,200);
+        //this.puw = puw;
+        //Popup popup;
+        //popup = PopupFactory.getSharedInstance().getPopup(null, puw, 200,200);
 		
         
         manPowerBar = new JProgressBar(0,100);  
