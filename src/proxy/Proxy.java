@@ -1,5 +1,3 @@
-package proxy;
-
 import java.io.*;
 import java.net.*;
 import java.util.*;
@@ -23,7 +21,7 @@ public class Proxy
 
 			recvThread.start();
 			
-			System.out.println("[+] Connected to server \""+ host +"\" on port "+ port);
+		//	System.out.println("[+] Connected to server \""+ host +"\" on port "+ port);
 		}
 		catch(UnknownHostException e)
 		{
@@ -190,7 +188,8 @@ public class Proxy
 
 	public Result combatRequest(int attX, int attY, int defX, int defY) throws FailedException
 	{
-		try{
+		try
+		{
 			Packet toSend = new Packet((byte)18);
 			toSend.add(attX);
 			toSend.add(attY);
@@ -205,9 +204,26 @@ public class Proxy
 		}
 	}
 
+	public Result sendChatMessage(String toWhom, String message) throws FailedException
+	{
+		try
+		{
+			Packet toSend = new Packet((byte)20);
+			toSend.add(toWhom);
+			toSend.add(message);
+			send(toSend);
+			return receiver.getResult();
+		}
+		catch(FailedException fe)
+		{
+			throw fe;
+		}
+	}
+
 	public Result builtCity(int x, int y, String name) throws FailedException
 	{
-		try{
+		try
+		{
 			Packet toSend = new Packet((byte)21);
 			toSend.add(x);
 			toSend.add(y);
@@ -223,7 +239,8 @@ public class Proxy
 
 	public Result builtImprovement(int x, int y, String improvement) throws FailedException
 	{
-		try{
+		try
+		{
 			Packet toSend = new Packet((byte)22);
 			toSend.add(x);
 			toSend.add(y);
@@ -237,13 +254,16 @@ public class Proxy
 		}
 	}
 
-	public Result madeUnit(int x, int y, String type) throws FailedException
+	public Result madeUnit(int x, int y, String owner, String type, int manPower) throws FailedException
 	{
-		try{
+		try
+		{
 			Packet toSend = new Packet((byte)23);
 			toSend.add(x);
 			toSend.add(y);
+			toSend.add(owner);
 			toSend.add(type);
+			toSend.add(manPower);
 			send(toSend);
 			return receiver.getResult();
 		}
@@ -253,8 +273,21 @@ public class Proxy
 		}
 	}
 
+	public Result leaveGame() throws FailedException
+	{
+		try
+		{
+			send(new Packet((byte)24));
+			return receiver.getResult();
+		}
+		catch(FailedException fe)
+		{
+			throw fe;
+		}
+	}
+
 	// Method to test sending and receiving lists.
-	public Result listTest(int x, int y) throws FailedException
+	private Result listTest(int x, int y) throws FailedException
 	{
 		try
 		{

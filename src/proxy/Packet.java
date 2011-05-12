@@ -1,5 +1,3 @@
-package proxy;
-
 import java.util.List;
 
 class Packet

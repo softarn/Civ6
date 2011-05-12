@@ -1,5 +1,3 @@
-package proxy;
-
 import java.util.*;
 import java.io.*;
 import java.net.*;
@@ -29,9 +27,18 @@ public class Receiver implements Runnable
 
 	public Result getResult() throws FailedException
 	{
-		while(getPacket() == null){}
-		Result toReturn = packet;
-        setPacket(null);
+		while(getPacket() == null)
+		{
+			try
+			{
+				Thread.sleep(100);
+			}
+			catch(Throwable t){}
+
+		//	System.out.println("getResult()");
+		}
+		Result toReturn = getPacket();
+       		setPacket(null);
 		if(!toReturn.getOk()){
 			throw new FailedException(toReturn.getRequestFail(), toReturn.getFailMsg());
 		}
@@ -64,17 +71,27 @@ public class Receiver implements Runnable
 	// Puts what it gets into an object of the Result class, which is then returned.
 	private void receive()
 	{
-		while(getPacket() != null){}
+		while(getPacket() != null)
+		{
+			try
+			{
+				Thread.sleep(100);
+			}
+			catch(Throwable t){}
+
+		//	System.out.println("receive()");
+		}
 		Result toReturn = new Result();
 		try
 		{
+		//	System.out.println("Waiting for header.");
 			int header = m_inStream.read();		// First the header.
+		//	System.out.println("Header: " + header);
 
 			// Header 3, welcome to the real world.
 			if(header == 3)
 			{
 				toReturn.addOk(true);
-				toReturn.addOkMsg("Welcome to the Real World");
 				setPacket(toReturn);
 			}
 
@@ -116,7 +133,7 @@ public class Receiver implements Runnable
 			else if(header == 9)
 			{
 				toReturn.addOk(true);
-				toReturn.addName(receiveString());
+				toReturn.addHostName(receiveString());
 				setPacket(toReturn);
 			}
 
@@ -169,6 +186,15 @@ public class Receiver implements Runnable
 				toReturn.addDefenderLeft(receiveInt());
 
 				setPacket(toReturn);
+			}
+
+			// Header 20, Message for you, sir!, receives a chat message.
+			else if(header == 20)
+			{
+				toReturn.addFromWhom(receiveString());
+				toReturn.addChatMessage(receiveString());
+
+				pl.chatMessageReceived(toReturn);
 			}
 
             else if(header == 25)
