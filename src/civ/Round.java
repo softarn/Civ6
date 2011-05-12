@@ -9,10 +9,7 @@ public class Round{
     private static GameMap gm;
     
     static void next(){
-        //if(number%players.length == 0){
-        //    ++turn;
-        //}
-        //activePlayer = players[number%players.length];
+        GameServer.endTurn();
     }
 
     static void resume(){

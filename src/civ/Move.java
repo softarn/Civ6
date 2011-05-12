@@ -1,5 +1,7 @@
 package civ;
 
+import java.util.ArrayList;
+
 public class Move {
     private static final GameMap gm = GameMap.getInstance();
 	
@@ -9,6 +11,14 @@ public class Move {
 
         if(length == -1)
             return false;
+
+        ArrayList<Tile> tiles = new ArrayList<Tile>();
+        tiles.add(t1);
+        tiles.add(t2);
+
+        if(!GameServer.makeMove(tiles)){
+            return false;
+        }
 
         t1.setUnit(null);
         t2.setUnit(unit);

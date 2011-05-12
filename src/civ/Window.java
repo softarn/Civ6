@@ -46,6 +46,7 @@ public class Window extends JFrame  implements ActionListener{
         port = getint.nextInt();
 
         p = new Proxy(ip, port, new MyPacketListener());
+        GameServer.init(p);
 
         Result returned;
 
@@ -116,7 +117,8 @@ public class Window extends JFrame  implements ActionListener{
 
     Window(int w,int h) {
         super ("Civ 6");
-        Round.next(); // Round.next() has to be run atleast once before the player gets to play.
+        //Round.resume(); // Round.next() has to be run atleast once before the player gets to play.
+        System.out.println("Round started");
 
         puw = new PopupWindow();
 

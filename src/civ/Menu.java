@@ -219,10 +219,11 @@ public class Menu extends JPanel implements Observer, ActionListener{
                     //scaleDown();
                 }
                 else{
-                    state.getSelectedTile().setUnit(new PhysicalUnit(
-                                (PhysicalUnitType)selUnit.getSelectedItem(),
-                                Round.getActivePlayer()));//(Player)selPlayer.getSelectedItem()));
-                    state.getSelectedTile().getView().repaint();
+                    Tile tile = state.getSelectedTile();
+                    PhysicalUnitType put = (PhysicalUnitType)selUnit.getSelectedItem();
+                    tile.setUnit(new PhysicalUnit(put, Round.getMe()));
+                    tile.getView().repaint();
+                    GameServer.makeUnit(tile.getX(), tile.getY(), put);
                 }
             }
         }

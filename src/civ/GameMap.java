@@ -76,6 +76,16 @@ public class GameMap{
         }
     }
 
+    public void clearTiles(){
+        for(Tile[] temp : tiles){
+            for(Tile tile : temp){
+                if(tile.hasUnit()){
+                    tile.setUnit(null);
+                }
+            }
+        }
+    }
+
     public void resetUnits(){
         for(Tile[] temp : tiles){
             for(Tile tile : temp){
@@ -253,14 +263,14 @@ public class GameMap{
         for(int k=0; k<width; k++){
             result[k] = new Tile[height];
         }
-        int j=height-1, i;
+        int j=0, i;
         for(ArrayList<String> al : terrain){
-            i=width-1;
+            i=0;
             for(String type : al){
-                result[j][i] = new Tile(ter.get(type), j, i);
-                --i;
+                result[i][j] = new Tile(ter.get(type), i, j);
+                ++i;
             }
-            --j;
+            ++j;
         }
         tiles = result;
     }

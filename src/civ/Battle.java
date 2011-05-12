@@ -211,39 +211,16 @@ public class Battle {
 
     public static int doBattle(PhysicalUnit u1, PhysicalUnit u2, Tile t1, Tile t2) {
 
-        int winnerId = 0;
+        GameServer.battle(u1, u2, t1, t2);
         fetchStats(u1, u2, t1, t2);
-        System.out.println(name1);
-        if(-1 == attackRange(t1, t2, range1)){
-            return 0;
+        int winnerId = 0;
+        if (amp < 1 && dmp < 1){
+            winnerId = 2;
+        }else if(amp < 1) {
+            winnerId = 1;
+        }else if(dmp < 1){
+            winnerId = -1;
         }
-
-        // Remove the movement cost 1 from the attacking unit
-        if(!u1.useMovementPoints(1)){
-            return 0;
-        }
-
-        if(u1.getType().getCategory().equals("Ranged") ||
-                u1.getType().getName().equals("Trireme")){
-            winnerId = ranged();
-                }
-        else if(u1.getType().getCategory().equals("Artillery") ||
-                u1.getType().getName().equals("Galley") ||
-                u1.getType().getName().equals("Caravel")){
-            winnerId = bombardment();
-                }
-        else{
-            winnerId = normal();
-        }
-        u1.setManPower(amp);
-        u2.setManPower(dmp);
-
-        u1.getView().update();
-        u2.getView().update();
-
-        attackerLoss = mamp-u1.getManPower();
-        defenderLoss = mdmp-u2.getManPower();
-
         if(winnerId == 2){
             state.setUnitState(UnitUnSelected);
             state.setHoverState(State.HoverState.HoverTileOnly);
@@ -259,6 +236,55 @@ public class Battle {
             t2.setUnit(null);
         }
         return winnerId;
+        /*
+           int winnerId = 0;
+           fetchStats(u1, u2, t1, t2);
+           System.out.println(name1);
+           if(-1 == attackRange(t1, t2, range1)){
+           return 0;
+           }
+
+        // Remove the movement cost 1 from the attacking unit
+        if(!u1.useMovementPoints(1)){
+        return 0;
+        }
+
+        if(u1.getType().getCategory().equals("Ranged") ||
+        u1.getType().getName().equals("Trireme")){
+        winnerId = ranged();
+        }
+        else if(u1.getType().getCategory().equals("Artillery") ||
+        u1.getType().getName().equals("Galley") ||
+        u1.getType().getName().equals("Caravel")){
+        winnerId = bombardment();
+        }
+        else{
+        winnerId = normal();
+        }
+        u1.setManPower(amp);
+        u2.setManPower(dmp);
+
+        u1.getView().update();
+        u2.getView().update();
+
+        attackerLoss = mamp-u1.getManPower();
+        defenderLoss = mdmp-u2.getManPower();
+
+        if(winnerId == 2){
+        state.setUnitState(UnitUnSelected);
+        state.setHoverState(State.HoverState.HoverTileOnly);
+        t1.setUnit(null);
+        t2.setUnit(null);
+        }
+        if(winnerId == 1){
+        state.setUnitState(UnitUnSelected);
+        t1.setUnit(null);
+        }
+        if(winnerId == -1){
+        state.setHoverState(State.HoverState.HoverTileOnly);
+        t2.setUnit(null);
+        }*/
+        //return winnerId;
     }
 
     public static int getAttackerLoss(){
