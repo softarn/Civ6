@@ -40,8 +40,10 @@ public class GameMap{
         for(int j=getHeight()-1; j>=0; --j){
             for(int i=getWidth()-1; i>=0; --i){
                 gmv.add(tiles[i][j].getView());
+                tiles[i][j].setExplored(true);
             }
         }
+        resize(60);
     }
 
     public boolean isInited(){
@@ -77,8 +79,13 @@ public class GameMap{
     public void resetUnits(){
         for(Tile[] temp : tiles){
             for(Tile tile : temp){
-                if(tile.hasUnit() && (tile.getUnit().isAlly() || tile.getUnit().getType().getName().equals("Barbarian"))){ 
-                    tile.getUnit().reset();
+                if(tile.hasUnit()){ 
+                    if(tile.getUnit().isAlly()){
+                        tile.getUnit().reset();
+                    }
+                    else if(tile.getUnit().getType().getName().equals("Barbarian")){ 
+
+                    }
                 }
             }
         }
@@ -205,8 +212,8 @@ public class GameMap{
         if(newSize > 200){
             size = 200;
         }
-        else if(newSize < 50){
-            size = 50;
+        else if(newSize < 10){
+            size = 10;
         }
         else{
             size = newSize;

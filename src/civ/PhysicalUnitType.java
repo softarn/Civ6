@@ -49,14 +49,21 @@ public enum PhysicalUnitType implements AbstractUnitType{
             int movementPoints,
             int inventorySize){
         this.unitType = new UnitType(name, category, maxManPower, attack, 
-                defence, range, movementPoints, inventorySize);
+                defence, range, movementPoints, inventorySize, this);
         if(name.equals("Siege Tower") || name.equals("Galley") || name.equals("Caravel")){
             this.hold = new Hold();
         }
         else{
             this.hold = null;
         }
+    }
 
+    public static PhysicalUnitType getByName(String name){
+        AbstractUnitType result = UnitType.getByName(name);
+        if(result instanceof PhysicalUnitType){
+            return (PhysicalUnitType)result;
+        }
+        else return null;
     }
 
     public String getName(){

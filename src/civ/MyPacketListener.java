@@ -20,7 +20,7 @@ public class MyPacketListener implements PacketListener{
                 String theType = received.getUnitType(i);
                 int manPowerLeft = received.getUnitManPower(i);
                 gm.getTile(tileXValue, tileYValue).setUnit(new PhysicalUnit(theType, Player.getInstance(theOwner)));
-                gm.exploreMap();
+                System.out.println(tileXValue +", "+ tileYValue);
             }
             if(received.existCity(i)){
                 String theOwner = received.getCityOwner(i);
@@ -36,14 +36,21 @@ public class MyPacketListener implements PacketListener{
                     gm.getTile(tileXValue, tileYValue).setCity();
                 }*/
             }
+            gm.exploreMap();
             //String improvement = received.getImprovement(i);
         }
 
-        //Round.resume();
-        System.out.println("I has new turn!");
+        Round.resume();
     }
 
 	public void lobbyUpdated(Result received){
+        boolean gameLocked = received.getLocked();
+        int amount = received.getNumberPlayers();
+        for(int i=0; i<amount; i++){
+            String playerName = received.getPlayerName(i);
+            String playerCivilization = received.getPlayerCiv(i);
+            Round.addPlayer(Player.getInstance(playerName));
+        }
     }
 
 	public void gameStarted(Result received){

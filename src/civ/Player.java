@@ -6,7 +6,7 @@ public class Player implements Comparable<Player>{
     private String name;
     private static HashMap<String, Player> saved = new HashMap<String, Player>();
     //private Civilisation civ;
-    
+
     private Player(String name){
         this.name = name;
     }
@@ -21,7 +21,11 @@ public class Player implements Comparable<Player>{
     }
 
     public boolean isActive(){
-        return Round.getActivePlayer().equals(this);
+        Player player = Round.getActivePlayer();
+        if(player != null){
+            return player.equals(this);
+        }
+        return false;
     }
 
     /**
@@ -31,7 +35,7 @@ public class Player implements Comparable<Player>{
      * turn it is.
      */
     public boolean isMe(){
-        return isActive();
+        return Round.getMe().equals(this);
     }
 
     public String toString(){

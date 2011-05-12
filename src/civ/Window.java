@@ -40,6 +40,7 @@ public class Window extends JFrame  implements ActionListener{
 
         System.out.println("Enter player name: ");
         name = scan.next();
+        Round.setMe(Player.getInstance(name));
 
         System.out.println("Enter a port to connect via: ");
         port = getint.nextInt();
