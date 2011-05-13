@@ -3,6 +3,8 @@ package civ;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Arrays;
+import java.util.ArrayList;
 
 import proxy.Proxy;
 import proxy.Result;
@@ -30,11 +32,14 @@ class LobbyScreen extends JPanel implements ActionListener {
 		scp.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		hostButton.addActionListener(this);
 		joinButton.addActionListener(this);
+		refreshButton.addActionListener(this);
 		
+        lobbyList.setListData(GameServer.listGames());
 		lobbyList.setSelectedIndex(1);
 		
 		buttonPanel.add(hostButton);
 		buttonPanel.add(joinButton);
+		buttonPanel.add(refreshButton);
 		
 		add(buttonPanel, BorderLayout.SOUTH);
 		add(scp, BorderLayout.NORTH);	
@@ -68,7 +73,9 @@ class LobbyScreen extends JPanel implements ActionListener {
 			
 		}
 		else if (ae.getSource() == refreshButton){
-            lobbyList.setListData(GameServer.listGames());
+            String[] data = GameServer.listGames();
+            System.out.println(new ArrayList<String>(Arrays.asList(data)));
+            lobbyList.setListData(data);
         }
 	}
 }

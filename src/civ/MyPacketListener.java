@@ -12,7 +12,7 @@ import proxy.PacketListener;
 class GameServer{
     private static Proxy proxy = null;
     public static void init(Proxy p){
-        if(p != null) {
+        if(proxy == null && p != null) {
             proxy = p;
         }
     }
@@ -58,7 +58,6 @@ class GameServer{
     
     public static boolean makeUnit(int x, int y, AbstractUnitType type){
         try{
-            System.out.println();
             proxy.madeUnit(x, y, Round.getMe().toString(), type.getName(), type.getMaxManPower());
         }
         catch(FailedException fe){
@@ -69,7 +68,6 @@ class GameServer{
     }
 
     public static boolean makeMove(ArrayList<Tile> tiles){
-        if(proxy == null) return false;
         ArrayList<Integer> moves = new ArrayList<Integer>();
         for(Tile t : tiles){
             moves.add(t.getX());

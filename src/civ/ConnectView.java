@@ -26,7 +26,7 @@ class ConnectView extends JPanel implements ActionListener{
 	private Proxy p;
 	private Result returned;
 	
-	private LobbyScreen ls = new LobbyScreen();
+	private LobbyScreen ls;
 
 	public ConnectView(){
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -66,6 +66,7 @@ class ConnectView extends JPanel implements ActionListener{
 			try{
                 p = new Proxy(serverLine.getText(), Integer.valueOf(portLine.getText()), new MyPacketListener());
                 Result r = p.connect(usernameLine.getText());
+                GameServer.init(p);
                 if(!r.getOk()){
                     System.out.println("Connection failed");
                     return;
@@ -77,6 +78,7 @@ class ConnectView extends JPanel implements ActionListener{
                 System.out.println(fe);
             }     
             
+            ls = new LobbyScreen();
             JFrame frame = (JFrame)SwingUtilities.getRoot(this);
             frame.getContentPane().remove(this);
             frame.getContentPane().add(ls);

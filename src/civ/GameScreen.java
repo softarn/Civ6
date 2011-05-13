@@ -29,7 +29,8 @@ class GameScreen extends JPanel implements ActionListener {
 		setLayout(new BorderLayout());
 		
 		topPanel.add(userLabel);
-		
+
+		update();
 		listPanel.add(list);
 		
 		buttonPanel.add(startButton);
