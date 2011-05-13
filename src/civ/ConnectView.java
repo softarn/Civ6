@@ -67,6 +67,8 @@ class ConnectView extends JPanel implements ActionListener{
                 p = new Proxy(serverLine.getText(), Integer.valueOf(portLine.getText()), new MyPacketListener());
                 Result r = p.connect(usernameLine.getText());
                 GameServer.init(p);
+                Round.addPlayer(Player.getInstance(usernameLine.getText()));
+                Round.setMe(Player.getInstance(usernameLine.getText()));
                 if(!r.getOk()){
                     System.out.println("Connection failed");
                     return;

@@ -31,7 +31,7 @@ public class Player implements Comparable<Player>{
      * turn it is.
      */
     public boolean isMe(){
-        return isActive();
+        return Round.getMe().equals(this);
     }
 
     public String toString(){

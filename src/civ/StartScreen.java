@@ -29,7 +29,7 @@ public class StartScreen extends JFrame implements ActionListener{
 			startPanel.add(exitButton);
 			
 			setLocation(270,100);
-			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			setSize(300, 400);
 			setVisible(true);
 	}

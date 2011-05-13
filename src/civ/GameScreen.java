@@ -16,6 +16,7 @@ class GameScreen extends JPanel implements ActionListener {
 	private JButton lockButton = new JButton("Lås ");
 	
 	private boolean startEnabled = true; 
+	private boolean toggle = true; 
 	
 	private JPanel topPanel = new JPanel();
 	private JPanel listPanel = new JPanel();
@@ -67,10 +68,23 @@ class GameScreen extends JPanel implements ActionListener {
 
 	
 	public void actionPerformed (ActionEvent ae) {
-		if(ae.getSource() == startButton)
+		if(ae.getSource() == startButton){
 			System.out.println("startButton pressed ");
-		else if (ae.getSource() == lockButton)
+            if(GameServer.startGame()){
+                //Close the window here
+                JFrame frame = (JFrame)SwingUtilities.getRoot(this);
+                frame.dispose();
+                System.out.println("Game is starting");
+            }
+            else{
+                System.out.println("Game could not be started");
+            }
+        }
+		else if (ae.getSource() == lockButton){
 			System.out.println("lockButton pressed ");
+            GameServer.lockGame(toggle);
+            toggle = !toggle;
+        }
 	}
 	
 }

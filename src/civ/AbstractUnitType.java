@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 
 public interface AbstractUnitType{
     abstract public String getName();
@@ -33,6 +34,7 @@ class UnitType implements AbstractUnitType{
     private boolean mounted;
 
     private static final String imgPath = "data/img/"; //Need a better fix for this!
+    private static HashMap<String, AbstractUnitType> types = new HashMap<String, AbstractUnitType>();
 
     protected UnitType(String name, 
             String category,
@@ -41,7 +43,8 @@ class UnitType implements AbstractUnitType{
             int defence,
             int range,
             int movementPoints,
-            int inventorySize){
+            int inventorySize,
+            AbstractUnitType type){
         this.name = name;
         this.category = category;
         this.maxManPower = maxManPower;
@@ -51,6 +54,7 @@ class UnitType implements AbstractUnitType{
         this.movementPoints = movementPoints;
         this.inventorySize = inventorySize;
         this.mounted = category.equals("Mounted");
+        types.put(name, type);
         if(category.equals("Boat")){
             this.vision = 2;
         }
@@ -65,6 +69,10 @@ class UnitType implements AbstractUnitType{
         }
     }
 
+    public static AbstractUnitType getByName(String name){
+        return types.get(name);
+    }
+    
     public String getName(){
         return name;
     }

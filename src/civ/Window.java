@@ -22,7 +22,7 @@ import proxy.Proxy;
 import proxy.Result;
 import proxy.FailedException;
 
-public class Window extends JFrame  implements ActionListener{
+public class Window extends JFrame implements ActionListener{
 
     //Menu bar
     private JMenuBar mainMenuBar;
@@ -119,7 +119,7 @@ public class Window extends JFrame  implements ActionListener{
 
     Window(int w,int h) {
         super ("Civ 6");
-        Round.next(); // Round.next() has to be run atleast once before the player gets to play.
+        Round.resume(); // Round.next() has to be run atleast once before the player gets to play.
 
         //puw = new PopupWindow();
 

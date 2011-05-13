@@ -30,7 +30,7 @@ public class PhysicalUnit implements Comparable<PhysicalUnit>{
     }
 
     public PhysicalUnit(String type, Player allegiance){
-
+        this(PhysicalUnitType.getByName(type), allegiance);
     }
 
     public PhysicalUnit(AbstractUnitType type, Player allegiance){

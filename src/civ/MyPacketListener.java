@@ -106,6 +106,29 @@ class GameServer{
         }
         return true;
     }
+
+    public static boolean startGame(){
+        Result returned = null;
+        try{
+            returned = proxy.startGame();
+            return returned.getOk();
+        }
+        catch(FailedException fe){
+            System.out.println(fe);
+            return false;
+        }
+    }
+
+    public static void lockGame(boolean lock){
+        try{
+            proxy.lockGame(lock);
+        }
+        catch(FailedException fe){
+            System.out.println(fe);
+            return;
+        }
+        
+    }
 }
 
 public class MyPacketListener implements PacketListener{
@@ -159,6 +182,7 @@ public class MyPacketListener implements PacketListener{
         GameMap gm = GameMap.getInstance();
         gm.parseMap((ArrayList<ArrayList<String>>)received.getMap());
         Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
+        System.out.println("Starting game for realz");
         new Window(size.width,size.height);
     }
 
