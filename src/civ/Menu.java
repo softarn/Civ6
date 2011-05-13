@@ -54,7 +54,7 @@ public class Menu extends JPanel implements Observer, ActionListener{
     private JComboBox selUnit;
 
     //Status is only for testing purpose
-    private JLa<bel status = new JLabel("Status is: " + state.getUnitState());
+    private JLabel status = new JLabel("Status is: " + state.getUnitState());
     //private PopupWindow puw;
     private int curScale = 5 ;
     private int[] sizes = {50, 75, 90, 120, 150, 175, 190};
