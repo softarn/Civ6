@@ -57,6 +57,7 @@ class LobbyScreen extends JPanel implements ActionListener {
             frame.getContentPane().validate();  
 						
 			System.out.println("hostButton pressed ");
+            GameServer.host();
 		}
 		
 		else if (ae.getSource() == joinButton){
@@ -70,7 +71,7 @@ class LobbyScreen extends JPanel implements ActionListener {
             frame.getContentPane().validate();
             
 			System.out.println("joinButton pressed ");
-			
+			GameServer.join((String)lobbyList.getSelectedValue());
 		}
 		else if (ae.getSource() == refreshButton){
             String[] data = GameServer.listGames();

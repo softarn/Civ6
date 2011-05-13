@@ -55,7 +55,7 @@ class GameServer{
             System.out.println("Couldn't end turn");
         }
     }
-    
+
     public static boolean makeUnit(int x, int y, AbstractUnitType type){
         try{
             proxy.madeUnit(x, y, Round.getMe().toString(), type.getName(), type.getMaxManPower());
@@ -82,10 +82,34 @@ class GameServer{
         }
         return r.getOk();
     }
+
+    public static boolean host(){
+        Result returned = null;
+        try{
+            returned = proxy.host();
+            System.out.println(returned.getHostName());
+        }
+        catch(FailedException fe){
+            System.out.println(fe);
+            return false;
+        }
+        return true;
+    }
+
+    public static boolean join(String name){
+        try{
+            proxy.joinGame(name);
+        }
+        catch(FailedException fe){
+            System.out.println(fe);
+            return false;
+        }
+        return true;
+    }
 }
 
 public class MyPacketListener implements PacketListener{
-	public void newTurn(Result received){
+    public void newTurn(Result received){
         GameMap gm = GameMap.getInstance();
         //gm.parseMap((ArrayList<ArrayList<String>>)received.getMap());
         gm.clearTiles();
@@ -106,13 +130,13 @@ public class MyPacketListener implements PacketListener{
                 gm.getTile(tileXValue, tileYValue).setCity(new City(theName, Player.getInstance(theOwner)));
 
                 /*List<String> buildings = received.getCityBuildings(i);
-                int amountCityUnits = received.getAmountCityUnits(i);
-                for(int j=0; j<amountCityUnits; j++){
-                    String cityUnitOwner = received.getCityUnitOwner(i, j);
-                    String cityUnitType = received.getCityUnitType(i, j);
-                    int cityUnitManpower = received.getCityUnitManPower(i, j);
-                    gm.getTile(tileXValue, tileYValue).setCity();
-                }*/
+                  int amountCityUnits = received.getAmountCityUnits(i);
+                  for(int j=0; j<amountCityUnits; j++){
+                  String cityUnitOwner = received.getCityUnitOwner(i, j);
+                  String cityUnitType = received.getCityUnitType(i, j);
+                  int cityUnitManpower = received.getCityUnitManPower(i, j);
+                  gm.getTile(tileXValue, tileYValue).setCity();
+                  }*/
             }
             //String improvement = received.getImprovement(i);
         }
@@ -120,7 +144,7 @@ public class MyPacketListener implements PacketListener{
         Round.resume();
     }
 
-	public void lobbyUpdated(Result received){
+    public void lobbyUpdated(Result received){
         boolean gameLocked = received.getLocked();
         int amount = received.getNumberPlayers();
         for(int i=0; i<amount; i++){
@@ -131,14 +155,14 @@ public class MyPacketListener implements PacketListener{
         }
     }
 
-	public void gameStarted(Result received){
+    public void gameStarted(Result received){
         GameMap gm = GameMap.getInstance();
         gm.parseMap((ArrayList<ArrayList<String>>)received.getMap());
         Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
         new Window(size.width,size.height);
     }
 
-	public void chatMessageReceived(Result received){
+    public void chatMessageReceived(Result received){
     }
 
     public void gameClosed(){
