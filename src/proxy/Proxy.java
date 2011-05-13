@@ -29,6 +29,9 @@ public class Proxy
 		{
 			e.printStackTrace();
 		}
+        catch(ConnectException ce){
+            System.out.println(ce);
+        }
 		catch(IOException e)
 		{
 			e.printStackTrace();

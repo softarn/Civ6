@@ -14,9 +14,9 @@ class LobbyScreen extends JPanel implements ActionListener {
 
 	private JButton hostButton = new JButton("Host ");
 	private JButton joinButton = new JButton("Join ");
+	private JButton refreshButton = new JButton("Refresh");
 	
-	private String[] players = {"Server - game1 ", 
-		"Server - game2 ", "Server - game3 ", "Server - game4 "};
+	private String[] players = {};
 	
 	private JList lobbyList = new JList(players);
 	private JScrollPane scp = new JScrollPane(lobbyList);
@@ -37,13 +37,14 @@ class LobbyScreen extends JPanel implements ActionListener {
 		buttonPanel.add(joinButton);
 		
 		add(buttonPanel, BorderLayout.SOUTH);
-		add(lobbyList, BorderLayout.NORTH);	
+		add(scp, BorderLayout.NORTH);	
 	}
-	
+
 	public void actionPerformed (ActionEvent ae) {
 		if(ae.getSource() == hostButton){
 			startEnabled = true;
-			gs = new GameScreen(startEnabled);
+			gs = GameScreen.getInstance();
+            gs.init(startEnabled);
 			
 			JFrame frame = (JFrame)SwingUtilities.getRoot(this);
             frame.getContentPane().remove(this);
@@ -55,7 +56,8 @@ class LobbyScreen extends JPanel implements ActionListener {
 		
 		else if (ae.getSource() == joinButton){
 			startEnabled = false;
-			gs = new GameScreen(startEnabled);
+			gs = GameScreen.getInstance();
+            gs.init(startEnabled);
 			
 			JFrame frame = (JFrame)SwingUtilities.getRoot(this);
             frame.getContentPane().remove(this);
@@ -65,7 +67,9 @@ class LobbyScreen extends JPanel implements ActionListener {
 			System.out.println("joinButton pressed ");
 			
 		}
+		else if (ae.getSource() == refreshButton){
+            lobbyList.setListData(GameServer.listGames());
+        }
 	}
-	
 }
 

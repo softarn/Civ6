@@ -31,7 +31,6 @@ class ConnectView extends JPanel implements ActionListener{
 	public ConnectView(){
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
-		p = new Proxy(serverLine.getText(), Integer.valueOf(portLine.getText()), new MyPacketListener());
 		
         /*try{
             returned = p.connect(usernameLine.getText());
@@ -65,8 +64,14 @@ class ConnectView extends JPanel implements ActionListener{
 	public void actionPerformed (ActionEvent ae) {
 		if(ae.getSource() == connectButton) {
 			try{
-            	returned = p.listGames();
-                System.out.println(returned.getSessions());
+                p = new Proxy(serverLine.getText(), Integer.valueOf(portLine.getText()), new MyPacketListener());
+                Result r = p.connect(usernameLine.getText());
+                if(!r.getOk()){
+                    System.out.println("Connection failed");
+                    return;
+                }
+            	//returned = p.listGames();
+                //System.out.println(returned.getSessions());
             }
             catch(FailedException fe){
                 System.out.println(fe);

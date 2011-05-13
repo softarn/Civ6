@@ -10,6 +10,7 @@ import proxy.Result;
 import proxy.FailedException;
 
 class GameScreen extends JPanel implements ActionListener {
+    private static GameScreen object;
 	private JLabel userLabel = new JLabel("Users: 5");
 	private JButton startButton = new JButton("Starta ");
 	private JButton lockButton = new JButton("Lås ");
@@ -20,15 +21,12 @@ class GameScreen extends JPanel implements ActionListener {
 	private JPanel listPanel = new JPanel();
 	private JPanel buttonPanel = new JPanel();
 	
-	private String[] players = {"aramande","softarn","haxxor",
-		"jegarn", "heaton", "tiamo"};
+	private String[] players = {};
 		
 	private JList list = new JList(players);
 	
-	public GameScreen(boolean startEnabled){
+	private GameScreen(){
 		setLayout(new BorderLayout());
-		
-		this.startEnabled = startEnabled;
 		
 		topPanel.add(userLabel);
 		
@@ -39,12 +37,6 @@ class GameScreen extends JPanel implements ActionListener {
 		startButton.addActionListener(this);
 		lockButton.addActionListener(this);
 		
-		if(startEnabled == false){
-			startButton.setEnabled(false);
-			lockButton.setEnabled(false);
-			
-		}
-		
 		topPanel.setLayout(new FlowLayout());
 		listPanel.setLayout(new FlowLayout());
 		buttonPanel.setLayout(new FlowLayout());
@@ -54,6 +46,24 @@ class GameScreen extends JPanel implements ActionListener {
 		add(buttonPanel, BorderLayout.SOUTH);
 
 	}
+
+    public void init(boolean startEnabled){
+		if(startEnabled == false){
+			startButton.setEnabled(false);
+			lockButton.setEnabled(false);
+			
+		}
+    }
+
+    public static GameScreen getInstance(){
+        if(object == null) object = new GameScreen();
+        return object;
+    }
+	
+    public void update(){
+        list.setListData(Round.getPlayers());
+    }
+
 	
 	public void actionPerformed (ActionEvent ae) {
 		if(ae.getSource() == startButton)

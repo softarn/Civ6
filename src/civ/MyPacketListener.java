@@ -3,6 +3,7 @@ package civ;
 import java.awt.Toolkit;
 import java.awt.Dimension;
 import java.util.ArrayList;
+import java.util.List;
 
 import proxy.Proxy;
 import proxy.FailedException;
@@ -14,6 +15,23 @@ class GameServer{
         if(p != null) {
             proxy = p;
         }
+    }
+
+    public static String[] listGames(){
+        Result r = null;
+        try{
+            r = proxy.listGames();
+        }
+        catch(FailedException fe){
+            System.out.println("Couldn't list games");
+        }
+        List<String> list = r.getSessions();
+        String[] games = new String[list.size()];
+        int i = 0;
+        for(String temp : list){
+            games[i++] = temp;
+        }
+        return games;
     }
 
     public static void battle(PhysicalUnit u1, PhysicalUnit u2, Tile t1, Tile t2){
@@ -111,6 +129,7 @@ public class MyPacketListener implements PacketListener{
             String playerName = received.getPlayerName(i);
             String playerCivilization = received.getPlayerCiv(i);
             Round.addPlayer(Player.getInstance(playerName));
+            GameScreen.getInstance().update();
         }
     }
 

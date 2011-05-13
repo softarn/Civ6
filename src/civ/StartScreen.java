@@ -10,7 +10,7 @@ public class StartScreen extends JFrame implements ActionListener{
 	private JButton multiButton;
 	private JButton exitButton;
 	private JPanel startPanel = new JPanel();
-	private ConnectView cv = new ConnectView();
+	private ConnectView cv;
 	
 	public StartScreen(){
 			super("Civ6 ");
@@ -43,6 +43,7 @@ public class StartScreen extends JFrame implements ActionListener{
 			System.out.println("SingelButton ");
 		else if (ae.getSource() == multiButton) {
 			System.out.println("Visa multi!!");
+            cv = new ConnectView();
 			this.remove(startPanel);
 			//this.repaint();
 			this.add(cv);
