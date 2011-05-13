@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 class BarbarianType implements AbstractUnitType{
     private UnitType unitType;
     public BarbarianType(){
-        unitType = new UnitType("Barbarian", "Melee", 100, 3, 3, 1, 1, 75, this); // Borrowed infantry stats
+        unitType = new UnitType("Barbarian", "Melee", 100, 3, 3, 1, 1, 75); // Borrowed infantry stats
     }
 
     public String getName(){

@@ -2,7 +2,6 @@ package civ;
 
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
-import java.util.HashMap;
 import java.io.File;
 import java.io.IOException;
 
@@ -34,7 +33,6 @@ class UnitType implements AbstractUnitType{
     private boolean mounted;
 
     private static final String imgPath = "data/img/"; //Need a better fix for this!
-    private static HashMap<String, AbstractUnitType> types = new HashMap<String, AbstractUnitType>();
 
     protected UnitType(String name, 
             String category,
@@ -43,8 +41,7 @@ class UnitType implements AbstractUnitType{
             int defence,
             int range,
             int movementPoints,
-            int inventorySize,
-            AbstractUnitType type){
+            int inventorySize){
         this.name = name;
         this.category = category;
         this.maxManPower = maxManPower;
@@ -54,7 +51,6 @@ class UnitType implements AbstractUnitType{
         this.movementPoints = movementPoints;
         this.inventorySize = inventorySize;
         this.mounted = category.equals("Mounted");
-        types.put(name, type);
         if(category.equals("Boat")){
             this.vision = 2;
         }
@@ -67,10 +63,6 @@ class UnitType implements AbstractUnitType{
             System.out.println(e);
             System.out.println(name);
         }
-    }
-
-    public static AbstractUnitType getByName(String name){
-        return types.get(name);
     }
 
     public String getName(){
