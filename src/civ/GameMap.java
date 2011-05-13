@@ -33,7 +33,7 @@ public class GameMap{
 
     public void init(GameMapView gmv){
         // Parsing the map
-        //parseMap("Put server map data here");
+        parseMap();
         exploreMap();
         this.gmv = gmv;
         // Put all TileViews on the GameMapView
@@ -277,8 +277,8 @@ public class GameMap{
             }
         }
         tiles = result;
-/*        tiles[1][1].setUnit(new PhysicalUnit(PhysicalUnitType.Musketeer, Player.getInstance("Andy")));
-        tiles[2][1].setUnit(new Barbarian(tiles[2][1]));
-        tiles[2][2].setCity(new City());*/
+        tiles[1][1].setUnit(new PhysicalUnit(PhysicalUnitType.Musketeer, Player.getInstance("Andy")));
+        //tiles[2][1].setUnit(new Barbarian(tiles[2][1]));
+        //tiles[2][2].setCity(new City());
     }
 }

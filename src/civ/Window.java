@@ -33,7 +33,7 @@ public class Window extends JFrame  implements ActionListener{
     //Only for testpurpose
     public static void main(String[] args){
         
-    	StartScreen st = new StartScreen();
+    	//StartScreen st = new StartScreen();
     	
     	
     	/*String name, ip = "dvk.fishface.se";
@@ -111,10 +111,9 @@ public class Window extends JFrame  implements ActionListener{
                     break;
             }
         }
-        /*
+    */
         Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
         new Window(size.width,size.height);
-        */
     }
 
     Window(int w,int h) {
