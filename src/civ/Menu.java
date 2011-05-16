@@ -50,6 +50,8 @@ public class Menu extends JPanel implements Observer, ActionListener{
     //private JLabel unitPresentation;
     private GameMapView gmv = new GameMapView();    
 
+    private JButton plus;
+    private JButton minus;
     private JButton putUnit;
     private JComboBox selUnit;
 
@@ -57,7 +59,7 @@ public class Menu extends JPanel implements Observer, ActionListener{
     private JLabel status = new JLabel("Status is: " + state.getUnitState());
     //private PopupWindow puw;
     private int curScale = 5 ;
-    private int[] sizes = {50, 75, 90, 120, 150, 175, 190};
+    private int[] sizes = {35, 50, 75, 90, 120, 150, 175, 190};
     
     Menu(){ 
         super(); 
@@ -76,11 +78,18 @@ public class Menu extends JPanel implements Observer, ActionListener{
         //unitPresentation = new JLabel();
         tileLabel = new JLabel();
  
+        plus = new JButton("+");
+        plus.addActionListener(this);
+        minus = new JButton("-");
+        minus.addActionListener(this);
+
         selUnit = new JComboBox(PhysicalUnitType.values());
         putUnit = new JButton("Set Unit");
         putUnit.setActionCommand("setunit");
         putUnit.addActionListener(this);
 
+        createUnit.add(plus);
+        createUnit.add(minus);
         createUnit.add(selUnit);
         createUnit.add(putUnit);
 
@@ -225,6 +234,12 @@ public class Menu extends JPanel implements Observer, ActionListener{
                     state.getSelectedTile().getView().repaint();
                 }
             }
+        }
+        else if(plus == ae.getSource()){
+            scaleUp();
+        }
+        else if(minus == ae.getSource()){
+            scaleDown();
         }
     }
 }

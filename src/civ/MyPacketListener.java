@@ -4,6 +4,8 @@ import java.awt.Toolkit;
 import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 
 import proxy.Proxy;
 import proxy.FailedException;
@@ -182,7 +184,9 @@ public class MyPacketListener implements PacketListener{
         GameMap gm = GameMap.getInstance();
         gm.parseMap((ArrayList<ArrayList<String>>)received.getMap());
         Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
-        System.out.println("Starting game for realz");
+        System.out.println("Starting game");
+        JFrame frame = (JFrame)SwingUtilities.getRoot(GameScreen.getInstance());
+        frame.dispose();
         new Window(size.width,size.height);
     }
 

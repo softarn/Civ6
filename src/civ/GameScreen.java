@@ -72,9 +72,8 @@ class GameScreen extends JPanel implements ActionListener {
 			System.out.println("startButton pressed ");
             if(GameServer.startGame()){
                 //Close the window here
-                JFrame frame = (JFrame)SwingUtilities.getRoot(this);
-                frame.dispose();
-                System.out.println("Game is starting");
+                //JFrame frame = (JFrame)SwingUtilities.getRoot(this);
+                //frame.dispose();
             }
             else{
                 System.out.println("Game could not be started");

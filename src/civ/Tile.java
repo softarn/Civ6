@@ -207,7 +207,7 @@ public class Tile implements Comparable<Tile>{
     }
 
     public boolean hasFog(){
-        return countToFog == 40;
+        return countToFog <= 40;
     }
 
     /**
