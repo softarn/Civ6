@@ -3,10 +3,10 @@ package civ;
 public class Round{
     private static int number = 0;
     private static int turn = 0;
-    private static Player[] players = {Player.getInstance("Player")};
+    private static Player[] players = {Player.getInstance("Player1")}; 
     private static Player activePlayer = null;
     private static GameMap gm;
-    
+        
     static void next(){
         if(number%players.length == 0){
             ++turn;

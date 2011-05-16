@@ -17,7 +17,6 @@ public class State extends Observable{
     private HoverState hoverState;
    
 	private State(){
-		
 		setUnitState(UnitState.UnitUnSelected);
 		setCityState(CityState.CityUnSelected);
 		setTileState(TileState.TileUnSelected);
