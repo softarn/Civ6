@@ -230,7 +230,7 @@ public class Menu extends JPanel implements Observer, ActionListener{
                 else{
                     state.getSelectedTile().setUnit(new PhysicalUnit(
                                 (PhysicalUnitType)selUnit.getSelectedItem(),
-                                Round.getActivePlayer()));//(Player)selPlayer.getSelectedItem()));
+                                Round.getMe()));//(Player)selPlayer.getSelectedItem()));
                     state.getSelectedTile().getView().repaint();
                 }
             }

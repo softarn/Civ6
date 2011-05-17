@@ -195,7 +195,6 @@ public class Tile implements Comparable<Tile>{
     }
 
     public void decreaseFogCounter(){
-        System.out.println(x + "," + y + " = " + countToFog);
         --countToFog;
         if(countToFog == 0){
             setExplored(false);

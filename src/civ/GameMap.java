@@ -40,6 +40,7 @@ public class GameMap{
         for(int j=getHeight()-1; j>=0; --j){
             for(int i=getWidth()-1; i>=0; --i){
                 gmv.add(tiles[i][j].getView());
+                //tiles[i][j].setExplored(true);
             }
         }
     }
@@ -78,7 +79,7 @@ public class GameMap{
     public void clearTiles(){
         for(Tile[] temp : tiles){
             for(Tile tile : temp){
-                if(tile.hasUnit() && tile.getUnit().getType().getName().equals("Barbarian")){
+                if(tile.hasUnit() && !tile.getUnit().getType().getName().equals("Barbarian")){
                     tile.setUnit(null);
                 }
             }

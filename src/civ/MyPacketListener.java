@@ -11,6 +11,12 @@ import proxy.Proxy;
 import proxy.FailedException;
 import proxy.Result;
 import proxy.PacketListener;
+
+import static civ.State.UnitState.UnitSelected;
+import static civ.State.UnitState.UnitUnSelected;
+import static civ.State.TileState.TileSelected;
+import static civ.State.TileState.TileUnSelected;
+
 class GameServer{
     private static Proxy proxy = null;
     public static void init(Proxy p){
@@ -146,8 +152,16 @@ public class MyPacketListener implements PacketListener{
                 String theOwner = received.getUnitOwner(i);
                 String theType = received.getUnitType(i);
                 int manPowerLeft = received.getUnitManPower(i);
-                gm.getTile(tileXValue, tileYValue).setUnit(new PhysicalUnit(theType, Player.getInstance(theOwner)));
+                PhysicalUnit pu = new PhysicalUnit(theType, Player.getInstance(theOwner));
+                gm.getTile(tileXValue, tileYValue).setUnit(pu);
                 System.out.println(tileXValue +", "+ tileYValue);
+                pu.getView().update();
+                if(State.getInstance().getUnitState() == UnitSelected){
+                    State.getInstance().setUnitState(UnitUnSelected);
+                    State.getInstance().setTileState(TileUnSelected);
+                    State.getInstance().setUnitState(UnitSelected);
+                    State.getInstance().setTileState(TileSelected);
+                }
             }
             if(received.existCity(i)){
                 String theOwner = received.getCityOwner(i);
