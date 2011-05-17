@@ -267,7 +267,7 @@ public class GameMap{
         for(ArrayList<String> al : terrain){
             i=0;
             for(String type : al){
-                result[i][j] = new Tile(ter.get(type), i, j);
+                result[j][i] = new Tile(ter.get(type), j, i);
                 ++i;
             }
             ++j;

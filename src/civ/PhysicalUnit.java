@@ -62,6 +62,10 @@ public class PhysicalUnit implements Comparable<PhysicalUnit>{
         return allegiance.isMe();
     }
 
+    public Player getOwner(){
+        return allegiance;
+    }
+
     public boolean isInCity(){
         return false;
     }

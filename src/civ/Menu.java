@@ -168,8 +168,15 @@ public class Menu extends JPanel implements Observer, ActionListener{
                 }
                 else{
                     // Enemy unit hovered
-                    tileLabel.setText("<html>Terrain: " + outputTerrain +
-                            "<br>Unit: Enemy unit");
+                    Player owner = state.getHoverTile().getUnit().getOwner();
+                    if(owner != null){
+                        tileLabel.setText("<html>Terrain: " + outputTerrain +
+                                "<br>Unit: Enemy unit, belongs to "+owner);
+                    }
+                    else{
+                        tileLabel.setText("<html>Terrain: " + outputTerrain +
+                                "<br>Unit: Enemy unit");
+                    }
 
                 }
                 
@@ -177,7 +184,6 @@ public class Menu extends JPanel implements Observer, ActionListener{
         }        
 
         switch(state.getUnitState()){
-
             case UnitSelected: 
                 if(state.getSelectedUnit().isAlly()){
                     PhysicalUnit unit = state.getSelectedUnit();
@@ -185,11 +191,9 @@ public class Menu extends JPanel implements Observer, ActionListener{
                  	tabbedPane.addTab(unitTypeName, null, unit.getView(), "Visa dina units ");
                 }
                 break;
-                
             case UnitUnSelected:                 
                 tabbedPane.removeAll();
                 tabbedPane.repaint();
-
                 break;
         }
         
@@ -199,12 +203,9 @@ public class Menu extends JPanel implements Observer, ActionListener{
         		City city = state.getSelectedCity();
         		String cityName = city.getName();
         		tabbedPane.addTab(cityName, null, city.getView(), "Visa dina städer ");
-        		
         		break;
         	case CityUnSelected:
-        		//tabbedPane.removeAll();
         		tabbedPane.repaint();
-        		
         		break;
         }
         
@@ -221,17 +222,16 @@ public class Menu extends JPanel implements Observer, ActionListener{
                 if(state.getSelectedTile().hasUnit()){
                     status.setText("Status is: Can't place unit on another unit.");
                     GameMap gm = GameMap.getInstance();
-                    //scaleUp();
                 }
                 else if(!state.getSelectedTile().getTerrain().isTraversible((PhysicalUnitType)selUnit.getSelectedItem())){
                     status.setText("Status is: Unit can't stand there.");
-                    //scaleDown();
                 }
                 else{
-                    state.getSelectedTile().setUnit(new PhysicalUnit(
-                                (PhysicalUnitType)selUnit.getSelectedItem(),
-                                Round.getMe()));//(Player)selPlayer.getSelectedItem()));
-                    state.getSelectedTile().getView().repaint();
+                    Tile tile = state.getSelectedTile();
+                    PhysicalUnitType type = (PhysicalUnitType)selUnit.getSelectedItem();
+                    tile.setUnit(new PhysicalUnit(type, Round.getMe()));
+                    tile.getView().repaint();
+                    GameServer.makeUnit(tile.getX(), tile.getY(), type);
                 }
             }
         }
