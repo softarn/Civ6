@@ -1,6 +1,7 @@
 package civ;
 
 import java.awt.image.BufferedImage;
+import java.awt.Color;
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
@@ -16,6 +17,7 @@ import static civ.State.UnitState.UnitUnSelected;
 
 public class Tile implements Comparable<Tile>{
     private boolean selected, hilight, explored, plain;
+    private Color color;
 
     private int countToFog;
     private int x, y;
@@ -174,12 +176,17 @@ public class Tile implements Comparable<Tile>{
         return terrain;
     }
 
-    public void hilight(){
+    public void hilight(Color color){
         hilight = true;
+        this.color = color;
     }
 
     public void dehilight(){
         hilight = false;
+    }
+
+    public Color getHilightColor(){
+        return color;
     }
 
     public boolean isHilighted(){

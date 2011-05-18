@@ -108,7 +108,7 @@ public class TileView extends JPanel{
             g2.drawPolygon(aura);
         }
         if(tile.isHilighted()){
-            g2.setColor(new Color(240, 200, 50, 120));
+            g2.setColor(tile.getHilightColor());
             g2.fillPolygon(aura);
         }
 

@@ -17,7 +17,7 @@ import static civ.State.HoverState.HoverTileOnly;
 import static civ.State.HoverState.HoverTileUnit;
 
 public class GameMapView extends JPanel{
-    
+
     private GameMap gm;
     private State state = State.getInstance();
 
@@ -81,7 +81,7 @@ public class GameMapView extends JPanel{
                 setBounds(tempX, tempY, getWidth(), getHeight());
             }
         }
-        
+
         public void mouseReleased(MouseEvent e){
             if(e.getButton() == MouseEvent.BUTTON3){
                 saveX = 0;
@@ -103,12 +103,26 @@ public class GameMapView extends JPanel{
 
                     switch(state.getActionState()){
                         case Move:
+                            if(state.getUnitState() == UnitSelected){
+                                PhysicalUnit pu = state.getSelectedUnit();
+                                int movement = pu.getCurrentMovementPoint();
+                                for(Tile t : gm.getNeighbours(state.getSelectedTile(), movement, true)){
+                                    t.dehilight();
+                                    t.getView().repaint();
+                                }
+                            }
                             civ.Move.makeMove(state.getSelectedTile(), tile);
                             state.setActionState(None);
                             break;
                         case Attack:
-                            if(state.getUnitState() == UnitSelected && tile.hasUnit()){
-                                if(!tile.getUnit().isAlly()){
+                            if(state.getUnitState() == UnitSelected){
+                                PhysicalUnit pu = state.getSelectedUnit();
+                                int range = pu.getType().getRange();
+                                for(Tile t : gm.getNeighbours(state.getSelectedTile(), range, false)){
+                                    t.dehilight();
+                                    t.getView().repaint();
+                                }
+                                if(tile.hasUnit() && tile.getUnit().isAlly()){
                                     if(Battle.attackRange(state.getSelectedTile(), tile, 
                                                 state.getSelectedUnit().getType().getRange()) > 0){
                                         before = new PopUpBubble(state.getSelectedTile().getView().getX() + 135, 
@@ -116,10 +130,10 @@ public class GameMapView extends JPanel{
                                         GameMapView.this.add(before, 0);
                                         GameMapView.this.repaint();
                                         int choice = showConfirmAttackPane(state.getSelectedUnit(), tile.getUnit(), 
-                                            state.getSelectedTile(), tile);
+                                                state.getSelectedTile(), tile);
                                         if(choice == 0){
                                             Battle.doBattle(state.getSelectedUnit(), tile.getUnit(), 
-                                                state.getSelectedTile(), tile);
+                                                    state.getSelectedTile(), tile);
                                         }
                                         after = new PopUpBubble(state.getSelectedTile().getView().getX() + 135, 
                                                 state.getSelectedTile().getView().getY() + 35, 
@@ -168,7 +182,7 @@ public class GameMapView extends JPanel{
         }
 
         public void mouseExited(MouseEvent e){
-        
+
         }
 
         public void mouseEntered(MouseEvent e){

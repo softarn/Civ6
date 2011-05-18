@@ -187,10 +187,7 @@ public class PhysicalUnitView extends JPanel implements Observer, ActionListener
         lifeLength.setString("Livslängd: "+ Integer.toString(pUnit.getInventoryAmount()));
         lifeLength.setValue(pUnit.getInventoryAmount());
         lifeLength.setStringPainted(true);
-        //lifeLength.paintString(true);
-
-        //inventory.setText("Matlager: " + pUnit.getInventoryAmount() + 
-          //      "/" + pUnit.getType().getInventorySize());
+        update(state, null);
     }
 
     private void updateSettler(){
@@ -226,16 +223,27 @@ public class PhysicalUnitView extends JPanel implements Observer, ActionListener
     }
 
     public void actionPerformed(ActionEvent ae){
+        GameMap gm = GameMap.getInstance();
         if(moveButton == ae.getSource()){
             if(state.getUnitState() == UnitSelected){
-                state.getSelectedUnit().getView().update();
+                PhysicalUnit pu = state.getSelectedUnit();
+                pu.getView().update();
                 state.setActionState(Move);
+                for(Tile t : gm.getNeighbours(state.getSelectedTile(), pu.getCurrentMovementPoint(), true)){
+                    t.hilight(new Color(200, 175, 115, 140));
+                    t.getView().repaint();
+                }
             }
         }
         if(atkButton == ae.getSource()){
             if(state.getUnitState() == UnitSelected){
-                state.getSelectedUnit().getView().update();
+                PhysicalUnit pu = state.getSelectedUnit();
+                pu.getView().update();
                 state.setActionState(Attack);
+                for(Tile t : gm.getNeighbours(state.getSelectedTile(), pu.getCurrentMovementPoint(), false)){
+                    t.hilight(new Color(230, 75, 15, 140));
+                    t.getView().repaint();
+                }
             }
         }
         

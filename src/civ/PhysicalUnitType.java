@@ -22,20 +22,20 @@ public enum PhysicalUnitType implements AbstractUnitType{
         Pikeman(    "Pikeman",      "Melee", 100, 2, 3, 1, 1, 50),
 
         // Mounted 
-        Cavalry(    "Cavalry",      "Mounted", 100, 6, 4, 1, 2, 100),
+        Cavalry(    "Cavalry",      "Mounted", 100,  6, 4, 1, 2, 100),
         Knight(     "Knight",       "Mounted", 100, 12, 8, 1, 2, 100),
-        Crusader(   "Crusader",     "Mounted", 100, 6, 4, 1, 2, 150),
+        Crusader(   "Crusader",     "Mounted", 100,  6, 4, 1, 2, 150),
 
         // Boats
-        Trireme(    "Trireme",      "Boat", 50, 4, 3, 1, 3, 100),
+        Trireme(    "Trireme",      "Boat", 50,   4,  3, 1, 3, 100),
         Galley(     "Galley",       "Boat", 250, 30, 25, 1, 4, 400),
         Caravel(    "Caravel",      "Boat", 100, 50, 40, 1, 6, 200),
 
         // Other
         Settler(    "Settler",      "Other", 100, 0, 2, 0, 1, 0),
-        Diplomat(   "Diplomat",     "Other", 25, 0, 0, 0, 3, 0),
-        Siegetower( "Siege Tower",  "Other", 0, 0, 0, 0, 1, 0),
-        Wagontrain( "Wagon Train",  "Other", 0, 0, 0, 0, 2, 0);
+        Diplomat(   "Diplomat",     "Other", 25,  0, 0, 0, 3, 0),
+        Siegetower( "Siege Tower",  "Other", 0,   0, 0, 0, 1, 0),
+        Wagontrain( "Wagon Train",  "Other", 0,   0, 0, 0, 2, 0);
 
     private UnitType unitType;
     private Hold hold;

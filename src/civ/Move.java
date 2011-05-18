@@ -3,10 +3,12 @@ package civ;
 import java.util.ArrayList;
 
 public class Move {
+    private static final State state = State.getInstance();
     private static final GameMap gm = GameMap.getInstance();
 
     public static boolean makeMove(Tile t1, Tile t2){
         PhysicalUnit unit = t1.getUnit();
+
         int length = moveLength(t1, t2, unit.getCurrentMovementPoint());
 
         ArrayList<Tile> tiles = new ArrayList<Tile>();

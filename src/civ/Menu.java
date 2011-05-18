@@ -230,18 +230,18 @@ public class Menu extends JPanel implements Observer, ActionListener{
     }
 
     private void updateState(){
-        status.setText("Status is: " + state.getUnitState());
+        //tileLabel.setText("Status is: " + state.getUnitState());
     }
 
     public void actionPerformed(ActionEvent ae){
         if(putUnit == ae.getSource()){
             if(state.getTileState() == TileSelected){
                 if(state.getSelectedTile().hasUnit()){
-                    status.setText("Status is: Can't place unit on another unit.");
+                    tileLabel.setText("<html><br />Can't place unit on another unit.</html>");
                     GameMap gm = GameMap.getInstance();
                 }
                 else if(!state.getSelectedTile().getTerrain().isTraversible((PhysicalUnitType)selUnit.getSelectedItem())){
-                    status.setText("Status is: Unit can't stand there.");
+                    tileLabel.setText("<html><br />Unit can't stand there.</html>");
                 }
                 else{
                     Tile tile = state.getSelectedTile();
