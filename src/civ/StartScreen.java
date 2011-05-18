@@ -29,7 +29,7 @@ public class StartScreen extends JFrame implements ActionListener{
 			startPanel.add(exitButton);
 			
 			setLocation(270,100);
-			//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			setSize(300, 400);
 			setVisible(true);
 	}
@@ -39,13 +39,19 @@ public class StartScreen extends JFrame implements ActionListener{
 	}
 	
 	public void actionPerformed (ActionEvent ae){
-		if (ae.getSource() == singelButton)
+		if (ae.getSource() == singelButton){
 			System.out.println("SingelButton ");
+            State.setOnline(false);
+            this.dispose();
+            Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
+            new Window(size.width,size.height);
+        }
+
 		else if (ae.getSource() == multiButton) {
 			System.out.println("Visa multi!!");
+            State.setOnline(true);
             cv = new ConnectView();
 			this.remove(startPanel);
-			//this.repaint();
 			this.add(cv);
 			cv.setVisible(true);
 			this.validate();

@@ -32,9 +32,11 @@ public class GameMap{
     }
 
     public void init(GameMapView gmv){
-        // Parsing the map
-        //parseMap("Put server map data here");
-        //exploreMap();
+        if(!State.isOnline()){
+            // If not online, create a map
+            parseMap();
+            exploreMap();
+        }
         this.gmv = gmv;
         // Put all TileViews on the GameMapView
         for(int j=getHeight()-1; j>=0; --j){

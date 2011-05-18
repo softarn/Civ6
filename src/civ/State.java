@@ -5,6 +5,7 @@ import java.util.Observable;
 public class State extends Observable{
 	private static final State INSTANCE = new State();
 
+    private static boolean online = false;
 	private static Tile selectedTile;
 	private static City selectedCity;
 	private static PhysicalUnit selectedUnit;
@@ -28,6 +29,14 @@ public class State extends Observable{
 	public static State getInstance(){
 		return INSTANCE;
 	}
+
+    public static void setOnline(boolean on){
+        online = on;
+    }
+
+    public static boolean isOnline(){
+        return online;
+    }
 
 	public static void setSelectedTile(Tile tile){
 		selectedTile = tile;

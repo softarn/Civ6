@@ -33,6 +33,7 @@ public class Receiver implements Runnable
 		{
 			try
 			{
+                System.out.println("getRes");
 				Thread.sleep(100);
 			}
 			catch(Throwable t){}
@@ -77,6 +78,7 @@ public class Receiver implements Runnable
 		{
 			try
 			{
+                System.out.println("receive");
 				Thread.sleep(100);
 			}
 			catch(Throwable t){}
@@ -86,9 +88,9 @@ public class Receiver implements Runnable
 		Result toReturn = new Result();
 		try
 		{
-		//	System.out.println("Waiting for header.");
+			System.out.println("Waiting for header.");
 			int header = m_inStream.read();		// First the header.
-		//	System.out.println("Header: " + header);
+			System.out.println("Header: " + header);
 
 			// Header 3, welcome to the real world.
 			if(header == 3)
@@ -179,6 +181,7 @@ public class Receiver implements Runnable
 				}
 
 				pl.newTurn(toReturn);
+                System.out.println("Received turn");
 			}
 
 			// Header 19, Combat result, receives what's left of the fighting units.
@@ -231,18 +234,22 @@ public class Receiver implements Runnable
 	// Läser in ett heltal från inStream:en.
 	private int receiveInt()
 	{
-		byte[] toParse = new byte[4];
-		try
-		{
-			m_inStream.read(toParse);
-		}catch(IOException e)
-		{
-			e.printStackTrace();
-		}
+        byte[] toParse = new byte[4];
+        for(int i = 0; i < 4; i++)
+        {
+            try
+            {
+                toParse[i] += m_inStream.read();
+            }catch(IOException e)
+            {
+                e.printStackTrace();
+            }
+        }
 		int toReturn = ((int)toParse[0]<<24)
 				+(makeInt(toParse[1])<<16)
 				+(makeInt(toParse[2])<<8)
 				+(makeInt(toParse[3]));
+        System.out.println("toReturn: " + toReturn);
 		return toReturn;
 	}
 
@@ -346,13 +353,17 @@ public class Receiver implements Runnable
 	// Method to receive a tile from the server.
 	private void receiveTile(Result toAddTo)
 	{
-		toAddTo.setUpdatedTile(receiveInt(), receiveInt());
+        int f = receiveInt();
+        int s = receiveInt();
+		toAddTo.setUpdatedTile(f, s);
 		if(receiveBool())
 		{
+            System.out.println("Adding unit");
 			toAddTo.setUnit(receiveString(), receiveString(), receiveInt());
 		}
 		if(receiveBool())
 		{
+            System.out.println("Adding City");
 			String owner = receiveString();
 			int size = receiveInt();
 			for(int i=0; i<size; i++)
@@ -365,6 +376,7 @@ public class Receiver implements Runnable
 		}
 		if(receiveBool())
 		{
+            System.out.println("Adding improvement");
 			toAddTo.setImprovement(receiveString());
 		}
 		toAddTo.addUpdatedTile();

@@ -9,7 +9,12 @@ public class Round{
     private static GameMap gm;
     
     static void next(){
-        GameServer.endTurn();
+        if(State.isOnline()){
+            GameServer.endTurn();
+        }
+        else{
+            resume();
+        }
     }
 
     static void resume(){
