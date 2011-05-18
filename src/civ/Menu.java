@@ -15,9 +15,13 @@ import javax.swing.PopupFactory;
 
 import java.util.Observer;
 import java.util.Observable;
+import java.io.File;
+import java.io.IOException;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
 
 import java.awt.*;
 
@@ -60,11 +64,21 @@ public class Menu extends JPanel implements Observer, ActionListener{
     //private PopupWindow puw;
     private int curScale = 5 ;
     private int[] sizes = {35, 50, 75, 90, 120, 150, 175, 190};
+
+    private static final String imgPath = "data/img/"; //Need a better fix for this!
+    private BufferedImage img;
     
     Menu(){ 
         super(); 
         setLayout(new BorderLayout(0,10)); 
         
+        String name = "medievalwallpaper";
+        try{
+            img = ImageIO.read(new File(imgPath + name + ".jpg"));
+        }catch(IOException e){
+            System.out.println(e);
+            System.out.println("name");
+        }
         //this.puw = puw;
         //Popup popup;
         //popup = PopupFactory.getSharedInstance().getPopup(null, puw, 200,200);
@@ -77,6 +91,7 @@ public class Menu extends JPanel implements Observer, ActionListener{
         
         //unitPresentation = new JLabel();
         tileLabel = new JLabel();
+        tileLabel.setOpaque(false);
  
         plus = new JButton("+");
         plus.addActionListener(this);
@@ -92,10 +107,9 @@ public class Menu extends JPanel implements Observer, ActionListener{
         createUnit.add(minus);
         createUnit.add(selUnit);
         createUnit.add(putUnit);
+        createUnit.setOpaque(false);
 
         tabbedPane = new JTabbedPane(); 
-        //tabbedPane.addTab("Cities ", null, tabContent, "Your cities ");
-        //stabbedPane.addTab("Units", null, tabContent, "Your units ");
        
         add(north, BorderLayout.NORTH);      
         add(westPanel,  BorderLayout.WEST);
@@ -104,17 +118,16 @@ public class Menu extends JPanel implements Observer, ActionListener{
         
         // Set layout managers 
         north.setLayout(new BoxLayout(north, BoxLayout.Y_AXIS)); 
+        //north.setOpaque(false);
         eastPanel.setLayout(new BorderLayout());
         westPanel.setLayout(new BorderLayout());
         westPanel.setPreferredSize(new Dimension (600,220));
+        westPanel.setOpaque(false);
         
         // ADD CONTENT
-        //unitView = GameMap.getInstance().getTile(1,1).getUnit().getView();
-        //unitView.setPopup(popup);
         globalViewObject = new GlobalView();
         
         tabbedPane.addTab(" Hey ", null, unitView, "Inget objekt markerat ");
-        //tabbedPane.addTab("Cities ", null, null, "About cities");
         tabbedPane.setPreferredSize(new Dimension(580,200));
             
         // East
@@ -129,6 +142,10 @@ public class Menu extends JPanel implements Observer, ActionListener{
         state.addObserver(this);
         tabbedPane.repaint();
         update(); 
+    }
+
+    public void paintComponent(Graphics g) {
+        g.drawImage(img, 0, 0, null);
     }
 
     private void scaleUp(){
@@ -151,10 +168,10 @@ public class Menu extends JPanel implements Observer, ActionListener{
     private void update(){
         switch (state.getHoverState()) {
             case HoverNone:
-                tileLabel.setText("No tile");
+                tileLabel.setText("<html>No tile" + "<br />&nbsp;</html>");
                 break;
             case HoverTileOnly:
-                tileLabel.setText("Terrain: \n" + state.getHoverTile().getTerrain().toString());
+                tileLabel.setText("<html>Terrain: \n" + state.getHoverTile().getTerrain().toString() + "<br />&nbsp;</html>");
                 break;
             case HoverTileUnit:
                 String outputTerrain = state.getHoverTile().getTerrain().toString();
@@ -175,7 +192,7 @@ public class Menu extends JPanel implements Observer, ActionListener{
                     }
                     else{
                         tileLabel.setText("<html>Terrain: " + outputTerrain +
-                                "<br>Unit: Enemy unit");
+                                "<br>Unit: Enemy unit</html>");
                     }
 
                 }
@@ -231,7 +248,9 @@ public class Menu extends JPanel implements Observer, ActionListener{
                     PhysicalUnitType type = (PhysicalUnitType)selUnit.getSelectedItem();
                     tile.setUnit(new PhysicalUnit(type, Round.getMe()));
                     tile.getView().repaint();
-                    GameServer.makeUnit(tile.getX(), tile.getY(), type);
+                    if(State.isOnline()){
+                        GameServer.makeUnit(tile.getX(), tile.getY(), type);
+                    }
                 }
             }
         }

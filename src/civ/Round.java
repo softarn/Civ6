@@ -1,5 +1,7 @@
 package civ;
 
+import java.util.Random;
+
 public class Round{
     private static Player me = null;
     private static int number = 0;
@@ -7,7 +9,7 @@ public class Round{
     private static Player[] players = {}; 
     private static Player activePlayer = null;
     private static GameMap gm;
-    
+
     static void next(){
         if(State.isOnline()){
             GameServer.endTurn();
@@ -18,6 +20,7 @@ public class Round{
     }
 
     static void resume(){
+        System.out.println("I has new turn!");
         gm = GameMap.getInstance();
         gm.exploreMap();
         if(gm.isInited()){
@@ -25,7 +28,7 @@ public class Round{
             spawnBarbarian();
         }
         ++turn;
-        System.out.println("I has new turn!");
+        System.out.println("Resuming");
     }
 
     /**
@@ -64,19 +67,22 @@ public class Round{
     }
 
     private static void spawnBarbarian(){
-        // Make random number chance here
-        if(true){
-            for(int y=0; y<gm.getHeight(); ++y){
-                for(int x=0; x<gm.getWidth(); ++x){
-                    Tile t = gm.getTile(x, y);
-                    // Make another random chance here
-                    if(!t.getTerrain().getName().equals("Sea") &&
-                    !t.getTerrain().getName().equals("Ocean") &&
-                    !t.isExplored() &&
-                    !t.hasUnit()){
-                        t.setUnit(new Barbarian(t));
-                        return;
-                    }
+        Random r = new Random();
+        int x;
+        int y;
+        int count = 0;
+        if(r.nextInt(100) < 20){
+            while(++count < 100){
+                x = r.nextInt(gm.getWidth());
+                y = r.nextInt(gm.getHeight());
+                Tile t = gm.getTile(x, y);
+                if(t != null &&
+                        !t.getTerrain().getName().equals("Sea") &&
+                        !t.getTerrain().getName().equals("Ocean") &&
+                        !t.isExplored() &&
+                        !t.hasUnit()){
+                    t.setUnit(new Barbarian(t));
+                    return;
                 }
             }
         }

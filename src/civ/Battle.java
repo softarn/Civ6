@@ -149,13 +149,13 @@ public class Battle {
 
             int dau;
             int ddu;
-            if(audp == 0){
+            if(audp <= 0){
                 dau = 0;
             }
             else{
                 dau = rand.nextInt(audp) + rand.nextInt(audp);
             }
-            if(dudp == 0){
+            if(dudp <= 0){
                 ddu = 0;
             }
             else{

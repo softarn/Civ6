@@ -72,6 +72,7 @@ public class GameMap{
                     for(Tile t : getNeighbours(tile, tile.getUnit().getType().getVision())){
                         t.setExplored(true);
                     }
+                    tile.setExplored(true);
                 }
                 tile.getView().repaint();
             }

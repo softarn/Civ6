@@ -169,17 +169,11 @@ class GlobalView extends JPanel implements ActionListener{
     public void actionPerformed(ActionEvent ae){
         if(endturn == ae.getSource()){
             Round.next();
-            GameMap.getInstance().exploreMap();
         }
         
-        else if (placeHolderButton == ae.getSource())
+        else if (placeHolderButton == ae.getSource()){
         	ViewPort.getPopup().setVisible(true);
-        	
-    	} 
-    
-    
-    
-    
-    
+        }
+    } 
     
 } // class 

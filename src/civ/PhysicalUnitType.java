@@ -7,9 +7,9 @@ import java.io.IOException;
 
 public enum PhysicalUnitType implements AbstractUnitType{
     // Artillery
-    Catapult("Catapult", "Artillery", 100, 12, 1, 2, 1, 50),
-        Trebuchet("Trebuchet", "Artillery", 100, 20, 2, 3, 1, 75),
-        Cannon("Cannon", "Artillery", 100, 30, 3, 4, 1, 100),
+    Catapult(       "Catapult",     "Artillery", 100, 12, 1, 2, 1, 50),
+        Trebuchet(  "Trebuchet",    "Artillery", 100, 20, 2, 3, 1, 75),
+        Cannon(     "Cannon",       "Artillery", 100, 30, 3, 4, 1, 100),
 
         // Range
         Archer(     "Archer",       "Range", 100, 4, 2, 2, 1, 50),
