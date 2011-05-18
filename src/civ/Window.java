@@ -37,7 +37,11 @@ public class Window extends JFrame implements ActionListener{
 
     Window(int w,int h) {
         super ("Civ 6");
-        //Round.resume(); 
+        
+        if(!State.isOnline()){
+            Round.addPlayer(Player.getInstance("Player"));
+            Round.setMe(Player.getInstance("Player"));
+        }
 
         Menu m = new Menu();
         ViewPort vp = new ViewPort();

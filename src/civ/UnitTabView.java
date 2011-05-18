@@ -7,7 +7,7 @@ class UnitTabView extends JPanel{
 	private JTabbedPane unitTypePane = new JTabbedPane();
 	private JPanel viewAllPanel = new JPanel();
 	private JLabel enhetsNamn = new JLabel();
-	private Tile t = new Tile(); 
+	//private Tile t = new Tile(); 
 	//private PhyiscalUnit pu = new PhysicalUnit();
 	
 	//private ArrayList<PhysicalUnit> allUnitsArray = new ArrayList<PhysicalUnit> ();

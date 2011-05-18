@@ -210,74 +210,85 @@ public class Battle {
     }
 
     public static int doBattle(PhysicalUnit u1, PhysicalUnit u2, Tile t1, Tile t2) {
-        // Remove the movement cost 1 from the attacking unit
-        if(!u1.useMovementPoints(1)){
-            return 0;
-        }
-        fetchStats(u1, u2, t1, t2);
-        GameServer.battle(u1, u2, t1, t2);
-        if(-1 == attackRange(t1, t2, range1)){
-            return 0;
-        }
+        if(State.isOnline()){
+            // Remove the movement cost 1 from the attacking unit
+            if(!u1.useMovementPoints(1)){
+                return 0;
+            }
+            fetchStats(u1, u2, t1, t2);
+            GameServer.battle(u1, u2, t1, t2);
+            if(-1 == attackRange(t1, t2, range1)){
+                return 0;
+            }
 
-        int winnerId = 0;
-        System.out.println(name1);
-        attackerLoss = mamp-u1.getManPower();
-        defenderLoss = mdmp-u2.getManPower();
+            int winnerId = 0;
+            System.out.println(name1);
+            attackerLoss = mamp-u1.getManPower();
+            defenderLoss = mdmp-u2.getManPower();
 
-        if(winnerId == 2){
-            state.setUnitState(UnitUnSelected);
-            state.setHoverState(State.HoverState.HoverTileOnly);
-            t1.setUnit(null);
-            t2.setUnit(null);
+            if(winnerId == 2){
+                state.setUnitState(UnitUnSelected);
+                state.setHoverState(State.HoverState.HoverTileOnly);
+                t1.setUnit(null);
+                t2.setUnit(null);
+            }
+            if(winnerId == 1){
+                state.setUnitState(UnitUnSelected);
+                t1.setUnit(null);
+            }
+            if(winnerId == -1){
+                state.setHoverState(State.HoverState.HoverTileOnly);
+                t2.setUnit(null);
+            }
+            return winnerId;
         }
-        if(winnerId == 1){
-            state.setUnitState(UnitUnSelected);
-            t1.setUnit(null);
-        }
-        if(winnerId == -1){
-            state.setHoverState(State.HoverState.HoverTileOnly);
-            t2.setUnit(null);
-        }
-        return winnerId;
-/*
-        if(u1.getType().getCategory().equals("Ranged") ||
-                u1.getType().getName().equals("Trireme")){
-            winnerId = ranged();
-                }
-        else if(u1.getType().getCategory().equals("Artillery") ||
-                u1.getType().getName().equals("Galley") ||
-                u1.getType().getName().equals("Caravel")){
-            winnerId = bombardment();
-                }
         else{
-            winnerId = normal();
-        }
-        u1.setManPower(amp);
-        u2.setManPower(dmp);
+            if(!u1.useMovementPoints(1)){
+                return 0;
+            }
+            fetchStats(u1, u2, t1, t2);
+            if(-1 == attackRange(t1, t2, range1)){
+                return 0;
+            }
 
-        u1.getView().update();
-        u2.getView().update();
+            int winnerId = 0;
+            if(u1.getType().getCategory().equals("Ranged") ||
+                    u1.getType().getName().equals("Trireme")){
+                winnerId = ranged();
+                    }
+            else if(u1.getType().getCategory().equals("Artillery") ||
+                    u1.getType().getName().equals("Galley") ||
+                    u1.getType().getName().equals("Caravel")){
+                winnerId = bombardment();
+                    }
+            else{
+                winnerId = normal();
+            }
+            u1.setManPower(amp);
+            u2.setManPower(dmp);
 
-        attackerLoss = mamp-u1.getManPower();
-        defenderLoss = mdmp-u2.getManPower();
+            u1.getView().update();
+            u2.getView().update();
 
-        if(winnerId == 2){
-            state.setUnitState(UnitUnSelected);
-            state.setHoverState(State.HoverState.HoverTileOnly);
-            t1.setUnit(null);
-            t2.setUnit(null);
+            attackerLoss = mamp-u1.getManPower();
+            defenderLoss = mdmp-u2.getManPower();
+
+            if(winnerId == 2){
+                state.setUnitState(UnitUnSelected);
+                state.setHoverState(State.HoverState.HoverTileOnly);
+                t1.setUnit(null);
+                t2.setUnit(null);
+            }
+            if(winnerId == 1){
+                state.setUnitState(UnitUnSelected);
+                t1.setUnit(null);
+            }
+            if(winnerId == -1){
+                state.setHoverState(State.HoverState.HoverTileOnly);
+                t2.setUnit(null);
+            }
+            return winnerId;
         }
-        if(winnerId == 1){
-            state.setUnitState(UnitUnSelected);
-            t1.setUnit(null);
-        }
-        if(winnerId == -1){
-            state.setHoverState(State.HoverState.HoverTileOnly);
-            t2.setUnit(null);
-        }
-        return winnerId;
-        */
     }
 
     public static int getAttackerLoss(){

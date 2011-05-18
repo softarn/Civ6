@@ -94,6 +94,8 @@ public class GameMap{
                 if(tile.hasUnit()){ 
                     if(tile.getUnit().isAlly()){
                         tile.getUnit().reset();
+                        tile.getUnit().getView().update();
+                        tile.getUnit().getView().repaint();
                     }
                     else if(tile.getUnit().getType().getName().equals("Barbarian")){ 
                         tile.getUnit().reset();
@@ -296,8 +298,8 @@ public class GameMap{
             }
         }
         tiles = result;
-/*        tiles[1][1].setUnit(new PhysicalUnit(PhysicalUnitType.Musketeer, Player.getInstance("Andy")));
-        tiles[2][1].setUnit(new Barbarian(tiles[2][1]));
-        tiles[2][2].setCity(new City());*/
+        tiles[1][1].setUnit(new PhysicalUnit(PhysicalUnitType.Musketeer, Player.getInstance("Player")));
+        //tiles[2][1].setUnit(new Barbarian(tiles[2][1]));
+        //tiles[2][2].setCity(new City());
     }
 }
