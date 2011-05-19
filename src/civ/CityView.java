@@ -51,6 +51,8 @@ class CityView extends JPanel implements ActionListener{
     private JButton buildButton = new JButton("Visa byggmeny ");
     private JButton infoButton = new JButton("Visa info ");
     
+    private ViewPort vp;
+    
     //private State state = new State();
     
     public CityView(City city){
@@ -84,8 +86,12 @@ class CityView extends JPanel implements ActionListener{
     }
     
      public void actionPerformed(ActionEvent ae){
-     	 if(ae.getSource() == recruitButton)
+     	 if(ae.getSource() == recruitButton){	 
+     	 	 ViewPort.getTabbed().setTab();
+     	 	 ViewPort.getPopup().setVisible(true);
+     	 	 
      	 	 System.out.println("Rekryt ");
+     	 }
      	 else if (ae.getSource() == buildButton)
      	 	 System.out.println("Bygga ");
      	 else if (ae.getSource() == infoButton)
@@ -93,7 +99,6 @@ class CityView extends JPanel implements ActionListener{
      	 else 
      	 	 System.out.println("Elsesats i actionPerf")	; 
      }
-
 }
 
 

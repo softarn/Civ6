@@ -31,6 +31,8 @@ class UnitTabView extends JPanel{
 		
 	}
 	
+	
+	
 	/*public void printUnitArray() {
 		for (PhysicalUnit pu : t.getUnitArray()){
 			enhetsNamn.setText(pu.toString());		

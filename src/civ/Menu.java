@@ -56,8 +56,6 @@ public class Menu extends JPanel implements Observer, ActionListener{
 
     private JButton plus;
     private JButton minus;
-    private JButton putUnit;
-    private JComboBox selUnit;
 
     //Status is only for testing purpose
     private JLabel status = new JLabel("Status is: " + state.getUnitState());
@@ -98,16 +96,9 @@ public class Menu extends JPanel implements Observer, ActionListener{
         minus = new JButton("-");
         minus.addActionListener(this);
 
-        selUnit = new JComboBox(PhysicalUnitType.values());
-        putUnit = new JButton("Set Unit");
-        putUnit.setActionCommand("setunit");
-        putUnit.addActionListener(this);
-
         createUnit.add(plus);
         createUnit.add(minus);
-        createUnit.add(selUnit);
-        createUnit.add(putUnit);
-        createUnit.setOpaque(false);
+        createUnit.setOpaque(false);        
 
         tabbedPane = new JTabbedPane(); 
        
@@ -231,29 +222,9 @@ public class Menu extends JPanel implements Observer, ActionListener{
     private void updateState(){
         //tileLabel.setText("Status is: " + state.getUnitState());
     }
-
+    
     public void actionPerformed(ActionEvent ae){
-        if(putUnit == ae.getSource()){
-            if(state.getTileState() == TileSelected){
-                if(state.getSelectedTile().hasUnit()){
-                    tileLabel.setText("<html><br />Can't place unit on another unit.</html>");
-                    GameMap gm = GameMap.getInstance();
-                }
-                else if(!state.getSelectedTile().getTerrain().isTraversible((PhysicalUnitType)selUnit.getSelectedItem())){
-                    tileLabel.setText("<html><br />Unit can't stand there.</html>");
-                }
-                else{
-                    Tile tile = state.getSelectedTile();
-                    PhysicalUnitType type = (PhysicalUnitType)selUnit.getSelectedItem();
-                    tile.setUnit(new PhysicalUnit(type, Round.getMe()));
-                    tile.getView().repaint();
-                    if(State.isOnline()){
-                        GameServer.makeUnit(tile.getX(), tile.getY(), type);
-                    }
-                }
-            }
-        }
-        else if(plus == ae.getSource()){
+        if(plus == ae.getSource()){
             scaleUp();
         }
         else if(minus == ae.getSource()){

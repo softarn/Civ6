@@ -5,49 +5,78 @@ import java.awt.*;
 import java.awt.BorderLayout;
 import javax.swing.JTabbedPane;	
 
-import java.awt.Color;
-import java.awt.Dimension; 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class ViewPopup extends JPanel implements ActionListener{
-	private JTabbedPane mainTPane;
-	private JPanel closePanel;
-	private JButton exitButton = new JButton("X");
+import java.awt.Color;
+import java.awt.Dimension; 
+import static civ.State.TileState.TileSelected;
+
+public class ViewPopup extends JTabbedPane implements ActionListener{
+	private static final State state = State.getInstance();
+    private JLabel jel = new JLabel("HELLOOOOOOAH!");
+	private JPanel cityPanel = new JPanel();
 	private UnitTabView utv = new UnitTabView();
+    private JButton putUnit;
+    private JComboBox selUnit;
 	
 	public ViewPopup() {
-		setLayout(new BorderLayout());
-		mainTPane = new JTabbedPane();
-		closePanel = new JPanel();
-		
-		exitButton.addActionListener(this);
-		exitButton.setPreferredSize(new Dimension(50,30));
-		exitButton.setBackground(new Color (0xEE2222));
-		exitButton.setForeground(new Color (0xFFFFFF));
-		
-		mainTPane.addTab("Enheter ", null, utv, "Tooltips vare her ");
-        mainTPane.setPreferredSize(new Dimension(580,200));
+		addTab("Enheter ", null, utv, "Tooltips vare her ");
+        setPreferredSize(new Dimension(580,200));
 	
-		mainTPane.addTab("Städer", null, null, "Tooltips vare her ");
-		mainTPane.addTab("Forskning", null, null, "Tooltips vare her ");
+		addTab("Städer", null, null, "Tooltips vare her ");
+		addTab("Forskning", null, null, "Tooltips vare her ");
+		setOpaque(true);
+
+        selUnit = new JComboBox(PhysicalUnitType.values());
+        putUnit = new JButton("Set Unit");
+        putUnit.addActionListener(this);
+        
 		//mainTPane.addTab("Mecca", null, Content, "Tooltips vare her ");
 		//add(unitContent);
 		
-		//closePanel.add(exitButton);
-		//closePanel.setPreferredSize(new Dimension (30,40));
-		this.setOpaque(false);
-		add(mainTPane, BorderLayout.SOUTH);
-		add(exitButton, BorderLayout.EAST);
+		//add(cityPanel);
 		
 		//mainTPane.repaint();
 		
 	}
 	
-	public void actionPerformed(ActionEvent ae) {
-		if (ae.getSource() == exitButton)
-			System.exit(0);
-	}	
+	public void actionPerformed(ActionEvent ae){
+        if(putUnit == ae.getSource()){
+            if(state.getTileState() == TileSelected){
+                if(state.getSelectedTile().hasUnit()){
+                    //tileLabel.setText("<html><br />Can't place unit on another unit.</html>");
+                    GameMap gm = GameMap.getInstance();
+                }
+                else if(!state.getSelectedTile().getTerrain().isTraversible((PhysicalUnitType)selUnit.getSelectedItem())){
+                    //tileLabel.setText("<html><br />Unit can't stand there.</html>");
+                }
+                else{
+                    Tile tile = state.getSelectedTile();
+                    PhysicalUnitType type = (PhysicalUnitType)selUnit.getSelectedItem();
+                    tile.setUnit(new PhysicalUnit(type, Round.getMe()));
+                    tile.getView().repaint();
+                    if(State.isOnline()){
+                        GameServer.makeUnit(tile.getX(), tile.getY(), type);
+                    }
+                }
+            }
+        }
+    }
+	
+	public void setTab(){
+
+		cityPanel.add(jel);
+		
+		cityPanel.add(selUnit);
+        cityPanel.add(putUnit);
+        
+		//add(cityPanel);
+		addTab("Mecca",null,cityPanel,"Visa mer om city");
+		setSelectedIndex(3);
+		
+		
+	}
 		
 	
 }
