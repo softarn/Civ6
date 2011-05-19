@@ -32,17 +32,22 @@ public class GameMap{
     }
 
     public void init(GameMapView gmv){
+        this.gmv = gmv;
         if(!State.isOnline()){
             // If not online, create a map
             parseMap();
             exploreMap();
         }
-        this.gmv = gmv;
         // Put all TileViews on the GameMapView
+        Tile t;
         for(int j=getHeight()-1; j>=0; --j){
             for(int i=getWidth()-1; i>=0; --i){
-                gmv.add(tiles[i][j].getView());
+                t = tiles[i][j];
+                gmv.add(t.getView());
                 //tiles[i][j].setExplored(true);
+                if(t.hasUnit()){
+                    t.select();
+                }
             }
         }
     }
@@ -299,8 +304,28 @@ public class GameMap{
             }
         }
         tiles = result;
-        tiles[1][1].setUnit(new PhysicalUnit(PhysicalUnitType.Musketeer, Player.getInstance("Player")));
+        spawnSettler();
+        spawnSettler();
+        //tiles[1][1].setUnit(new PhysicalUnit(PhysicalUnitType.Musketeer, Player.getInstance("Player")));
         //tiles[2][1].setUnit(new Barbarian(tiles[2][1]));
         //tiles[2][2].setCity(new City());
+    }
+
+    public void spawnSettler(){
+        Random r = new Random();
+        int x, y;
+        Tile t;
+        while(true){
+            x = r.nextInt(getWidth());
+            y = r.nextInt(getHeight());
+            t = getTile(x, y);
+            if(t != null &&
+                    !t.getTerrain().getName().equals("Sea") &&
+                    !t.getTerrain().getName().equals("Ocean") &&
+                    !t.hasUnit()){
+                t.setUnit(new PhysicalUnit(PhysicalUnitType.Settler, Round.getMe()));
+                return;
+            }
+        }
     }
 }

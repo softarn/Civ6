@@ -3,12 +3,14 @@ package civ;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.Toolkit;
 import java.awt.Dimension;
 
 public class ViewPort extends JPanel{
     private GameMapView gmv;
     private static JPanel popup = new JPanel();
+    private static final State state = State.getInstance();
 
     public ViewPort(){
         setLayout(null);
@@ -25,5 +27,9 @@ public class ViewPort extends JPanel{
 
     public static JPanel getPopup(){
         return popup;
+    }
+
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
     }
 }
