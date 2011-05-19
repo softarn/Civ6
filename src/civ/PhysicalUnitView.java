@@ -29,6 +29,8 @@ import static civ.State.ActionState.Move;
 import static civ.State.ActionState.Attack;
 
 import static civ.State.UnitState.UnitSelected;
+import static civ.State.UnitState.UnitUnSelected;
+import static civ.State.CityState.CitySelected;
 
 /**
  * PhysicalUnitView is the GUI representation of the information in the bottom
@@ -48,7 +50,8 @@ public class PhysicalUnitView extends JPanel implements Observer, ActionListener
     private JButton atkButton = new JButton("Attackera");
     private JButton defButton = new JButton("Befästa");
     private JButton moveButton = new JButton("Förflytta");
-    private JButton infoButton = new JButton("Visa mer info");
+    private JButton infoButton = new JButton("Visa info");
+    private JButton settleButton = new JButton("Grunda stad");
 
     private JProgressBar manPower;    
     private JProgressBar lifeLength;
@@ -96,6 +99,11 @@ public class PhysicalUnitView extends JPanel implements Observer, ActionListener
 
     private JPanel createUpperPane(){
         JPanel panel = new JPanel();
+        if(pUnit.getType().getName().equals("Settler")){
+            panel.setBorder(BorderFactory.createTitledBorder("Strid:"));
+            panel.setPreferredSize(new Dimension(135, 99));
+            return panel;
+        }
         panel.setBorder(BorderFactory.createTitledBorder("Strid:"));
         panel.setLayout(new BorderLayout());
 
@@ -132,6 +140,7 @@ public class PhysicalUnitView extends JPanel implements Observer, ActionListener
         panel.setLayout(new BorderLayout());
 
         JPanel stats = new JPanel();
+        stats.setPreferredSize(new Dimension(155, 55));
         stats.setLayout(new BoxLayout(stats, BoxLayout.PAGE_AXIS));
         stats.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
         stats.add(movement);
@@ -145,8 +154,14 @@ public class PhysicalUnitView extends JPanel implements Observer, ActionListener
 
         JPanel right = new JPanel();
         right.setLayout(new BoxLayout(right, BoxLayout.PAGE_AXIS));
-        right.setBorder(BorderFactory.createEmptyBorder(25,10,10,10));
+        right.setBorder(BorderFactory.createEmptyBorder(15,10,10,10));
         right.add(infoButton);
+
+        if(pUnit.getType().getName().equals("Settler")){
+            right.add(Box.createRigidArea(new Dimension(0,7)));
+            right.add(settleButton);
+            settleButton.addActionListener(this);
+        }
 
         panel.add(left, BorderLayout.WEST);
         panel.add(right, BorderLayout.CENTER);
@@ -251,6 +266,17 @@ public class PhysicalUnitView extends JPanel implements Observer, ActionListener
         	if(popup != null){
         		popup.show();
         	}
+        }
+
+        if(settleButton == ae.getSource()){
+            PhysicalUnit pu = state.getSelectedUnit();
+            Tile tile = state.getSelectedTile();
+            tile.setUnit(null);
+            state.setUnitState(UnitUnSelected);
+            tile.setCity(new City("City Name Here", Round.getMe()));
+            state.setSelectedCity(tile.getCity());
+            state.setCityState(CitySelected);
+            //GameServer.createCity(tile);
         }
     }
 }

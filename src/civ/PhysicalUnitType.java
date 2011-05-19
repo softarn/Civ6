@@ -32,10 +32,10 @@ public enum PhysicalUnitType implements AbstractUnitType{
         Caravel(    "Caravel",      "Boat", 100, 50, 40, 1, 6, 200),
 
         // Other
-        Settler(    "Settler",      "Other", 100, 0, 2, 0, 1, 0),
-        Diplomat(   "Diplomat",     "Other", 25,  0, 0, 0, 3, 0),
-        Siegetower( "Siege Tower",  "Other", 0,   0, 0, 0, 1, 0),
-        Wagontrain( "Wagon Train",  "Other", 0,   0, 0, 0, 2, 0);
+        Settler(    "Settler",      "Other", 100, 0, 2, 0, 1, 100),
+        Diplomat(   "Diplomat",     "Other", 25,  0, 0, 0, 3, 100),
+        Siegetower( "Siege Tower",  "Other", 0,   0, 0, 0, 1,  50),
+        Wagontrain( "Wagon Train",  "Other", 0,   0, 0, 0, 2, 100);
 
     private UnitType unitType;
     private Hold hold;
