@@ -267,13 +267,15 @@ public class PhysicalUnitView extends JPanel implements Observer, ActionListener
         		popup.show();
         	}
         }
-
+        
         if(settleButton == ae.getSource()){
             PhysicalUnit pu = state.getSelectedUnit();
             Tile tile = state.getSelectedTile();
             tile.setUnit(null);
             state.setUnitState(UnitUnSelected);
-            tile.setCity(new City("City Name Here", Round.getMe()));
+            
+            tile.setCity(new City("Mecca", Round.getMe()));
+            
             state.setSelectedCity(tile.getCity());
             state.setCityState(CitySelected);
             //GameServer.createCity(tile);
