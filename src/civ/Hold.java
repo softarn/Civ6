@@ -19,7 +19,7 @@ public class Hold{
     }
 
     public boolean addUnit(PhysicalUnit unit){
-        if(limit == 0 || units.size() >= limit){
+        if(limit != 0 && units.size() >= limit){
             return false;
         }
         units.add(unit);

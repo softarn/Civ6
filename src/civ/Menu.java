@@ -212,6 +212,13 @@ public class Menu extends JPanel implements Observer, ActionListener{
         		City city = state.getSelectedCity();
         		String cityName = city.getName();
         		tabbedPane.addTab(cityName, null, city.getView(), "Visa dina städer ");
+        			
+        		for (PhysicalUnit pu : city.getHold().getUnits()) {
+        			tabbedPane.addTab(pu.getType().getName(), null, pu.getView(), "Visa ---" );	
+        			//tabbedPane.add();
+        		}
+        		
+        		
         		break;
         	case CityUnSelected:
         		break;
