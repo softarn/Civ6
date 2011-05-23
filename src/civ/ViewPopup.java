@@ -41,29 +41,6 @@ public class ViewPopup extends JTabbedPane implements ActionListener{
 		
 	}
 	
-	public void actionPerformed(ActionEvent ae){
-        if(putUnit == ae.getSource()){
-            if(state.getTileState() == TileSelected){
-                if(state.getSelectedTile().hasUnit()){
-                    //tileLabel.setText("<html><br />Can't place unit on another unit.</html>");
-                    GameMap gm = GameMap.getInstance();
-                }
-                else if(!state.getSelectedTile().getTerrain().isTraversible((PhysicalUnitType)selUnit.getSelectedItem())){
-                    //tileLabel.setText("<html><br />Unit can't stand there.</html>");
-                }
-                else{
-                    Tile tile = state.getSelectedTile();
-                    PhysicalUnitType type = (PhysicalUnitType)selUnit.getSelectedItem();
-                    tile.setUnit(new PhysicalUnit(type, Round.getMe()));
-                    tile.getView().repaint();
-                    if(State.isOnline()){
-                        GameServer.makeUnit(tile.getX(), tile.getY(), type);
-                    }
-                }
-            }
-        }
-    }
-	
 	public void setTab(){
 
 		cityPanel.add(jel);
@@ -78,5 +55,22 @@ public class ViewPopup extends JTabbedPane implements ActionListener{
 		
 	}
 		
-	
+	public void actionPerformed(ActionEvent ae){
+        if(putUnit == ae.getSource()){
+            if(state.getTileState() == TileSelected){
+                if(state.getSelectedTile().hasUnit()){
+                    //tileLabel.setText("<html><br />Can't place unit on another unit.</html>");
+                    GameMap gm = GameMap.getInstance();
+                }
+                else if(!state.getSelectedTile().getTerrain().isTraversible((PhysicalUnitType)selUnit.getSelectedItem())){
+                    //tileLabel.setText("<html><br />Unit can't stand there.</html>");
+                }
+                else{
+                    Tile tile = state.getSelectedTile();
+                    PhysicalUnitType type = (PhysicalUnitType)selUnit.getSelectedItem();
+                    Round.spawnCounter(type, tile, type.getCost());
+                }
+            }
+        }
+    }
 }

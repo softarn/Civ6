@@ -36,6 +36,10 @@ public class City {
         return name;
     }
 
+    public boolean isMine(){
+        return Round.getMe().equals(owner);
+    }
+
     public Hold getHold(){
         return hold;
     }

@@ -15,6 +15,7 @@ public class GameMap{
     private static GameMap map;
     private GameMapView gmv;
     private int height = 20, width = 20;
+    public static final int CITY_VISION = 3;
 
     private int[][] offsets = {
         {-1,-1},
@@ -75,6 +76,12 @@ public class GameMap{
                 tile.decreaseFogCounter();
                 if(tile.hasUnit() && tile.getUnit().isAlly()){ 
                     for(Tile t : getNeighbours(tile, tile.getUnit().getType().getVision())){
+                        t.setExplored(true);
+                    }
+                    tile.setExplored(true);
+                }
+                if(tile.hasCity() && tile.getCity().isMine()){
+                    for(Tile t : getNeighbours(tile, CITY_VISION)){
                         t.setExplored(true);
                     }
                     tile.setExplored(true);

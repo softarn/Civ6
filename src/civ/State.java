@@ -20,7 +20,7 @@ public class State extends Observable{
 	private State(){
 		
 		setUnitState(UnitState.UnitUnSelected);
-		setCityState(CityState.CityUnSelected);
+		setCityState(CityState.CityNone);
 		setTileState(TileState.TileUnSelected);
 		setActionState(ActionState.None);
         setHoverState(HoverState.HoverNone);
@@ -87,7 +87,7 @@ public class State extends Observable{
 	
 	// Citystate
 	public enum CityState{
-		CitySelected, CityUnSelected 
+		CitySelected, CityUnSelected, CityNone
 	}
 
 	public CityState getCityState(){

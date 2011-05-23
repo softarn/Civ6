@@ -1,20 +1,22 @@
 package civ;
 
 import java.util.Random;
+import javax.swing.JOptionPane;
 
 public class Round{
     private static Player me = null;
     private static int number = 0;
     private static int turn = 0;
+    private static PhysicalUnitType ptype;
+    private static Tile ptile;
+    private static int pcost = 0;
     private static Player[] players = {}; 
     private static Player activePlayer = null;
     private static GameMap gm;
 
     static void next(){
-        if(State.isOnline()){
-            GameServer.endTurn();
-        }
-        else{
+        GameServer.endTurn();
+        if(!State.isOnline()){
             resume();
         }
     }
@@ -27,8 +29,29 @@ public class Round{
             gm.resetUnits();
             spawnBarbarian();
         }
+        count();
         ++turn;
         System.out.println("Resuming");
+    }
+
+    private static void count(){
+        if(pcost == 1){
+            //spawn unit here
+            System.out.println("Spawning unit");
+            ptile.getCity().getHold().addUnit(new PhysicalUnit(ptype, getMe()));
+            ptile.getView().repaint();
+            GameServer.makeUnit(ptile, ptype);
+            int choice = JOptionPane.showConfirmDialog( null, "En ny enhet, " + ptype.getName() + ", har blivit skapad. Vill du gå till dess position?", "Enhet skapad", JOptionPane.YES_NO_OPTION);
+        }
+        if(pcost >= 0){
+            --pcost;
+        }
+    }
+
+    public static void spawnCounter(PhysicalUnitType type, Tile tile, int cost){
+        ptype = type;
+        ptile = tile;
+        pcost = cost;
     }
 
     /**

@@ -14,10 +14,8 @@ public class Move {
         ArrayList<Tile> tiles = new ArrayList<Tile>();
         tiles.add(t1);
         tiles.add(t2);
-        if(State.isOnline()){
-            if(!GameServer.makeMove(tiles)){
-                return false;
-            }
+        if(!GameServer.makeMove(tiles)){
+            return false;
         }
 
         if(length == -1)

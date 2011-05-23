@@ -196,7 +196,9 @@ public class Menu extends JPanel implements Observer, ActionListener{
                 if(state.getSelectedUnit().isAlly()){
                     PhysicalUnit unit = state.getSelectedUnit();
                  	String unitTypeName = unit.getType().getName();
+                    tabbedPane.removeAll();
                  	tabbedPane.addTab(unitTypeName, null, unit.getView(), "Visa dina units ");
+                    tabbedPane.repaint();
                 }
                 break;
             case UnitUnSelected:                 
@@ -212,7 +214,6 @@ public class Menu extends JPanel implements Observer, ActionListener{
         		tabbedPane.addTab(cityName, null, city.getView(), "Visa dina städer ");
         		break;
         	case CityUnSelected:
-        		tabbedPane.repaint();
         		break;
         }
         

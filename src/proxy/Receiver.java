@@ -33,7 +33,6 @@ public class Receiver implements Runnable
 		{
 			try
 			{
-                System.out.println("getRes");
 				Thread.sleep(100);
 			}
 			catch(Throwable t){}
@@ -78,7 +77,6 @@ public class Receiver implements Runnable
 		{
 			try
 			{
-                System.out.println("receive");
 				Thread.sleep(100);
 			}
 			catch(Throwable t){}
@@ -88,9 +86,7 @@ public class Receiver implements Runnable
 		Result toReturn = new Result();
 		try
 		{
-			System.out.println("Waiting for header.");
 			int header = m_inStream.read();		// First the header.
-			System.out.println("Header: " + header);
 
 			// Header 3, welcome to the real world.
 			if(header == 3)
@@ -181,7 +177,6 @@ public class Receiver implements Runnable
 				}
 
 				pl.newTurn(toReturn);
-                System.out.println("Received turn");
 			}
 
 			// Header 19, Combat result, receives what's left of the fighting units.
@@ -249,7 +244,6 @@ public class Receiver implements Runnable
 				+(makeInt(toParse[1])<<16)
 				+(makeInt(toParse[2])<<8)
 				+(makeInt(toParse[3]));
-        System.out.println("toReturn: " + toReturn);
 		return toReturn;
 	}
 
@@ -358,26 +352,17 @@ public class Receiver implements Runnable
 		toAddTo.setUpdatedTile(f, s);
 		if(receiveBool())
 		{
-            System.out.println("Adding unit");
 			toAddTo.setUnit(receiveString(), receiveString(), receiveInt());
 		}
 		if(receiveBool())
 		{
-            System.out.println("Adding City");
 			String owner = receiveString();
 			int size = receiveInt();
 			for(int i=0; i<size; i++)
 			{
 				toAddTo.addCityUnit(receiveString(), receiveString(), receiveInt());
 			}
-			size = receiveInt();
-			ArrayList<String> buildings = receiveListString(size);
-			toAddTo.setCity(owner, receiveString(), buildings);
-		}
-		if(receiveBool())
-		{
-            System.out.println("Adding improvement");
-			toAddTo.setImprovement(receiveString());
+			toAddTo.setCity(owner, receiveString());
 		}
 		toAddTo.addUpdatedTile();
 	}

@@ -3,9 +3,9 @@ package proxy;
 import java.util.*;
 
 class TestKlient{
-	String name, ip ="dvk.fishface.se";// "chylis.dyndns-at-work.com";//"softarn.mine.nu";
+	String name, ip = "localhost"; //"chylis.dyndns-at-work.com";//"softarn.mine.nu";
 	Proxy p;
-	int port = 1339;
+	int port = 1234;
 	boolean loop = true, lobby = true, inGame = false;
 	Scanner sc = new Scanner(System.in);
 	Scanner scan = new Scanner(System.in);
@@ -303,7 +303,6 @@ class TestKlient{
 				if(res.existCity(i)){
 					String theOwner = res.getCityOwner(i);
 					String theName = res.getCityName(i);
-					List<String> buildings = res.getCityBuildings(i);
 					int amountCityUnits = res.getAmountCityUnits(i);
 					for(int j=0; j<amountCityUnits; j++){
 						String cityUnitOwner = res.getCityUnitOwner(i, j);
