@@ -59,7 +59,7 @@ public class PhysicalUnitView extends JPanel implements Observer, ActionListener
     private JLabel range = new JLabel();
     private JLabel attack = new JLabel();
     private JLabel movement = new JLabel();
-    
+
     private Popup popup;
 
     public PhysicalUnitView(PhysicalUnit pu){
@@ -79,7 +79,7 @@ public class PhysicalUnitView extends JPanel implements Observer, ActionListener
         imgPane.add(image);
         imgPane.setMaximumSize(new Dimension(pUnit.getImage().getWidth() + 20, 
                     pUnit.getImage().getHeight() + 20));
-        
+
         upperPane = createUpperPane();
         lowerPane = createLowerPane();
 
@@ -197,7 +197,7 @@ public class PhysicalUnitView extends JPanel implements Observer, ActionListener
         attack.setText("Attackvärde: " + pUnit.getType().getAttack());
         movement.setText("Förflyttning: " + pUnit.getCurrentMovementPoint() + 
                 "/" + pUnit.getType().getMovementPoints());
-        
+
         lifeLength.setMaximum(pUnit.getType().getInventorySize());
         lifeLength.setString("Livslängd: "+ Integer.toString(pUnit.getInventoryAmount()));
         lifeLength.setValue(pUnit.getInventoryAmount());
@@ -208,9 +208,9 @@ public class PhysicalUnitView extends JPanel implements Observer, ActionListener
     private void updateSettler(){
         // To be written at a later date
     }
-    
+
     public void setPopup (Popup pop) {
-    	this.popup = pop;
+        this.popup = pop;
     }
 
     public void update(Observable obs, Object obj){
@@ -239,37 +239,48 @@ public class PhysicalUnitView extends JPanel implements Observer, ActionListener
 
     public void actionPerformed(ActionEvent ae){
         GameMap gm = GameMap.getInstance();
+        PhysicalUnit pu = null;
         if(moveButton == ae.getSource()){
             if(state.getUnitState() == UnitSelected){
-                PhysicalUnit pu = state.getSelectedUnit();
-                pu.getView().update();
-                state.setActionState(Move);
-                for(Tile t : gm.getNeighbours(state.getSelectedTile(), pu.getCurrentMovementPoint(), true)){
-                    t.hilight(new Color(200, 175, 115, 140));
-                    t.getView().repaint();
+                pu = state.getSelectedUnit();
+            }
+            else if(state.getCityState() == CitySelected){
+                Hold hold = state.getSelectedCity().getHold();
+                if(hold.getSelUnitIndex() < 0){
+                    return;
                 }
+                pu = hold.getUnit(hold.getSelUnitIndex());
+            }
+            pu.getView().update();
+            state.setActionState(Move);
+            for(Tile t : gm.getNeighbours(state.getSelectedTile(), pu.getCurrentMovementPoint(), true)){
+                t.hilight(new Color(200, 175, 115, 140));
+                t.getView().repaint();
             }
         }
         if(atkButton == ae.getSource()){
             if(state.getUnitState() == UnitSelected){
-                PhysicalUnit pu = state.getSelectedUnit();
-                pu.getView().update();
-                state.setActionState(Attack);
-                for(Tile t : gm.getNeighbours(state.getSelectedTile(), pu.getCurrentMovementPoint(), false)){
-                    t.hilight(new Color(230, 75, 15, 140));
-                    t.getView().repaint();
-                }
+                pu = state.getSelectedUnit();
+            }
+            else if(state.getCityState() == CitySelected){
+                Hold hold = state.getSelectedCity().getHold();
+                pu = hold.getUnit(hold.getSelUnitIndex());
+            }
+            pu.getView().update();
+            state.setActionState(Attack);
+            for(Tile t : gm.getNeighbours(state.getSelectedTile(), pu.getCurrentMovementPoint(), false)){
+                t.hilight(new Color(230, 75, 15, 140));
+                t.getView().repaint();
             }
         }
-        
+
         if(infoButton == ae.getSource()){
-        	if(popup != null){
-        		popup.show();
-        	}
+            if(popup != null){
+                popup.show();
+            }
         }
 
         if(settleButton == ae.getSource()){
-            PhysicalUnit pu = state.getSelectedUnit();
             Tile tile = state.getSelectedTile();
             if(GameServer.buildCity(tile, "City Name Here")){
                 tile.setUnit(null);

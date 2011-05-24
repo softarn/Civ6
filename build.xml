@@ -28,6 +28,20 @@
 	<javac srcdir="${src.dir}" destdir="${bin.dir}" debug="true" debuglevel="lines,source"/>
     </target>
 
+    <target name="jar" depends="compile">
+	<delete file="hello.jar"/>
+	<delete file="MANIFEST.MF"/>
+	<manifest file="MANIFEST.MF">
+		<attribute name="Built-By" value="Grupp 4"/>
+		<attribute name="Main-Class" value="civ.Window"/>
+	</manifest>
+        <jar destfile="Civ6.jar"
+		 manifest="MANIFEST.MF">
+		 <fileset dir="bin" includes="**/*.class"/>
+ 		 <fileset dir="." includes="data/img/*.*"/>
+	</jar>
+    </target>
+
     <target name="run">
 	<java fork="yes"
 	    classname="civ.Window">

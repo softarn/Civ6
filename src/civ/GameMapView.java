@@ -12,6 +12,7 @@ import java.awt.event.MouseEvent;
 import static civ.State.ActionState.Move;
 import static civ.State.ActionState.None;
 import static civ.State.UnitState.UnitSelected;
+import static civ.State.CityState.CitySelected;
 import static civ.State.HoverState.HoverNone;
 import static civ.State.HoverState.HoverTileOnly;
 import static civ.State.HoverState.HoverTileUnit;
@@ -101,6 +102,7 @@ public class GameMapView extends JPanel{
                     System.out.println("Printing hexagon at x"+ tile.getView().getTilePositionx()+
                             " y"+tile.getView().getTilePositiony());
 
+                    System.out.println(state.getActionState());
                     switch(state.getActionState()){
                         case Move:
                             if(state.getUnitState() == UnitSelected){
@@ -110,8 +112,22 @@ public class GameMapView extends JPanel{
                                     t.dehilight();
                                     t.getView().repaint();
                                 }
+                                civ.Move.makeMove(state.getSelectedTile(), tile);
                             }
-                            civ.Move.makeMove(state.getSelectedTile(), tile);
+                            if(state.getCityState() == CitySelected){
+                                City city = state.getSelectedCity();
+                                int index = city.getHold().getSelUnitIndex();
+                                PhysicalUnit unit = null;
+                                if(index != -1){
+                                    unit = city.getHold().getUnit(index);
+                                    city.getHold().delUnit(index);
+                                }
+                                for(Tile t : gm.getNeighbours(state.getSelectedTile(), unit.getCurrentMovementPoint(), true)){
+                                    t.dehilight();
+                                    t.getView().repaint();
+                                }
+                                civ.Move.makeMove(unit, state.getSelectedTile(), tile);
+                            }
                             state.setActionState(None);
                             break;
                         case Attack:

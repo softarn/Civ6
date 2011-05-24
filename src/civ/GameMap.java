@@ -114,6 +114,14 @@ public class GameMap{
                         tile.getUnit().reset();
                     }
                 }
+                else if(tile.hasCity()){
+                    Hold hold = tile.getCity().getHold();
+                    for(PhysicalUnit u : hold.getUnits()){
+                        u.reset();
+                        u.getView().update();
+                        u.getView().repaint();
+                    }
+                }
             }
         }
     }
@@ -314,10 +322,10 @@ public class GameMap{
         tiles = result;
         spawnSettler();
         spawnSettler();
-        tiles[1][1].setUnit(new PhysicalUnit(PhysicalUnitType.Musketeer, Player.getInstance("Player")));
+        //tiles[1][1].setUnit(new PhysicalUnit(PhysicalUnitType.Musketeer, Player.getInstance("Player")));
         //tiles[2][1].setUnit(new Barbarian(tiles[2][1]));
-        tiles[2][2].setCity(new City("Mecca", Round.getMe()));
-        tiles[2][2].getCity().getHold().addUnit(new PhysicalUnit("Archer", Round.getMe()));
+        //tiles[2][2].setCity(new City("Mecca", Round.getMe()));
+        //tiles[2][2].getCity().getHold().addUnit(new PhysicalUnit("Archer", Round.getMe()));
     }
 
     public void spawnSettler(){

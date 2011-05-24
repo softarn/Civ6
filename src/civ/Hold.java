@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Hold{
     private ArrayList<PhysicalUnit> units;
     private int limit;
+    private int index;
 
     public Hold(){
         this(0);
@@ -32,6 +33,26 @@ public class Hold{
             return true;
         }
         return false;
+    }
+
+    public boolean delUnit(int index){
+        units.remove(index);
+        return true;
+    }
+
+    public void selUnitIndex(int index){
+        if(index >= units.size() || index < -1){
+            return;
+        }
+        this.index = index;
+    }
+
+    public int getSelUnitIndex(){
+        return index;
+    }
+
+    public PhysicalUnit getUnit(int index){
+        return units.get(index);
     }
 
     public ArrayList<PhysicalUnit> getUnits(){

@@ -16,6 +16,7 @@ import static civ.State.UnitState.UnitSelected;
 import static civ.State.UnitState.UnitUnSelected;
 
 public class Tile implements Comparable<Tile>{
+    private static final State state = State.getInstance();
     private boolean selected, hilight, explored, plain;
     private Color color;
 
@@ -78,37 +79,35 @@ public class Tile implements Comparable<Tile>{
     }
 
     public void select(){
-        State st = State.getInstance();
-        if(st.getTileState() == TileSelected){
+        if(state.getTileState() == TileSelected){
             State.getSelectedTile().deselect();
         }
-        st.setSelectedTile(this);
-        st.setTileState(TileSelected);
+        state.setSelectedTile(this);
+        state.setTileState(TileSelected);
         if(hasCity()){
-        	st.setSelectedCity(city);
-        	st.setCityState(CitySelected);
+        	state.setSelectedCity(city);
+        	state.setCityState(CitySelected);
         }
         if(hasUnit()){
-            st.setSelectedUnit(unit);
-            st.setUnitState(UnitSelected);
+            state.setSelectedUnit(unit);
+            state.setUnitState(UnitSelected);
         }
         selected = true;
         view.repaint();
     }
 
     public void deselect(){
-        State st = State.getInstance();
-        if(st.getSelectedTile().equals(this)){
-            st.setSelectedTile(null);
-            st.setTileState(TileUnSelected);
+        if(state.getSelectedTile().equals(this)){
+            state.setSelectedTile(null);
+            state.setTileState(TileUnSelected);
             selected = false;
             if(hasCity()){
-                st.setSelectedCity(null);
-                st.setCityState(CityUnSelected);
+                state.setSelectedCity(null);
+                state.setCityState(CityUnSelected);
             }
             if(hasUnit()){
-                st.setSelectedUnit(null);
-                st.setUnitState(UnitUnSelected);
+                state.setSelectedUnit(null);
+                state.setUnitState(UnitUnSelected);
             }
             view.repaint();
         }
@@ -125,25 +124,34 @@ public class Tile implements Comparable<Tile>{
 
     //This function must be edited 
     public void setUnit(PhysicalUnit pu){
-        if(pu != null && pu.isAlly()){
-            setExplored(true);
-            if(GameMap.getInstance() != null){
-                for(Tile t : GameMap.getInstance().getNeighbours(this, pu.getType().getVision())){
-                    t.setExplored(true);
-                    t.getView().repaint();
-                }
-            }
-        }else{
-            //countToFog = 0;
+        if(hasCity()){
+            Hold hold = getCity().getHold();
+            hold.addUnit(pu);
+            state.setUnitState(UnitUnSelected);
+            state.setSelectedCity(getCity());
+            state.setCityState(CitySelected);
         }
-        unit = pu;
+        else{
+            if(pu != null && pu.isAlly()){
+                setExplored(true);
+                if(GameMap.getInstance() != null){
+                    for(Tile t : GameMap.getInstance().getNeighbours(this, pu.getType().getVision())){
+                        t.setExplored(true);
+                        t.getView().repaint();
+                    }
+                }
+            }else{
+                //countToFog = 0;
+            }
+            unit = pu;
+        }
         view.repaint();
     }
 
     public PhysicalUnit getUnit(){
         return unit; 
     }
-    
+
     public City getCity() {
     	return city;	
     }
