@@ -65,7 +65,18 @@ public class GameMap{
         if(map == null) map = new GameMap();
         return map;
     }
-
+    
+    // Set map size through:
+    public void setHeight(int height){
+    	this.height = height; 	
+    }
+    
+    public void setWidth(int width){
+    	this.width = width;	
+    }
+    
+    // --------------------
+    
     public GameMapView getView(){
         return gmv;
     }
@@ -180,6 +191,9 @@ public class GameMap{
     public int getHeight(){
         return height;
     }
+    
+    
+    // Update? 
 
     /**
      * Get all neighbours to a tile in an ArrayList(Not finished yet!)

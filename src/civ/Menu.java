@@ -20,9 +20,15 @@ import java.io.IOException;
 
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Image;
+import javax.swing.Box;
+
+import javax.imageio.ImageIO;
+
+import java.awt.*;
 import javax.imageio.ImageIO;
 
 import java.awt.*;
@@ -59,6 +65,7 @@ public class Menu extends JPanel implements Observer, ActionListener, ChangeList
     //private JLabel unitPresentation;
     private GameMapView gmv = new GameMapView();    
 
+    private JLabel zoomLabel;
     private JButton plus;
     private JButton minus;
 
@@ -90,20 +97,27 @@ public class Menu extends JPanel implements Observer, ActionListener, ChangeList
         //popup = PopupFactory.getSharedInstance().getPopup(null, puw, 200,200);
         manPowerBar = new JProgressBar(0,100);  
         manPowerBar.setSize(new Dimension(30,10));
-        manPowerBar.setString("Manpower "); 
+        manPowerBar.setString("Mankraft "); 
         manPowerBar.setStringPainted(true); 
 
         //unitPresentation = new JLabel();
         tileLabel = new JLabel();
         tileLabel.setOpaque(false);
 
+        zoomLabel = new JLabel("Zoom");
         plus = new JButton("+");
         plus.addActionListener(this);
         minus = new JButton("-");
         minus.addActionListener(this);
-
+        
+        createUnit.setLayout(new BoxLayout(createUnit, BoxLayout.Y_AXIS));
+        createUnit.add(Box.createRigidArea(new Dimension(170,20)));
+        createUnit.add(zoomLabel);
+        createUnit.add(Box.createRigidArea(new Dimension(5,5)));
         createUnit.add(plus);
+        createUnit.add(Box.createRigidArea(new Dimension(5,5)));
         createUnit.add(minus);
+        createUnit.add(Box.createRigidArea(new Dimension(5,5)));
         createUnit.setOpaque(false);        
 
         tabbedPane = new JTabbedPane(); 
@@ -114,7 +128,7 @@ public class Menu extends JPanel implements Observer, ActionListener, ChangeList
         // ADD CONTENT
         globalViewObject = new GlobalView();
 
-        tabbedPane.addTab(" Hey ", null, unitView, "Inget objekt markerat ");
+        tabbedPane.addTab(" TestLabel ", null, unitView, "Inget objekt markerat ");
         tabbedPane.setPreferredSize(new Dimension(580,200));
         tabbedPane.addChangeListener(this);
 
@@ -175,7 +189,7 @@ public class Menu extends JPanel implements Observer, ActionListener, ChangeList
                 tileLabel.setText("<html>No tile" + "<br />&nbsp;</html>");
                 break;
             case HoverTileOnly:
-                tileLabel.setText("<html>Terrain: \n" + state.getHoverTile().getTerrain().toString() + "<br />&nbsp;</html>");
+                tileLabel.setText("<html>Terräng: \n" + state.getHoverTile().getTerrain().toString() + "<br />&nbsp;</html>");
                 break;
             case HoverTileUnit:
                 String outputTerrain = state.getHoverTile().getTerrain().toString();
@@ -191,11 +205,11 @@ public class Menu extends JPanel implements Observer, ActionListener, ChangeList
                     // Enemy unit hovered
                     Player owner = state.getHoverTile().getUnit().getOwner();
                     if(owner != null){
-                        tileLabel.setText("<html>Terrain: " + outputTerrain +
+                        tileLabel.setText("<html>Terräng: " + outputTerrain +
                                 "<br>Unit: Enemy unit, belongs to "+owner);
                     }
                     else{
-                        tileLabel.setText("<html>Terrain: " + outputTerrain +
+                        tileLabel.setText("<html>Terräng: " + outputTerrain +
                                 "<br>Unit: Enemy unit</html>");
                     }
 

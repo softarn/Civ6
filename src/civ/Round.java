@@ -151,4 +151,8 @@ public class Round{
     public static Player getActivePlayer(){
         return activePlayer;
     }
+    
+    public static int getTurn(){
+    	return turn;
+	}
 }
