@@ -61,6 +61,10 @@ public class MyPacketListener implements PacketListener{
         Round.resume();
     }
 
+    public void wasBombarded(Result received){
+        System.out.println("We was Bombarded!");
+    }
+
     public void lobbyUpdated(Result received){
         boolean gameLocked = received.getLocked();
         int amount = received.getNumberPlayers();

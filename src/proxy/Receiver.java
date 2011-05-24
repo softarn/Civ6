@@ -6,7 +6,7 @@ import java.net.*;
 
 public class Receiver implements Runnable
 {
-
+    
 	private Result packet = null;
 	private InputStream m_inStream;
 	private OutputStream m_outStream;
@@ -34,8 +34,7 @@ public class Receiver implements Runnable
 			try
 			{
 				Thread.sleep(100);
-			}
-			catch(Throwable t){}
+			}catch(Throwable t){}
 
 		//	System.out.println("getResult()");
 		}
@@ -202,6 +201,14 @@ public class Receiver implements Runnable
                 pl.gameClosed();
             }
 
+	    else if(header == 30)
+	    {
+		toReturn.addBombX(receiveInt());
+		toReturn.addBombY(receiveInt());
+		toReturn.addHealthLost(receiveInt());
+		    pl.wasBombarded(toReturn);
+	    }
+
 			// Test
 			else if(header == 99)
 			{
@@ -324,11 +331,30 @@ public class Receiver implements Runnable
 		return toReturn;
 	}
 
-	// Method for reading a boolean from the inputStream.
-	private boolean receiveBool()
-	{
-		boolean bool = false;
-		int boolVal = 0;
+    private ArrayList<Unit> receiveListUnits(int size)
+    {
+		ArrayList<Unit> toReturn = new ArrayList<Unit>();
+        for(int i=0; i<size; i++){
+            Unit tmp = receiveUnit();
+            toReturn.add(tmp);
+        }
+        return toReturn;
+    }
+
+    private Unit receiveUnit(){
+        String o = receiveString();
+        String t = receiveString();
+        int mp = receiveInt();
+        ArrayList<Unit> units = receiveListUnits(receiveInt());
+        Unit unit = new Unit(o, t, mp, units);
+        return unit;
+    }
+
+    // Method for reading a boolean from the inputStream.
+    private boolean receiveBool()
+    {
+        boolean bool = false;
+        int boolVal = 0;
 		try
 		{
 			boolVal = m_inStream.read();
@@ -352,7 +378,7 @@ public class Receiver implements Runnable
 		toAddTo.setUpdatedTile(f, s);
 		if(receiveBool())
 		{
-			toAddTo.setUnit(receiveString(), receiveString(), receiveInt());
+			toAddTo.setUnit(receiveUnit());
 		}
 		if(receiveBool())
 		{
@@ -360,10 +386,11 @@ public class Receiver implements Runnable
 			int size = receiveInt();
 			for(int i=0; i<size; i++)
 			{
-				toAddTo.addCityUnit(receiveString(), receiveString(), receiveInt());
+				toAddTo.addCityUnit(receiveUnit());
 			}
 			toAddTo.setCity(owner, receiveString());
 		}
 		toAddTo.addUpdatedTile();
 	}
+
 }

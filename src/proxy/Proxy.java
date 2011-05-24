@@ -249,6 +249,7 @@ public class Proxy
 			toSend.add(owner);
 			toSend.add(type);
 			toSend.add(manPower);
+            toSend.add(new ArrayList());
 			send(toSend);
 			return receiver.getResult();
 		}
@@ -297,8 +298,8 @@ public class Proxy
 		Packet toSend = new Packet((byte)28);
 		toSend.add(fromX);
 		toSend.add(fromY);
-        	toSend.add(type);
-        	toSend.add(mp);
+        toSend.add(type);
+        toSend.add(mp);
 		toSend.add(toX);
 		toSend.add(toY);
 		send(toSend);

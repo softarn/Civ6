@@ -24,7 +24,7 @@ public enum PhysicalUnitType implements AbstractUnitType{
         // Mounted 
         Cavalry(    "Cavalry",      "Mounted", 100,  6, 4, 1, 2, 100, 8),
         Knight(     "Knight",       "Mounted", 100, 12, 8, 1, 2, 100, 10),
-        Crusader(   "Crusader",     "Mounted", 100,  6, 4, 1, 2, 150, 12),
+        Crusader(   "Crusader",     "Mounted", 100,  18, 12, 1, 2, 150, 12),
 
         // Boats
         Trireme(    "Trireme",      "Boat", 50,   4,  3, 1, 3, 100, 16),

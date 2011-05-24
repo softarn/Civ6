@@ -8,10 +8,10 @@ public class Result{
 	private boolean ok = true, locked;
 	private String failMsg, hostName, chatMessage, chatName, fromWhom;
 	private List sessions, players, map, updatedTiles;
-	private int requestFail, requestOk, attackerLeft, defenderLeft;
+	private int requestFail, requestOk, attackerLeft, defenderLeft, bombX, bombY, healthLost;
 
 	// Här är medlemsvariabler som bara är hjälpvariabler till vissa metoder.
-	private List cityUnits = new ArrayList<Unit>();
+	private List<Unit> cityUnits = new ArrayList<Unit>();
 	private Tile temp;
 
 	public Result(){
@@ -76,6 +76,18 @@ public class Result{
 		defenderLeft = defLeft;
 	}
 
+	public void addBombX(int x){
+		bombX = x;
+	}
+
+	public void addBombY(int y){
+		bombY = y;
+	}
+
+	public void addHealthLost(int healthLost){
+		this.healthLost = healthLost;
+	}
+
 	// Sets för komplexa strukturer.
 	
 	// För listan med spelare först.
@@ -98,12 +110,12 @@ public class Result{
 		temp = new Tile(new Position(x, y));
 	}
 
-	public void setUnit(String owner, String type, int manPower){
-		temp.addUnit(new Unit(owner, type, manPower));
+	public void setUnit(Unit unit){
+		temp.addUnit(unit);
 	}
 
-	public void addCityUnit(String owner, String type, int manPower){
-		cityUnits.add(new Unit(owner, type, manPower));
+	public void addCityUnit(Unit unit){
+		cityUnits.add(unit);
 	}
 
 	public void setCity(String owner, String name){
@@ -178,6 +190,18 @@ public class Result{
 		return defenderLeft;
 	}
 
+	public int getBombX(){
+		return bombX;
+	}
+
+	public int getBombY(){
+		return bombY;
+	}
+
+	public int getHealthLost(){
+		return healthLost;
+	}
+
 	// Här under kommer det att finnas getters för dom mer komplexa strukturerna.
 	//
 	// Börjar med get för spelare.
@@ -229,6 +253,10 @@ public class Result{
 		return ((Tile)updatedTiles.get(n)).getUnit().getManPower();
 	}
 
+    public List<Unit> getUnitUnits(int n){
+        return ((Tile)updatedTiles.get(n)).getUnit().getUnits();
+    }
+
 	public boolean existCity(int n){
 		if(((Tile)updatedTiles.get(n)).getCity() != null){
 			return true;
@@ -269,33 +297,6 @@ public class Result{
 	// Här slutar getters.
 	// --------------------------------------------
 	// Här under är nestlade klasser för ytterligare containers!
-	
-	private class Unit{
-		private String owner, type;
-		private int manPower;
-
-		public Unit(String owner, String type, int manPower){
-			this.owner = owner;
-			this.type = type;
-			this.manPower = manPower;
-		}
-
-		public String getOwner(){
-			return owner;
-		}
-
-		public String getType(){
-			return type;
-		}
-
-		public int getManPower(){
-			return manPower;
-		}
-
-		public String toString(){
-			return "Unit type: " + type + "\nUnit owner: " + owner + "\nUnit manpower: " + manPower + "\n";
-		}
-	}
 
 	private class City{
 		private String owner, name;

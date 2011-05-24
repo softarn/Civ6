@@ -120,13 +120,14 @@ public class GameMapView extends JPanel{
                                 PhysicalUnit unit = null;
                                 if(index != -1){
                                     unit = city.getHold().getUnit(index);
-                                    city.getHold().delUnit(index);
                                 }
                                 for(Tile t : gm.getNeighbours(state.getSelectedTile(), unit.getCurrentMovementPoint(), true)){
                                     t.dehilight();
                                     t.getView().repaint();
                                 }
-                                civ.Move.makeMove(unit, state.getSelectedTile(), tile);
+                                if(civ.Move.makeMove(unit, state.getSelectedTile(), tile)){
+                                    city.getHold().delUnit(index);
+                                }
                             }
                             state.setActionState(None);
                             break;
@@ -138,7 +139,7 @@ public class GameMapView extends JPanel{
                                     t.dehilight();
                                     t.getView().repaint();
                                 }
-                                if(tile.hasUnit() && tile.getUnit().isAlly()){
+                                if(tile.hasUnit() && !tile.getUnit().isAlly()){
                                     if(Battle.attackRange(state.getSelectedTile(), tile, 
                                                 state.getSelectedUnit().getType().getRange()) > 0){
                                         before = new PopUpBubble(state.getSelectedTile().getView().getX() + 135, 

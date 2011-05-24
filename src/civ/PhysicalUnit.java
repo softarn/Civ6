@@ -3,6 +3,8 @@ package civ;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
+import proxy.Unit;
+
 public class PhysicalUnit implements Comparable<PhysicalUnit>{
     private static int count = 0;
     private int idNumber;
@@ -45,7 +47,7 @@ public class PhysicalUnit implements Comparable<PhysicalUnit>{
     }
 
     public PhysicalUnit(PhysicalUnit other){
-        this.idNumber = ++count;
+        this.idNumber = other.idNumber;
         this.manPower = other.getManPower();
         this.currentMovementPoint = other.getCurrentMovementPoint();
         this.type = other.getType();
@@ -53,6 +55,20 @@ public class PhysicalUnit implements Comparable<PhysicalUnit>{
         this.currentInvSize = other.currentInvSize;
         this.allegiance = other.allegiance;
         this.view = other.getView();
+    }
+
+    /**
+     * This is not a copy constructor, it a translator between the proxy units,
+     * and our physicalunits.
+     */
+    public PhysicalUnit(Unit other){
+        this.idNumber = ++count;
+        this.type = PhysicalUnitType.getByName(other.getType());
+        this.allegiance = Player.getInstance(other.getOwner());
+        reset();
+        this.currentInvSize = type.getInventorySize();
+        this.manPower = other.getManPower();
+        this.view = new PhysicalUnitView(this);
     }
 
     public boolean isAlly(){

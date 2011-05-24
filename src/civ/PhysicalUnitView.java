@@ -268,7 +268,7 @@ public class PhysicalUnitView extends JPanel implements Observer, ActionListener
             }
             pu.getView().update();
             state.setActionState(Attack);
-            for(Tile t : gm.getNeighbours(state.getSelectedTile(), pu.getCurrentMovementPoint(), false)){
+            for(Tile t : gm.getNeighbours(state.getSelectedTile(), pu.getType().getRange(), false)){
                 t.hilight(new Color(230, 75, 15, 140));
                 t.getView().repaint();
             }
