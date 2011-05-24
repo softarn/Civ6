@@ -15,14 +15,25 @@ public class Round{
     private static GameMap gm;
 
     static void next(){
-        GameServer.endTurn();
+        GameServer.endTurn(); 
         if(!State.isOnline()){
             resume();
+            System.out.println("You are waiting for your turn");
+        }
+        else {
+          JOptionPane.showMessageDialog(null,"Du väntar på din tur", "Spelmeddelande",
+            JOptionPane.INFORMATION_MESSAGE);	
         }
     }
 
     static void resume(){
         System.out.println("I has new turn!");
+        
+        if(State.isOnline()){
+        JOptionPane.showMessageDialog(null,"Nu är det din tur ", "Spelmeddelande",
+            JOptionPane.INFORMATION_MESSAGE);
+        }
+        
         gm = GameMap.getInstance();
         gm.exploreMap();
         if(gm.isInited()){

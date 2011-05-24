@@ -4,9 +4,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.BorderLayout;
 import javax.swing.JTabbedPane;	
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.GridLayout;
 
 import java.awt.Color;
 import java.awt.Dimension; 
@@ -14,12 +17,13 @@ import static civ.State.TileState.TileSelected;
 
 public class ViewPopup extends JTabbedPane implements ActionListener{
 	private static final State state = State.getInstance();
-    private JLabel jel = new JLabel("HELLOOOOOOAH!");
 	private JPanel cityPanel = new JPanel();
 	private UnitTabView utv = new UnitTabView();
-    private JButton putUnit;
+    
+	private JButton putUnit;
     private JComboBox selUnit;
-	
+	private JLabel selHeader;
+    
 	public ViewPopup() {
 		addTab("Enheter ", null, utv, "Tooltips vare her ");
         setPreferredSize(new Dimension(580,200));
@@ -27,10 +31,12 @@ public class ViewPopup extends JTabbedPane implements ActionListener{
 		addTab("Städer", null, null, "Tooltips vare her ");
 		addTab("Forskning", null, null, "Tooltips vare her ");
 		setOpaque(true);
-
+			
         selUnit = new JComboBox(PhysicalUnitType.values());
         putUnit = new JButton("Set Unit");
         putUnit.addActionListener(this);
+        
+        selHeader = new JLabel("Välj enhet du vill skapa ");
         
 		//mainTPane.addTab("Mecca", null, Content, "Tooltips vare her ");
 		//add(unitContent);
@@ -42,16 +48,15 @@ public class ViewPopup extends JTabbedPane implements ActionListener{
 	}
 	
 	public void setTab(){
-
-		cityPanel.add(jel);
-		
+		cityPanel.add(selHeader);
+		cityPanel.add(Box.createRigidArea(new Dimension(30,30)));
 		cityPanel.add(selUnit);
+		cityPanel.add(Box.createRigidArea(new Dimension(50,50)));
         cityPanel.add(putUnit);
         
 		//add(cityPanel);
 		addTab("Mecca",null,cityPanel,"Visa mer om city");
 		setSelectedIndex(3);
-		
 		
 	}
 		

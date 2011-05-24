@@ -3,6 +3,7 @@ package civ;
 import javax.swing.*;
 import javax.swing.BoxLayout;
 
+import java.awt.Image;
 import java.awt.event.*;
 import java.awt.*;
 import java.awt.Dimension;
@@ -15,10 +16,13 @@ public class StartScreen extends JFrame implements ActionListener{
 	private JButton exitButton;
 	private JPanel startPanel = new JPanel();
 	private ConnectView cv;
+	private Image backimg;
 	
 	public StartScreen(){
 		super("Civ6 ");
 		setLayout(new BorderLayout());
+		
+		//backimg("data/img/victor59wallpaper.png");
 		
 		add(startPanel, BorderLayout.NORTH);	
 		startPanel.setLayout(new BoxLayout(startPanel, BoxLayout.Y_AXIS));

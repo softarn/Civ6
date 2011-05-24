@@ -3,11 +3,22 @@ package civ;
 import java.util.Random;
 import java.util.ArrayList;
 import java.awt.image.BufferedImage;
+import java.util.Random;
 
 class BarbarianType implements AbstractUnitType{
     private UnitType unitType;
-    public BarbarianType(){
-        unitType = new UnitType("Barbarian", "Melee", 100, 3, 3, 1, 1, 75, this); // Borrowed infantry stats
+    
+    public BarbarianType(){	
+    	Random rand = new Random();
+    	int i = rand.nextInt(PhysicalUnitType.values().length);
+    	
+    	PhysicalUnitType put = PhysicalUnitType.values()[i];
+    	
+        unitType = new UnitType("Barbarian", put.getCategory(), put.getMaxManPower(), put.getAttack(), 
+        	put.getDefence(), put.getRange(), put.getMovementPoints(), put.getInventorySize(),
+        	this);
+        
+        
     }
 
     public String getName(){
