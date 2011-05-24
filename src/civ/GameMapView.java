@@ -102,18 +102,8 @@ public class GameMapView extends JPanel{
                     System.out.println("Printing hexagon at x"+ tile.getView().getTilePositionx()+
                             " y"+tile.getView().getTilePositiony());
 
-                    System.out.println(state.getActionState());
                     switch(state.getActionState()){
                         case Move:
-                            if(state.getUnitState() == UnitSelected){
-                                PhysicalUnit pu = state.getSelectedUnit();
-                                int movement = pu.getCurrentMovementPoint();
-                                for(Tile t : gm.getNeighbours(state.getSelectedTile(), movement, true)){
-                                    t.dehilight();
-                                    t.getView().repaint();
-                                }
-                                civ.Move.makeMove(state.getSelectedTile(), tile);
-                            }
                             if(state.getCityState() == CitySelected){
                                 City city = state.getSelectedCity();
                                 int index = city.getHold().getSelUnitIndex();
@@ -128,6 +118,15 @@ public class GameMapView extends JPanel{
                                 if(civ.Move.makeMove(unit, state.getSelectedTile(), tile)){
                                     city.getHold().delUnit(index);
                                 }
+                            }
+                            else if(state.getUnitState() == UnitSelected){
+                                PhysicalUnit pu = state.getSelectedUnit();
+                                int movement = pu.getCurrentMovementPoint();
+                                for(Tile t : gm.getNeighbours(state.getSelectedTile(), movement, true)){
+                                    t.dehilight();
+                                    t.getView().repaint();
+                                }
+                                civ.Move.makeMove(state.getSelectedTile(), tile);
                             }
                             state.setActionState(None);
                             break;
@@ -146,12 +145,10 @@ public class GameMapView extends JPanel{
                                                 state.getSelectedTile().getView().getY() + 35);
                                         GameMapView.this.add(before, 0);
                                         GameMapView.this.repaint();
-                                        int choice = showConfirmAttackPane(state.getSelectedUnit(), tile.getUnit(), 
+                                        showConfirmAttackPane(state.getSelectedUnit(), tile.getUnit(), 
                                                 state.getSelectedTile(), tile);
-                                        if(choice == 0){
-                                            Battle.doBattle(state.getSelectedUnit(), tile.getUnit(), 
+                                        Battle.doBattle(state.getSelectedUnit(), tile.getUnit(), 
                                                     state.getSelectedTile(), tile);
-                                        }
                                         after = new PopUpBubble(state.getSelectedTile().getView().getX() + 135, 
                                                 state.getSelectedTile().getView().getY() + 35, 
                                                 Battle.getAttackerLoss(), Battle.getDefenderLoss());
@@ -211,11 +208,12 @@ public class GameMapView extends JPanel{
         PhysicalUnit tmpDef = new PhysicalUnit(def);
         Battle.doAverageBattle(tmpAtt, tmpDef, tatt, tdef);
 
-        return JOptionPane.showConfirmDialog(
+        JOptionPane.showMessageDialog(
                 null,
                 "You: " + tmpAtt.getManPower() + "\nDefender: " + tmpDef.getManPower() +
                 "\n Attack?",
                 "Expected outcome",
-                JOptionPane.YES_NO_OPTION);
+                JOptionPane.OK_OPTION);
+        return 0;
     }
 }// class

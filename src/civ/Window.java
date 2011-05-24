@@ -43,7 +43,7 @@ public class Window extends JFrame implements ActionListener{
             Round.setMe(Player.getInstance("Player"));
         }
 
-        Menu m = new Menu();
+        Menu m = Menu.getInstance();
         ViewPort vp = new ViewPort();
 
         mainMenuBar = new JMenuBar();

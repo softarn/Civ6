@@ -1,6 +1,7 @@
 package civ;
 
-import java.awt.image.BufferedImage;
+import java.awt.Image;
+import java.awt.Toolkit;
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
@@ -15,7 +16,7 @@ public interface AbstractUnitType{
     abstract public int getVision();
     abstract public int getMaxManPower();
     abstract public int getRange();
-    abstract public BufferedImage getImage();
+    abstract public Image getImage();
     abstract public int getInventorySize();
     abstract public boolean isMounted();
 }
@@ -23,7 +24,7 @@ public interface AbstractUnitType{
 class UnitType implements AbstractUnitType{
     private String name;
     private String category;
-    private BufferedImage unitImg;
+    private Image unitImg;
     private int maxManPower;
     private int defence;
     private int attack;
@@ -33,7 +34,7 @@ class UnitType implements AbstractUnitType{
     private int inventorySize;
     private boolean mounted;
 
-    private static final String imgPath = "data/img/"; //Need a better fix for this!
+    private static final String imgPath = "/data/img/"; //Need a better fix for this!
     private static HashMap<String, AbstractUnitType> types = new HashMap<String, AbstractUnitType>();
 
     protected UnitType(String name, 
@@ -62,8 +63,8 @@ class UnitType implements AbstractUnitType{
             this.vision = movementPoints;
         }
         try{
-            unitImg = ImageIO.read(new File(imgPath + name + ".png"));
-        }catch(IOException e){
+            unitImg = Toolkit.getDefaultToolkit().getImage((getClass().getResource(imgPath + name + ".png")));
+        }catch(Exception e){
             System.out.println(e);
             System.out.println(name);
         }
@@ -105,7 +106,7 @@ class UnitType implements AbstractUnitType{
         return range;
     }
 
-    public BufferedImage getImage(){
+    public Image getImage(){
         return unitImg;
     }
 

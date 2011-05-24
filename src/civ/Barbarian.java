@@ -2,7 +2,7 @@ package civ;
 
 import java.util.Random;
 import java.util.ArrayList;
-import java.awt.image.BufferedImage;
+import java.awt.Image;
 import java.util.Random;
 
 class BarbarianType implements AbstractUnitType{
@@ -53,7 +53,7 @@ class BarbarianType implements AbstractUnitType{
         return unitType.getRange();
     }
 
-    public BufferedImage getImage(){
+    public Image getImage(){
         return unitType.getImage();
     }
 

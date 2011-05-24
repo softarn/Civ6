@@ -77,8 +77,8 @@ public class PhysicalUnitView extends JPanel implements Observer, ActionListener
         infoButton.addActionListener(this); 
 
         imgPane.add(image);
-        imgPane.setMaximumSize(new Dimension(pUnit.getImage().getWidth() + 20, 
-                    pUnit.getImage().getHeight() + 20));
+        imgPane.setMinimumSize(new Dimension(pUnit.getImage().getHeight(null) + 20, 
+                    pUnit.getImage().getHeight(null) + 20));
 
         upperPane = createUpperPane();
         lowerPane = createLowerPane();
@@ -250,11 +250,13 @@ public class PhysicalUnitView extends JPanel implements Observer, ActionListener
                     return;
                 }
                 pu = hold.getUnit(hold.getSelUnitIndex());
+                state.setSelectedUnit(pu);
+                state.setUnitState(UnitSelected);
             }
             pu.getView().update();
             state.setActionState(Move);
             for(Tile t : gm.getNeighbours(state.getSelectedTile(), pu.getCurrentMovementPoint(), true)){
-                t.hilight(new Color(200, 175, 115, 140));
+                t.hilight(new Color(200, 175, 115, 170));
                 t.getView().repaint();
             }
         }

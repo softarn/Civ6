@@ -210,7 +210,7 @@ public class Battle {
     }
 
     public static int doBattle(PhysicalUnit u1, PhysicalUnit u2, Tile t1, Tile t2) {
-        if(State.isOnline()){
+        if(State.isOnline() && Round.getTurn() > 25){
             // Remove the movement cost 1 from the attacking unit
             if(!u1.useMovementPoints(1)){
                 return 0;
@@ -242,7 +242,7 @@ public class Battle {
             }
             return winnerId;
         }
-        else{
+        else if(Round.getTurn() > 25){
             if(!u1.useMovementPoints(1)){
                 return 0;
             }
@@ -289,6 +289,7 @@ public class Battle {
             }
             return winnerId;
         }
+        return 0;
     }
 
     public static int getAttackerLoss(){

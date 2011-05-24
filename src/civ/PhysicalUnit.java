@@ -1,6 +1,6 @@
 package civ;
 
-import java.awt.image.BufferedImage;
+import java.awt.Image;
 import java.util.HashMap;
 
 import proxy.Unit;
@@ -187,7 +187,7 @@ public class PhysicalUnit implements Comparable<PhysicalUnit>{
             this.fortified = false;
         }
 
-        public BufferedImage getImage(){
+        public Image getImage(){
             return type.getImage();
         }
 

@@ -22,7 +22,7 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.image.BufferedImage;
+import java.awt.Image;
 import javax.imageio.ImageIO;
 
 import java.awt.*;
@@ -36,6 +36,7 @@ import static civ.State.ActionState.Move;
 import static civ.State.ActionState.Attack;
 
 import static civ.State.CityState.CitySelected;
+import static civ.State.CityState.CityUnSelected;
 import static civ.State.HoverState.HoverNone;
 import static civ.State.HoverState.HoverTileOnly;
 import static civ.State.HoverState.HoverTileUnit;
@@ -64,29 +65,29 @@ public class Menu extends JPanel implements Observer, ActionListener, ChangeList
     //Status is only for testing purpose
     private JLabel status = new JLabel("Status is: " + state.getUnitState());
     //private PopupWindow puw;
-    private int curScale = 5 ;
+    private int curScale = 5;
     private int index = 0;
+    private City oldCity = null;
     private int[] sizes = {35, 50, 75, 90, 120, 150, 175, 190};
 
-    private static final String imgPath = "data/img/"; //Need a better fix for this!
-    private BufferedImage img;
+    private static final String imgPath = "/data/img/"; //Need a better fix for this!
+    private Image img;
+    private static Menu menu = new Menu();
 
-    Menu(){ 
+    private Menu(){ 
         super(); 
         setLayout(new BorderLayout(0,10)); 
 
         String name = "medievalwallpaper";
         try{
-            img = ImageIO.read(new File(imgPath + name + ".jpg"));
-        }catch(IOException e){
+            img = Toolkit.getDefaultToolkit().getImage(getClass().getResource(imgPath + name + ".jpg"));
+        }catch(Exception e){
             System.out.println(e);
-            System.out.println("name");
+            System.out.println(name);
         }
         //this.puw = puw;
         //Popup popup;
         //popup = PopupFactory.getSharedInstance().getPopup(null, puw, 200,200);
-
-
         manPowerBar = new JProgressBar(0,100);  
         manPowerBar.setSize(new Dimension(30,10));
         manPowerBar.setString("Manpower "); 
@@ -107,18 +108,8 @@ public class Menu extends JPanel implements Observer, ActionListener, ChangeList
 
         tabbedPane = new JTabbedPane(); 
 
-        add(north, BorderLayout.NORTH);      
-        add(westPanel,  BorderLayout.WEST);
-        add(eastPanel, BorderLayout.EAST);
-        add(createUnit, BorderLayout.CENTER);
-
-        // Set layout managers 
         north.setLayout(new BoxLayout(north, BoxLayout.Y_AXIS)); 
-        //north.setOpaque(false);
-        eastPanel.setLayout(new BorderLayout());
-        westPanel.setLayout(new BorderLayout());
-        westPanel.setPreferredSize(new Dimension (600,220));
-        westPanel.setOpaque(false);
+        north.add(tileLabel);
 
         // ADD CONTENT
         globalViewObject = new GlobalView();
@@ -128,17 +119,29 @@ public class Menu extends JPanel implements Observer, ActionListener, ChangeList
         tabbedPane.addChangeListener(this);
 
         // East
+        eastPanel.setLayout(new BorderLayout());
         eastPanel.add(globalViewObject, BorderLayout.EAST);
+        eastPanel.setOpaque(false);
 
         // West
+        westPanel.setLayout(new BorderLayout());
+        westPanel.setPreferredSize(new Dimension (600,220));
+        westPanel.setOpaque(false);
         westPanel.add(tabbedPane, BorderLayout.WEST);
 
-        north.add(tileLabel);
-        //north.add(unitPresentation);
+
+        add(north, BorderLayout.NORTH);      
+        add(westPanel,  BorderLayout.WEST);
+        add(eastPanel, BorderLayout.EAST);
+        add(createUnit, BorderLayout.CENTER);
 
         state.addObserver(this);
         tabbedPane.repaint();
         update(); 
+    }
+
+    public static Menu getInstance(){
+        return menu;
     }
 
     public void paintComponent(Graphics g) {
@@ -154,6 +157,10 @@ public class Menu extends JPanel implements Observer, ActionListener, ChangeList
         if(curScale != 0){
             GameMap.getInstance().resize(sizes[--curScale]);
         }
+    }
+
+    public JTabbedPane getTabs(){
+        return tabbedPane;
     }
 
     public void update(Observable obs, Object obj){
@@ -208,11 +215,14 @@ public class Menu extends JPanel implements Observer, ActionListener, ChangeList
                 }
                 break;
             case UnitUnSelected:
-                if(index > -1 && tabbedPane.getTabCount() != 0 && index < tabbedPane.getTabCount()){
+                /*if(index > -1 && tabbedPane.getTabCount() != 0 && index < tabbedPane.getTabCount()){
                     index = tabbedPane.getSelectedIndex();
+                }*/
+                if(state.getCityState() == CityUnSelected){
+                    oldCity = null;
+                    tabbedPane.removeAll();
+                    tabbedPane.repaint();
                 }
-                tabbedPane.removeAll();
-                tabbedPane.repaint();
                 break;
         }
 
@@ -220,17 +230,23 @@ public class Menu extends JPanel implements Observer, ActionListener, ChangeList
             case CitySelected:
                 City city = state.getSelectedCity();
                 String cityName = city.getName();
-                tabbedPane.addTab(cityName, null, city.getView(), "Visa dina städer ");
-                for (PhysicalUnit pu : city.getHold().getUnits()) {
-                    tabbedPane.addTab(pu.getType().getName(), null, pu.getView(), "Visa ---" );	
-                    //tabbedPane.add();
+                if(city != oldCity){
+                    tabbedPane.removeAll();
+                    tabbedPane.repaint();
+                    tabbedPane.addTab(cityName, null, city.getView(), "Visa dina städer ");
+                    for (PhysicalUnit pu : city.getHold().getUnits()) {
+                        tabbedPane.addTab(pu.getType().getName(), null, pu.getView(), "Visa ---" );	
+                    }
+                    oldCity = city;
                 }
-                if(index > -1 && index < tabbedPane.getTabCount()){
+                /*
+                   System.out.println(index);
+                   if(index > -1 && index <= tabbedPane.getTabCount()){
                     tabbedPane.setSelectedIndex(index);
                     state.setSelectedUnit(city.getHold().getUnits().get(index-1));
                     if(index <= 0) city.getHold().selUnitIndex(-1);
                     else city.getHold().selUnitIndex(index-1);
-                }
+                }*/
                 break;
             case CityUnSelected:
                 break;
@@ -253,13 +269,11 @@ public class Menu extends JPanel implements Observer, ActionListener, ChangeList
     }
 
     public void stateChanged(ChangeEvent ce){
-        //System.out.println("Other "+state.getActionState());
         if(tabbedPane == ce.getSource()){
             if(state.getCityState() == CitySelected){
-                City city = state.getSelectedCity();
                 if(index > -1 && tabbedPane.getTabCount() != 0 && index < tabbedPane.getTabCount()){
-                    state.setHoverState(HoverTileOnly);
-                    state.setHoverState(HoverNone);
+                    //state.setCityState(CitySelected);
+                    //update();
                 }
             }
         }

@@ -207,6 +207,11 @@ public class GameMap{
                     if(t.getTerrain().isTraversible(state.getSelectedUnit())){
                         result.add(t);
                     }
+                    else if(t.hasUnit() && 
+                            t.getUnit().getType().getCategory().equals("Boat") && 
+                            t.getUnit().isAlly()){
+                        result.add(t);
+                    }
                 }
                 else{
                     result.add(t);
@@ -234,7 +239,6 @@ public class GameMap{
                 getNeighbours(t2, range - 1, acc, terrain);
             }
         }
-
         return acc;            
     }
 

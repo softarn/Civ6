@@ -7,7 +7,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.BasicStroke;
 import java.awt.Dimension;
-import java.awt.image.BufferedImage;
+import java.awt.Image;
 import javax.imageio.ImageIO;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
@@ -113,19 +113,19 @@ public class TileView extends JPanel{
         }
 
         if (tile.hasCity() && !tile.hasFog()){
-        	BufferedImage cityImg = tile.getCity().getImage();
-            int h = cityImg.getTileHeight();
-            int w = cityImg.getTileWidth();
+        	Image cityImg = tile.getCity().getImage();
+            int h = cityImg.getHeight(null);
+            int w = cityImg.getWidth(null);
 
             int x = (w/2) - 60;
             int y = 150 - h;
             g2.drawImage(cityImg, x, y, this);
     	}
         else if(tile.hasUnit() && !tile.hasFog()){
-            BufferedImage unitImg = tile.getUnitImg();
+            Image unitImg = tile.getUnitImg();
 
-            int h = unitImg.getTileHeight();
-            int w = unitImg.getTileWidth();
+            int h = unitImg.getHeight(null);
+            int w = unitImg.getWidth(null);
 
             int x = (w/2) - 60;
             int y = 150 - h;

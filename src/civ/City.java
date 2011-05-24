@@ -1,35 +1,68 @@
 package civ;
 
-import java.awt.image.BufferedImage;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
 
 public class City {
 
     //private PhysicalUnit phu = new PhysicalUnit(null, null);
+    private static GameMap gm = GameMap.getInstance();
     private String name;
     private Player owner;
     private Hold hold = new Hold();
     private CityView cityView;
+   
+    private PhysicalUnitType type;
+    private Tile tile;
+    private int cost = 0;
     
-    private BufferedImage cityImg;
+    private Image cityImg;
     private int defence;
     
     public City(String name, Player owner) {
         this.name = name;
         this.owner = owner;
     	defence = 100;
+        Round.addCity(this);
     	
         try {
-            cityImg =  ImageIO.read(new File("data/img/city.png"));
+            cityImg =  Toolkit.getDefaultToolkit().getImage((getClass().getResource("/data/img/city.png")));
         }
-        catch (IOException ioE) {
+        catch (Exception ioE) {
             System.out.println("Bilden finns ej ");    
         }
         
         cityView = new CityView(this);
-    	
+    }
+
+    public void count(){
+        if(this.cost == 1){
+            //spawn unit here
+            System.out.println("Spawning unit");
+            PhysicalUnit pu = new PhysicalUnit(type, Round.getMe());
+            tile.getCity().getHold().addUnit(pu);
+            tile.getView().repaint();
+            GameServer.makeUnit(tile, type);
+            int choice = JOptionPane.showConfirmDialog( null, "En ny enhet, " + type.getName() + ", har blivit skapad. Vill du gå till dess position?", "Enhet skapad", JOptionPane.YES_NO_OPTION);
+            if(choice == 0){
+                tile.select();
+                gm.getView().centerOn(tile);
+                Menu.getInstance().getTabs().setSelectedComponent(pu.getView());
+            }
+        }
+        if(cost >= 0){
+            --cost;
+        }
+    }
+
+    public void spawnCounter(PhysicalUnitType type, Tile tile, int cost){
+        this.type = type;
+        this.tile = tile;
+        this.cost = cost;
     }
 
     public String getName(){
@@ -48,7 +81,7 @@ public class City {
     	return cityView;	
     }
     
-    public BufferedImage getImage() {
+    public Image getImage() {
         return cityImg;
     }
 

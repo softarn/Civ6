@@ -1,6 +1,6 @@
 package civ;
 
-import java.awt.image.BufferedImage;
+import java.awt.Image;
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
@@ -32,7 +32,7 @@ public enum PhysicalUnitType implements AbstractUnitType{
         Caravel(    "Caravel",      "Boat", 100, 50, 40, 1, 6, 200, 70),
 
         // Other
-        Settler(    "Settler",      "Other", 100, 0, 2, 0, 1, 100, 65535), //Impossible to build, for now
+        Settler(    "Settler",      "Other", 100, 0, 2, 0, 1, 100, 5), 
         Diplomat(   "Diplomat",     "Other", 25,  0, 0, 0, 3, 100, 2),
         Siegetower( "Siege Tower",  "Other", 0,   0, 0, 0, 1,  50, 6),
         Wagontrain( "Wagon Train",  "Other", 0,   0, 0, 0, 2, 100, 3);
@@ -102,7 +102,7 @@ public enum PhysicalUnitType implements AbstractUnitType{
         return unitType.getRange();
     }
 
-    public BufferedImage getImage(){
+    public Image getImage(){
         return unitType.getImage();
     }
 
@@ -125,32 +125,4 @@ public enum PhysicalUnitType implements AbstractUnitType{
     public String toString(){
         return unitType.getName();
     }
-
-    /**
-     * Used for comparing one unittype to another, 
-     * to check if it's stronger than the other.
-     *
-     * @param other The other unittype.
-     *
-     * @return 
-     public int compareTo(PhysicalUnitType other){
-     int attacking = this.attack - other.defence;
-     int defending = other.attack - this.defence;
-     return attacking - defending;
-     }
-
-    /**
-     * If the unittype names are equal the unittypes are the same
-     * this method tests that connection.
-     *
-     * @param other Another PhysicalUnitType to compare to.
-     *
-     * @return True if this name is equal to other's name
-     public boolean equals(Object other){
-     if(other instanceof PhysicalUnitType){
-     return this.name.equals(((PhysicalUnitType)other).name);
-     }
-     return false;
-     }
-     */
 }

@@ -7,15 +7,15 @@ public class Move {
     private static final GameMap gm = GameMap.getInstance();
 
     /**
-     * Used to move units out of a hold. 
-     * Expects the unit to be removed from the hold beforehand.
+     * Used to move units out of a hold. Does not automatically remove the unit.
+     * Expects the unit to be removed from the hold if the function returns true.
      */
     public static boolean makeMove(PhysicalUnit u1, Tile t1, Tile t2){
         int length = moveLength(t1, t2, u1.getCurrentMovementPoint());
         System.out.println("Moving unit");
-        if(length == -1)
+        if(length == -1){
             return false;
-
+        }
         t2.setUnit(u1);
         for(Tile t : gm.getNeighbours(t2, u1.getType().getVision())){
             t.setExplored(true);
@@ -37,10 +37,9 @@ public class Move {
         if(!GameServer.makeMove(tiles)){
             return false;
         }
-
-        if(length == -1)
+        if(length == -1){
             return false;
-
+        }
         t1.setUnit(null);
         t2.setUnit(unit);
         for(Tile t : gm.getNeighbours(t2, unit.getType().getVision())){

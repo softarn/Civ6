@@ -1,6 +1,6 @@
 package civ;
 
-import java.awt.image.BufferedImage;
+import java.awt.Image;
 import java.awt.Color;
 import javax.imageio.ImageIO;
 import java.io.File;
@@ -164,15 +164,15 @@ public class Tile implements Comparable<Tile>{
         return unit != null;
     }
 
-    public BufferedImage getUnitImg(){
+    public Image getUnitImg(){
         return unit.getImage();
     }
     
-    public BufferedImage getTileImg(){
+    public Image getTileImg(){
         return terrain.getNormalImage();
     }
 
-    public BufferedImage getTileFogImg(){
+    public Image getTileFogImg(){
         return terrain.getFogImage();
     }
 

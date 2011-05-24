@@ -2,7 +2,8 @@ package civ;
 
 import java.io.File;
 import java.io.IOException;
-import java.awt.image.BufferedImage;
+import java.awt.Toolkit;
+import java.awt.Image;
 import javax.imageio.ImageIO;
 import java.util.ArrayList;
 
@@ -34,7 +35,7 @@ public enum TerrainType {
     private int [12] hillsArray = {};
     private int [12] mountainArray = {};*/
     
-    private static final String imgPath = "data/img/"; //Need a better fix for this!
+    private static final String imgPath = "/data/img/"; //Need a better fix for this!
 
     private final String name;
     private final int attackBonus;
@@ -43,8 +44,8 @@ public enum TerrainType {
     private final String fogfile;
     // An array of travelrules
     private final String[][] traversible = {{"Boat"}, {"Artillery", "Range", "Melee", "Mounted", "Other"}};
-    private BufferedImage normalImg;
-    private BufferedImage fogImg;
+    private Image normalImg;
+    private Image fogImg;
     private ResourceType type;
     private ResourceUnit runit;
 
@@ -78,18 +79,18 @@ public enum TerrainType {
         traversibleFor = traversible[travelRule];
         
         try{
-            normalImg = ImageIO.read(new File(imgPath + tilefile));
-            fogImg = ImageIO.read(new File(imgPath + fogfile));
-        } catch(IOException e){
+            normalImg = Toolkit.getDefaultToolkit().getImage(getClass().getResource(imgPath + tilefile));
+            fogImg = Toolkit.getDefaultToolkit().getImage(getClass().getResource(imgPath + fogfile));
+        } catch(Exception e){
             System.out.println(e);
         }
     }
 
-    public BufferedImage getNormalImage(){
+    public Image getNormalImage(){
         return normalImg;
     }
 
-    public BufferedImage getFogImage(){
+    public Image getFogImage(){
         return fogImg;
     }
     
