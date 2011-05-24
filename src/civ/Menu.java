@@ -20,9 +20,12 @@ import java.io.IOException;
 
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
+import javax.swing.Box;
+
 import javax.imageio.ImageIO;
 
 import java.awt.*;
@@ -58,6 +61,7 @@ public class Menu extends JPanel implements Observer, ActionListener, ChangeList
     //private JLabel unitPresentation;
     private GameMapView gv = new GameMapView();    
 
+    private JLabel zoomLabel;
     private JButton plus;
     private JButton minus;
 
@@ -96,13 +100,20 @@ public class Menu extends JPanel implements Observer, ActionListener, ChangeList
         tileLabel = new JLabel();
         tileLabel.setOpaque(false);
 
+        zoomLabel = new JLabel("Zoom");
         plus = new JButton("+");
         plus.addActionListener(this);
         minus = new JButton("-");
         minus.addActionListener(this);
-
+        
+        createUnit.setLayout(new BoxLayout(createUnit, BoxLayout.Y_AXIS));
+        createUnit.add(Box.createRigidArea(new Dimension(170,20)));
+        createUnit.add(zoomLabel);
+        createUnit.add(Box.createRigidArea(new Dimension(5,5)));
         createUnit.add(plus);
+        createUnit.add(Box.createRigidArea(new Dimension(5,5)));
         createUnit.add(minus);
+        createUnit.add(Box.createRigidArea(new Dimension(5,5)));
         createUnit.setOpaque(false);        
 
         tabbedPane = new JTabbedPane(); 

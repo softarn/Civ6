@@ -32,10 +32,13 @@ import static civ.State.UnitState.UnitSelected;
 import static civ.State.UnitState.UnitUnSelected;
 import static civ.State.CityState.CitySelected;
 
+
 /**
  * PhysicalUnitView is the GUI representation of the information in the bottom
  * bar.
  */
+ 
+ 
 public class PhysicalUnitView extends JPanel implements Observer, ActionListener{
     private static final State state = State.getInstance();
     private PhysicalUnit pUnit;

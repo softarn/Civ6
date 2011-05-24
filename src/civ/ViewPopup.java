@@ -31,9 +31,9 @@ public class ViewPopup extends JTabbedPane implements ActionListener{
 		addTab("Städer", null, null, "Tooltips vare her ");
 		addTab("Forskning", null, null, "Tooltips vare her ");
 		setOpaque(true);
-			
-        selUnit = new JComboBox(PhysicalUnitType.values());
-        putUnit = new JButton("Set Unit");
+		
+		selUnit = new JComboBox(PhysicalUnitType.values());
+        putUnit = new JButton("Skapa enhet");
         putUnit.addActionListener(this);
         
         selHeader = new JLabel("Välj enhet du vill skapa ");
@@ -48,11 +48,14 @@ public class ViewPopup extends JTabbedPane implements ActionListener{
 	}
 	
 	public void setTab(){
+		cityPanel.removeAll();
 		cityPanel.add(selHeader);
 		cityPanel.add(Box.createRigidArea(new Dimension(30,30)));
 		cityPanel.add(selUnit);
 		cityPanel.add(Box.createRigidArea(new Dimension(50,50)));
         cityPanel.add(putUnit);
+        
+        cityPanel.repaint();
         
 		//add(cityPanel);
 		addTab("Mecca",null,cityPanel,"Visa mer om city");
