@@ -57,12 +57,12 @@ class GlobalView extends JPanel implements ActionListener{
         scienceBar.setValue(scienceValue);
         
         // Labels
-        yearLabel = new JLabel("Year of the beast 666 b.c. ");
+        yearLabel = new JLabel("Runda nummer: " + Round.getTurn()+ " ");
         scienceLabel = new JLabel("Forskning: Segling ");
         //goldLabel = new JLabel("<html>Gold: $ 1000 <BR> Inkomst 25 $ / runda <BR> </html>");
         
         // Buttons
-        endturn = new JButton("End Turn");
+        endturn = new JButton("Avsluta runda");
         endturn.setActionCommand("endturn");
         endturn.setPreferredSize(new Dimension (50,30));
         endturn.addActionListener(this);
@@ -78,7 +78,7 @@ class GlobalView extends JPanel implements ActionListener{
         showCitiesButton = new JButton ("Visa cities ");
         showCitiesButton.setPreferredSize(new Dimension(50,30));
        
-        amountCitiesLabel = new JLabel("Antal cities: 2");
+        amountCitiesLabel = new JLabel("Antal städer: 2");
         amountCitiesLabel.setBorder(new CompoundBorder(BorderFactory.createLineBorder(Color.BLACK), BorderFactory.createEmptyBorder(10,10,10,10)));
 
         // Add and set layout manager

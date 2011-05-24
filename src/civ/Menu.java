@@ -56,7 +56,7 @@ public class Menu extends JPanel implements Observer, ActionListener, ChangeList
     private JProgressBar manPowerBar;    
     private JLabel tileLabel;
     //private JLabel unitPresentation;
-    private GameMapView gmv = new GameMapView();    
+    private GameMapView gv = new GameMapView();    
 
     private JButton plus;
     private JButton minus;
@@ -89,7 +89,7 @@ public class Menu extends JPanel implements Observer, ActionListener, ChangeList
 
         manPowerBar = new JProgressBar(0,100);  
         manPowerBar.setSize(new Dimension(30,10));
-        manPowerBar.setString("Manpower "); 
+        manPowerBar.setString("Mankraft "); 
         manPowerBar.setStringPainted(true); 
 
         //unitPresentation = new JLabel();
@@ -123,7 +123,7 @@ public class Menu extends JPanel implements Observer, ActionListener, ChangeList
         // ADD CONTENT
         globalViewObject = new GlobalView();
 
-        tabbedPane.addTab(" Hey ", null, unitView, "Inget objekt markerat ");
+        tabbedPane.addTab(" TestLabel ", null, unitView, "Inget objekt markerat ");
         tabbedPane.setPreferredSize(new Dimension(580,200));
         tabbedPane.addChangeListener(this);
 
@@ -168,7 +168,7 @@ public class Menu extends JPanel implements Observer, ActionListener, ChangeList
                 tileLabel.setText("<html>No tile" + "<br />&nbsp;</html>");
                 break;
             case HoverTileOnly:
-                tileLabel.setText("<html>Terrain: \n" + state.getHoverTile().getTerrain().toString() + "<br />&nbsp;</html>");
+                tileLabel.setText("<html>Terräng: \n" + state.getHoverTile().getTerrain().toString() + "<br />&nbsp;</html>");
                 break;
             case HoverTileUnit:
                 String outputTerrain = state.getHoverTile().getTerrain().toString();
@@ -184,11 +184,11 @@ public class Menu extends JPanel implements Observer, ActionListener, ChangeList
                     // Enemy unit hovered
                     Player owner = state.getHoverTile().getUnit().getOwner();
                     if(owner != null){
-                        tileLabel.setText("<html>Terrain: " + outputTerrain +
+                        tileLabel.setText("<html>Terräng: " + outputTerrain +
                                 "<br>Unit: Enemy unit, belongs to "+owner);
                     }
                     else{
-                        tileLabel.setText("<html>Terrain: " + outputTerrain +
+                        tileLabel.setText("<html>Terräng: " + outputTerrain +
                                 "<br>Unit: Enemy unit</html>");
                     }
 

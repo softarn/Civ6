@@ -17,6 +17,7 @@ public class StartScreen extends JFrame implements ActionListener{
 	private JPanel startPanel = new JPanel();
 	private ConnectView cv;
 	private Image backimg;
+	private MapEdit mapEdit;
 	
 	public StartScreen(){
 		super("Civ6 ");
@@ -60,11 +61,18 @@ public class StartScreen extends JFrame implements ActionListener{
 	
 	public void actionPerformed (ActionEvent ae){
 		if (ae.getSource() == singelButton){
-			System.out.println("SingelButton ");
+			
+			mapEdit = new MapEdit();
+			this.remove(startPanel);
+			this.add(mapEdit);
+			mapEdit.setVisible(true);
+			this.validate();
+			
+			/*System.out.println("SingelButton ");
             State.setOnline(false);
             this.dispose();
             Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
-            new Window(size.width,size.height);
+            new Window(size.width,size.height);*/
         }
 
 		else if (ae.getSource() == multiButton) {
