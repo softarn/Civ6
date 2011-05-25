@@ -79,8 +79,14 @@ public class MyPacketListener implements PacketListener{
         System.out.println("We was Bombarded!");
     }
 
-    public void casualtyReport(Result received){
+    public void casualtyReport(Result res){
         System.out.println("Report received");
+        gm.getView().add(new PopUpBubble(res.getBombX() + 135, 
+                res.getBombY() + 35, 
+                0, res.getHealthLost()), 0);
+        PhysicalUnit pu = gm.getTile(res.getBombX(), res.getBombY()).getUnit();
+        pu.setManPower(res.getHealthLost());
+        gm.getView().repaint();
     }
 
     public void lobbyUpdated(Result received){

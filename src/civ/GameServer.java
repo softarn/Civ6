@@ -33,18 +33,22 @@ class GameServer{
         return games;
     }
 
-    public static void battle(PhysicalUnit u1, PhysicalUnit u2, Tile t1, Tile t2){
+    public static boolean battle(PhysicalUnit u1, PhysicalUnit u2, Tile t1, Tile t2){
         if(State.isOnline()){
             Result result = null;
             try{
                 result = proxy.combatRequest(t1.getX(), t1.getY(), t2.getX(), t2.getY());
             }
             catch(FailedException fe){
-                System.out.println("Couldn't end turn");
+                System.out.println("Couldn't do battle");
+                return false;
             }
             u1.setManPower(result.getAttackerLeft());
-            u2.setManPower(result.getDefenderLeft());
+            if(u2 != null){
+                u2.setManPower(result.getDefenderLeft());
+            }
         }
+        return true;
     }
 
     public static void endTurn(){

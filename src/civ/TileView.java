@@ -85,9 +85,14 @@ public class TileView extends JPanel{
                 (double) maxY / origH);
         if(tile.isExplored()){
             if(tile.hasFog()){
+                g2.setColor(Color.GRAY);
+                g2.fillPolygon(aura);
+            }
+            else if(tile.hasShadow()){
                 terrain = tile.getTileFogImg();
                 g2.drawImage(terrain, 0, 0, this);
-            }else{
+            }
+            else{
                 terrain = tile.getTileImg();
                 g2.drawImage(terrain, 0, 0, this);
                 if(tile.getUnit() != null && tile.getUnit().isAlly()){
@@ -112,7 +117,7 @@ public class TileView extends JPanel{
             g2.fillPolygon(aura);
         }
 
-        if (tile.hasCity() && !tile.hasFog()){
+        if (tile.hasCity() && !tile.hasShadow()){
         	Image cityImg = tile.getCity().getImage();
             int h = cityImg.getHeight(null);
             int w = cityImg.getWidth(null);
@@ -121,7 +126,7 @@ public class TileView extends JPanel{
             int y = 150 - h;
             g2.drawImage(cityImg, x, y, this);
     	}
-        else if(tile.hasUnit() && !tile.hasFog()){
+        else if(tile.hasUnit() && !tile.hasShadow()){
             Image unitImg = tile.getUnitImg();
 
             int h = unitImg.getHeight(null);
