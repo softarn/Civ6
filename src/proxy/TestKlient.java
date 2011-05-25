@@ -3,9 +3,9 @@ package proxy;
 import java.util.*;
 
 class TestKlient{
-	String name, ip = "chylis.dyndns-at-work.com"; //"chylis.dyndns-at-work.com";//"softarn.mine.nu";
+	String name, ip = "localhost"; //"chylis.dyndns-at-work.com";//"softarn.mine.nu";
 	Proxy p;
-	int port = 1234;
+	int port = 1337;
 	boolean loop = true, lobby = true, inGame = false;
 	Scanner sc = new Scanner(System.in);
 	Scanner scan = new Scanner(System.in);
@@ -322,7 +322,7 @@ class TestKlient{
             System.out.println("Game closed");
         }
 
-	public void wasBombarded(Result res){
+	public void casualtyReport(Result res){
 		System.out.println("Du blev bombad!" + "\nPå ruta " + res.getBombX() + ";" + res.getBombY() + "\nLiv borttaget: " + res.getHealthLost());
 	}
 	}

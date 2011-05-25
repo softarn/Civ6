@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.awt.Image;
 import java.util.Random;
 
+import static civ.State.UnitState.UnitSelected;
+import static civ.State.UnitState.UnitUnSelected;
+
 class BarbarianType implements AbstractUnitType{
     private UnitType unitType;
     
@@ -67,6 +70,7 @@ class BarbarianType implements AbstractUnitType{
 }
 
 public class Barbarian extends PhysicalUnit{
+    private static final State state = State.getInstance();
     public Tile tile;
     public Barbarian(Tile tile){
         super(new BarbarianType());
@@ -74,6 +78,12 @@ public class Barbarian extends PhysicalUnit{
     }
 
     public void reset(){
+        PhysicalUnit unit = null;
+        if(state.getUnitState() == UnitSelected){
+            unit = state.getSelectedUnit();
+        }
+        state.setSelectedUnit(this);
+        state.setUnitState(UnitSelected);
         GameMap gm = GameMap.getInstance();
         ArrayList<Tile> neighbours = gm.getNeighbours(tile, 1, true);
         currentMovementPoint = type.getMovementPoints();
@@ -84,9 +94,18 @@ public class Barbarian extends PhysicalUnit{
             }
         }
         Random r = new Random();
-        int i = r.nextInt(neighbours.size());
-        tile.setUnit(null);
-        tile = neighbours.get(i);
-        tile.setUnit(this);
+        int i;
+        try{
+            i = r.nextInt(neighbours.size());
+            tile.setUnit(null);
+            tile = neighbours.get(i);
+            tile.setUnit(this);
+        }
+        catch(IllegalArgumentException iae){
+        }
+        if(unit != null){
+            state.setUnitState(UnitSelected);
+            state.setSelectedUnit(unit);
+        }
     }
 }

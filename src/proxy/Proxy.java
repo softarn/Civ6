@@ -146,7 +146,40 @@ public class Proxy
 	{
 		try
 		{
-			send(new Packet((byte)13));
+			Packet toSend = new Packet((byte)13);
+			toSend.add(20);
+			toSend.add(20);
+			send(toSend);
+			return receiver.getResult();
+		}
+		catch(FailedException fe)
+		{
+			throw fe;
+		}
+	}
+
+	public Result startGame(int width, int height) throws FailedException
+	{
+		try
+		{
+			Packet toSend = new Packet((byte)13);
+			if(width < 20)
+			{
+				toSend.add(20);
+			}
+			else
+			{
+				toSend.add(width);
+			}
+			if(height < 20)
+			{
+				toSend.add(20);
+			}
+			else
+			{
+				toSend.add(height);
+			}
+			send(toSend);
 			return receiver.getResult();
 		}
 		catch(FailedException fe)
@@ -316,6 +349,38 @@ public class Proxy
 	    try
 	    {
 		    Packet toSend = new Packet((byte)29);
+		    toSend.add(px);
+		    toSend.add(py);
+		    send(toSend);
+		    return receiver.getResult();
+	    }
+	    catch(FailedException fe)
+	    {
+		    throw fe;
+	    }
+    }
+
+    public Result fortify(int px, int py) throws FailedException
+    {
+	    try
+	    {
+		    Packet toSend = new Packet((byte)31);
+		    toSend.add(px);
+		    toSend.add(py);
+		    send(toSend);
+		    return receiver.getResult();
+	    }
+	    catch(FailedException fe)
+	    {
+		    throw fe;
+	    }
+    }
+
+    public Result unFortify(int px, int py) throws FailedException
+    {
+	    try
+	    {
+		    Packet toSend = new Packet((byte)32);
 		    toSend.add(px);
 		    toSend.add(py);
 		    send(toSend);

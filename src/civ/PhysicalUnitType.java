@@ -38,7 +38,6 @@ public enum PhysicalUnitType implements AbstractUnitType{
         Wagontrain( "Wagon Train",  "Other", 0,   0, 0, 0, 2, 100, 3);
 
     private UnitType unitType;
-    private Hold hold;
     private int cost;
 
     private PhysicalUnitType(String name, 
@@ -53,12 +52,6 @@ public enum PhysicalUnitType implements AbstractUnitType{
         this.unitType = new UnitType(name, category, maxManPower, attack, 
                 defence, range, movementPoints, inventorySize, this);
         this.cost = cost;
-        if(name.equals("Siege Tower") || name.equals("Galley") || name.equals("Caravel")){
-            this.hold = new Hold();
-        }
-        else{
-            this.hold = null;
-        }
 
     }
 
@@ -112,10 +105,6 @@ public enum PhysicalUnitType implements AbstractUnitType{
 
     public boolean isMounted(){
         return unitType.isMounted();
-    }
-
-    public Hold getHold(){
-        return hold;
     }
 
     public int getCost(){

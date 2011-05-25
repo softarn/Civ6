@@ -131,6 +131,12 @@ public class Tile implements Comparable<Tile>{
                 state.setUnitState(UnitUnSelected);
             }
         }
+        else if(hasUnit() && unit.getType().getCategory().equals("Boat")){
+            if(pu != null && pu.isAlly()){
+                Hold hold = getUnit().getHold();
+                hold.addUnit(pu);
+            }
+        }
         else{
             if(pu != null && pu.isAlly()){
                 setExplored(true);

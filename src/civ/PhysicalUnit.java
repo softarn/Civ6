@@ -16,8 +16,7 @@ public class PhysicalUnit implements Comparable<PhysicalUnit>{
     //private HashMap<ResourceType, Integer> inventory;
     private int currentInvSize;
     private boolean fortified;
-    //private SiegeTower st?
-    //private City city;
+    private Hold hold;
 
     /** Used to create barbarians */
     public PhysicalUnit(BarbarianType type){ 
@@ -44,6 +43,12 @@ public class PhysicalUnit implements Comparable<PhysicalUnit>{
         this.currentInvSize = type.getInventorySize();
         this.manPower = type.getMaxManPower();
         this.view = new PhysicalUnitView(this);
+        if(type.getName().equals("Siege Tower") || type.getName().equals("Galley") || type.getName().equals("Caravel")){
+            this.hold = new Hold();
+        }
+        else{
+            this.hold = null;
+        }
     }
 
     public PhysicalUnit(PhysicalUnit other){
@@ -55,6 +60,7 @@ public class PhysicalUnit implements Comparable<PhysicalUnit>{
         this.currentInvSize = other.currentInvSize;
         this.allegiance = other.allegiance;
         this.view = other.getView();
+        this.hold = other.hold;
     }
 
     /**
@@ -69,6 +75,10 @@ public class PhysicalUnit implements Comparable<PhysicalUnit>{
         this.currentInvSize = type.getInventorySize();
         this.manPower = other.getManPower();
         this.view = new PhysicalUnitView(this);
+    }
+
+    public Hold getHold(){
+        return hold;
     }
 
     public boolean isAlly(){

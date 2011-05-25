@@ -36,8 +36,8 @@ public class Round{
         System.out.println("I has new turn!");
         
         if(State.isOnline()){
-        JOptionPane.showMessageDialog(null,"Nu är det din tur ", "Spelmeddelande",
-            JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null,"Nu är det din tur ", "Spelmeddelande",
+                JOptionPane.INFORMATION_MESSAGE);
         }
         
         gm.exploreMap();
@@ -134,6 +134,7 @@ public class Round{
                         !t.isExplored() &&
                         !t.hasUnit()){
                     t.setUnit(new Barbarian(t));
+                    System.out.println("Spawning a barbarian of type: " + t.getUnit().getType().getCategory());
                     return;
                 }
             }

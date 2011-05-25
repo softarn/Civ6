@@ -217,14 +217,17 @@ public class GameMap{
             // Add all surrounding tiles
             Tile t = getTile(tile.getX() - off[0], tile.getY() - off[1]);
             if(t != null)
-                if(terrain && state.getUnitState() == UnitSelected){
-                    if(t.getTerrain().isTraversible(state.getSelectedUnit())){
-                        result.add(t);
-                    }
-                    else if(t.hasUnit() && 
-                            t.getUnit().getType().getCategory().equals("Boat") && 
-                            t.getUnit().isAlly()){
-                        result.add(t);
+                if(terrain){
+                    if(state.getUnitState() == UnitSelected){
+                        if(t.getTerrain().isTraversible(state.getSelectedUnit()) && !t.hasUnit()){
+                            result.add(t);
+                        }
+                        else if(t.hasUnit() && 
+                                t.getUnit().getType().getCategory().equals("Boat") && 
+                                t.getUnit().isAlly() && 
+                                state.getSelectedUnit().isAlly()){
+                            result.add(t);
+                        }
                     }
                 }
                 else{

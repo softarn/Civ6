@@ -192,14 +192,17 @@ public class Battle {
 
         if(u1.getType().getCategory().equals("Ranged") ||
                 u1.getType().getName().equals("Trireme")){
+            System.out.println("Ranged");
             winnerId = ranged();
                 }
         else if(u1.getType().getCategory().equals("Artillery") ||
                 u1.getType().getName().equals("Galley") ||
                 u1.getType().getName().equals("Caravel")){
+            System.out.println("Bombardment");
             winnerId = bombardment();
                 }
         else{
+            System.out.println("Normal");
             winnerId = normal();
         }
 

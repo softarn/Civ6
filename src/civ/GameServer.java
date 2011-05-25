@@ -86,6 +86,21 @@ class GameServer{
         return true;     
     }
 
+    public static boolean makeMoveOut(PhysicalUnit unit, Tile t1, Tile t2){
+        if(State.isOnline()){
+            Result r = new Result();
+            try{
+                proxy.moveOutUnit(t1.getX(), t1.getY(), unit.getType().getName(), 
+                        unit.getManPower(), t2.getX(), t2.getY());
+            }
+            catch(FailedException fe){
+                System.out.println("Couldn't move out there");
+            }
+            return r.getOk();
+        }
+        return true;
+    }
+
     public static boolean makeMove(ArrayList<Tile> tiles){
         if(State.isOnline()){
             ArrayList<Integer> moves = new ArrayList<Integer>();

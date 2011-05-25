@@ -39,6 +39,14 @@ public class City {
         cityView = new CityView(this);
     }
 
+    public void setName(String newName){
+        name = newName;
+    }
+
+    public void setOwner(Player newOwner){
+        owner = newOwner;
+    }
+
     public void count(){
         if(this.cost == 1){
             //spawn unit here

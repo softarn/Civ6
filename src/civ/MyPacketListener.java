@@ -44,16 +44,30 @@ public class MyPacketListener implements PacketListener{
             if(received.existCity(i)){
                 String theOwner = received.getCityOwner(i);
                 String theName = received.getCityName(i);
-                gm.getTile(tileXValue, tileYValue).setCity(new City(theName, Player.getInstance(theOwner)));
+                Tile tile = gm.getTile(tileXValue, tileYValue);
+                if(tile.hasCity()){
+                    tile.getCity().setName(theName);
+                    tile.getCity().setOwner(Player.getInstance(theOwner));
+                }
+                else{
+                    tile.setCity(new City(theName, Player.getInstance(theOwner)));
+                }
 
-                /*List<String> buildings = received.getCityBuildings(i);
-                  int amountCityUnits = received.getAmountCityUnits(i);
-                  for(int j=0; j<amountCityUnits; j++){
-                  String cityUnitOwner = received.getCityUnitOwner(i, j);
-                  String cityUnitType = received.getCityUnitType(i, j);
-                  int cityUnitManpower = received.getCityUnitManPower(i, j);
-                  gm.getTile(tileXValue, tileYValue).setCity();
-                  }*/
+                //List<String> buildings = received.getCityBuildings(i);
+
+                Hold hold = tile.getCity().getHold();
+                hold.clear();
+                int amountCityUnits = received.getAmountCityUnits(i);
+                for(int j=0; j<amountCityUnits; j++){
+                    String cityUnitOwner = received.getCityUnitOwner(i, j);
+                    String cityUnitType = received.getCityUnitType(i, j);
+                    int cityUnitManpower = received.getCityUnitManPower(i, j);
+                    PhysicalUnit pu = new PhysicalUnit(cityUnitType, Player.getInstance(cityUnitOwner));
+                    pu.setManPower(cityUnitManpower);
+                    hold.addUnit(pu);
+                    System.out.println("Found a "+pu.getType().getName());
+                }
+  
             }
             //String improvement = received.getImprovement(i);
         }
@@ -63,6 +77,10 @@ public class MyPacketListener implements PacketListener{
 
     public void wasBombarded(Result received){
         System.out.println("We was Bombarded!");
+    }
+
+    public void casualtyReport(Result received){
+        System.out.println("Report received");
     }
 
     public void lobbyUpdated(Result received){

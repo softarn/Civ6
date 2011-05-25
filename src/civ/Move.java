@@ -13,6 +13,9 @@ public class Move {
     public static boolean makeMove(PhysicalUnit u1, Tile t1, Tile t2){
         int length = moveLength(t1, t2, u1.getCurrentMovementPoint());
         System.out.println("Moving unit");
+        if(!GameServer.makeMoveOut(u1, t1, t2)){
+            return false;
+        }
         if(length == -1){
             return false;
         }

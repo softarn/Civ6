@@ -40,6 +40,10 @@ public class Hold{
         return true;
     }
 
+    public void clear(){
+        units.clear();
+    }
+
     public void selUnitIndex(int index){
         if(index >= units.size() || index < -1){
             return;

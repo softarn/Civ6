@@ -289,10 +289,13 @@ public class PhysicalUnitView extends JPanel implements Observer, ActionListener
             Tile tile = state.getSelectedTile();
             if(GameServer.buildCity(tile, "City Name Here")){
                 tile.setUnit(null);
-                state.setUnitState(UnitUnSelected);
                 tile.setCity(new City("City Name Here", Round.getMe()));
                 state.setSelectedCity(tile.getCity());
                 state.setCityState(CitySelected);
+                for(Tile t : gm.getNeighbours(tile, 3)){
+                    t.setExplored(true);
+                    t.getView().repaint();
+                }
             }
         }
     }
