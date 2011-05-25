@@ -26,7 +26,7 @@ class MapEdit  extends JPanel{
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		add(Box.createRigidArea(new Dimension(70,30)));
 		
-		min = 1;
+		min = 2;
 		max = 30;
 		init = 15;
 		intSize=0;

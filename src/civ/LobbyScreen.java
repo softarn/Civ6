@@ -13,10 +13,10 @@ import proxy.FailedException;
 class LobbyScreen extends JPanel implements ActionListener {
 	
 	private JPanel buttonPanel = new JPanel(); 	
-
-	private JButton hostButton = new JButton("Host ");
-	private JButton joinButton = new JButton("Join ");
-	private JButton refreshButton = new JButton("Refresh");
+	
+	private JButton hostButton = new JButton("Starta eget spel");
+	private JButton joinButton = new JButton("Gå med i spel");
+	private JButton refreshButton = new JButton("Uppdatera");
 	
 	private String[] players = {};
 	
@@ -27,7 +27,7 @@ class LobbyScreen extends JPanel implements ActionListener {
 	private boolean startEnabled;
  	
 	public LobbyScreen(){
-		setLayout(new BorderLayout());
+		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
 		scp.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		hostButton.addActionListener(this);
@@ -37,12 +37,17 @@ class LobbyScreen extends JPanel implements ActionListener {
         lobbyList.setListData(GameServer.listGames());
 		lobbyList.setSelectedIndex(1);
 		
+		buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
 		buttonPanel.add(hostButton);
+		buttonPanel.add(Box.createRigidArea(new Dimension(110,10)));
 		buttonPanel.add(joinButton);
+		buttonPanel.add(Box.createRigidArea(new Dimension(10,10)));
 		buttonPanel.add(refreshButton);
+		buttonPanel.add(Box.createRigidArea(new Dimension(10,10)));
 		
-		add(buttonPanel, BorderLayout.SOUTH);
-		add(scp, BorderLayout.NORTH);	
+		add(scp);
+		add(buttonPanel);
+		
 	}
 
 	public void actionPerformed (ActionEvent ae) {
