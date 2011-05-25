@@ -41,10 +41,12 @@ class GlobalView extends JPanel implements ActionListener{
     
     //private JLabel goldLabel;
     private JLabel yearLabel;
+    private JLabel bcLabel;
     private JLabel scienceLabel;
     //private JLabel amountCitiesLabel;
 
     private int scienceValue = 30;    
+    private int bc = 476;
     
     public GlobalView(){
         super();
@@ -55,9 +57,14 @@ class GlobalView extends JPanel implements ActionListener{
         //scienceBar.setString("Forskning " + scienceValue+ "%");
         //scienceBar.setStringPainted(true);
         //scienceBar.setValue(scienceValue);
+    	
         
         // Labels
         yearLabel = new JLabel("Runda nummer: " + Round.getTurn()+ " ");
+        bcLabel = new JLabel("År: " + getBc());
+        
+        System.out.println("BC: "+ getBc());
+        
         //scienceLabel = new JLabel("Forskning: Segling ");
         //goldLabel = new JLabel("<html>Gold: $ 1000 <BR> Inkomst 25 $ / runda <BR> </html>");
         
@@ -124,6 +131,7 @@ class GlobalView extends JPanel implements ActionListener{
         //sciencePanel.add(scienceLabel);
         //sciencePanel.add(scienceBar);
         //sciencePanel.add(scienceButton);
+        yearPanel.add(bcLabel);
         yearPanel.add(yearLabel);
         yearPanel.add(endturn);
         
@@ -163,6 +171,9 @@ class GlobalView extends JPanel implements ActionListener{
         yearLabel.setAlignmentX(yearPanel.RIGHT_ALIGNMENT);
         yearLabel.setAlignmentY(yearPanel.CENTER_ALIGNMENT);
         
+        bcLabel.setAlignmentX(yearPanel.RIGHT_ALIGNMENT);
+        bcLabel.setAlignmentY(yearPanel.CENTER_ALIGNMENT);
+        
         endturn.setAlignmentX(yearPanel.RIGHT_ALIGNMENT);        
         endturn.setAlignmentY(yearPanel.BOTTOM_ALIGNMENT);
         
@@ -171,11 +182,18 @@ class GlobalView extends JPanel implements ActionListener{
     public void update(){
         yearLabel.setText("Runda nummer: " + Round.getTurn()+ " ");
         yearLabel.repaint();
+        bcLabel.setText("År: " + getBc());
+        bcLabel.repaint();
+    }
+    
+    public int getBc(){
+    	return bc;	
     }
 
     public void actionPerformed(ActionEvent ae){
         if(endturn == ae.getSource()){
             Round.next();
+            bc++;
         }
         
         else if (placeHolderButton == ae.getSource()){
