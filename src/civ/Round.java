@@ -22,6 +22,7 @@ public class Round{
     private static GameMap gm = GameMap.getInstance();
 
     static void next(){
+        countAll();
         GameServer.endTurn(); 
         if(!State.isOnline()){
             resume();
@@ -48,7 +49,6 @@ public class Round{
                 spawnBarbarian();
             }
         }
-        countAll();
         ++turn;
         Component[] comps = Menu.getInstance().getComponents();
         for(Component c : comps){

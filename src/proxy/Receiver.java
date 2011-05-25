@@ -87,6 +87,8 @@ public class Receiver implements Runnable
 		{
 			int header = m_inStream.read();		// First the header.
 
+            // System.out.println("Header: " + header);
+
 			// Header 3, welcome to the real world.
 			if(header == 3)
 			{

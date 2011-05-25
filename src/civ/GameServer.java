@@ -76,7 +76,10 @@ class GameServer{
         if(State.isOnline()){
             int x = tile.getX(), y = tile.getY();
             try{
+                System.out.println("Spawn damnit!");
+                System.out.println(x + ":" + y + " = Player: " + Round.getMe() + ", Type: " + type.getName() + ", Manpower: " + type.getMaxManPower());
                 proxy.madeUnit(x, y, Round.getMe().toString(), type.getName(), type.getMaxManPower());
+                System.out.println("Done!");
             }
             catch(FailedException fe){
                 System.out.println("Couldn't place unit");

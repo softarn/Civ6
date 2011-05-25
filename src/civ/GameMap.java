@@ -223,7 +223,9 @@ public class GameMap{
                             result.add(t);
                         }
                         else if(t.hasUnit() && 
-                                t.getUnit().getType().getCategory().equals("Boat") && 
+                                (t.getUnit().getType().getName().equals("Siege Tower") || 
+                                 t.getUnit().getType().getName().equals("Galley") || 
+                                 t.getUnit().getType().getName().equals("Caravel")) &&
                                 t.getUnit().isAlly() && 
                                 state.getSelectedUnit().isAlly()){
                             result.add(t);

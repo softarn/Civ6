@@ -52,14 +52,15 @@ public class City {
             //spawn unit here
             System.out.println("Spawning unit");
             PhysicalUnit pu = new PhysicalUnit(type, Round.getMe());
-            tile.getCity().getHold().addUnit(pu);
-            tile.getView().repaint();
-            GameServer.makeUnit(tile, type);
-            int choice = JOptionPane.showConfirmDialog( null, "En ny enhet, " + type.getName() + ", har blivit skapad. Vill du gå till dess position?", "Enhet skapad", JOptionPane.YES_NO_OPTION);
-            if(choice == 0){
-                tile.select();
-                gm.getView().centerOn(tile);
-                Menu.getInstance().getTabs().setSelectedComponent(pu.getView());
+            if(GameServer.makeUnit(tile, type)){
+                tile.getCity().getHold().addUnit(pu);
+                tile.getView().repaint();
+                int choice = JOptionPane.showConfirmDialog( null, "En ny enhet, " + type.getName() + ", har blivit skapad. Vill du gå till dess position?", "Enhet skapad", JOptionPane.YES_NO_OPTION);
+                if(choice == 0){
+                    tile.select();
+                    gm.getView().centerOn(tile);
+                    Menu.getInstance().getTabs().setSelectedComponent(pu.getView());
+                }
             }
         }
         if(cost >= 0){

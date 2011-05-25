@@ -19,8 +19,8 @@ import static civ.State.TileState.TileUnSelected;
 
 
 public class MyPacketListener implements PacketListener{
+    GameMap gm = GameMap.getInstance();
     public void newTurn(Result received){
-        GameMap gm = GameMap.getInstance();
         gm.clearTiles();
         int numberStartingPositions = received.getNumberTiles();
         for(int i=0; i<numberStartingPositions; i++){
