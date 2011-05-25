@@ -82,6 +82,7 @@ public class Barbarian extends PhysicalUnit{
         if(state.getUnitState() == UnitSelected){
             unit = state.getSelectedUnit();
         }
+        state.setUnitState(UnitUnSelected);
         state.setSelectedUnit(this);
         state.setUnitState(UnitSelected);
         GameMap gm = GameMap.getInstance();
@@ -103,9 +104,10 @@ public class Barbarian extends PhysicalUnit{
         }
         catch(IllegalArgumentException iae){
         }
+        state.setUnitState(UnitUnSelected);
         if(unit != null){
-            state.setUnitState(UnitSelected);
             state.setSelectedUnit(unit);
+            state.setUnitState(UnitSelected);
         }
     }
 }

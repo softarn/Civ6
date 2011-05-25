@@ -128,14 +128,14 @@ public class Menu extends JPanel implements Observer, ActionListener, ChangeList
         // ADD CONTENT
         globalViewObject = new GlobalView();
 
-        tabbedPane.addTab(" TestLabel ", null, unitView, "Inget objekt markerat ");
+        //tabbedPane.addTab(" TestLabel ", null, unitView, "Inget objekt markerat ");
         tabbedPane.setPreferredSize(new Dimension(580,200));
         tabbedPane.addChangeListener(this);
 
         // East
-        eastPanel.setLayout(new BorderLayout());
-        eastPanel.add(globalViewObject, BorderLayout.EAST);
-        eastPanel.setOpaque(false);
+        //eastPanel.setLayout(new BorderLayout());
+        //eastPanel.add(globalViewObject, BorderLayout.EAST);
+        //eastPanel.setOpaque(false);
 
         // West
         westPanel.setLayout(new BorderLayout());
@@ -146,7 +146,8 @@ public class Menu extends JPanel implements Observer, ActionListener, ChangeList
 
         add(north, BorderLayout.NORTH);      
         add(westPanel,  BorderLayout.WEST);
-        add(eastPanel, BorderLayout.EAST);
+        //add(eastPanel, BorderLayout.EAST);
+        add(globalViewObject, BorderLayout.EAST);
         add(createUnit, BorderLayout.CENTER);
 
         state.addObserver(this);

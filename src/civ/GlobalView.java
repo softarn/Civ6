@@ -167,6 +167,11 @@ class GlobalView extends JPanel implements ActionListener{
         endturn.setAlignmentY(yearPanel.BOTTOM_ALIGNMENT);
         
     } // public
+    
+    public void update(){
+        yearLabel.setText("Runda nummer: " + Round.getTurn()+ " ");
+        yearLabel.repaint();
+    }
 
     public void actionPerformed(ActionEvent ae){
         if(endturn == ae.getSource()){

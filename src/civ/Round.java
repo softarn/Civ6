@@ -1,6 +1,7 @@
 package civ;
 
 import java.util.Random;
+import java.awt.Component;
 import javax.swing.JOptionPane;
 
 import static civ.State.CityState.CitySelected;
@@ -49,6 +50,12 @@ public class Round{
         }
         countAll();
         ++turn;
+        Component[] comps = Menu.getInstance().getComponents();
+        for(Component c : comps){
+            if(c instanceof GlobalView){
+                ((GlobalView)c).update();
+            }
+        }
         System.out.println("Resuming");
     }
 
