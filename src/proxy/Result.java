@@ -114,6 +114,10 @@ public class Result{
 		temp.addUnit(unit);
 	}
 
+	public void prepareForCityUnits(){
+		cityUnits = new ArrayList<Unit>();
+	}
+
 	public void addCityUnit(Unit unit){
 		cityUnits.add(unit);
 	}
