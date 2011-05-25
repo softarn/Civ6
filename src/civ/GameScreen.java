@@ -11,42 +11,76 @@ import proxy.FailedException;
 
 class GameScreen extends JPanel implements ActionListener {
     private static GameScreen object;
-	private JLabel userLabel = new JLabel("Users: 5");
-	private JButton startButton = new JButton("Starta ");
-	private JButton lockButton = new JButton("Lås ");
+    
+	private JLabel userLabel;
+	private JLabel civLabel;
+	private JLabel nameLabel;
 	
-	private boolean startEnabled = true; 
-	private boolean toggle = true; 
+	private JTextField nameField;
+	private JTextField civField;
 	
-	private JPanel topPanel = new JPanel();
+	private JButton startButton;
+	private JButton lockButton;
+	
+	private boolean startEnabled = true;
+	private boolean toggle = true;
+	
 	private JPanel listPanel = new JPanel();
 	private JPanel buttonPanel = new JPanel();
+	private JPanel textPanel = new JPanel();
+	private JPanel rightPanel = new JPanel();
 	
 	private String[] players = {};
 		
 	private JList list = new JList(players);
 	
 	private GameScreen(){
-		setLayout(new BorderLayout());
+		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
-		topPanel.add(userLabel);
-
+		nameField = new JTextField("amoros");
+		nameField.setBackground(Color.LIGHT_GRAY);
+		civField = new JTextField("Persians");
+		
+		startButton = new JButton("Starta");
+		lockButton = new JButton("Lås");
+		
+		int arrLength = Round.getPlayers().length;
+		userLabel  = new JLabel("Antal spelare:  " + Integer.toString(arrLength) + " ");
+		
+		civLabel = new JLabel("Civilsationens namn: ");
+		nameLabel = new JLabel("Spelarnamn: ");
+		
+		list.setMinimumSize(new Dimension(20,20));
+		
+		textPanel.setLayout(new BoxLayout(textPanel, BoxLayout.Y_AXIS));
+		textPanel.add(nameLabel);
+		textPanel.add(nameField);
+		textPanel.add(civLabel);
+		textPanel.add(civField);
+		
+		rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.Y_AXIS));
+		rightPanel.add(Box.createRigidArea(new Dimension(10,10)));
+		rightPanel.add(userLabel);
+		rightPanel.add(Box.createRigidArea(new Dimension(20,10)));
+		rightPanel.add(list);
+		rightPanel.add(Box.createRigidArea(new Dimension(10,10)));
+		
 		update();
-		listPanel.add(list);
+		listPanel.add(textPanel);
+		listPanel.add(rightPanel);
 		
 		buttonPanel.add(startButton);
 		buttonPanel.add(lockButton);
+		
 		startButton.addActionListener(this);
 		lockButton.addActionListener(this);
 		
-		topPanel.setLayout(new FlowLayout());
 		listPanel.setLayout(new FlowLayout());
 		buttonPanel.setLayout(new FlowLayout());
 		
-		add(topPanel, BorderLayout.NORTH);
-		add(listPanel, BorderLayout.CENTER);
-		add(buttonPanel, BorderLayout.SOUTH);
-
+		add(listPanel);
+		add(buttonPanel);
+		
 	}
 
     public void init(boolean startEnabled){

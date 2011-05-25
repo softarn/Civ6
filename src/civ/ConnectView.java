@@ -4,6 +4,7 @@ import javax.swing.*;
 
 import java.awt.event.*;
 import java.awt.*;
+import java.awt.GridLayout;
 
 import proxy.Proxy;
 import proxy.Result;
@@ -11,26 +12,31 @@ import proxy.FailedException;
 
 class ConnectView extends JPanel implements ActionListener{
 	
-	private JLabel connectLabel = new JLabel("Anslut till server ");
-	private JLabel serverLabel = new JLabel("Server IP: ");
-	private JLabel portLabel = new JLabel("Port: ");
-	private JLabel usernameLabel = new JLabel("Username: ");
+	private JLabel connectLabel = new JLabel("Anslut till server");
+	private JLabel serverLabel = new JLabel("Server IP:");
+	private JLabel portLabel = new JLabel("Port:");
+	private JLabel usernameLabel = new JLabel("Username:");
 	
-	private JButton connectButton = new JButton("Anslut ");
+	private JButton connectButton = new JButton("Anslut");
 	
-	private JTextField serverLine = new JTextField("dvk.fishface.se");
+	private JTextField serverLine = new JTextField("softarn.mine.nu");
 	private JTextField portLine = new JTextField("1339");
-	private JTextField usernameLine = new JTextField("amoros");
+	private JTextField usernameLine = new JTextField();
 	
 	private int port;
 	private Proxy p;
 	private Result returned;
 	
+	private JPanel topPanel;
+	private JPanel middlePanel;
+	
 	private LobbyScreen ls;
 
 	public ConnectView(){
-		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		setLayout(new BorderLayout());
 		
+		middlePanel = new JPanel();
+		middlePanel.setLayout(new BoxLayout(middlePanel, BoxLayout.Y_AXIS));
 		
         /*try{
             returned = p.connect(usernameLine.getText());
@@ -40,23 +46,27 @@ class ConnectView extends JPanel implements ActionListener{
             System.out.println(fe);
         }*/
         
+        middlePanel.add(Box.createRigidArea(new Dimension(10,10)));
         connectButton.addActionListener(this);
         
-        serverLabel.setLabelFor(serverLine);
-        portLabel.setLabelFor(portLine);
-        usernameLabel.setLabelFor(usernameLine);
+	    middlePanel.add(usernameLabel);
+        middlePanel.add(Box.createRigidArea(new Dimension(10,10)));
+        middlePanel.add(usernameLine);
+        middlePanel.add(Box.createRigidArea(new Dimension(10,10)));
+        middlePanel.add(serverLabel);
+        middlePanel.add(Box.createRigidArea(new Dimension(10,10)));
+        middlePanel.add(serverLine);
+        middlePanel.add(Box.createRigidArea(new Dimension(10,10)));
+        middlePanel.add(portLabel);
+        middlePanel.add(Box.createRigidArea(new Dimension(10,10)));
+		middlePanel.add(portLine);
+		
+        middlePanel.add(Box.createRigidArea(new Dimension(10,10)));
+		middlePanel.add(connectButton);
+        middlePanel.add(Box.createRigidArea(new Dimension(80,10)));
         
-        add(serverLabel);
-        add(portLabel);
-        add(usernameLabel);
-		add(connectLabel);
+		add(middlePanel, BorderLayout.NORTH);
 		
-		add(connectButton);
-		
-        add(serverLine);
-		add(portLine);
-		add(usernameLine);
-
 	}
 
 	// Here goes proxy, package and so forth
