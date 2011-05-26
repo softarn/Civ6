@@ -19,7 +19,7 @@ class ConnectView extends JPanel implements ActionListener{
 	
 	private JButton connectButton = new JButton("Anslut");
 	
-	private JTextField serverLine = new JTextField("softarn.mine.nu");
+	private JTextField serverLine = new JTextField("dvk.fishface.se");
 	private JTextField portLine = new JTextField("1339");
 	private JTextField usernameLine = new JTextField();
 	

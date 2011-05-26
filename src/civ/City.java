@@ -26,7 +26,7 @@ public class City {
     public City(String name, Player owner) {
         this.name = name;
         this.owner = owner;
-    	defence = 100;
+			defence = 100;
         Round.addCity(this);
     	
         try {
