@@ -28,7 +28,7 @@ class MapEdit  extends JPanel{
 		
 		min = 2;
 		max = 30;
-		init = 15;
+		init = 20;
 		intSize=0;
 		
 		jSlide = new JSlider(JSlider.HORIZONTAL,
