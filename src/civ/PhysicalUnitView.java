@@ -102,11 +102,13 @@ public class PhysicalUnitView extends JPanel implements Observer, ActionListener
 
     private JPanel createUpperPane(){
         JPanel panel = new JPanel();
-        if(pUnit.getType().getName().equals("Settler")){
+        /*if(pUnit.getType().getName().equals("Settler")){
             panel.setBorder(BorderFactory.createTitledBorder("Strid:"));
             panel.setPreferredSize(new Dimension(135, 99));
             return panel;
-        }
+        }*/
+       
+        
         panel.setBorder(BorderFactory.createTitledBorder("Strid:"));
         panel.setLayout(new BorderLayout());
 
@@ -124,6 +126,11 @@ public class PhysicalUnitView extends JPanel implements Observer, ActionListener
         middle.add(range);
         middle.add(Box.createRigidArea(new Dimension(0,8)));
         middle.add(defence);
+        
+        if(pUnit.getType().getName().equals("Settler")){
+            defButton.setEnabled(false);
+            atkButton.setEnabled(false);
+        }
 
         JPanel right = new JPanel();
         right.setLayout(new BoxLayout(right, BoxLayout.PAGE_AXIS));
@@ -219,6 +226,11 @@ public class PhysicalUnitView extends JPanel implements Observer, ActionListener
     public void update(Observable obs, Object obj){
         if(obs == state){
             moveButton.setEnabled(true);
+            
+            if(pUnit.getType().getName().equals("Settler")){
+            	defButton.setEnabled(false);
+            	atkButton.setEnabled(false);
+            }
             atkButton.setEnabled(true);
 
             if(state.getUnitState() == UnitSelected){

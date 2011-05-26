@@ -29,7 +29,7 @@ class MapEdit  extends JPanel{
 		min = 2;
 		max = 30;
 		init = 20;
-		intSize=0;
+		intSize = 0;
 		
 		jSlide = new JSlider(JSlider.HORIZONTAL,
 			min, max, init);	
@@ -81,10 +81,10 @@ class MapEdit  extends JPanel{
 	}
 	
 	class SlideListener implements ChangeListener{
-		public void stateChanged(ChangeEvent e) {
+		public void stateChanged(ChangeEvent e){
         JSlider source = (JSlider)e.getSource();
         
-        	if (!source.getValueIsAdjusting()) {
+        	if (!source.getValueIsAdjusting()){
             	intSize = (int)source.getValue();
             	System.out.println(intSize);
         	}
@@ -92,8 +92,14 @@ class MapEdit  extends JPanel{
     }
     
 	public void setMapSize(){
-		GameMap.getInstance().setHeight(intSize);
-		GameMap.getInstance().setWidth(intSize);
+		if(intSize == 0){
+			GameMap.getInstance().setHeight(init);
+			GameMap.getInstance().setWidth(init);
+		}
+		else {
+			GameMap.getInstance().setHeight(intSize);
+			GameMap.getInstance().setWidth(intSize);				
+		}
 	}
     
     class ButtonListener implements ActionListener{
