@@ -21,6 +21,7 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.SwingConstants;
 import javax.swing.Popup;
 import javax.swing.PopupFactory;
+import javax.swing.JOptionPane;
 
 import java.util.Observer;
 import java.util.Observable;
@@ -62,9 +63,11 @@ public class PhysicalUnitView extends JPanel implements Observer, ActionListener
     private JLabel range = new JLabel();
     private JLabel attack = new JLabel();
     private JLabel movement = new JLabel();
+    
+    private String cityName = new String("");
 
     private Popup popup;
-
+    
     public PhysicalUnitView(PhysicalUnit pu){
         pUnit = pu;
         JPanel namePane = new JPanel();
@@ -85,7 +88,8 @@ public class PhysicalUnitView extends JPanel implements Observer, ActionListener
 
         upperPane = createUpperPane();
         lowerPane = createLowerPane();
-
+       
+        
         leftPane.setLayout(new BoxLayout(leftPane, BoxLayout.Y_AXIS));
         leftPane.add(namePane);
         leftPane.add(imgPane);
@@ -102,11 +106,13 @@ public class PhysicalUnitView extends JPanel implements Observer, ActionListener
 
     private JPanel createUpperPane(){
         JPanel panel = new JPanel();
-        if(pUnit.getType().getName().equals("Settler")){
+        /*if(pUnit.getType().getName().equals("Settler")){
             panel.setBorder(BorderFactory.createTitledBorder("Strid:"));
             panel.setPreferredSize(new Dimension(135, 99));
             return panel;
-        }
+        }*/
+       
+        
         panel.setBorder(BorderFactory.createTitledBorder("Strid:"));
         panel.setLayout(new BorderLayout());
 
@@ -124,6 +130,11 @@ public class PhysicalUnitView extends JPanel implements Observer, ActionListener
         middle.add(range);
         middle.add(Box.createRigidArea(new Dimension(0,8)));
         middle.add(defence);
+        
+        if(pUnit.getType().getName().equals("Settler")){
+            defButton.setEnabled(false);
+            atkButton.setEnabled(false);
+        }
 
         JPanel right = new JPanel();
         right.setLayout(new BoxLayout(right, BoxLayout.PAGE_AXIS));
@@ -219,7 +230,15 @@ public class PhysicalUnitView extends JPanel implements Observer, ActionListener
     public void update(Observable obs, Object obj){
         if(obs == state){
             moveButton.setEnabled(true);
-            atkButton.setEnabled(true);
+            
+            if(pUnit.getType().getCategory().equals("Other")){
+            	defButton.setEnabled(false);
+            	atkButton.setEnabled(false);
+            }
+            
+            else {
+            	atkButton.setEnabled(true);
+            }
 
             if(state.getUnitState() == UnitSelected){
                 if(state.getSelectedUnit().isAlly()){
@@ -291,10 +310,12 @@ public class PhysicalUnitView extends JPanel implements Observer, ActionListener
 
         if(settleButton == ae.getSource()){
             Tile tile = state.getSelectedTile();
-            if(GameServer.buildCity(tile, "City Name Here")){
+            cityName = JOptionPane.showInputDialog(null, "Vad ska din stad heta?");
+            
+            if(GameServer.buildCity(tile, cityName)){
                 tile.setUnit(null);
                 state.setUnitState(UnitUnSelected);
-                tile.setCity(new City("City Name Here", Round.getMe()));
+                tile.setCity(new City(cityName, Round.getMe()));
                 state.setSelectedCity(tile.getCity());
                 state.setCityState(CitySelected);
                 for(Tile t : gm.getNeighbours(tile, 3)){
