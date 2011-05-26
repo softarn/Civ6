@@ -21,6 +21,7 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.SwingConstants;
 import javax.swing.Popup;
 import javax.swing.PopupFactory;
+import javax.swing.JOptionPane;
 
 import java.util.Observer;
 import java.util.Observable;
@@ -62,6 +63,8 @@ public class PhysicalUnitView extends JPanel implements Observer, ActionListener
     private JLabel range = new JLabel();
     private JLabel attack = new JLabel();
     private JLabel movement = new JLabel();
+    
+    private String cityName = new String("");
 
     private Popup popup;
     
@@ -303,10 +306,12 @@ public class PhysicalUnitView extends JPanel implements Observer, ActionListener
 
         if(settleButton == ae.getSource()){
             Tile tile = state.getSelectedTile();
-            if(GameServer.buildCity(tile, "City Name Here")){
+            cityName = JOptionPane.showInputDialog(null, "Vad ska din stad heta?");
+            
+            if(GameServer.buildCity(tile, cityName)){
                 tile.setUnit(null);
                 state.setUnitState(UnitUnSelected);
-                tile.setCity(new City("City Name Here", Round.getMe()));
+                tile.setCity(new City(cityName, Round.getMe()));
                 state.setSelectedCity(tile.getCity());
                 state.setCityState(CitySelected);
                 for(Tile t : gm.getNeighbours(tile, 3)){
