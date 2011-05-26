@@ -53,7 +53,7 @@ public class PhysicalUnitView extends JPanel implements Observer, ActionListener
     private JButton atkButton = new JButton("Attackera");
     private JButton defButton = new JButton("Befästa");
     private JButton moveButton = new JButton("Förflytta");
-    private JButton infoButton = new JButton("Visa info");
+    //private JButton infoButton = new JButton("Visa info");
     private JButton settleButton = new JButton("Grunda stad");
 
     private JProgressBar manPower;    
@@ -77,7 +77,7 @@ public class PhysicalUnitView extends JPanel implements Observer, ActionListener
         atkButton.addActionListener(this);
         moveButton.addActionListener(this);
         defButton.addActionListener(this);
-        infoButton.addActionListener(this); 
+       // infoButton.addActionListener(this); 
 
         imgPane.add(image);
         imgPane.setMinimumSize(new Dimension(pUnit.getImage().getHeight(null) + 20, 
@@ -158,7 +158,7 @@ public class PhysicalUnitView extends JPanel implements Observer, ActionListener
         JPanel right = new JPanel();
         right.setLayout(new BoxLayout(right, BoxLayout.PAGE_AXIS));
         right.setBorder(BorderFactory.createEmptyBorder(15,10,10,10));
-        right.add(infoButton);
+        //right.add(infoButton);
 
         if(pUnit.getType().getName().equals("Settler")){
             right.add(Box.createRigidArea(new Dimension(0,7)));
@@ -279,11 +279,11 @@ public class PhysicalUnitView extends JPanel implements Observer, ActionListener
             }
         }
 
-        if(infoButton == ae.getSource()){
+        /*if(infoButton == ae.getSource()){
             if(popup != null){
                 popup.show();
             }
-        }
+        }*/
 
         if(settleButton == ae.getSource()){
             Tile tile = state.getSelectedTile();

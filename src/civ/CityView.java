@@ -48,8 +48,8 @@ class CityView extends JPanel implements ActionListener{
     private JPanel rightPane = new JPanel();
     
     private JButton recruitButton = new JButton("Visa rekrytmeny ");
-    private JButton buildButton = new JButton("Visa byggmeny ");
-    private JButton infoButton = new JButton("Visa info ");
+    //private JButton buildButton = new JButton("Visa byggmeny ");
+    //private JButton infoButton = new JButton("Visa info ");
     
     private ViewPort vp;
     
@@ -59,8 +59,8 @@ class CityView extends JPanel implements ActionListener{
     	setLayout(new BorderLayout());
     	
     	recruitButton.addActionListener(this);
-    	buildButton.addActionListener(this);
-    	infoButton.addActionListener(this);
+    	//buildButton.addActionListener(this);
+    	//infoButton.addActionListener(this);
     	
     	cityImg.setIcon(new ImageIcon(city.getImage()));
     	cityImg.setBorder(BorderFactory.createMatteBorder(6,6,6,6,Color.GREEN));
@@ -73,9 +73,10 @@ class CityView extends JPanel implements ActionListener{
         centerPane.add(Box.createRigidArea(new Dimension(0,5)));
         centerPane.add(recruitButton);
         centerPane.add(Box.createRigidArea(new Dimension(0,5)));
-        centerPane.add(buildButton);
+        
+        /*centerPane.add(buildButton);
         centerPane.add(Box.createRigidArea(new Dimension(0,5)));
-        centerPane.add(infoButton);
+        centerPane.add(infoButton);*/
         
         add(leftPane, BorderLayout.WEST);
         add(centerPane, BorderLayout.CENTER);
@@ -92,12 +93,10 @@ class CityView extends JPanel implements ActionListener{
      	 	 
      	 	 System.out.println("Rekryt ");
      	 }
-     	 else if (ae.getSource() == buildButton)
+     	 /*else if (ae.getSource() == buildButton)
      	 	 System.out.println("Bygga ");
      	 else if (ae.getSource() == infoButton)
-     	 	 System.out.println("Info ");
-     	 else 
-     	 	 System.out.println("Elsesats i actionPerf")	; 
+     	 	 System.out.println("Info ");*/
      }
 }
 
