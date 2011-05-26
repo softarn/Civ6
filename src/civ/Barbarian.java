@@ -86,7 +86,7 @@ public class Barbarian extends PhysicalUnit{
         state.setSelectedUnit(this);
         state.setUnitState(UnitSelected);
         GameMap gm = GameMap.getInstance();
-        ArrayList<Tile> neighbours = gm.getNeighbours(tile, 1, true);
+        ArrayList<Tile> neighbours = gm.getNeighbours(tile, 1, false);
         currentMovementPoint = type.getMovementPoints();
         for(Tile t : neighbours){
             if(t.hasUnit()){
@@ -95,6 +95,7 @@ public class Barbarian extends PhysicalUnit{
             }
         }
         Random r = new Random();
+        neighbours = gm.getNeighbours(tile, 1, true);
         int i;
         try{
             i = r.nextInt(neighbours.size());

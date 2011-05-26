@@ -75,6 +75,7 @@ public class Menu extends JPanel implements Observer, ActionListener, ChangeList
     private int curScale = 5;
     private int index = 0;
     private City oldCity = null;
+    private PhysicalUnit oldUnit = null;
     private int[] sizes = {35, 50, 75, 90, 120, 150, 175, 190};
 
     private static final String imgPath = "/data/img/"; //Need a better fix for this!
@@ -224,15 +225,22 @@ public class Menu extends JPanel implements Observer, ActionListener, ChangeList
                 if(state.getSelectedUnit().isAlly()){
                     PhysicalUnit unit = state.getSelectedUnit();
                     String unitTypeName = unit.getType().getName();
-                    tabbedPane.removeAll();
-                    tabbedPane.addTab(unitTypeName, null, unit.getView(), "Visa dina units ");
-                    tabbedPane.repaint();
+                    if(unit != oldUnit){
+                        tabbedPane.removeAll();
+                        tabbedPane.addTab(unitTypeName, null, unit.getView(), "Visa dina units ");
+                        if(unit.getHold() != null){
+                            for (PhysicalUnit pu : unit.getHold().getUnits()) {
+                                tabbedPane.addTab(pu.getType().getName(), null, pu.getView(), "Visa ---" );	
+                            }
+                        }
+                        tabbedPane.repaint();
+                    }
                 }
                 break;
             case UnitUnSelected:
                 /*if(index > -1 && tabbedPane.getTabCount() != 0 && index < tabbedPane.getTabCount()){
-                    index = tabbedPane.getSelectedIndex();
-                }*/
+                  index = tabbedPane.getSelectedIndex();
+                  }*/
                 if(state.getCityState() == CityUnSelected){
                     oldCity = null;
                     tabbedPane.removeAll();
@@ -247,12 +255,12 @@ public class Menu extends JPanel implements Observer, ActionListener, ChangeList
                 String cityName = city.getName();
                 if(city != oldCity){
                     tabbedPane.removeAll();
-                    tabbedPane.repaint();
                     tabbedPane.addTab(cityName, null, city.getView(), "Visa dina städer ");
                     for (PhysicalUnit pu : city.getHold().getUnits()) {
                         tabbedPane.addTab(pu.getType().getName(), null, pu.getView(), "Visa ---" );	
                     }
                     oldCity = city;
+                    tabbedPane.repaint();
                 }
                 /*
                    System.out.println(index);
@@ -264,6 +272,11 @@ public class Menu extends JPanel implements Observer, ActionListener, ChangeList
                 }*/
                 break;
             case CityUnSelected:
+                if(state.getUnitState() == UnitUnSelected){
+                    oldUnit = null;
+                    tabbedPane.removeAll();
+                    tabbedPane.repaint();
+                }
                 break;
         }
 

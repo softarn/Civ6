@@ -213,7 +213,7 @@ public class Battle {
     }
 
     public static int doBattle(PhysicalUnit u1, PhysicalUnit u2, Tile t1, Tile t2) {
-        if(State.isOnline() && Round.getTurn() > 25){
+        if(State.isOnline() && Round.getTurn() > 5){
             // Remove the movement cost 1 from the attacking unit
             if(!u1.useMovementPoints(1)){
                 return 0;
@@ -257,6 +257,7 @@ public class Battle {
             }
 
             int winnerId = 0;
+            System.out.println(u1.getType().getCategory());
             if(u1.getType().getCategory().equals("Ranged") ||
                     u1.getType().getName().equals("Trireme")){
                 winnerId = ranged();

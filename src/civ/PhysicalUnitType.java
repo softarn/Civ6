@@ -12,8 +12,8 @@ public enum PhysicalUnitType implements AbstractUnitType{
         Cannon(     "Cannon",       "Artillery", 100, 30, 3, 4, 1, 100, 20),
 
         // Range
-        Archer(     "Archer",       "Range", 100, 4, 2, 2, 1, 50, 2),
-        Musketeer(  "Musketeer",    "Range", 100, 8, 6, 2, 1, 50, 5),
+        Archer(     "Archer",       "Ranged", 100, 4, 2, 2, 1, 50, 2),
+        Musketeer(  "Musketeer",    "Ranged", 100, 8, 6, 2, 1, 50, 5),
 
         // Melee
         Phalanx(    "Phalanx",      "Melee", 100, 2, 5, 1, 1, 50, 3),

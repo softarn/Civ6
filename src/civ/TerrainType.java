@@ -43,7 +43,7 @@ public enum TerrainType {
     private final String tilefile;
     private final String fogfile;
     // An array of travelrules
-    private final String[][] traversible = {{"Boat"}, {"Artillery", "Range", "Melee", "Mounted", "Other"}};
+    private final String[][] traversible = {{"Boat"}, {"Artillery", "Ranged", "Melee", "Mounted", "Other"}};
     private Image normalImg;
     private Image fogImg;
     private ResourceType type;

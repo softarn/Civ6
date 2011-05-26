@@ -12,6 +12,7 @@ import java.awt.event.MouseEvent;
 import static civ.State.ActionState.Move;
 import static civ.State.ActionState.None;
 import static civ.State.UnitState.UnitSelected;
+import static civ.State.UnitState.UnitUnSelected;
 import static civ.State.CityState.CitySelected;
 import static civ.State.HoverState.HoverNone;
 import static civ.State.HoverState.HoverTileOnly;
@@ -118,6 +119,7 @@ public class GameMapView extends JPanel{
                                 if(civ.Move.makeMove(unit, state.getSelectedTile(), tile)){
                                     city.getHold().delUnit(index);
                                 }
+                                state.setUnitState(UnitUnSelected);
                             }
                             else if(state.getUnitState() == UnitSelected){
                                 PhysicalUnit pu = state.getSelectedUnit();
@@ -148,7 +150,7 @@ public class GameMapView extends JPanel{
                                         showConfirmAttackPane(state.getSelectedUnit(), tile.getUnit(), 
                                                 state.getSelectedTile(), tile);
                                         Battle.doBattle(state.getSelectedUnit(), tile.getUnit(), 
-                                                    state.getSelectedTile(), tile);
+                                                state.getSelectedTile(), tile);
                                         after = new PopUpBubble(state.getSelectedTile().getView().getX() + 135, 
                                                 state.getSelectedTile().getView().getY() + 35, 
                                                 Battle.getAttackerLoss(), Battle.getDefenderLoss());
@@ -158,11 +160,25 @@ public class GameMapView extends JPanel{
 
                                     }
                                 }
+                                else{
+                                    System.out.println("No unit to attack here.");
+                                    state.setActionState(None);
+                                }
                                 state.setActionState(None);
                                 tile = state.getSelectedTile();
-                            }else{
-                                System.out.println("No unit to attack here.");
-                                state.setActionState(None);
+                            }
+                            else if(state.getCityState() == CitySelected){
+                                City city = state.getSelectedCity();
+                                int index = city.getHold().getSelUnitIndex();
+                                PhysicalUnit unit = null;
+                                if(index != -1){
+                                    unit = city.getHold().getUnit(index);
+                                }
+                                for(Tile t : gm.getNeighbours(state.getSelectedTile(), unit.getType().getRange(), false)){
+                                    t.dehilight();
+                                    t.getView().repaint();
+                                }
+                                System.out.println("Can't attack from city");
                             }
                             break;
                     }
