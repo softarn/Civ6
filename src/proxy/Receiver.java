@@ -87,8 +87,6 @@ public class Receiver implements Runnable
 		{
 			int header = m_inStream.read();		// First the header.
 
-            // System.out.println("Header: " + header);
-
 			// Header 3, welcome to the real world.
 			if(header == 3)
 			{
@@ -386,6 +384,7 @@ public class Receiver implements Runnable
 		{
 			String owner = receiveString();
 			int size = receiveInt();
+			toAddTo.prepareForCityUnits();
 			for(int i=0; i<size; i++)
 			{
 				toAddTo.addCityUnit(receiveUnit());

@@ -219,7 +219,9 @@ public class Battle {
                 return 0;
             }
             fetchStats(u1, u2, t1, t2);
-            GameServer.battle(u1, u2, t1, t2);
+            if(GameServer.battle(u1, u2, t1, t2)){
+                return 0;
+            }
             if(-1 == attackRange(t1, t2, range1)){
                 return 0;
             }

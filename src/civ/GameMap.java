@@ -97,9 +97,9 @@ public class GameMap{
                     }
                     tile.setExplored(true);
                 }
-                tile.getView().repaint();
             }
         }
+        gmv.repaint();
     }
 
     public void clearTiles(){
