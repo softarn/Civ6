@@ -69,7 +69,7 @@ public class ViewPopup extends JTabbedPane implements ActionListener{
                 Tile tile = state.getSelectedTile();
                 PhysicalUnitType type = (PhysicalUnitType)selUnit.getSelectedItem();
                 tile.getCity().spawnCounter(type, tile, type.getCost());
-             	ViewPort.setVisible(false);   
+             	ViewPort.getPopup().setVisible(false);   
             }
             
         }
