@@ -9,6 +9,7 @@ public class State extends Observable{
 	private static Tile selectedTile;
 	private static City selectedCity;
 	private static PhysicalUnit selectedUnit;
+	private static PhysicalUnit holdUnit;
 	private static Tile hoverTile;
 	
 	private UnitState unitState;
@@ -53,6 +54,14 @@ public class State extends Observable{
 	public static City getSelectedCity(){
 		return selectedCity;
 	}
+
+    public static void setHoldUnit(PhysicalUnit unit){
+        holdUnit = unit;
+    }
+
+    public static PhysicalUnit getHoldUnit(){
+        return holdUnit;
+    }
 
 	public static void setSelectedUnit(PhysicalUnit unit){
 		selectedUnit = unit;

@@ -248,14 +248,14 @@ public class PhysicalUnitView extends JPanel implements Observer, ActionListener
                 pu = state.getSelectedUnit();
             }
             else if(state.getCityState() == CitySelected){
-                Hold hold = state.getSelectedCity().getHold();
-                if(hold.getSelUnitIndex() < 0){
-                    return;
-                }
-                pu = hold.getUnit(hold.getSelUnitIndex());
-                state.setSelectedUnit(pu);
-                state.setUnitState(UnitSelected);
+                pu = pUnit; //hold.getUnit(hold.getSelUnitIndex());
+                state.setHoldUnit(pu);
             }
+            for(Tile t : gm.getNeighbours(state.getSelectedTile(), pu.getType().getRange(), false)){
+                t.dehilight();
+                t.getView().repaint();
+            }
+            System.out.println();
             pu.getView().update();
             state.setActionState(Move);
             for(Tile t : gm.getNeighbours(state.getSelectedTile(), pu.getCurrentMovementPoint(), true)){
@@ -270,6 +270,10 @@ public class PhysicalUnitView extends JPanel implements Observer, ActionListener
             else if(state.getCityState() == CitySelected){
                 Hold hold = state.getSelectedCity().getHold();
                 pu = hold.getUnit(hold.getSelUnitIndex());
+            }
+            for(Tile t : gm.getNeighbours(state.getSelectedTile(), pu.getType().getMovementPoints(), true)){
+                t.dehilight();
+                t.getView().repaint();
             }
             pu.getView().update();
             state.setActionState(Attack);

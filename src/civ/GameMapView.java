@@ -107,28 +107,37 @@ public class GameMapView extends JPanel{
                         case Move:
                             if(state.getCityState() == CitySelected){
                                 City city = state.getSelectedCity();
-                                int index = city.getHold().getSelUnitIndex();
-                                PhysicalUnit unit = null;
-                                if(index != -1){
-                                    unit = city.getHold().getUnit(index);
-                                }
+                                PhysicalUnit unit = state.getHoldUnit();
                                 for(Tile t : gm.getNeighbours(state.getSelectedTile(), unit.getCurrentMovementPoint(), true)){
                                     t.dehilight();
                                     t.getView().repaint();
                                 }
-                                if(civ.Move.makeMove(unit, state.getSelectedTile(), tile)){
-                                    city.getHold().delUnit(index);
+                                if(unit != null){
+                                    if(civ.Move.makeMove(unit, state.getSelectedTile(), tile)){
+                                        city.getHold().delUnit(unit);
+                                    }
                                 }
-                                state.setUnitState(UnitUnSelected);
+                                state.setHoldUnit(null);
                             }
                             else if(state.getUnitState() == UnitSelected){
                                 PhysicalUnit pu = state.getSelectedUnit();
+                                PhysicalUnit unit = state.getHoldUnit();
                                 int movement = pu.getCurrentMovementPoint();
                                 for(Tile t : gm.getNeighbours(state.getSelectedTile(), movement, true)){
                                     t.dehilight();
                                     t.getView().repaint();
                                 }
-                                civ.Move.makeMove(state.getSelectedTile(), tile);
+                                if(unit != null){
+                                    if(pu.getHold() != null){
+                                        if(civ.Move.makeMove(unit, state.getSelectedTile(), tile)){
+                                            pu.getHold().delUnit(unit);
+                                        }
+                                    }
+                                    else{
+                                        civ.Move.makeMove(state.getSelectedTile(), tile);
+                                    }
+                                }
+                                state.setHoldUnit(null);
                             }
                             state.setActionState(None);
                             break;

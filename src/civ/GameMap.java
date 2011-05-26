@@ -120,6 +120,9 @@ public class GameMap{
                         tile.getUnit().reset();
                         tile.getUnit().getView().update();
                         tile.getUnit().getView().repaint();
+                        if(!tile.getUnit().useItem()){
+                            tile.setUnit(null);
+                        }
                     }
                     else if(tile.getUnit().getType().getName().equals("Barbarian")){ 
                         tile.getUnit().reset();
@@ -223,9 +226,7 @@ public class GameMap{
                             result.add(t);
                         }
                         else if(t.hasUnit() && 
-                                (t.getUnit().getType().getName().equals("Siege Tower") || 
-                                 t.getUnit().getType().getName().equals("Galley") || 
-                                 t.getUnit().getType().getName().equals("Caravel")) &&
+                                t.getUnit().getHold() != null &&
                                 t.getUnit().isAlly() && 
                                 state.getSelectedUnit().isAlly()){
                             result.add(t);
