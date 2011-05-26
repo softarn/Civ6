@@ -64,7 +64,7 @@ public class PhysicalUnitView extends JPanel implements Observer, ActionListener
     private JLabel movement = new JLabel();
 
     private Popup popup;
-
+    
     public PhysicalUnitView(PhysicalUnit pu){
         pUnit = pu;
         JPanel namePane = new JPanel();
@@ -85,7 +85,8 @@ public class PhysicalUnitView extends JPanel implements Observer, ActionListener
 
         upperPane = createUpperPane();
         lowerPane = createLowerPane();
-
+       
+        
         leftPane.setLayout(new BoxLayout(leftPane, BoxLayout.Y_AXIS));
         leftPane.add(namePane);
         leftPane.add(imgPane);
@@ -227,11 +228,14 @@ public class PhysicalUnitView extends JPanel implements Observer, ActionListener
         if(obs == state){
             moveButton.setEnabled(true);
             
-            if(pUnit.getType().getName().equals("Settler")){
+            if(pUnit.getType().getCategory().equals("Other")){
             	defButton.setEnabled(false);
             	atkButton.setEnabled(false);
             }
-            atkButton.setEnabled(true);
+            
+            else {
+            	atkButton.setEnabled(true);
+            }
 
             if(state.getUnitState() == UnitSelected){
                 if(state.getSelectedUnit().isAlly()){
