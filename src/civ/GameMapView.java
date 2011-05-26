@@ -108,11 +108,11 @@ public class GameMapView extends JPanel{
                             if(state.getCityState() == CitySelected){
                                 City city = state.getSelectedCity();
                                 PhysicalUnit unit = state.getHoldUnit();
-                                for(Tile t : gm.getNeighbours(state.getSelectedTile(), unit.getCurrentMovementPoint(), true)){
-                                    t.dehilight();
-                                    t.getView().repaint();
-                                }
                                 if(unit != null){
+                                    for(Tile t : gm.getNeighbours(state.getSelectedTile(), unit.getCurrentMovementPoint(), true)){
+                                        t.dehilight();
+                                        t.getView().repaint();
+                                    }
                                     if(civ.Move.makeMove(unit, state.getSelectedTile(), tile)){
                                         city.getHold().delUnit(unit);
                                     }

@@ -237,6 +237,7 @@ public class GameMap{
                         else if(t.hasUnit() && 
                                 t.getUnit().getHold() != null &&
                                 t.getUnit().isAlly() && 
+                                state.getSelectedUnit().getHold() == null &&
                                 state.getSelectedUnit().isAlly()){
                             result.add(t);
                         }
