@@ -269,12 +269,12 @@ public class PhysicalUnitView extends JPanel implements Observer, ActionListener
             else if(state.getCityState() == CitySelected){
                 pu = pUnit; //hold.getUnit(hold.getSelUnitIndex());
                 state.setHoldUnit(pu);
+                System.out.println("Hello unit");
             }
             for(Tile t : gm.getNeighbours(state.getSelectedTile(), pu.getType().getRange(), false)){
                 t.dehilight();
                 t.getView().repaint();
             }
-            System.out.println();
             pu.getView().update();
             state.setActionState(Move);
             for(Tile t : gm.getNeighbours(state.getSelectedTile(), pu.getCurrentMovementPoint(), true)){

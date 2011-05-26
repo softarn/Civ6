@@ -112,6 +112,6 @@ public enum PhysicalUnitType implements AbstractUnitType{
     }
 
     public String toString(){
-        return unitType.getName();
+        return unitType.getName() + "    Turer: " + cost;
     }
 }
