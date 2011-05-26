@@ -137,6 +137,9 @@ public class GameMapView extends JPanel{
                                         civ.Move.makeMove(state.getSelectedTile(), tile);
                                     }
                                 }
+                                else{
+                                    civ.Move.makeMove(state.getSelectedTile(), tile);
+                                }
                                 state.setHoldUnit(null);
                             }
                             state.setActionState(None);

@@ -216,13 +216,22 @@ public class GameMap{
 
     private ArrayList<Tile> getNeighbours(Tile tile, boolean terrain){
         ArrayList<Tile> result = new ArrayList<Tile>();
+        Tile t = null;
+        PhysicalUnit unit = null;
+        if(state.getHoldUnit() != null){
+            unit = state.getHoldUnit();
+        }
+        else if(state.getUnitState() == UnitSelected){
+            unit = state.getSelectedUnit();
+            System.out.println("Moving unit");
+        }
         for(int[] off : offsets){
             // Add all surrounding tiles
-            Tile t = getTile(tile.getX() - off[0], tile.getY() - off[1]);
+            t = getTile(tile.getX() - off[0], tile.getY() - off[1]);
             if(t != null)
                 if(terrain){
-                    if(state.getUnitState() == UnitSelected){
-                        if(t.getTerrain().isTraversible(state.getSelectedUnit()) && !t.hasUnit()){
+                    if(unit != null){
+                        if(t.getTerrain().isTraversible(unit) && !t.hasUnit()){
                             result.add(t);
                         }
                         else if(t.hasUnit() && 
