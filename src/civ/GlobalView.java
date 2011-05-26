@@ -30,21 +30,23 @@ class GlobalView extends JPanel implements ActionListener{
     private JPanel yearPanel = new JPanel();    
     //private JPanel citiesPanel = new JPanel();
    
-    private JPanel iconsPanel = new JPanel();
+    //private JPanel iconsPanel = new JPanel();
     private JPanel goldLabelPanel = new JPanel();
     
     //private JButton scienceButton;
     private JButton endturn;
-    private JButton placeHolderButton;
+    //private JButton placeHolderButton;
     private JButton showCitiesButton;
     //private JProgressBar scienceBar;
     
     //private JLabel goldLabel;
     private JLabel yearLabel;
+    private JLabel bcLabel;
     private JLabel scienceLabel;
     //private JLabel amountCitiesLabel;
 
     private int scienceValue = 30;    
+    private int bc = 476;
     
     public GlobalView(){
         super();
@@ -55,25 +57,30 @@ class GlobalView extends JPanel implements ActionListener{
         //scienceBar.setString("Forskning " + scienceValue+ "%");
         //scienceBar.setStringPainted(true);
         //scienceBar.setValue(scienceValue);
+    	
         
         // Labels
         yearLabel = new JLabel("Runda nummer: " + Round.getTurn()+ " ");
+        bcLabel = new JLabel("År: " + getBc());
+        
+        System.out.println("BC: "+ getBc());
+        
         //scienceLabel = new JLabel("Forskning: Segling ");
         //goldLabel = new JLabel("<html>Gold: $ 1000 <BR> Inkomst 25 $ / runda <BR> </html>");
         
         // Buttons
         endturn = new JButton("Avsluta runda");
         endturn.setActionCommand("endturn");
-        endturn.setPreferredSize(new Dimension (50,30));
+        //endturn.setPreferredSize(new Dimension (60,40));
         endturn.addActionListener(this);
         
         // scienceButton = new JButton("Visa forskning ");
        	//scienceButton.setPreferredSize(new Dimension(30,25));
         //scienceButton.addActionListener(this);
         
-        placeHolderButton = new JButton("Visa enheter ");
-        placeHolderButton.setPreferredSize(new Dimension(50,25));
-        placeHolderButton.addActionListener(this);
+        //placeHolderButton = new JButton("Visa enheter ");
+        //placeHolderButton.setPreferredSize(new Dimension(50,25));
+        //placeHolderButton.addActionListener(this);
         
         //showCitiesButton = new JButton ("Visa cities ");
         //showCitiesButton.setPreferredSize(new Dimension(50,30));
@@ -89,13 +96,14 @@ class GlobalView extends JPanel implements ActionListener{
         westPanel.setLayout(new BoxLayout(westPanel, BoxLayout.Y_AXIS));
         
         // Add panels to *Panel
-        eastPanel.add(iconsPanel);
-        iconsPanel.setLayout(new BorderLayout());
-        iconsPanel.setAlignmentX(eastPanel.LEFT_ALIGNMENT);
-        iconsPanel.setAlignmentY(eastPanel.TOP_ALIGNMENT);
-        iconsPanel.setBorder(new CompoundBorder(BorderFactory.createLineBorder(Color.BLACK), BorderFactory.createEmptyBorder(10,10,10,10)));
+        //eastPanel.add(iconsPanel);
+        //iconsPanel.setLayout(new BorderLayout());
+        //iconsPanel.setAlignmentX(eastPanel.LEFT_ALIGNMENT);
+        // iconsPanel.setAlignmentY(eastPanel.TOP_ALIGNMENT);
+        //  iconsPanel.setBorder(new CompoundBorder(BorderFactory.createLineBorder(Color.BLACK), BorderFactory.createEmptyBorder(10,10,10,10)));
         
-        eastPanel.add(yearPanel); 
+        eastPanel.add(Box.createRigidArea(new Dimension(30,120)));
+        eastPanel.add(yearPanel);  
         yearPanel.setAlignmentX(eastPanel.LEFT_ALIGNMENT);
         yearPanel.setAlignmentY(eastPanel.BOTTOM_ALIGNMENT);
         yearPanel.setBorder(new CompoundBorder(BorderFactory.createLineBorder(Color.BLACK), BorderFactory.createEmptyBorder(15,15,15,15)));
@@ -117,13 +125,14 @@ class GlobalView extends JPanel implements ActionListener{
         //goldPanel.add(goldLabelPanel);
         //goldPanel.add(citiesPanel);
         
-        iconsPanel.add(Box.createRigidArea(new Dimension(0,5)));
-        iconsPanel.add(placeHolderButton, BorderLayout.NORTH);
+        //iconsPanel.add(Box.createRigidArea(new Dimension(0,5)));
+        // iconsPanel.add(placeHolderButton, BorderLayout.NORTH);
         
         
         //sciencePanel.add(scienceLabel);
         //sciencePanel.add(scienceBar);
         //sciencePanel.add(scienceButton);
+        yearPanel.add(bcLabel);
         yearPanel.add(yearLabel);
         yearPanel.add(endturn);
         
@@ -163,6 +172,9 @@ class GlobalView extends JPanel implements ActionListener{
         yearLabel.setAlignmentX(yearPanel.RIGHT_ALIGNMENT);
         yearLabel.setAlignmentY(yearPanel.CENTER_ALIGNMENT);
         
+        bcLabel.setAlignmentX(yearPanel.RIGHT_ALIGNMENT);
+        bcLabel.setAlignmentY(yearPanel.CENTER_ALIGNMENT);
+        
         endturn.setAlignmentX(yearPanel.RIGHT_ALIGNMENT);        
         endturn.setAlignmentY(yearPanel.BOTTOM_ALIGNMENT);
         
@@ -171,16 +183,23 @@ class GlobalView extends JPanel implements ActionListener{
     public void update(){
         yearLabel.setText("Runda nummer: " + Round.getTurn()+ " ");
         yearLabel.repaint();
+        bcLabel.setText("År: " + getBc());
+        bcLabel.repaint();
+    }
+    
+    public int getBc(){
+    	return bc;	
     }
 
     public void actionPerformed(ActionEvent ae){
         if(endturn == ae.getSource()){
             Round.next();
+            bc++;
         }
         
-        else if (placeHolderButton == ae.getSource()){
+       /* else if (placeHolderButton == ae.getSource()){
         	ViewPort.getPopup().setVisible(true);
-        }
+        }*/
     } 
     
 } // class 
