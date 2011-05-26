@@ -151,11 +151,11 @@ class GameServer{
         return true;
     }
 
-    public static boolean startGame(){
+    public static boolean startGame(int tileSize){
         Result returned = null;
         try{
             System.out.println("Hosting game");
-            returned = proxy.startGame();
+            returned = proxy.startGame(tileSize,tileSize);
             System.out.println(returned.getOk());
             return returned.getOk();
         }

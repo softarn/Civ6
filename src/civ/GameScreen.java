@@ -1,6 +1,7 @@
 package civ;
 
 import javax.swing.*;
+import javax.swing.event.*;
 
 import java.awt.event.*;
 import java.awt.*;
@@ -27,12 +28,22 @@ class GameScreen extends JPanel implements ActionListener {
 	
 	private JPanel listPanel = new JPanel();
 	private JPanel buttonPanel = new JPanel();
+	private JPanel sliderPanel = new JPanel();
 	private JPanel textPanel = new JPanel();
 	private JPanel rightPanel = new JPanel();
+	
+	private int min;
+	private int max;
+	private int init;
+	private int intSize;
+	
+	private JLabel titleLabel;
+	private JSlider jSlide;	
 	
 	private String[] players = {};
 		
 	private JList list = new JList(players);
+	private JScrollPane scp;
 	
 	private GameScreen(){
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -50,7 +61,23 @@ class GameScreen extends JPanel implements ActionListener {
 		civLabel = new JLabel("Civilsationens namn: ");
 		nameLabel = new JLabel("Spelarnamn: ");
 		
-		list.setMinimumSize(new Dimension(20,20));
+		//list.setMinimumSize(new Dimension(40,50));
+		scp = new JScrollPane(list);
+		
+		titleLabel = new JLabel("Välj hur många tiles du vill ha på kartan: ");
+
+		min = 20;
+		max = 200;
+		init = 20;
+		intSize = 0;
+		
+		jSlide = new JSlider(JSlider.HORIZONTAL, min, max, init);	
+		jSlide.setMajorTickSpacing(50);
+		jSlide.setPaintTicks(true);
+		jSlide.setPaintLabels(true);
+		jSlide.setPaintTrack(true);
+		
+		jSlide.addChangeListener(new SlideListener());
 		
 		textPanel.setLayout(new BoxLayout(textPanel, BoxLayout.Y_AXIS));
 		textPanel.add(nameLabel);
@@ -62,13 +89,24 @@ class GameScreen extends JPanel implements ActionListener {
 		rightPanel.add(Box.createRigidArea(new Dimension(10,10)));
 		rightPanel.add(userLabel);
 		rightPanel.add(Box.createRigidArea(new Dimension(20,10)));
-		rightPanel.add(list);
+		rightPanel.add(scp);
+		rightPanel.add(Box.createRigidArea(new Dimension(20,10)));
+		//rightPanel.add(list);
 		rightPanel.add(Box.createRigidArea(new Dimension(10,10)));
 		
 		update();
 		listPanel.add(textPanel);
 		listPanel.add(rightPanel);
 		
+		sliderPanel.setLayout(new BoxLayout(sliderPanel, BoxLayout.Y_AXIS));
+		buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.PAGE_AXIS));
+		
+		sliderPanel.add(Box.createRigidArea(new Dimension(10,30)));
+		sliderPanel.add(titleLabel);
+		sliderPanel.add(Box.createRigidArea(new Dimension(10,30)));
+		sliderPanel.add(jSlide);
+		sliderPanel.add(Box.createRigidArea(new Dimension(10,30)));
+		buttonPanel.add(Box.createRigidArea(new Dimension(10,30)));
 		buttonPanel.add(startButton);
 		buttonPanel.add(lockButton);
 		
@@ -79,6 +117,7 @@ class GameScreen extends JPanel implements ActionListener {
 		buttonPanel.setLayout(new FlowLayout());
 		
 		add(listPanel);
+		add(sliderPanel);
 		add(buttonPanel);
 		
 	}
@@ -99,12 +138,28 @@ class GameScreen extends JPanel implements ActionListener {
     public void update(){
         list.setListData(Round.getPlayers());
     }
-
+    
+    
+	class SlideListener implements ChangeListener{
+		public void stateChanged(ChangeEvent e){
+        JSlider source = (JSlider)e.getSource();
+        
+        	if (!source.getValueIsAdjusting()){
+            	intSize = (int)source.getValue();
+            	System.out.println(intSize);
+        	}
+        }
+    }
+    
 	
 	public void actionPerformed (ActionEvent ae) {
 		if(ae.getSource() == startButton){
 			System.out.println("startButton pressed ");
-            if(GameServer.startGame()){
+			
+			if(intSize == 0)
+				intSize = init; 
+			
+            if(GameServer.startGame(intSize)){
                 //Close the window here
                 //JFrame frame = (JFrame)SwingUtilities.getRoot(this);
                 //frame.dispose();

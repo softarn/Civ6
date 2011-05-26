@@ -26,9 +26,9 @@ class MapEdit  extends JPanel{
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		add(Box.createRigidArea(new Dimension(70,30)));
 		
-		min = 2;
-		max = 30;
-		init = 20;
+		min = 7;
+		max = 40;
+		init = 15;
 		intSize = 0;
 		
 		jSlide = new JSlider(JSlider.HORIZONTAL,
