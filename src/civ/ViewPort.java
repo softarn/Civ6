@@ -27,7 +27,7 @@ public class ViewPort extends JPanel implements ActionListener{
         popup.setLayout(new BorderLayout());
         
         exitButton.addActionListener(this);
-		exitButton.setPreferredSize(new Dimension(50,30));
+		exitButton.setPreferredSize(new Dimension(20,20));
 		exitButton.setBackground(new Color (0xEE2222));
 		exitButton.setForeground(new Color (0xFFFFFF));
 		popup.add(exitButton, BorderLayout.NORTH);

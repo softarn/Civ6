@@ -30,12 +30,12 @@ class GlobalView extends JPanel implements ActionListener{
     private JPanel yearPanel = new JPanel();    
     //private JPanel citiesPanel = new JPanel();
    
-    private JPanel iconsPanel = new JPanel();
+    //private JPanel iconsPanel = new JPanel();
     private JPanel goldLabelPanel = new JPanel();
     
     //private JButton scienceButton;
     private JButton endturn;
-    private JButton placeHolderButton;
+    //private JButton placeHolderButton;
     private JButton showCitiesButton;
     //private JProgressBar scienceBar;
     
@@ -71,16 +71,16 @@ class GlobalView extends JPanel implements ActionListener{
         // Buttons
         endturn = new JButton("Avsluta runda");
         endturn.setActionCommand("endturn");
-        endturn.setPreferredSize(new Dimension (50,30));
+        //endturn.setPreferredSize(new Dimension (60,40));
         endturn.addActionListener(this);
         
         // scienceButton = new JButton("Visa forskning ");
        	//scienceButton.setPreferredSize(new Dimension(30,25));
         //scienceButton.addActionListener(this);
         
-        placeHolderButton = new JButton("Visa enheter ");
-        placeHolderButton.setPreferredSize(new Dimension(50,25));
-        placeHolderButton.addActionListener(this);
+        //placeHolderButton = new JButton("Visa enheter ");
+        //placeHolderButton.setPreferredSize(new Dimension(50,25));
+        //placeHolderButton.addActionListener(this);
         
         //showCitiesButton = new JButton ("Visa cities ");
         //showCitiesButton.setPreferredSize(new Dimension(50,30));
@@ -96,13 +96,14 @@ class GlobalView extends JPanel implements ActionListener{
         westPanel.setLayout(new BoxLayout(westPanel, BoxLayout.Y_AXIS));
         
         // Add panels to *Panel
-        eastPanel.add(iconsPanel);
-        iconsPanel.setLayout(new BorderLayout());
-        iconsPanel.setAlignmentX(eastPanel.LEFT_ALIGNMENT);
-        iconsPanel.setAlignmentY(eastPanel.TOP_ALIGNMENT);
-        iconsPanel.setBorder(new CompoundBorder(BorderFactory.createLineBorder(Color.BLACK), BorderFactory.createEmptyBorder(10,10,10,10)));
+        //eastPanel.add(iconsPanel);
+        //iconsPanel.setLayout(new BorderLayout());
+        //iconsPanel.setAlignmentX(eastPanel.LEFT_ALIGNMENT);
+        // iconsPanel.setAlignmentY(eastPanel.TOP_ALIGNMENT);
+        //  iconsPanel.setBorder(new CompoundBorder(BorderFactory.createLineBorder(Color.BLACK), BorderFactory.createEmptyBorder(10,10,10,10)));
         
-        eastPanel.add(yearPanel); 
+        eastPanel.add(Box.createRigidArea(new Dimension(30,120)));
+        eastPanel.add(yearPanel);  
         yearPanel.setAlignmentX(eastPanel.LEFT_ALIGNMENT);
         yearPanel.setAlignmentY(eastPanel.BOTTOM_ALIGNMENT);
         yearPanel.setBorder(new CompoundBorder(BorderFactory.createLineBorder(Color.BLACK), BorderFactory.createEmptyBorder(15,15,15,15)));
@@ -124,8 +125,8 @@ class GlobalView extends JPanel implements ActionListener{
         //goldPanel.add(goldLabelPanel);
         //goldPanel.add(citiesPanel);
         
-        iconsPanel.add(Box.createRigidArea(new Dimension(0,5)));
-        iconsPanel.add(placeHolderButton, BorderLayout.NORTH);
+        //iconsPanel.add(Box.createRigidArea(new Dimension(0,5)));
+        // iconsPanel.add(placeHolderButton, BorderLayout.NORTH);
         
         
         //sciencePanel.add(scienceLabel);
@@ -196,9 +197,9 @@ class GlobalView extends JPanel implements ActionListener{
             bc++;
         }
         
-        else if (placeHolderButton == ae.getSource()){
+       /* else if (placeHolderButton == ae.getSource()){
         	ViewPort.getPopup().setVisible(true);
-        }
+        }*/
     } 
     
 } // class 

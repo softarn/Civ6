@@ -17,11 +17,11 @@ class UnitTabView extends JPanel{
 		setLayout(new BorderLayout());
 
 		unitTypePane.addTab("<html><body leftmargin=15 topmargin=12 marginwidth=15 marginheight=10>Alla </body></html>", null, viewAllPanel, "Visa alla enheter ");
-		unitTypePane.addTab("<html><body leftmargin=15 topmargin=12 marginwidth=15 marginheight=10>Fotburna </body></html>", null, null, "Visa fotburna enhter ");
-		unitTypePane.addTab("<html><body leftmargin=15 topmargin=12 marginwidth=15 marginheight=10>Ryttare </body></html>", null, null, "Visa beridna enheter ");
-		unitTypePane.addTab("<html><body leftmargin=15 topmargin=12 marginwidth=15 marginheight=10>Båtar </body></html>", null, null, "Visa båtarburna enheter ");
-		unitTypePane.addTab("<html><body leftmargin=15 topmargin=12 marginwidth=15 marginheight=10>Artilleri </body></html> ", null, null, "Visa artillerienheter ");
-		unitTypePane.addTab("<html><body leftmargin=15 topmargin=12 marginwidth=15 marginheight=10>Civila </body></html>", null, null, "Visa civila enheter ");
+		//unitTypePane.addTab("<html><body leftmargin=15 topmargin=12 marginwidth=15 marginheight=10>Fotburna </body></html>", null, null, "Visa fotburna enhter ");
+		//unitTypePane.addTab("<html><body leftmargin=15 topmargin=12 marginwidth=15 marginheight=10>Ryttare </body></html>", null, null, "Visa beridna enheter ");
+		//unitTypePane.addTab("<html><body leftmargin=15 topmargin=12 marginwidth=15 marginheight=10>Båtar </body></html>", null, null, "Visa båtarburna enheter ");
+		//unitTypePane.addTab("<html><body leftmargin=15 topmargin=12 marginwidth=15 marginheight=10>Artilleri </body></html> ", null, null, "Visa artillerienheter ");
+		//unitTypePane.addTab("<html><body leftmargin=15 topmargin=12 marginwidth=15 marginheight=10>Civila </body></html>", null, null, "Visa civila enheter ");
 
 		//viewAllPanel.add();	
 		

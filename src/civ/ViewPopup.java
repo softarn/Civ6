@@ -25,11 +25,11 @@ public class ViewPopup extends JTabbedPane implements ActionListener{
 	private JLabel selHeader;
     
 	public ViewPopup() {
-		addTab("Enheter ", null, utv, "Tooltips vare her ");
-        setPreferredSize(new Dimension(580,200));
+	    setPreferredSize(new Dimension(580,200));
 	
-		addTab("Städer", null, null, "Tooltips vare her ");
-		addTab("Forskning", null, null, "Tooltips vare her ");
+		addTab("Enheter ", null, utv, "Tooltips vare her ");
+		//addTab("Städer", null, null, "Tooltips vare her ");
+		//addTab("Forskning", null, null, "Tooltips vare her ");
 		setOpaque(true);
 		
 		selUnit = new JComboBox(PhysicalUnitType.values());
@@ -59,7 +59,7 @@ public class ViewPopup extends JTabbedPane implements ActionListener{
         
 		//add(cityPanel);
 		addTab("Mecca",null,cityPanel,"Visa mer om city");
-		setSelectedIndex(3);
+		setSelectedIndex(1);
 		
 	}
 		
@@ -69,7 +69,9 @@ public class ViewPopup extends JTabbedPane implements ActionListener{
                 Tile tile = state.getSelectedTile();
                 PhysicalUnitType type = (PhysicalUnitType)selUnit.getSelectedItem();
                 tile.getCity().spawnCounter(type, tile, type.getCost());
+             	ViewPort.setVisible(false);   
             }
+            
         }
     }
 }
