@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 import proxy.Proxy;
@@ -81,11 +82,17 @@ public class MyPacketListener implements PacketListener{
 
     public void casualtyReport(Result res){
         System.out.println("Report received");
-        gm.getView().add(new PopUpBubble(res.getBombX() + 135, 
-                res.getBombY() + 35, 
-                0, res.getHealthLost()), 0);
+        Tile tile = gm.getTile(res.getBombX(), res.getBombX());
+        JOptionPane.showMessageDialog(
+                null,
+                "En " + tile.getUnit().getType() + " blev attackerad. Den förlorade " + 
+                res.getHealthLost() + " mankraft.",
+                "Dödsraport",
+                JOptionPane.OK_OPTION);
         PhysicalUnit pu = gm.getTile(res.getBombX(), res.getBombY()).getUnit();
         pu.setManPower(res.getHealthLost());
+        pu.getView().update();
+        pu.getView().repaint();
         gm.getView().repaint();
     }
 

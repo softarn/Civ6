@@ -17,6 +17,7 @@ import static civ.State.CityState.CitySelected;
 import static civ.State.HoverState.HoverNone;
 import static civ.State.HoverState.HoverTileOnly;
 import static civ.State.HoverState.HoverTileUnit;
+import static civ.State.HoverState.HoverTileCity;
 
 public class GameMapView extends JPanel{
 
@@ -213,11 +214,15 @@ public class GameMapView extends JPanel{
                 state.setHoverTile(null);
                 state.setHoverState(HoverNone);
             }
-            else if (tile != state.getHoverTile() && tile.hasUnit()){
+            else if (tile != state.getHoverTile() && tile.hasUnit() && tile.isExplored()){
                 state.setHoverTile(tile); 
                 state.setHoverState(HoverTileUnit); 
             } 
-            else if (tile != state.getHoverTile() && tile.isExplored() == true){
+            else if (tile != state.getHoverTile() && tile.hasCity() && tile.isExplored()){
+                state.setHoverTile(tile);
+                state.setHoverState(HoverTileCity); 
+            } 
+            else if (tile != state.getHoverTile() && tile.isExplored()){
                 state.setHoverTile(tile); 
                 state.setHoverState(HoverTileOnly); 
             }

@@ -142,14 +142,14 @@ public class State extends Observable{
     
     // HoverState 
 	public enum HoverState {
-        HoverNone, HoverTileOnly, HoverTileUnit 
+        HoverNone, HoverTileOnly, HoverTileUnit, HoverTileCity
     } 
     
-    public HoverState getHoverState (){
+    public HoverState getHoverState(){
         return hoverState;
     }
     
-    public void setHoverState(HoverState state) {
+    public void setHoverState(HoverState state){
         hoverState = state;
         setChanged();
 		notifyObservers();

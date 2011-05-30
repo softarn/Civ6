@@ -47,6 +47,10 @@ public class City {
         owner = newOwner;
     }
 
+    public Player getOwner(){
+        return owner;
+    }
+
     public void count(){
         if(this.cost == 1){
             //spawn unit here

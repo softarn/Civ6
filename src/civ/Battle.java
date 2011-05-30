@@ -168,6 +168,7 @@ public class Battle {
             System.out.println(amp);
             System.out.println(dmp);
 
+            // (((Attack points*Manpower)/100 ) < 0.5) och (((Defense points*Manpower)/100 ) < 0.5)
             if (amp < 1 && dmp < 1){
                 winnerId = 2;
                 break;

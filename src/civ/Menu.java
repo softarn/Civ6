@@ -46,6 +46,7 @@ import static civ.State.CityState.CityUnSelected;
 import static civ.State.HoverState.HoverNone;
 import static civ.State.HoverState.HoverTileOnly;
 import static civ.State.HoverState.HoverTileUnit;
+import static civ.State.HoverState.HoverTileCity;
 
 public class Menu extends JPanel implements Observer, ActionListener, ChangeListener{
 
@@ -198,7 +199,7 @@ public class Menu extends JPanel implements Observer, ActionListener, ChangeList
                 String outputUnit = Integer.toString(state.getHoverTile().getUnit().getManPower());
                 if(state.getHoverTile().getUnit().isAlly()){
                     tileLabel.setText("<html>Terrain: " + outputTerrain +
-                            "<br>Unit: " + state.getHoverTile().getUnit().getType() +
+                            "<br>Unit: " + state.getHoverTile().getUnit().getType().getName() +
                             " Anfall: " + state.getHoverTile().getUnit().getType().getAttack() + 
                             " Försvar: " + state.getHoverTile().getUnit().getType().getDefence() + 
                             " Manpower: " + outputUnit + "</html>");
@@ -217,6 +218,22 @@ public class Menu extends JPanel implements Observer, ActionListener, ChangeList
 
                 }
 
+                break;
+            case HoverTileCity:
+                outputTerrain = state.getHoverTile().getTerrain().toString();
+                City city = state.getHoverTile().getCity();
+                if(state.getHoverTile().getCity().isMine()){
+                    tileLabel.setText("<html>Terrain: " + outputTerrain +
+                            "<br>City: " + city.getName());
+                }
+                else{
+                    // Enemy unit hovered
+                    Player owner = city.getOwner();
+                    if(owner != null){
+                        tileLabel.setText("<html>Terräng: " + outputTerrain +
+                                "<br>City: " + city.getName() + "; Enemy city, belongs to "+owner);
+                    }
+                }
                 break;
         }        
 
