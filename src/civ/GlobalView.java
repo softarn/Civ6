@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JProgressBar;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
+import javax.swing.JOptionPane;
 import javax.swing.BoxLayout;
 import javax.swing.BorderFactory;
 import javax.swing.border.CompoundBorder;
@@ -47,6 +48,9 @@ class GlobalView extends JPanel implements ActionListener{
 
     private int scienceValue = 30;    
     private int bc = 476;
+    
+    private String[] choice = {"Exit"};
+    private int choiceAnswer;
     
     public GlobalView(){
         super();
@@ -193,6 +197,31 @@ class GlobalView extends JPanel implements ActionListener{
 
     public void actionPerformed(ActionEvent ae){
         if(endturn == ae.getSource()){
+        	if(bc >= 1453){
+        		JOptionPane.showOptionDialog(null, "Spelet är slut. Programmet kommer att avslutas. \nVälkommen åter!", "Game over", 
+        			JOptionPane.OK_OPTION, JOptionPane.INFORMATION_MESSAGE, null, choice,"");
+        		
+        		switch(choiceAnswer){
+        			case 0:
+        				System.exit(0);
+        				break;
+        			default:
+        				System.out.println("Somehting madly wrong sir");
+        			}
+        		}
+        		
+        		else if (bc >= 480 && State.isOnline() == true) {
+        				JOptionPane.showOptionDialog(null, "Spelet är slut, du vann! Grattis! \nProgrammet kommer att avslutas. \n\nVälkommen åter!", "Game over", 
+        					JOptionPane.OK_OPTION, JOptionPane.INFORMATION_MESSAGE, null, choice,"");
+        		
+        			switch(choiceAnswer){
+        				case 0:
+        					System.exit(0);
+        					break;
+        				default:
+        					System.out.println("Somehting madly wrong sir");
+        			}
+        		}     	
             Round.next();
             bc++;
         }

@@ -13,15 +13,18 @@ class BarbarianType implements AbstractUnitType{
     
     public BarbarianType(){	
     	Random rand = new Random();
-    	int i = rand.nextInt(PhysicalUnitType.values().length);
-    	
-    	PhysicalUnitType put = PhysicalUnitType.values()[i];
+    	PhysicalUnitType put;
+    	do{
+    		int i = rand.nextInt(PhysicalUnitType.values().length);
+    		put = PhysicalUnitType.values()[i];
+    		System.out.println(put.getName());
+    	} while(put.getCategory() == "Other" || 
+    		put.getCategory() == "Artillery" ||
+    		put.getName() == "Caravel");
     	
         unitType = new UnitType("Barbarian", put.getCategory(), put.getMaxManPower(), put.getAttack(), 
         	put.getDefence(), put.getRange(), put.getMovementPoints(), put.getInventorySize(),
-        	this);
-        
-        
+        	this); 
     }
 
     public String getName(){

@@ -18,8 +18,6 @@ public class StartScreen extends JFrame implements ActionListener{
 	
 	private JButton singelButton;
 	private JButton multiButton;
-	private JButton preferencesButton;
-	private JButton credButton;
 	private JButton exitButton;
 	
 	private JPanel startPanel = new JPanel();
@@ -50,12 +48,6 @@ public class StartScreen extends JFrame implements ActionListener{
 		multiButton = new JButton("Flerspelarläge");
 		multiButton.addActionListener(this);
 		
-		preferencesButton = new JButton("Inställningar");
-		preferencesButton.addActionListener(this);
-		
-		credButton = new JButton("Licenser och 'Tack till'");
-		credButton.addActionListener(this);
-		
 		exitButton = new JButton("Avsluta");
 		exitButton.addActionListener(this);
 		
@@ -63,12 +55,6 @@ public class StartScreen extends JFrame implements ActionListener{
 		startPanel.add(Box.createRigidArea(new Dimension(10,10)));
 		
 		startPanel.add(multiButton);
-		startPanel.add(Box.createRigidArea(new Dimension(10,10)));
-		
-		startPanel.add(preferencesButton);
-		startPanel.add(Box.createRigidArea(new Dimension(10,10)));
-
-		startPanel.add(credButton);	
 		startPanel.add(Box.createRigidArea(new Dimension(10,10)));
 
 		startPanel.add(exitButton);
@@ -116,10 +102,6 @@ public class StartScreen extends JFrame implements ActionListener{
 			this.add(cv);
 			cv.setVisible(true);
 			this.validate();
-		}
-		
-		else if (ae.getSource() == credButton) {
-			System.out.println("");
 		}
 		
 		else if (ae.getSource() == exitButton)

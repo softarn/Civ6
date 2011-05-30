@@ -90,10 +90,11 @@ public class Menu extends JPanel implements Observer, ActionListener, ChangeList
         String name = "medievalwallpaper";
         try{
             img = Toolkit.getDefaultToolkit().getImage(getClass().getResource(imgPath + name + ".jpg"));
-        }catch(Exception e){
+        } catch(Exception e){
             System.out.println(e);
             System.out.println(name);
         }
+        
         //this.puw = puw;
         //Popup popup;
         //popup = PopupFactory.getSharedInstance().getPopup(null, puw, 200,200);
@@ -145,8 +146,7 @@ public class Menu extends JPanel implements Observer, ActionListener, ChangeList
         westPanel.setOpaque(false);
         westPanel.add(tabbedPane, BorderLayout.WEST);
 
-
-        add(north, BorderLayout.NORTH);      
+        add(north, BorderLayout.NORTH);
         add(westPanel,  BorderLayout.WEST);
         //add(eastPanel, BorderLayout.EAST);
         add(globalViewObject, BorderLayout.EAST);
@@ -170,6 +170,7 @@ public class Menu extends JPanel implements Observer, ActionListener, ChangeList
             GameMap.getInstance().resize(sizes[++curScale]);
         }
     }
+    
     private void scaleDown(){
         if(curScale != 0){
             GameMap.getInstance().resize(sizes[--curScale]);
@@ -187,7 +188,7 @@ public class Menu extends JPanel implements Observer, ActionListener, ChangeList
     }
 
     private void update(){
-        switch (state.getHoverState()) {
+        switch (state.getHoverState()){
             case HoverNone:
                 tileLabel.setText("<html>No tile" + "<br />&nbsp;</html>");
                 break;
@@ -205,19 +206,16 @@ public class Menu extends JPanel implements Observer, ActionListener, ChangeList
                             " Manpower: " + outputUnit + "</html>");
                 }
                 else{
-                    // Enemy unit hovered
-                    Player owner = state.getHoverTile().getUnit().getOwner();
-                    if(owner != null){
-                        tileLabel.setText("<html>Terräng: " + outputTerrain +
-                                "<br>Unit: Enemy unit, belongs to "+owner);
-                    }
-                    else{
-                        tileLabel.setText("<html>Terräng: " + outputTerrain +
-                                "<br>Unit: Enemy unit</html>");
-                    }
-
-                }
-
+                    if (state.getHoverTile().hasFog() == true){
+                    		System.out.println("Enemy unit in fog not visible");
+                    		tileLabel.setText("");
+                    	}
+                    	
+                        else {
+                    	tileLabel.setText("<html>Terräng: " + outputTerrain +
+                                "<br>Unit: Enemy unit, belongs to "+state.getHoverTile().getUnit().getType().getName());
+                        }            
+                 	}
                 break;
             case HoverTileCity:
                 outputTerrain = state.getHoverTile().getTerrain().toString();
@@ -246,7 +244,7 @@ public class Menu extends JPanel implements Observer, ActionListener, ChangeList
                         tabbedPane.removeAll();
                         tabbedPane.addTab(unitTypeName, null, unit.getView(), "Visa dina units ");
                         if(unit.getHold() != null){
-                            for (PhysicalUnit pu : unit.getHold().getUnits()) {
+                            for(PhysicalUnit pu : unit.getHold().getUnits()) {
                                 tabbedPane.addTab(pu.getType().getName(), null, pu.getView(), "Visa ---" );	
                             }
                         }

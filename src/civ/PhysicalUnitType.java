@@ -60,6 +60,7 @@ public enum PhysicalUnitType implements AbstractUnitType{
         if(result instanceof PhysicalUnitType){
             return (PhysicalUnitType)result;
         }
+        
         else return null;
     }
 

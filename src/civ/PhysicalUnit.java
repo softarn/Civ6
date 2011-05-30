@@ -126,7 +126,10 @@ public class PhysicalUnit implements Comparable<PhysicalUnit>{
 
     public void fortify(){
         this.fortified = true;
+        currentMovementPoint--;
     }
+    
+    
 
     public boolean inSiegeTower(){
         return false; // !! change later !!

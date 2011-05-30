@@ -230,21 +230,23 @@ public class PhysicalUnitView extends JPanel implements Observer, ActionListener
     public void update(Observable obs, Object obj){
         if(obs == state){
             moveButton.setEnabled(true);
+            settleButton.setEnabled(true);
+            defButton.setEnabled(true);
+            atkButton.setEnabled(true);
             
             if(pUnit.getType().getCategory().equals("Other")){
             	defButton.setEnabled(false);
             	atkButton.setEnabled(false);
             }
             
-            else {
-            	atkButton.setEnabled(true);
-            }
-
             if(state.getUnitState() == UnitSelected){
                 if(state.getSelectedUnit().isAlly()){
                     if(state.getSelectedUnit().getCurrentMovementPoint() == 0){
                         moveButton.setEnabled(false);
                         atkButton.setEnabled(false);
+                        defButton.setEnabled(false);
+                        settleButton.setEnabled(false);
+                        
                     }
                     switch(state.getActionState()){
                         case Move:
@@ -303,6 +305,10 @@ public class PhysicalUnitView extends JPanel implements Observer, ActionListener
                 t.hilight(new Color(230, 75, 15, 140));
                 t.getView().repaint();
             }
+        }
+        
+        if (defButton == ae.getSource()){
+        	pu.fortify();
         }
 
         /*if(infoButton == ae.getSource()){

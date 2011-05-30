@@ -17,16 +17,17 @@ public class City {
     private CityView cityView;
    
     private PhysicalUnitType type;
+    private PhysicalUnit pu;
     private Tile tile;
     private int cost = 0;
     
     private Image cityImg;
     private int defence;
-    
+
     public City(String name, Player owner) {
         this.name = name;
         this.owner = owner;
-			defence = 100;
+		defence = 100;
         Round.addCity(this);
     	
         try {
@@ -74,6 +75,8 @@ public class City {
                         }
                     }
                 }
+                //Reset "now building" label
+                getView().setUnitBuilding();
             }
             this.type = null;
             this.cost = -1;
@@ -81,6 +84,8 @@ public class City {
         if(cost >= 0){
             --cost;
         }
+        
+        cityView.update();
     }
 
     public void spawnCounter(PhysicalUnitType type, Tile tile, int cost){
@@ -88,7 +93,11 @@ public class City {
         this.tile = tile;
         this.cost = cost;
     }
-
+    
+    /*public String getBuildingUnit(){
+    	return pu.getType().getName();
+    }*/
+   
     public String getName(){
         return name;
     }
@@ -109,7 +118,11 @@ public class City {
         return cityImg;
     }
 
-    public int getDefence () {
+    public int getDefence() {
     	return defence;	
+    }
+    
+    public int getCost(){
+    	return cost;
     }
 }
