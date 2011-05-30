@@ -22,7 +22,7 @@ import java.awt.*;
 
 class GlobalView extends JPanel implements ActionListener{
     
-    private JPanel eastPanel = new JPanel();
+    private JPanel eastPanel = bnew JPanel();
     private JPanel westPanel = new JPanel();
     
     // Main panels

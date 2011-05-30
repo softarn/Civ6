@@ -23,8 +23,11 @@ public class ViewPopup extends JTabbedPane implements ActionListener{
 	private JButton putUnit;
     private JComboBox selUnit;
 	private JLabel selHeader;
-    
-	public ViewPopup() {
+	
+	private PhysicalUnitType type;
+	private Tile tile;
+	
+	public ViewPopup(){
 	    setPreferredSize(new Dimension(580,200));
 	
 		addTab("Enheter ", null, utv, "Tooltips vare her ");
@@ -58,7 +61,7 @@ public class ViewPopup extends JTabbedPane implements ActionListener{
         cityPanel.repaint();
         
 		//add(cityPanel);
-		addTab("Mecca",null,cityPanel,"Visa mer om city");
+		addTab(state.getSelectedTile().getCity().getName(),null,cityPanel,"Visa mer om city");
 		setSelectedIndex(1);
 		
 	}
@@ -66,12 +69,20 @@ public class ViewPopup extends JTabbedPane implements ActionListener{
 	public void actionPerformed(ActionEvent ae){
         if(putUnit == ae.getSource()){
             if(state.getTileState() == TileSelected){
-                Tile tile = state.getSelectedTile();
-                PhysicalUnitType type = (PhysicalUnitType)selUnit.getSelectedItem();
+                tile = state.getSelectedTile();
+                type = (PhysicalUnitType)selUnit.getSelectedItem();
                 tile.getCity().spawnCounter(type, tile, type.getCost());
+                
+                unitBuilding(type);
              	ViewPort.getPopup().setVisible(false);   
             }
-            
         }
     }
+    
+    public void unitBuilding(PhysicalUnitType type){
+    	this.type = type;
+    	tile.getCity().getView().setUnitBuilding(type);
+    	System.out.println("NU bygger vi: " + type.getName());
+    }
+    
 }
