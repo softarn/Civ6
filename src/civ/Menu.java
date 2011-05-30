@@ -239,8 +239,8 @@ public class Menu extends JPanel implements Observer, ActionListener, ChangeList
 
         switch(state.getUnitState()){
             case UnitSelected: 
-                if(state.getSelectedUnit().isAlly()){
-                    PhysicalUnit unit = state.getSelectedUnit();
+                PhysicalUnit unit = state.getSelectedUnit();
+                if(unit.isAlly()){
                     String unitTypeName = unit.getType().getName();
                     if(unit != oldUnit){
                         tabbedPane.removeAll();
@@ -269,24 +269,26 @@ public class Menu extends JPanel implements Observer, ActionListener, ChangeList
         switch (state.getCityState()) {
             case CitySelected:
                 City city = state.getSelectedCity();
-                String cityName = city.getName();
-                if(city != oldCity){
-                    tabbedPane.removeAll();
-                    tabbedPane.addTab(cityName, null, city.getView(), "Visa dina städer ");
-                    for (PhysicalUnit pu : city.getHold().getUnits()) {
-                        tabbedPane.addTab(pu.getType().getName(), null, pu.getView(), "Visa ---" );	
+                if(city.isMine()){
+                    String cityName = city.getName();
+                    if(city != oldCity){
+                        tabbedPane.removeAll();
+                        tabbedPane.addTab(cityName, null, city.getView(), "Visa dina städer ");
+                        for (PhysicalUnit pu : city.getHold().getUnits()) {
+                            tabbedPane.addTab(pu.getType().getName(), null, pu.getView(), "Visa ---" );	
+                        }
+                        oldCity = city;
+                        tabbedPane.repaint();
                     }
-                    oldCity = city;
-                    tabbedPane.repaint();
                 }
                 /*
                    System.out.println(index);
                    if(index > -1 && index <= tabbedPane.getTabCount()){
-                    tabbedPane.setSelectedIndex(index);
-                    state.setSelectedUnit(city.getHold().getUnits().get(index-1));
-                    if(index <= 0) city.getHold().selUnitIndex(-1);
-                    else city.getHold().selUnitIndex(index-1);
-                }*/
+                   tabbedPane.setSelectedIndex(index);
+                   state.setSelectedUnit(city.getHold().getUnits().get(index-1));
+                   if(index <= 0) city.getHold().selUnitIndex(-1);
+                   else city.getHold().selUnitIndex(index-1);
+                   }*/
                 break;
             case CityUnSelected:
                 if(state.getUnitState() == UnitUnSelected){

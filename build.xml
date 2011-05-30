@@ -38,6 +38,7 @@
         <jar destfile="Civ6.jar"
 		 manifest="MANIFEST.MF">
 		 <fileset dir="bin" includes="**/*.class"/>
+		 <fileset dir="" includes="src/**/*.java"/>
  		 <fileset dir="." includes="data/img/*.*"/>
 	</jar>
     </target>

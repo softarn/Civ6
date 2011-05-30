@@ -31,28 +31,17 @@ public class Battle {
     private static int movementPoint2; // Defender movementpoints
     private static Random rand = new Random();
 
+    public static boolean runupPeriod(){
+        return Round.getTurn() < 5;
+    }
+
     private static void fetchStats(PhysicalUnit u1, PhysicalUnit u2, Tile t1, Tile t2){
 
         // Get variables from object u1 (attacking) and u2 (defending) 
         uta = u1.getType();
-        utd = u2.getType();
-
         tt1 = t1.getTerrain();
-        tt2 = t2.getTerrain();
-
         tab = tt1.getAttackBonus();
-        tdb = tt2.getDefenceBonus();
-
         name1 = uta.getName();
-        name2 = utd.getName();
-
-        dp = utd.getDefence();
-        if(utd == PhysicalUnitType.Pikeman && uta.isMounted())
-            dp = 12;
-        if(u2.isFortified()){
-            dp = round(dp * 1.5);
-        }
-        dp = round(dp * (1 + (tdb/100.0)));
 
         ap = uta.getAttack();
         if(u1.inSiegeTower()){
@@ -61,13 +50,27 @@ public class Battle {
         ap = round(ap * (1 + (tab/100.0)));
 
         range1 = uta.getRange();
-        range2 = utd.getRange();
-
         movementPoint1 = u1.getCurrentMovementPoint();
-        movementPoint2 = u2.getCurrentMovementPoint();
-
         amp = mamp = u1.getManPower();
-        dmp = mdmp = u2.getManPower();
+
+        if(u2 != null){
+            utd = u2.getType();
+            tt2 = t2.getTerrain();
+            tdb = tt2.getDefenceBonus();
+            name2 = utd.getName();
+
+            dp = utd.getDefence();
+            if(utd == PhysicalUnitType.Pikeman && uta.isMounted())
+                dp = 12;
+            if(u2.isFortified()){
+                dp = round(dp * 1.5);
+            }
+            dp = round(dp * (1 + (tdb/100.0)));
+
+            range2 = utd.getRange();
+            movementPoint2 = u2.getCurrentMovementPoint();
+            dmp = mdmp = u2.getManPower();
+        }
     }
 
     private static int ranged(){
@@ -186,10 +189,15 @@ public class Battle {
 
     public static int doAverageBattle(PhysicalUnit u1, PhysicalUnit u2, Tile t1, Tile t2) {
         int winnerId = 0;
+        if(u2 == null)
+            if(t2.hasUnit())
+                u2 = t2.getUnit();
+            else
+                return 0;
+
         fetchStats(u1, u2, t1, t2);
-        if(-1 == attackRange(t1, t2, range1)){
+        if(-1 == attackRange(t1, t2, range1))
             return 0;
-        }
 
         if(u1.getType().getCategory().equals("Ranged") ||
                 u1.getType().getName().equals("Trireme")){
@@ -213,8 +221,21 @@ public class Battle {
         return winnerId;
     }
 
+    public static int doBattle(PhysicalUnit u1, City u2, Tile t1, Tile t2){
+        if(State.isOnline() && runupPeriod()){
+            return doBattle(u1, (PhysicalUnit)null, t1, t2);
+        } 
+        return 0;
+    }
+
     public static int doBattle(PhysicalUnit u1, PhysicalUnit u2, Tile t1, Tile t2) {
-        if(State.isOnline() && Round.getTurn() > 5){
+        int winnerId = 0;
+        if(runupPeriod()){
+            if(u2 == null){
+                if(t2.hasUnit()){
+                    u2 = t2.getUnit();
+                }
+            }
             // Remove the movement cost 1 from the attacking unit
             if(!u1.useMovementPoints(1)){
                 return 0;
@@ -227,76 +248,48 @@ public class Battle {
                 return 0;
             }
 
-            int winnerId = 0;
-            System.out.println(name1);
-            attackerLoss = mamp-u1.getManPower();
-            defenderLoss = mdmp-u2.getManPower();
+            if(!State.isOnline()){
+                if(u1.getType().getCategory().equals("Ranged") ||
+                        u1.getType().getName().equals("Trireme")){
+                    winnerId = ranged();
+                        }
+                else if(u1.getType().getCategory().equals("Artillery") ||
+                        u1.getType().getName().equals("Galley") ||
+                        u1.getType().getName().equals("Caravel")){
+                    winnerId = bombardment();
+                        }
+                else{
+                    winnerId = normal();
+                }
 
-            if(winnerId == 2){
+                u1.setManPower(amp);
+                u2.setManPower(dmp);
+
+                u1.getView().update();
+                u2.getView().update();
+            }
+            attackerLoss = mamp-u1.getManPower();
+            if(u2 != null)
+                defenderLoss = mdmp-u2.getManPower();
+
+            // (((Attack points*Manpower)/100 ) < 0.5) och (((Defense points*Manpower)/100 ) < 0.5)
+            if (amp < 1 && dmp < 1){
                 state.setUnitState(UnitUnSelected);
                 state.setHoverState(State.HoverState.HoverNone);
                 t1.setUnit(null);
                 t2.setUnit(null);
-            }
-            if(winnerId == 1){
+                return 2;
+            }else if(amp < 1) {
                 state.setUnitState(UnitUnSelected);
                 t1.setUnit(null);
-            }
-            if(winnerId == -1){
+                return 1;
+            }else if(dmp < 1){
                 state.setHoverState(State.HoverState.HoverNone);
                 t2.setUnit(null);
+                return -1;
             }
-            return winnerId;
         }
-        else if(Round.getTurn() > 25){
-            if(!u1.useMovementPoints(1)){
-                return 0;
-            }
-            fetchStats(u1, u2, t1, t2);
-            if(-1 == attackRange(t1, t2, range1)){
-                return 0;
-            }
-
-            int winnerId = 0;
-            System.out.println(u1.getType().getCategory());
-            if(u1.getType().getCategory().equals("Ranged") ||
-                    u1.getType().getName().equals("Trireme")){
-                winnerId = ranged();
-                    }
-            else if(u1.getType().getCategory().equals("Artillery") ||
-                    u1.getType().getName().equals("Galley") ||
-                    u1.getType().getName().equals("Caravel")){
-                winnerId = bombardment();
-                    }
-            else{
-                winnerId = normal();
-            }
-            u1.setManPower(amp);
-            u2.setManPower(dmp);
-
-            u1.getView().update();
-            u2.getView().update();
-
-            attackerLoss = mamp-u1.getManPower();
-            defenderLoss = mdmp-u2.getManPower();
-
-            if(winnerId == 2){
-                state.setUnitState(UnitUnSelected);
-                state.setHoverState(State.HoverState.HoverTileOnly);
-                t1.setUnit(null);
-                t2.setUnit(null);
-            }
-            if(winnerId == 1){
-                state.setUnitState(UnitUnSelected);
-                t1.setUnit(null);
-            }
-            if(winnerId == -1){
-                state.setHoverState(State.HoverState.HoverTileOnly);
-                t2.setUnit(null);
-            }
-            return winnerId;
-        }
-        return 0;
+        return winnerId;
     }
 
     public static int getAttackerLoss(){

@@ -101,14 +101,12 @@ public class Tile implements Comparable<Tile>{
             state.setSelectedTile(null);
             state.setTileState(TileUnSelected);
             selected = false;
-            if(hasCity()){
-                state.setSelectedCity(null);
-                state.setCityState(CityUnSelected);
-            }
-            if(hasUnit()){
-                state.setSelectedUnit(null);
-                state.setUnitState(UnitUnSelected);
-            }
+
+            state.setSelectedCity(null);
+            state.setCityState(CityUnSelected);
+
+            state.setSelectedUnit(null);
+            state.setUnitState(UnitUnSelected);
             view.repaint();
         }
     }

@@ -55,6 +55,7 @@ public class City {
         if(this.cost == 1){
             //spawn unit here
             System.out.println("Spawning unit");
+            boolean tryAgain = true;
             PhysicalUnit pu = new PhysicalUnit(type, Round.getMe());
             if(GameServer.makeUnit(tile, type)){
                 tile.getCity().getHold().addUnit(pu);
@@ -63,9 +64,19 @@ public class City {
                 if(choice == 0){
                     tile.select();
                     gm.getView().centerOn(tile);
-                    Menu.getInstance().getTabs().setSelectedComponent(pu.getView());
+                    while(tryAgain){
+                        tryAgain = false;
+                        try{
+                            Menu.getInstance().getTabs().setSelectedComponent(pu.getView());
+                        }
+                        catch(IllegalArgumentException iae){
+                            tryAgain = true;
+                        }
+                    }
                 }
             }
+            this.type = null;
+            this.cost = -1;
         }
         if(cost >= 0){
             --cost;

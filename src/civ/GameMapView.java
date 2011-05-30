@@ -21,6 +21,8 @@ import static civ.State.HoverState.HoverTileCity;
 
 public class GameMapView extends JPanel{
 
+    private static final int MAX_MOVEMENT = 6;
+    private static final int MAX_RANGE = 4; 
     private GameMap gm;
     private State state = State.getInstance();
 
@@ -110,7 +112,7 @@ public class GameMapView extends JPanel{
                                 City city = state.getSelectedCity();
                                 PhysicalUnit unit = state.getHoldUnit();
                                 if(unit != null){
-                                    for(Tile t : gm.getNeighbours(state.getSelectedTile(), unit.getCurrentMovementPoint(), true)){
+                                    for(Tile t : gm.getNeighbours(state.getSelectedTile(), MAX_MOVEMENT, true)){
                                         t.dehilight();
                                         t.getView().repaint();
                                     }
@@ -124,7 +126,7 @@ public class GameMapView extends JPanel{
                                 PhysicalUnit pu = state.getSelectedUnit();
                                 PhysicalUnit unit = state.getHoldUnit();
                                 int movement = pu.getCurrentMovementPoint();
-                                for(Tile t : gm.getNeighbours(state.getSelectedTile(), movement, true)){
+                                for(Tile t : gm.getNeighbours(state.getSelectedTile(), MAX_MOVEMENT, true)){
                                     t.dehilight();
                                     t.getView().repaint();
                                 }
@@ -147,51 +149,78 @@ public class GameMapView extends JPanel{
                             break;
                         case Attack:
                             if(state.getUnitState() == UnitSelected){
-                                PhysicalUnit pu = state.getSelectedUnit();
-                                int range = pu.getType().getRange();
-                                for(Tile t : gm.getNeighbours(state.getSelectedTile(), range, false)){
-                                    t.dehilight();
-                                    t.getView().repaint();
-                                }
-                                if(tile.hasUnit() && !tile.getUnit().isAlly()){
-                                    if(Battle.attackRange(state.getSelectedTile(), tile, 
-                                                state.getSelectedUnit().getType().getRange()) > 0){
-                                        before = new PopUpBubble(state.getSelectedTile().getView().getX() + 135, 
-                                                state.getSelectedTile().getView().getY() + 35);
-                                        GameMapView.this.add(before, 0);
-                                        GameMapView.this.repaint();
-                                        showConfirmAttackPane(state.getSelectedUnit(), tile.getUnit(), 
-                                                state.getSelectedTile(), tile);
-                                        Battle.doBattle(state.getSelectedUnit(), tile.getUnit(), 
-                                                state.getSelectedTile(), tile);
-                                        after = new PopUpBubble(state.getSelectedTile().getView().getX() + 135, 
-                                                state.getSelectedTile().getView().getY() + 35, 
-                                                Battle.getAttackerLoss(), Battle.getDefenderLoss());
-                                        GameMapView.this.remove(before);
-                                        GameMapView.this.add(after, 0);
-                                        GameMapView.this.repaint();
+                                if(Battle.runupPeriod()){
+                                    PhysicalUnit atkUnit = state.getSelectedUnit();
+                                    int range = atkUnit.getType().getRange();
+                                    for(Tile t : gm.getNeighbours(state.getSelectedTile(), MAX_RANGE, false)){
+                                        t.dehilight();
+                                        t.getView().repaint();
+                                    }
+                                    if(atkUnit.getType().getCategory().equals("Artillery")){
+                                        if(tile.hasCity() && !tile.getCity().isMine()){
+                                            before = new PopUpBubble(state.getSelectedTile().getView().getX() + 135, 
+                                                    state.getSelectedTile().getView().getY() + 35);
+                                            GameMapView.this.add(before, 0);
+                                            GameMapView.this.repaint();
+                                            /*showConfirmAttackPane(atkUnit, tile.getCity(),
+                                              state.getSelectedTile(), tile);*/
+                                            Battle.doBattle(atkUnit, tile.getCity(),
+                                                    state.getSelectedTile(), tile);
+                                        }
+                                        else{
+                                            System.out.println("Attacking tile");
+                                            before = new PopUpBubble(state.getSelectedTile().getView().getX() + 135, 
+                                                    state.getSelectedTile().getView().getY() + 35);
+                                            GameMapView.this.add(before, 0);
+                                            GameMapView.this.repaint();
+                                            showConfirmAttackPane(atkUnit, (PhysicalUnit)null,
+                                                    state.getSelectedTile(), tile);
+                                            Battle.doBattle(atkUnit, (PhysicalUnit)null, 
+                                                    state.getSelectedTile(), tile);
+                                        }
 
                                     }
-                                }
-                                else{
-                                    System.out.println("No unit to attack here.");
+                                    if(tile.hasUnit() && !tile.getUnit().isAlly()){
+                                        PhysicalUnit defUnit = tile.getUnit();
+                                        if(Battle.attackRange(state.getSelectedTile(), tile, 
+                                                    atkUnit.getType().getRange()) > 0){
+                                            before = new PopUpBubble(state.getSelectedTile().getView().getX() + 135, 
+                                                    state.getSelectedTile().getView().getY() + 35);
+                                            GameMapView.this.add(before, 0);
+                                            GameMapView.this.repaint();
+                                            showConfirmAttackPane(atkUnit, defUnit,
+                                                    state.getSelectedTile(), tile);
+                                            Battle.doBattle(atkUnit, defUnit,
+                                                    state.getSelectedTile(), tile);
+                                            after = new PopUpBubble(state.getSelectedTile().getView().getX() + 135, 
+                                                    state.getSelectedTile().getView().getY() + 35, 
+                                                    Battle.getAttackerLoss(), Battle.getDefenderLoss());
+                                            GameMapView.this.remove(before);
+                                            GameMapView.this.add(after, 0);
+                                            GameMapView.this.repaint();
+
+                                        }
+                                    }
+                                    else{
+                                        System.out.println("No unit to attack here.");
+                                        state.setActionState(None);
+                                    }
                                     state.setActionState(None);
+                                    tile = state.getSelectedTile();
                                 }
-                                state.setActionState(None);
-                                tile = state.getSelectedTile();
-                            }
-                            else if(state.getCityState() == CitySelected){
-                                City city = state.getSelectedCity();
-                                int index = city.getHold().getSelUnitIndex();
-                                PhysicalUnit unit = null;
-                                if(index != -1){
-                                    unit = city.getHold().getUnit(index);
+                                else if(state.getCityState() == CitySelected){
+                                    City city = state.getSelectedCity();
+                                    int index = city.getHold().getSelUnitIndex();
+                                    PhysicalUnit unit = null;
+                                    if(index != -1){
+                                        unit = city.getHold().getUnit(index);
+                                    }
+                                    for(Tile t : gm.getNeighbours(state.getSelectedTile(), MAX_RANGE, false)){
+                                        t.dehilight();
+                                        t.getView().repaint();
+                                    }
+                                    System.out.println("Can't attack from city");
                                 }
-                                for(Tile t : gm.getNeighbours(state.getSelectedTile(), unit.getType().getRange(), false)){
-                                    t.dehilight();
-                                    t.getView().repaint();
-                                }
-                                System.out.println("Can't attack from city");
                             }
                             break;
                     }
@@ -249,4 +278,14 @@ public class GameMapView extends JPanel{
                 JOptionPane.OK_OPTION);
         return 0;
     }
+
+    /*    private void showConfirmAttackPane(PhysicalUnit atkUnit, City city, Tile tatt, Tile tdef){
+          Battle.doAverageBattle(tmpAtt, tmpDef, tatt, tdef);
+          JOptionPane.showMessageDialog(
+          null,
+          "You: " + tmpAtt.getManPower() + "\nDefender: " + tmpDef.getManPower() +
+          "\n Attack?",
+          "Expected outcome",
+          JOptionPane.OK_OPTION);
+          }*/
 }// class
