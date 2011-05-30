@@ -265,6 +265,10 @@ public class PhysicalUnitView extends JPanel implements Observer, ActionListener
         if(moveButton == ae.getSource()){
             if(state.getUnitState() == UnitSelected){
                 pu = state.getSelectedUnit();
+                if(pu.getHold() != null && pUnit.getHold() == null){
+                    state.setHoldUnit(pUnit);
+                    pu = pUnit;
+                }
             }
             else if(state.getCityState() == CitySelected){
                 pu = pUnit; //hold.getUnit(hold.getSelUnitIndex());
@@ -274,8 +278,8 @@ public class PhysicalUnitView extends JPanel implements Observer, ActionListener
                 t.dehilight();
                 t.getView().repaint();
             }
-            pu.getView().update();
             state.setActionState(Move);
+            pUnit.getView().update();
             for(Tile t : gm.getNeighbours(state.getSelectedTile(), pu.getCurrentMovementPoint(), true)){
                 t.hilight(new Color(200, 175, 115, 170));
                 t.getView().repaint();

@@ -124,6 +124,10 @@ public class Tile implements Comparable<Tile>{
 
     //This function must be edited 
     public void setUnit(PhysicalUnit pu){
+        if(pu == null){
+            unit = null;
+            return;
+        }
         if(hasCity()){
             if(pu != null && pu.isAlly()){
                 Hold hold = getCity().getHold();
@@ -131,7 +135,7 @@ public class Tile implements Comparable<Tile>{
                 state.setUnitState(UnitUnSelected);
             }
         }
-        else if(hasUnit() && unit.getType().getCategory().equals("Boat")){
+        else if(hasUnit() && unit.getHold() != null){
             if(pu != null && pu.isAlly()){
                 Hold hold = getUnit().getHold();
                 hold.addUnit(pu);

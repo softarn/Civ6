@@ -117,6 +117,14 @@ public class GameMap{
             for(Tile tile : temp){
                 if(tile.hasUnit()){ 
                     if(tile.getUnit().isAlly()){
+                        Hold hold = tile.getUnit().getHold();
+                        if(hold != null){
+                            for(PhysicalUnit u : hold.getUnits()){
+                                u.reset();
+                                u.getView().update();
+                                u.getView().repaint();
+                            }
+                        }
                         tile.getUnit().reset();
                         tile.getUnit().getView().update();
                         tile.getUnit().getView().repaint();
@@ -223,7 +231,6 @@ public class GameMap{
         }
         else if(state.getUnitState() == UnitSelected){
             unit = state.getSelectedUnit();
-            System.out.println("Moving unit");
         }
         for(int[] off : offsets){
             // Add all surrounding tiles
@@ -237,8 +244,8 @@ public class GameMap{
                         else if(t.hasUnit() && 
                                 t.getUnit().getHold() != null &&
                                 t.getUnit().isAlly() && 
-                                state.getSelectedUnit().getHold() == null &&
-                                state.getSelectedUnit().isAlly()){
+                                unit.getHold() == null &&
+                                unit.isAlly()){
                             result.add(t);
                         }
                     }

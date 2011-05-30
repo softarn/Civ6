@@ -12,7 +12,7 @@ public class Move {
      */
     public static boolean makeMove(PhysicalUnit u1, Tile t1, Tile t2){
         int length = moveLength(t1, t2, u1.getCurrentMovementPoint());
-        System.out.println("Moving unit");
+        //System.out.println("Moving unit");
         if(!GameServer.makeMoveOut(u1, t1, t2)){
             return false;
         }
@@ -32,6 +32,7 @@ public class Move {
     public static boolean makeMove(Tile t1, Tile t2){
         PhysicalUnit unit = t1.getUnit();
 
+        System.out.println(unit.getType().getName());
         int length = moveLength(t1, t2, unit.getCurrentMovementPoint());
 
         ArrayList<Tile> tiles = new ArrayList<Tile>();
@@ -43,6 +44,8 @@ public class Move {
         if(length == -1){
             return false;
         }
+        System.out.println(t1.getX() + ":" + t1.getY());
+        System.out.println(t2.getX() + ":" + t2.getY());
         t1.setUnit(null);
         t2.setUnit(unit);
         for(Tile t : gm.getNeighbours(t2, unit.getType().getVision())){

@@ -233,7 +233,7 @@ public class Battle {
 
             if(winnerId == 2){
                 state.setUnitState(UnitUnSelected);
-                state.setHoverState(State.HoverState.HoverTileOnly);
+                state.setHoverState(State.HoverState.HoverNone);
                 t1.setUnit(null);
                 t2.setUnit(null);
             }
@@ -242,7 +242,7 @@ public class Battle {
                 t1.setUnit(null);
             }
             if(winnerId == -1){
-                state.setHoverState(State.HoverState.HoverTileOnly);
+                state.setHoverState(State.HoverState.HoverNone);
                 t2.setUnit(null);
             }
             return winnerId;
