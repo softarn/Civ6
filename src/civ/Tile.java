@@ -129,7 +129,10 @@ public class Tile implements Comparable<Tile>{
         if(hasCity()){
             if(pu != null && (pu.isAlly() || city.getHold().isEmpty())){
                 Hold hold = city.getHold();
-                hold.addUnit(pu);
+                if(!hold.addUnit(pu)){
+                    System.out.println("No room for unit");
+                    return;
+                }
                 state.setUnitState(UnitUnSelected);
                 if(!pu.isAlly()){
                     city.setOwner(null);
@@ -140,7 +143,10 @@ public class Tile implements Comparable<Tile>{
         else if(hasUnit() && unit.getHold() != null){
             if(pu != null && pu.isAlly()){
                 Hold hold = getUnit().getHold();
-                hold.addUnit(pu);
+                if(!hold.addUnit(pu)){
+                    System.out.println("No room for unit");
+                    return;
+                }
             }
         }
         else{
