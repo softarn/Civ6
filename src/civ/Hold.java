@@ -19,6 +19,10 @@ public class Hold{
         this.limit = limit;
     }
 
+    public boolean isEmpty(){
+        return units.isEmpty();
+    }
+
     public boolean addUnit(PhysicalUnit unit){
         if(limit != 0 && units.size() >= limit){
             return false;
