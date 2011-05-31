@@ -48,9 +48,9 @@ class GameScreen extends JPanel implements ActionListener {
 	private GameScreen(){
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
-		nameField = new JTextField("amoros");
+		nameField = new JTextField("");
 		nameField.setBackground(Color.LIGHT_GRAY);
-		civField = new JTextField("Persians");
+		civField = new JTextField("");
 		
 		startButton = new JButton("Starta");
 		lockButton = new JButton("Lås");
@@ -68,12 +68,12 @@ class GameScreen extends JPanel implements ActionListener {
 		titleLabel = new JLabel("Välj hur många tiles du vill ha på kartan: ");
 	
 		min = 20;
-		max = 200;
+		max = 100;
 		init = 20;
 		intSize = 0;
 			
 		jSlide = new JSlider(JSlider.HORIZONTAL, min, max, init);	
-		jSlide.setMajorTickSpacing(50);
+		jSlide.setMajorTickSpacing(10);
 		jSlide.setPaintTicks(true);
 		jSlide.setPaintLabels(true);
 		jSlide.setPaintTrack(true);

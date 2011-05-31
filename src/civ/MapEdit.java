@@ -26,14 +26,14 @@ class MapEdit  extends JPanel{
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		add(Box.createRigidArea(new Dimension(70,30)));
 		
-		min = 7;
+		min = 5;
 		max = 40;
 		init = 15;
 		intSize = 0;
 		
 		jSlide = new JSlider(JSlider.HORIZONTAL,
 			min, max, init);	
-		jSlide.setMajorTickSpacing(2);
+		jSlide.setMajorTickSpacing(5);
 		jSlide.setPaintTicks(true);
 		jSlide.setPaintLabels(true);
 		jSlide.setPaintTrack(true);
