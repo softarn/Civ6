@@ -98,7 +98,7 @@ public class GameMap{
                     tile.setExplored(true);
                 }
                 // Debug line
-                tile.setExplored(true);
+                //tile.setExplored(true);
             }
         }
         gmv.repaint();
@@ -363,8 +363,8 @@ public class GameMap{
         }
         */
         tiles = MapGen.generate(width, height);
-        //spawnSettler();
-        //spawnSettler();
+        spawnSettler();
+        spawnSettler();
     }
 
     public void spawnSettler(){

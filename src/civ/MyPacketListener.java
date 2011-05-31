@@ -89,8 +89,10 @@ public class MyPacketListener implements PacketListener{
                 res.getHealthLost() + " mankraft.",
                 "Dödsraport",
                 JOptionPane.OK_OPTION);
+        System.out.println("Printed report");
         PhysicalUnit pu = gm.getTile(res.getBombX(), res.getBombY()).getUnit();
         pu.setManPower(res.getHealthLost());
+        System.out.println("Updating unit");
         pu.getView().update();
         pu.getView().repaint();
         gm.getView().repaint();
