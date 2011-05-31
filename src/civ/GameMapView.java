@@ -180,8 +180,6 @@ public class GameMapView extends JPanel{
                                                     state.getSelectedTile().getView().getY() + 35);
                                             GameMapView.this.add(before, 0);
                                             GameMapView.this.repaint();
-                                            showConfirmAttackPane(atkUnit, (PhysicalUnit)null,
-                                                    state.getSelectedTile(), tile);
                                             Battle.doBattle(atkUnit, (PhysicalUnit)null, 
                                                     state.getSelectedTile(), tile);
                                         }

@@ -128,9 +128,13 @@ public class Tile implements Comparable<Tile>{
         }
         if(hasCity()){
             if(pu != null && (pu.isAlly() || city.getHold().isEmpty())){
-                Hold hold = getCity().getHold();
+                Hold hold = city.getHold();
                 hold.addUnit(pu);
                 state.setUnitState(UnitUnSelected);
+                if(!pu.isAlly()){
+                    city.setOwner(null);
+                    state.setCityState(CityUnSelected);
+                }
             }
         }
         else if(hasUnit() && unit.getHold() != null){
