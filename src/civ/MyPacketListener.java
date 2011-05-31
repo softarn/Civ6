@@ -31,8 +31,12 @@ public class MyPacketListener implements PacketListener{
                 String theOwner = received.getUnitOwner(i);
                 String theType = received.getUnitType(i);
                 int manPowerLeft = received.getUnitManPower(i);
-                PhysicalUnit pu = new PhysicalUnit(theType, Player.getInstance(theOwner), manPowerLeft);
-                gm.getTile(tileXValue, tileYValue).setUnit(pu);
+                PhysicalUnit pu = new PhysicalUnit(theType, Player.getInstance(theOwner));
+                Tile tile = gm.getTile(tileXValue, tileYValue);
+                if(!tile.hasUnit())
+                    tile.setUnit(pu);
+
+                tile.getUnit().setManPower(manPowerLeft);
                 System.out.println(tileXValue +", "+ tileYValue);
                 pu.getView().update();
                 if(State.getInstance().getUnitState() == UnitSelected){

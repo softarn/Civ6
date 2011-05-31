@@ -107,7 +107,7 @@ public class GameMap{
     public void clearTiles(){
         for(Tile[] temp : tiles){
             for(Tile tile : temp){
-                if(tile.hasUnit() && !tile.getUnit().getType().getName().equals("Barbarian")){
+                if(tile.hasUnit() && !tile.getUnit().isAlly() && !tile.getUnit().getType().getName().equals("Barbarian")){
                     tile.setUnit(null);
                 }
             }
