@@ -61,16 +61,17 @@ class GameScreen extends JPanel implements ActionListener {
 		civLabel = new JLabel("Civilsationens namn: ");
 		nameLabel = new JLabel("Spelarnamn: ");
 		
-		//list.setMinimumSize(new Dimension(40,50));
-		scp = new JScrollPane(list);
 		
+			//list.setMinimumSize(new Dimension(40,50));
+		scp = new JScrollPane(list);
+			
 		titleLabel = new JLabel("Välj hur många tiles du vill ha på kartan: ");
-
+	
 		min = 20;
 		max = 200;
 		init = 20;
 		intSize = 0;
-		
+			
 		jSlide = new JSlider(JSlider.HORIZONTAL, min, max, init);	
 		jSlide.setMajorTickSpacing(50);
 		jSlide.setPaintTicks(true);
@@ -78,6 +79,7 @@ class GameScreen extends JPanel implements ActionListener {
 		jSlide.setPaintTrack(true);
 		
 		jSlide.addChangeListener(new SlideListener());
+		
 		
 		textPanel.setLayout(new BoxLayout(textPanel, BoxLayout.Y_AXIS));
 		textPanel.add(nameLabel);
@@ -126,6 +128,7 @@ class GameScreen extends JPanel implements ActionListener {
 		if(startEnabled == false){
 			startButton.setEnabled(false);
 			lockButton.setEnabled(false);
+			jSlide.setEnabled(false);
 			
 		}
     }
