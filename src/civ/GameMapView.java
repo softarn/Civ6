@@ -207,27 +207,27 @@ public class GameMapView extends JPanel{
                                             GameMapView.this.repaint();
 
                                         }
-                                    }
-                                    else{
-                                        System.out.println("No unit to attack here.");
+                                        else{
+                                            System.out.println("No unit to attack here.");
+                                            state.setActionState(None);
+                                        }
                                         state.setActionState(None);
+                                        tile = state.getSelectedTile();
                                     }
-                                    state.setActionState(None);
-                                    tile = state.getSelectedTile();
                                 }
-                                else if(state.getCityState() == CitySelected){
-                                    City city = state.getSelectedCity();
-                                    int index = city.getHold().getSelUnitIndex();
-                                    PhysicalUnit unit = null;
-                                    if(index != -1){
-                                        unit = city.getHold().getUnit(index);
-                                    }
-                                    for(Tile t : gm.getNeighbours(state.getSelectedTile(), MAX_RANGE, false)){
-                                        t.dehilight();
-                                        t.getView().repaint();
-                                    }
-                                    System.out.println("Can't attack from city");
+                            }
+                            else if(state.getCityState() == CitySelected){
+                                City city = state.getSelectedCity();
+                                int index = city.getHold().getSelUnitIndex();
+                                PhysicalUnit unit = null;
+                                if(index != -1){
+                                    unit = city.getHold().getUnit(index);
                                 }
+                                for(Tile t : gm.getNeighbours(state.getSelectedTile(), MAX_RANGE, false)){
+                                    t.dehilight();
+                                    t.getView().repaint();
+                                }
+                                System.out.println("Can't attack from city");
                             }
                             break;
                     }
