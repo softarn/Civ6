@@ -97,6 +97,8 @@ public class GameMap{
                     }
                     tile.setExplored(true);
                 }
+                // Debug line
+                //tile.setExplored(true);
             }
         }
         gmv.repaint();
@@ -346,7 +348,7 @@ public class GameMap{
      * not anywhere close to a good randomization.
      */
     public void parseMap(){
-        TerrainType[] tt = TerrainType.values();
+        /*TerrainType[] tt = TerrainType.values();
         Random r = new Random();
         Tile[][] result = new Tile[width][];
         for(int k=0; k<width; k++){
@@ -359,14 +361,10 @@ public class GameMap{
                 result[i][j] = temp;
             }
         }
-        
-        tiles = result;
-        spawnSettler();
-        spawnSettler();
-        //tiles[1][1].setUnit(new PhysicalUnit(PhysicalUnitType.Musketeer, Player.getInstance("Player")));
-        //tiles[2][1].setUnit(new Barbarian(tiles[2][1]));
-        //tiles[2][2].setCity(new City("Mecca", Round.getMe()));
-        //tiles[2][2].getCity().getHold().addUnit(new PhysicalUnit("Archer", Round.getMe()));
+        */
+        tiles = MapGen.generate(width, height);
+        //spawnSettler();
+        //spawnSettler();
     }
 
     public void spawnSettler(){
