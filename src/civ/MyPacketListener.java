@@ -91,7 +91,7 @@ public class MyPacketListener implements PacketListener{
                 JOptionPane.OK_OPTION);
         gm.getView().centerOn(tile);
         PhysicalUnit pu = tile.getUnit();
-        pu.setManPower(res.getHealthLost());
+        pu.setManPower(pu.getManPower() - res.getHealthLost());
         pu.getView().update();
         pu.getView().repaint();
         gm.getView().repaint();
