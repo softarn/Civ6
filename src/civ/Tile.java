@@ -121,17 +121,17 @@ public class Tile implements Comparable<Tile>{
     
 
     //This function must be edited 
-    public void setUnit(PhysicalUnit pu){
+    public boolean setUnit(PhysicalUnit pu){
         if(pu == null){
             unit = null;
-            return;
+            return true;
         }
         if(hasCity()){
             if(pu != null && (pu.isAlly() || city.getHold().isEmpty())){
                 Hold hold = city.getHold();
                 if(!hold.addUnit(pu)){
                     System.out.println("No room for unit");
-                    return;
+                    return false;
                 }
                 state.setUnitState(UnitUnSelected);
                 if(!pu.isAlly()){
@@ -145,7 +145,7 @@ public class Tile implements Comparable<Tile>{
                 Hold hold = getUnit().getHold();
                 if(!hold.addUnit(pu)){
                     System.out.println("No room for unit");
-                    return;
+                    return false;
                 }
             }
         }
@@ -164,6 +164,7 @@ public class Tile implements Comparable<Tile>{
             unit = pu;
         }
         view.repaint();
+        return true;
     }
 
     public PhysicalUnit getUnit(){

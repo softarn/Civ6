@@ -19,7 +19,10 @@ public class Move {
         if(length == -1){
             return false;
         }
-        t2.setUnit(u1);
+        boolean couldPlace = t2.setUnit(u1);
+        if(!couldPlace)
+            return false;
+
         for(Tile t : gm.getNeighbours(t2, u1.getType().getVision())){
             t.setExplored(true);
             t.getView().repaint();
@@ -46,8 +49,12 @@ public class Move {
         }
         System.out.println(t1.getX() + ":" + t1.getY());
         System.out.println(t2.getX() + ":" + t2.getY());
-        t1.setUnit(null);
-        t2.setUnit(unit);
+        boolean couldPlace = t2.setUnit(unit);
+        if(couldPlace)
+            t1.setUnit(null);
+        else
+            return false;
+
         for(Tile t : gm.getNeighbours(t2, unit.getType().getVision())){
             t.setExplored(true);
             t.getView().repaint();

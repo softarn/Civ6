@@ -85,6 +85,7 @@ public class Barbarian extends PhysicalUnit{
         if(state.getUnitState() == UnitSelected){
             unit = state.getSelectedUnit();
         }
+        
         state.setUnitState(UnitUnSelected);
         state.setSelectedUnit(this);
         state.setUnitState(UnitSelected);
