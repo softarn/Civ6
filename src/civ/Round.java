@@ -38,7 +38,6 @@ public class Round{
         GameServer.endTurn(); 
         if(!State.isOnline()){
             resume();
-            System.out.println("You are waiting for your turn");
         }
         else {
         	createDialog();
@@ -48,8 +47,6 @@ public class Round{
     }
 
     static void resume(){
-        System.out.println("I has new turn!");
-        
         if(State.isOnline()){
         	if(dialog != null)
         		dialog.dispose();

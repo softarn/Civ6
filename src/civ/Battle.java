@@ -201,17 +201,14 @@ public class Battle {
 
         if(u1.getType().getCategory().equals("Ranged") ||
                 u1.getType().getName().equals("Trireme")){
-            System.out.println("Ranged");
             winnerId = ranged();
                 }
         else if(u1.getType().getCategory().equals("Artillery") ||
                 u1.getType().getName().equals("Galley") ||
                 u1.getType().getName().equals("Caravel")){
-            System.out.println("Bombardment");
             winnerId = bombardment();
                 }
         else{
-            System.out.println("Normal");
             winnerId = normal();
         }
 
@@ -231,19 +228,24 @@ public class Battle {
     public static int doBattle(PhysicalUnit u1, PhysicalUnit u2, Tile t1, Tile t2) {
         int winnerId = 0;
         if(!runupPeriod()){
+            System.out.println("Time to battle");
             if(u2 == null){
                 if(t2.hasUnit()){
                     u2 = t2.getUnit();
                 }
             }
+            System.out.println("Using a movementpoint");
             // Remove the movement cost 1 from the attacking unit
             if(!u1.useMovementPoints(1)){
                 return 0;
             }
+            System.out.println("Fetching stats");
             fetchStats(u1, u2, t1, t2);
-            if(GameServer.battle(u1, u2, t1, t2)){
+            System.out.println("Initialize server battle");
+            if(!GameServer.battle(u1, u2, t1, t2)){
                 return 0;
             }
+            System.out.println("Check battle range");
             if(-1 == attackRange(t1, t2, range1)){
                 return 0;
             }
@@ -251,17 +253,21 @@ public class Battle {
             if(!State.isOnline()){
                 if(u1.getType().getCategory().equals("Ranged") ||
                         u1.getType().getName().equals("Trireme")){
+                    System.out.println("Ranged");
                     winnerId = ranged();
                         }
                 else if(u1.getType().getCategory().equals("Artillery") ||
                         u1.getType().getName().equals("Galley") ||
                         u1.getType().getName().equals("Caravel")){
+                    System.out.println("Bombardment");
                     winnerId = bombardment();
                         }
                 else{
+                    System.out.println("Normal");
                     winnerId = normal();
                 }
 
+                System.out.println("Battle done");
                 u1.setManPower(amp);
                 u2.setManPower(dmp);
 
