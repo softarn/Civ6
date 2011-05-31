@@ -10,6 +10,14 @@ class MapGen{
     private static final int LAND_MOD = 65;
     private static final int WATER_MOD = 45;
     private static final int GRASSLAND_MOD = 10;
+    private static final int MARSH_MOD = 10;
+    private static final int DESERT_MOD = 10;
+    private static final int TUNDRA_MOD = 10;
+    private static final int RAINFOREST_MOD = 10;
+    private static final int CONIFER_MOD = 10;
+    private static final int BROADLEAF_MOD = 10;
+    private static final int HILLS_MOD = 10;
+    private static final int MOUNTAIN_MOD = 10;
     private static final int OCEAN_MOD = 50;
 
     private static final TerrainType[] terrains = TerrainType.values();
@@ -64,9 +72,33 @@ class MapGen{
         }
         if(terrain == Plains){
             rand = Math.abs(r.nextInt());
-            if(rand % 100 < GRASSLAND_MOD || getRandom(occurance) == Grassland){
+            if(rand % 100 < GRASSLAND_MOD || getRandom(occurance) == Grassland)
                 index = 3;
-            }
+            rand = Math.abs(r.nextInt());
+            if(rand % 100 < MARSH_MOD || getRandom(occurance) == Marsh)
+                index = 4;
+            rand = Math.abs(r.nextInt());
+            if(rand % 100 < DESERT_MOD || getRandom(occurance) == Desert)
+                index = 5;
+            rand = Math.abs(r.nextInt());
+            if(rand % 100 < TUNDRA_MOD || getRandom(occurance) == Tundra)
+                index = 6;
+            rand = Math.abs(r.nextInt());
+            if(rand % 100 < RAINFOREST_MOD || getRandom(occurance) == Rainforest)
+                index = 7;
+            rand = Math.abs(r.nextInt());
+            if(rand % 100 < CONIFER_MOD || getRandom(occurance) == Conifer)
+                index = 8;
+            rand = Math.abs(r.nextInt());
+            if(rand % 100 < BROADLEAF_MOD || getRandom(occurance) == Broadleaf)
+                index = 9;
+            rand = Math.abs(r.nextInt());
+            if(rand % 100 < HILLS_MOD || getRandom(occurance) == Hills)
+                index = 10;
+            rand = Math.abs(r.nextInt());
+            if(rand % 100 < MOUNTAIN_MOD || getRandom(occurance) == Mountain)
+                index = 11;
+            
         }
         else if(terrain == Sea){
             rand = Math.abs(r.nextInt());
