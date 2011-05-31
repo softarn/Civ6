@@ -43,9 +43,15 @@ public class PhysicalUnit implements Comparable<PhysicalUnit>{
         this.currentInvSize = type.getInventorySize();
         this.manPower = type.getMaxManPower();
         this.view = new PhysicalUnitView(this);
-        if(type.getName().equals("Siege Tower") || type.getCategory().equals("Boat")){
-            this.hold = new Hold();
-        }
+        
+        if(type.getName().equals("Siege Tower"))
+            this.hold = new Hold(1);
+        else if(type.getName().equals("Caravel"))
+        	this.hold = new Hold(2);
+        else if(type.getName().equals("Trireme"))
+        	this.hold = new Hold(3);
+        else if(type.getName().equals("Galley"))
+        	this.hold = new Hold(5);
         else{
             this.hold = null;
         }
