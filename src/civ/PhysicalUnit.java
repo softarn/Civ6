@@ -35,13 +35,21 @@ public class PhysicalUnit implements Comparable<PhysicalUnit>{
     }
 
     public PhysicalUnit(AbstractUnitType type, Player allegiance){
+        this(type, allegiance, type.getMaxManPower());
+    }
+
+    public PhysicalUnit(String type, Player allegiance, int manPower){
+        this(PhysicalUnitType.getByName(type), allegiance, manPower);
+    }
+
+    public PhysicalUnit(AbstractUnitType type, Player allegiance, int manPower){
         this.idNumber = ++count;
         this.type = type;
         this.allegiance = allegiance;
         //this.inventory = new HashMap<ResourceType, Integer>();
         reset();
         this.currentInvSize = type.getInventorySize();
-        this.manPower = type.getMaxManPower();
+        this.manPower = manPower;
         this.view = new PhysicalUnitView(this);
         
         if(type.getName().equals("Siege Tower"))
