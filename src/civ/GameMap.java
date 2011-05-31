@@ -98,7 +98,7 @@ public class GameMap{
                     tile.setExplored(true);
                 }
                 // Debug line
-                //tile.setExplored(true);
+                tile.setExplored(true);
             }
         }
         gmv.repaint();
