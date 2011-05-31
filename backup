@@ -1,0 +1,11 @@
+pane.setMessageType(JOptionPane.PLAIN_MESSAGE);
+		pane.setOptions(new String[]{});
+		dialog = pane.pane.setMessageType(JOptionPane.PLAIN_MESSAGE);
+		pane.setOptions(new String[]{});
+		dialog = pane.pane.setMessageType(JOptionPane.PLAIN_MESSAGE);
+		pane.setOptions(new String[]{});
+		dialog = pane.pane.setMessageType(JOptionPane.PLAIN_MESSAGE);
+		pane.setOptions(new String[]{});
+		dialog = pane.pane.setMessageType(JOptionPane.PLAIN_MESSAGE);
+		pane.setOptions(new String[]{});
+		dialog = pane.

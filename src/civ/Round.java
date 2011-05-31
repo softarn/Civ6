@@ -3,6 +3,8 @@ package civ;
 import java.util.Random;
 import java.awt.Component;
 import javax.swing.JOptionPane;
+import javax.swing.JDialog;
+import javax.swing.WindowConstants;
 
 import static civ.State.CityState.CitySelected;
 import static civ.State.CityState.CityUnSelected;
@@ -20,7 +22,17 @@ public class Round{
     private static City[] cities = {};
     private static Player activePlayer = null;
     private static GameMap gm = GameMap.getInstance();
-
+    private static JDialog dialog;
+    
+    public static void createDialog(){	
+		JOptionPane pane = new JOptionPane("Du väntar på din tur");
+		pane.setMessageType(JOptionPane.PLAIN_MESSAGE);
+		pane.setOptions(new String[]{});
+		dialog = pane.createDialog(null, "Avslutad tur");
+		dialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+		dialog.setVisible(true);
+	}
+    
     static void next(){
         countAll();
         GameServer.endTurn(); 
@@ -29,8 +41,9 @@ public class Round{
             System.out.println("You are waiting for your turn");
         }
         else {
-          JOptionPane.showMessageDialog(null,"Du väntar på din tur", "Spelmeddelande",
-            JOptionPane.INFORMATION_MESSAGE);	
+        	createDialog();
+          /*JOptionPane.showMessageDialog(null,"Du väntar på din tur", "Spelmeddelande",
+            JOptionPane.INFORMATION_MESSAGE);*/	
         }
     }
 
@@ -38,6 +51,8 @@ public class Round{
         System.out.println("I has new turn!");
         
         if(State.isOnline()){
+        	if(dialog != null)
+        		dialog.dispose();
             JOptionPane.showMessageDialog(null,"Nu är det din tur ", "Spelmeddelande",
                 JOptionPane.INFORMATION_MESSAGE);
         }
