@@ -48,9 +48,9 @@ class GameScreen extends JPanel implements ActionListener {
 	private GameScreen(){
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
-		nameField = new JTextField("amoros");
+		nameField = new JTextField("");
 		nameField.setBackground(Color.LIGHT_GRAY);
-		civField = new JTextField("Persians");
+		civField = new JTextField("");
 		
 		startButton = new JButton("Starta");
 		lockButton = new JButton("Lås");
@@ -61,23 +61,25 @@ class GameScreen extends JPanel implements ActionListener {
 		civLabel = new JLabel("Civilsationens namn: ");
 		nameLabel = new JLabel("Spelarnamn: ");
 		
-		//list.setMinimumSize(new Dimension(40,50));
-		scp = new JScrollPane(list);
 		
+			//list.setMinimumSize(new Dimension(40,50));
+		scp = new JScrollPane(list);
+			
 		titleLabel = new JLabel("Välj hur många tiles du vill ha på kartan: ");
-
+	
 		min = 20;
-		max = 200;
+		max = 100;
 		init = 20;
 		intSize = 0;
-		
+			
 		jSlide = new JSlider(JSlider.HORIZONTAL, min, max, init);	
-		jSlide.setMajorTickSpacing(50);
+		jSlide.setMajorTickSpacing(10);
 		jSlide.setPaintTicks(true);
 		jSlide.setPaintLabels(true);
 		jSlide.setPaintTrack(true);
 		
 		jSlide.addChangeListener(new SlideListener());
+		
 		
 		textPanel.setLayout(new BoxLayout(textPanel, BoxLayout.Y_AXIS));
 		textPanel.add(nameLabel);
@@ -126,6 +128,7 @@ class GameScreen extends JPanel implements ActionListener {
 		if(startEnabled == false){
 			startButton.setEnabled(false);
 			lockButton.setEnabled(false);
+			jSlide.setEnabled(false);
 			
 		}
     }
