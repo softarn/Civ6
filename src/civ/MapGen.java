@@ -7,10 +7,10 @@ import java.util.Random;
 import static civ.TerrainType.*;
 
 class MapGen{
-    private static final int LAND = 45;
-    private static final int WATER = 55;
-    private static final int PLAINS_MODIFIER = 30;
-    private static final int SEA_MODIFIER = 50;
+    private static final int LAND_MOD = 65;
+    private static final int WATER_MOD = 45;
+    private static final int GRASSLAND_MOD = 10;
+    private static final int OCEAN_MOD = 50;
 
     private static final TerrainType[] terrains = TerrainType.values();
     private static final int[][] offsets = {
@@ -41,16 +41,19 @@ class MapGen{
                     continue;
 
                 tiles[i][j] = createTile(i, j);
+                tiles[i][j] = modifyTile(i, j);
             }
         }
         return tiles;
     }
 
-    private static Tile createTile(int x, int y){
-        int rand = Math.abs(r.nextInt());
+    private static Tile modifyTile(int x, int y){
         int index = 0;
-        ArrayList<Tile> neighbours = getNeighbours(x, y);
+        int rand = Math.abs(r.nextInt());
+        Tile tile = getTile(x, y);
+        TerrainType terrain = tile.getTerrain();
         HashMap<TerrainType, Integer> occurance = new HashMap<TerrainType, Integer>();
+        ArrayList<Tile> neighbours = getNeighbours(x, y);
         for(Tile neighbour : neighbours){
             if(occurance.containsKey(neighbour.getTerrain())){
                 occurance.put(neighbour.getTerrain(), occurance.get(neighbour.getTerrain()) + 1);
@@ -59,10 +62,31 @@ class MapGen{
                 occurance.put(neighbour.getTerrain(), 1);
             }
         }
+        if(terrain == Plains){
+            rand = Math.abs(r.nextInt());
+            if(rand % 100 < GRASSLAND_MOD || getRandom(occurance) == Grassland){
+                index = 3;
+            }
+        }
+        else if(terrain == Sea){
+            rand = Math.abs(r.nextInt());
+            if(rand % 100 < OCEAN_MOD || getRandom(occurance) == Ocean){
+                index = 1;
+            }
+        }
+        if(index == 0)
+            return tile;
+        else
+            return new Tile(terrains[index], x, y);
+    }
+
+    private static Tile createTile(int x, int y){
+        int index = 0;
+        int rand = Math.abs(r.nextInt());
         switch(getRandom()){
             case Sea:
                 rand = Math.abs(r.nextInt());
-                if(rand % 100 < WATER){
+                if(rand % 100 < WATER_MOD){
                     index = 0;
                 }
                 else{
@@ -71,7 +95,7 @@ class MapGen{
                 break;
             default:
                 rand = Math.abs(r.nextInt());
-                if(rand % 100 < LAND){
+                if(rand % 100 < LAND_MOD){
                     index = 2;
                 }
                 else{
@@ -83,7 +107,13 @@ class MapGen{
     }
 
     private static TerrainType getRandom(){
-        return terrains[Math.abs(r.nextInt())%terrains.length];
+        int rand = Math.abs(r.nextInt());
+        return terrains[rand % terrains.length];
+    }
+
+    private static TerrainType getRandom(HashMap<TerrainType, Integer> map){
+        int rand = Math.abs(r.nextInt());
+        return (TerrainType)map.keySet().toArray()[rand % map.keySet().size()];
     }
 
     private static TerrainType getMax(HashMap<TerrainType, Integer> map){
