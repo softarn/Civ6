@@ -39,12 +39,12 @@ public class MyPacketListener implements PacketListener{
                 tile.getUnit().setManPower(manPowerLeft);
                 System.out.println(tileXValue +", "+ tileYValue);
                 pu.getView().update();
-                if(State.getInstance().getUnitState() == UnitSelected){
+                /*if(State.getInstance().getUnitState() == UnitSelected){
                     State.getInstance().setUnitState(UnitUnSelected);
                     State.getInstance().setTileState(TileUnSelected);
                     State.getInstance().setUnitState(UnitSelected);
                     State.getInstance().setTileState(TileSelected);
-                }
+                }*/
             }
             if(received.existCity(i)){
                 String theOwner = received.getCityOwner(i);
