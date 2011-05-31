@@ -149,13 +149,20 @@ public class GameMapView extends JPanel{
                             break;
                         case Attack:
                             if(state.getUnitState() == UnitSelected){
+                                for(Tile t : gm.getNeighbours(state.getSelectedTile(), MAX_RANGE, false)){
+                                    t.dehilight();
+                                    t.getView().repaint();
+                                }
                                 if(Battle.runupPeriod()){
+                                    JOptionPane.showMessageDialog(
+                                            null,
+                                            "Du kan inte attackera än, vänta några rundor till.",
+                                            "Runup Period",
+                                            JOptionPane.OK_OPTION);
+                                }
+                                else{
                                     PhysicalUnit atkUnit = state.getSelectedUnit();
                                     int range = atkUnit.getType().getRange();
-                                    for(Tile t : gm.getNeighbours(state.getSelectedTile(), MAX_RANGE, false)){
-                                        t.dehilight();
-                                        t.getView().repaint();
-                                    }
                                     if(atkUnit.getType().getCategory().equals("Artillery")){
                                         if(tile.hasCity() && !tile.getCity().isMine()){
                                             before = new PopUpBubble(state.getSelectedTile().getView().getX() + 135, 

@@ -206,11 +206,11 @@ class GlobalView extends JPanel implements ActionListener{
         				System.exit(0);
         				break;
         			default:
-        				System.out.println("Somehting madly wrong sir");
+        				System.out.println("Something madly wrong sir");
         			}
         		}
         		
-        		else if (bc >= 480 && State.isOnline() == true) {
+        		else if (bc >= 1453 && State.isOnline() == true) {
         				JOptionPane.showOptionDialog(null, "Spelet är slut, du vann! Grattis! \nProgrammet kommer att avslutas. \n\nVälkommen åter!", "Game over", 
         					JOptionPane.OK_OPTION, JOptionPane.INFORMATION_MESSAGE, null, choice,"");
         		

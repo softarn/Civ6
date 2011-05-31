@@ -230,7 +230,7 @@ public class Battle {
 
     public static int doBattle(PhysicalUnit u1, PhysicalUnit u2, Tile t1, Tile t2) {
         int winnerId = 0;
-        if(runupPeriod()){
+        if(!runupPeriod()){
             if(u2 == null){
                 if(t2.hasUnit()){
                     u2 = t2.getUnit();
