@@ -213,7 +213,7 @@ public class Menu extends JPanel implements Observer, ActionListener, ChangeList
                     	
                         else {
                     	tileLabel.setText("<html>Terräng: " + outputTerrain +
-                                "<br>Unit: Enemy unit, belongs to "+state.getHoverTile().getUnit().getType().getName());
+                                "<br>Unit: Enemy unit, belongs to "+state.getHoverTile().getUnit().getOwner());
                         }            
                  	}
                 break;
