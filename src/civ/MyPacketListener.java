@@ -82,17 +82,16 @@ public class MyPacketListener implements PacketListener{
 
     public void casualtyReport(Result res){
         System.out.println("Report received");
-        Tile tile = gm.getTile(res.getBombX(), res.getBombX());
+        Tile tile = gm.getTile(res.getBombX(), res.getBombY());
         JOptionPane.showMessageDialog(
                 null,
-                "En " + tile.getUnit().getType() + " blev attackerad. Den förlorade " + 
+                "En " + tile.getUnit().getType() + " blev attackerad, visar den på kartan. Den förlorade " + 
                 res.getHealthLost() + " mankraft.",
                 "Dödsraport",
                 JOptionPane.OK_OPTION);
-        System.out.println("Printed report");
-        PhysicalUnit pu = gm.getTile(res.getBombX(), res.getBombY()).getUnit();
+        gm.getView().centerOn(tile);
+        PhysicalUnit pu = tile.getUnit();
         pu.setManPower(res.getHealthLost());
-        System.out.println("Updating unit");
         pu.getView().update();
         pu.getView().repaint();
         gm.getView().repaint();
