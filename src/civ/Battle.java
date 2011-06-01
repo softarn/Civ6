@@ -32,7 +32,7 @@ public class Battle {
     private static Random rand = new Random();
 
     public static boolean runupPeriod(){
-        return Round.getTurn() < 25;
+        return Round.getTurn() < 10;
     }
 
     private static void fetchStats(PhysicalUnit u1, PhysicalUnit u2, Tile t1, Tile t2){

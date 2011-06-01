@@ -47,6 +47,12 @@ public class Move {
         if(length == -1){
             return false;
         }
+	
+        for(Tile t : gm.getNeighbours(t2, unit.getType().getVision())){
+            t.setShadow();
+            t.getView().repaint();
+        }
+	
         System.out.println(t1.getX() + ":" + t1.getY());
         System.out.println(t2.getX() + ":" + t2.getY());
         boolean couldPlace = t2.setUnit(unit);

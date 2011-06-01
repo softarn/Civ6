@@ -242,6 +242,10 @@ public class Tile implements Comparable<Tile>{
     public boolean hasShadow(){
         return countToFog <= 78;
     }
+    
+    public void setShadow(){
+	    countToFog = 78;
+    }
 
     public boolean hasFog(){
         return countToFog <= 40;
